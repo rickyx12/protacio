@@ -1,0 +1,69 @@
+.txtBox {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 320px;
+	padding:4px 4px 4px 5px;
+}
+
+.shortField {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 120px;
+	padding:4px 4px 4px 5px;
+}
+
+
+.bdayField {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 90px;
+	padding:4px 4px 4px 5px;
+}
+
+
+.comboBox {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 300px;
+	padding:4px 4px 4px 5px;
+}
+
+.comboBoxShort {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 65px;
+	padding:4px 4px 4px 5px;
+}
+
+
+.comboBoxDay {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 45px;
+	padding:4px 4px 4px 5px;
+}
+
+
+.labelz {
+color:#000;
+font-size:14px;
+}
+
+
+.txtArea {
+	border: 1px solid #000;
+	color: #000;
+	height: 60px;
+	width: 360px;
+	padding:4px 4px 4px 5px;
+}
+
+.qtyField {
+width:50px;
+}
