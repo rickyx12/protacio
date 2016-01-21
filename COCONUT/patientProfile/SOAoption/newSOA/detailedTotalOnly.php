@@ -1052,8 +1052,10 @@ $excessPF = $ro->selectNow("registrationDetails","excessPF","registrationNo",$re
 $excessRoom = $ro->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo);
 $PHICportion=$ro->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo);
 $excessMaxBenefits = $ro->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo);
+$hmoManualExcess = $ro->selectNow("registrationDetails","hmoManualExcess","registrationNo",$registrationNo);
+$hmoManualExcessValue = $ro->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo);
 
-$excessTotal = ($excessPF + $excessRoom + $excessMaxBenefits);
+$excessTotal = ($excessPF + $excessRoom + $excessMaxBenefits + $hmoManualExcessValue);
 
 if( $ro->selectNow("registrationDetails","Company","registrationNo",$registrationNo) == "" ) {
 $outStandingBill = (( ($total - $totalCaseRate) - $ro->detailedTotalOnly_deposit_total()) + $ro->getTakeHomeMeds_total());
@@ -1063,7 +1065,7 @@ $outStandingBill = (( ($total - $totalCaseRate) ) + $ro->getTakeHomeMeds_total()
 
 //$outStandingBill = (($cashTotal - $ro->detailedTotalOnly_deposit_total()) + $ro->getTakeHomeMeds_total());
 
-$outStandingBill_company = (($companyTotal)-($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion));
+$outStandingBill_company = (($companyTotal)-($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue));
 
 echo "<tr>";
 echo "<td>&nbsp;<font size=2><b>DISCOUNT</b></font></td>";
@@ -1246,6 +1248,22 @@ echo "</tr>";
 
 }else { }
 
+if( $hmoManualExcess != "" ) {
+
+echo "<tr>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;<font size=2>".$hmoManualExcess."</font></td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;<font size=2>".number_format($hmoManualExcessValue,2)."</font></td>";
+echo "<td>&nbsp;<font size=2>".number_format($hmoManualExcessValue,2)."</font></td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+}else { }
+
 echo "<tr>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
@@ -1253,7 +1271,7 @@ echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;<font size=2><b>".number_format(trim(($ro->detailedTotalOnly_patientToPay_total() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion))),2)."</b></font></td>";
+echo "<td>&nbsp;<font size=2><b>".number_format(trim(($ro->detailedTotalOnly_patientToPay_total() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue))),2)."</b></font></td>";
 
 //echo $ro->detailedTotalOnly_patientToPay_total();
 echo "<td>&nbsp;</td>";

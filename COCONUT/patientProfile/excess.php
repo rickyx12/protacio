@@ -11,10 +11,12 @@ $excessMaxBenefits=$ro->selectNow("registrationDetails","excessMaxBenefits","reg
 $excessPF=$ro->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo);
 $excessRoom=$ro->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo);
 $PHICportion=$ro->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo);
+$hmoManualExcess=$ro->selectNow("registrationDetails","hmoManualExcess","registrationNo",$registrationNo);
+$hmoManualExcessValue=$ro->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo);
 
 $ro->coconutFormStart("post","http://".$ro->getMyUrl()."/COCONUT/patientProfile/excess1.php");
 $ro->coconutHidden("registrationNo",$registrationNo);
-$ro->coconutBoxStart("700","185");
+$ro->coconutBoxStart("700","205");
 echo "<Br>";
 echo "<table border=0>";
 echo "<tr>";
@@ -44,6 +46,14 @@ echo "<td>";
 $ro->coconutTextBox("PHICportion","$PHICportion");
 echo "</td>";
 echo "</tr>";
+
+echo "<tr>";
+echo "<td>".$ro->coconutTextBox_return("manual",$hmoManualExcess)."</td>";
+echo "<td>";
+$ro->coconutTextBox("manualValue",$hmoManualExcessValue);
+echo "</td>";
+echo "</tr>";
+
 echo "</table>";
 echo "<br>";
 $ro->coconutButton("Proceed");
