@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>addaccount</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+#Layer1 {
+	position:absolute;
+	left:473px;
+	top:242px;
+	width:237px;
+	height:24px;
+	z-index:1;
+}
+body {
+	background-color: #F4FFE4;
+	background-image: url(http://210.4.57.20/image/background.gif);
+}
+#Layer2 {
+	position:absolute;
+	left:231px;
+	top:834px;
+	width:289px;
+	height:22px;
+	z-index:2;
+}
+#Layer3 {
+	position:absolute;
+	left:12px;
+	top:18px;
+	width:37px;
+	height:29px;
+	z-index:1;
+}
+a:link {
+	color: #000000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000000;
+}
+a:hover {
+	text-decoration: none;
+	color: #002969;
+}
+a:active {
+	text-decoration: none;
+}
+#Layer6 {position:absolute;
+	left:411px;
+	top:22px;
+	width:39px;
+	height:33px;
+	z-index:1;
+}
+.style17 {font-size: 12px; font-weight: bold; }
+.style18 {font-size: 12px}
+.style7 {	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+<form name="adddonor" 
+action="http://210.4.57.20/cgi-bin/semenalysis.cgi">
+
+ 
+
+<body text="#000000" alink="#666600">
+<strong>Semenalysis</strong>
+<table width="461" border="5" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="style18"><span class="style17">LAB NO. </span></td>
+      <td><strong><font color="#000000">
+        <input name="labno" type="text">
+      </font></strong></td>
+    </tr>
+    <tr>
+      <td class="style17">Semenalysis No. </td>
+      <td><strong><font color="#000000">
+        <input name="testno" type="text" id="testno">
+      </font></strong></td>
+    </tr>
+    <tr>
+      <td width="201" class="style17">PHYSICIAN</td>
+      <td width="244"><strong><font color="#000000">
+        <input name="physician" type="text">
+      </font></strong></td>
+    </tr>
+    <tr>
+      <td class="style18"><span class="style17">PATHOLOGIST</span></td>
+      <td><select name="pathologist" class="style17" id="pathologist"  style="background-color:#D7FFFF" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+       
+        <option>NOEMIA D. BARTOLOME, M.D.,FPSP</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td class="style18"><span class="style17">MEDICAL TECHNOLOGIST </span></td>
+      <td><label>
+        <select name="medtech">
+         <option></option>
+        <option>Grace T. larroza, R.M.T.</option>
+        <option>Ginalyn L. Eslava, R.M.T.</option>
+        <option>Helen Grace P. Umipig, M.T.</option>
+        <option>Emjie P. Pantorilla, M.T.</option>
+        <option>Janice S. Tutanes, M.T., RN</option>
+        <option>Judith Anne A. Sandig , M.T.</option>
+        <option>Rey D. Larroza, R.M.T.</option>
+
+
+        </select>
+      </label></td>
+    </tr>
+</table>
+  <label></label>
+  <p><strong><font color="#000000">
+    <input name="examrequested" type="text" value="Semenalysis">
+    <br>
+  </font></strong><span class="style18"><strong><font color="#000000">Specimen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input name="specimen" type="text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Examination</font></strong></span><strong><font color="#000000">&nbsp;
+  <input name="examination" type="text">
+  &nbsp;</font></strong></P>
+  <table width="914" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+    <tr>
+      <td width="121">Time Collected </td>
+      <td width="158"><input name="timecollected" type="text" id="timecollected"></td>
+      <td width="144">Time Received </td>
+      <td width="151"><input name="timereceived" type="text" id="timereceived"></td>
+      <td width="138">Time Examined </td>
+      <td width="188"><input name="timeexamined" type="text" id="timeexamined"></td>
+    </tr>
+    <tr>
+      <td>Volume</td>
+      <td><input name="volume" type="text" id="volume"></td>
+      <td>Pus Cells </td>
+      <td><input name="puscells" type="text" id="puscells"></td>
+      <td>&nbsp;</td>
+      <td><span class="style7">Morphology</span></td>
+    </tr>
+    <tr>
+      <td>Color</td>
+      <td><input name="color" type="text" id="color"></td>
+      <td>RBC</td>
+      <td><input name="rbc" type="text" id="rbc"></td>
+      <td>Normal </td>
+      <td><input name="normal" type="text" id="normal"></td>
+    </tr>
+    <tr>
+      <td>Viscosity</td>
+      <td><input name="viscosity" type="text" id="viscosity"></td>
+      <td>Others</td>
+      <td><input name="other" type="text" id="other"></td>
+      <td>Double Head </td>
+      <td><input name="doublehead" type="text" id="doublehead"></td>
+    </tr>
+    <tr>
+      <td>Liquefication Time </td>
+      <td><input name="ltime" type="text" id="ltime"></td>
+      <td><input name="ltime2" type="text" id="ltime2"></td>
+      <td>&nbsp;</td>
+      <td>Pin Head </td>
+      <td><input name="pinhead" type="text" id="pinhead"></td>
+    </tr>
+    <tr>
+      <td>pH</td>
+      <td><input name="ph" type="text" id="ph"></td>
+      <td><input name="ph1" type="text" id="ph1"></td>
+      <td>&nbsp;</td>
+      <td>Giant Head </td>
+      <td><input name="gianthead" type="text" id="gianthead"></td>
+    </tr>
+    <tr>
+      <td>Specific gravity </td>
+      <td><input name="specificgravity" type="text" id="specificgravity"></td>
+      <td>Total Cell Count </td>
+      <td><input name="totalcellcount" type="text" id="totalcellcount"></td>
+      <td>Amorphous</td>
+      <td><input name="amorphous" type="text" id="amorphous"></td>
+    </tr>
+    <tr>
+      <td>Motility:</td>
+      <td>Motile</td>
+      <td><input name="motile" type="text" id="motile"></td>
+      <td>&nbsp;</td>
+      <td>Constricted Tail </td>
+      <td><input name="constrictedtail" type="text" id="constrictedtail"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>Non-motile</td>
+      <td><input name="nonmotile" type="text" id="nonmotile"></td>
+      <td>&nbsp;</td>
+      <td>Others</td>
+      <td><input name="others" type="text" id="others"></td>
+    </tr>
+</table>
+  <table width="461" border="1" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC" class="style7">
+    <tr>
+      <td height="30" class="style18"><font color="#000000">AR  Patient </font></td>
+      <td class="style18"><input name="patient" type="text" value="$patient"></td>
+    </tr>
+  </table>
+  <p>
+</p>
+    <input type="submit" name="Submit" value="Submit">
+  </p>
+  <label>
+  <input type="reset" name="Submit2" value="Reset">
+  </label>
+</body>
+
+</html>
