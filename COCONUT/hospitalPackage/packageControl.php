@@ -2,22 +2,64 @@
 
 
 class hospitalPackage {
-
+/*
 public $myHost = 'localhost';
 public $username = 'root';
 public $password = 'Pr0taci001';
 public $database = 'Coconut';
+*/
+
+
+public function myHost(){
+$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
+$fh = fopen($myFile, 'r');
+$theData = fread($fh,filesize($myFile));
+$assoc_array = array();
+$databaseInfo = explode("\n", $theData);
+$databaseHOST = explode("=",$databaseInfo[0]);
+return $databaseHOST[1];
+}
+
+public function getUser(){
+$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
+$fh = fopen($myFile, 'r');
+$theData = fread($fh,filesize($myFile));
+$assoc_array = array();
+$databaseInfo = explode("\n", $theData);
+$databaseUSER = explode("=",$databaseInfo[1]);
+return $databaseUSER[1];
+}
+
+public function getPass(){
+$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
+$fh = fopen($myFile, 'r');
+$theData = fread($fh,filesize($myFile));
+$assoc_array = array();
+$databaseInfo = explode("\n", $theData);
+$databasePASS = explode("=",$databaseInfo[2]);
+return $databasePASS[1];
+}
+
+public function getDB(){
+$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
+$fh = fopen($myFile, 'r');
+$theData = fread($fh,filesize($myFile));
+$assoc_array = array();
+$databaseInfo = explode("\n", $theData);
+$databaseDB = explode("=",$databaseInfo[3]);
+return $databaseDB[1];
+}
 
 
 public function getMyUrl() {
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT ipaddress FROM ipaddress ");
 
@@ -61,13 +103,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 
 $result = mysql_query("SELECT Description,chargesCode,Category,WARD from availableCharges where Description like '$desc%%%%%%%%' order by Description asc ");
@@ -100,13 +142,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 
 $result = mysql_query("SELECT description,inventoryCode,upper(inventoryType) as inventoryType,unitcost,Added,inventoryLocation,opdPrice from inventory where description like '$desc%%%%%%%%' and status not like 'DELETED_%%%%%%%' and inventoryLocation = '$searchFrom' order by description asc ");
@@ -146,13 +188,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 
 $result = mysql_query("SELECT Name,doctorCode from Doctors where Name like '$desc%%%%%%%%' order by Name asc ");
@@ -177,13 +219,13 @@ echo "</table>";
 
 public function addPackageInclude($packageName,$packageIncluded_desc,$packageIncluded_qty,$unitcost,$Added) {
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $sql="INSERT INTO hospitalPackage (packageName,packageIncluded_description,packageIncluded_qty,unitcost,Added)
 VALUES
@@ -216,13 +258,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT packageName,packageNo,packageIncluded_description,packageIncluded_qty,Added FROM hospitalPackage WHERE packageName = '$packageName' order by packageIncluded_description asc ");
 
@@ -278,13 +320,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT packageName,packagePrice,package_phicPrice FROM hospitalPackage group by packageName order by packageName asc ");
 
@@ -312,13 +354,13 @@ $this->coconutTableStop();
 //UNIVERSAL SELECT
 public function selectNow($table,$cols,$identifier,$identifierData) {
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT ($cols) as cols from $table  where $identifier = '$identifierData'  ");
 
@@ -341,13 +383,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT packageNo,packageIncluded_description,packageIncluded_qty,unitcost,Added FROM hospitalPackage WHERE packageName = '$packageName' order by packageIncluded_description asc ");
 
@@ -421,13 +463,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT packageName,packagePrice FROM hospitalPackage group by packageName order by packageName asc ");
 
@@ -460,13 +502,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost,$this->username,$this->password);
+$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+mysql_select_db($this->getDB(), $con);
 
 $result = mysql_query("SELECT inventoryCode,description,quantity,genericName FROM inventory WHERE (description like '%%%%%$item%%%%%' or genericName like '%%%%%$item%%%%%') and quantity > 0 and inventoryLocation = '$inventoryLocation' and status not like 'DELETED%%%%%%' ");
 
