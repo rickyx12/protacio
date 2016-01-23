@@ -34,13 +34,13 @@ background-color:yellow;
 ";
 
 
-$con = mysql_connect($ro->myHost,$ro->username,$ro->password);
+$con = mysql_connect($ro->myHost(),$ro->getUser(),$ro->getPass());
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($ro->database, $con);
+mysql_select_db($ro->getDB(), $con);
 
 $fromRegistered = $fromYear."-".$fromMonth."-".$fromDay;
 $toRegistered = $toYear."-".$toMonth."-".$toDay;
