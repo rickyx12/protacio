@@ -13,17 +13,17 @@ $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
 
 
-mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
-mysql_select_db($this->getDB());
+mysql_connect($this->host,$this->username,$this->password);
+mysql_select_db($this->database);
 
 
-//$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+//$con = mysql_connect($this->host,$this->username,$this->password);
 //if (!$con)
   //{
   //die('Could not connect: ' . mysql_error());
   //}
 
-//mysql_select_db($this->getDB(), $con);
+//mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT count(registrationNo) as regNo FROM registrationDetails WHERE (dateRegistered between '$date' and '$date1') and type = '$type'  ");
 
@@ -73,13 +73,13 @@ ImageDestroy($myImage);
 
 public function phicTransmit($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO phicTransmit (registrationNo)
 VALUES
@@ -103,13 +103,13 @@ mysql_close($con);
 
 public function addVoucher($voucherNo,$paymentMode,$description,$amount,$payee,$date,$time,$accountTitle,$user,$type) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO vouchers (voucherNo,paymentMode,description,amount,payee,date,time,accountTitle,user,type)
 VALUES
@@ -146,13 +146,13 @@ a { text-decoration:none; color:black; }
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."_".$day1;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $payee == "" ) {
 $result = mysql_query("SELECT * FROM vouchers WHERE (date between '$date' and '$date1') order by date desc  ");
@@ -207,14 +207,14 @@ $this->coconutTableStop();
 public function addSupplier($supplierName,$address,$contactPerson,$contactNo,$description) {
 
 
-//$con = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass());
+//$con = mysqli_connect($this->host,$this->username,$this->password);
 $con = mysql_connect('localhost','root','Pr0taci001');
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO supplier (supplierName,address,description,contactPerson,contactNo)
 VALUES
@@ -247,13 +247,13 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT * FROM supplier order by supplierName asc  ");
 
@@ -301,13 +301,13 @@ $this->coconutTableStop();
 
 public function chargesAlready($desc,$date,$registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT description FROM patientCharges WHERE description = '$desc' and dateCharge = '$date' and registrationNo = '$registrationNo'");
 
@@ -319,13 +319,13 @@ return mysql_num_rows($result);
 
 public function sumAccountTitle($accountTitle,$month,$year) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(amount) as amount FROM vouchers WHERE date like '$month%%%%$year' and accountTitle = '$accountTitle'  ");
 
@@ -338,13 +338,13 @@ return $row['amount'];
 
 public function sumPaymentMode($month,$year,$paymentMode) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(amount) as amount FROM vouchers WHERE date like '$month%%%%$year' and paymentMode = '$paymentMode'  ");
 
@@ -369,13 +369,13 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT * FROM vouchers WHERE date like '$month%%%%$year' group by accountTitle order by accountTitle asc  ");
@@ -434,13 +434,13 @@ public function getPxCensusMonth($month,$day,$year,$type) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $type == "IPD" ) {
 $result = mysql_query("SELECT count(registrationNo) as regNo FROM registrationDetails WHERE dateRegistered = '$date' and type IN ('IPD','ER','ICU','OR/DR')  ");
@@ -464,13 +464,13 @@ return $row['regNo'];
 public function getPxCensusAnnual($month,$year,$type) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $type == "IPD" ) {
 $result = mysql_query("SELECT count(registrationNo) as regNo FROM registrationDetails WHERE dateRegistered like '$year-$month%%%' and type IN ('IPD','ICU','ER','OR/DR')  ");
@@ -493,13 +493,13 @@ public function getPxRevenueDaily_opd($month,$day,$year) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(cashPaid) as cashPaid FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.datePaid = '$date'   ");
 
@@ -520,13 +520,13 @@ public function getPxRevenueDaily_opd_dept($month,$day,$year,$title) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(cashPaid) as cashPaid FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.datePaid = '$date' and pc.title = '$title'  ");
 
@@ -545,13 +545,13 @@ public function getPxRevenueDaily_ipd($month,$day,$year) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pp.amountPaid) as amountPaid,sum(pf) as pf,sum(admitting) as admitting FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.type = 'IPD' and pp.datePaid = '$date'  ");
 
@@ -569,13 +569,13 @@ return ($row['amountPaid'] );
 /**********ANNUAL REVENUE/COLLECTION***************/
 public function getAnnualRevenue_opd($month,$year) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(cashPaid) as cashPaid FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.datePaid like '$year-$month%%%'   ");
 
@@ -592,13 +592,13 @@ return $row['cashPaid'] / 1000;
 /**********ANNUAL REVENUE/COLLECTION**********************/
 public function getAnnualRevenue_ipd($month,$year) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(amountPaid) as amountPaid FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.type = 'IPD' and pp.datePaid like '$year-$month%%%'  ");
 
@@ -616,13 +616,13 @@ public function getGenderDaily($month,$day,$year,$gender,$type) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT count(rd.registrationNo) as regNo FROM registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.dateRegistered IN ('$date') and rd.type = '$type' and pr.Gender = '$gender' ");
 
@@ -640,13 +640,13 @@ return $row['regNo'];
 public function getGenderAnnual($month,$year,$gender,$type) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT count(rd.registrationNo) as regNo FROM registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.dateRegistered like '$year-$month%%%' and rd.type = '$type' and pr.Gender = '$gender' ");
 
@@ -666,13 +666,13 @@ public function getPHICReceivablesMonthly($month,$day,$year) { //BASED ON TRANSM
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.dateUnregistered IN ('$date') ");
@@ -694,13 +694,13 @@ public function getPHICReceivablesMonthly_package($month,$day,$year) { //BASED O
 
 $date = $month."_".$day."_".$year;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(pt.package) as totalPackage FROM registrationDetails rd,phicTransmit pt WHERE rd.dateUnregistered IN ('$date') and rd.registrationNo = pt.registrationNo and pt.package > 0   ");
@@ -718,13 +718,13 @@ while($row = mysql_fetch_array($result))
 /********PHIC RECEIVABLE NON-PACKAGE Annual**********************/
 public function getPHICReceivablesAnnual($month,$year) { //BASED ON TRANSMITTED NA
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc,phicTransmit pt WHERE rd.registrationNo = pc.registrationNo and rd.dateUnregistered like '$month%%%%$year' and rd.registrationNo = pt.registrationNo and pt.package = 0   ");
@@ -746,13 +746,13 @@ while($row = mysql_fetch_array($result))
 public function getPHICReceivablesAnnual_package($month,$year) { //BASED ON TRANSMITTED NA
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(pt.package) as totalPackage FROM registrationDetails rd,phicTransmit pt WHERE rd.dateUnregistered like '$month%%%%$year' and rd.registrationNo = pt.registrationNo and pt.package > 0   ");
@@ -773,13 +773,13 @@ public function getMonthlyExpenses($month,$day,$year) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(amount) as amount FROM vouchers WHERE date IN ('$date')   ");
 
@@ -797,13 +797,13 @@ return $row['amount'] / 1000;
 public function getAnnualExpenses($month,$year) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(amount) as amount FROM vouchers WHERE date like '$year-$month%%%'   ");
 
@@ -824,13 +824,13 @@ public function getMonthlyDiscount_ipd($month,$day,$year) {
 
 $date = $month."_".$day."_".$year;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(discount) as discount FROM registrationDetails WHERE dateUnregistered IN ('$date') and discount NOT IN('',0) and type = 'IPD'   ");
 
@@ -851,13 +851,13 @@ public function getMonthlyDiscount_opd($month,$day,$year) {
 
 $date = $month."_".$day."_".$year;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.discount) as discountz FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and pc.dateCharge IN ('$date') and pc.discount NOT IN('',0) and rd.type = 'OPD'   ");
 
@@ -875,13 +875,13 @@ return $row['discountz'];
 /*************ANNUAL DISCOUNT GIVEN*****************************/
 public function getAnnualDiscount_ipd($month,$year) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(discount) as discount FROM registrationDetails WHERE dateUnregistered like '$month%%%%$year' and discount NOT IN('',0) and type = 'IPD'   ");
 
@@ -899,13 +899,13 @@ return $row['discount'] / 1000;
 /*************MONTHLY DISCOUNT GIVEN*****************************/
 public function getAnnualDiscount_opd($month,$year) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.discount) as discountz FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and pc.dateCharge like '$month%%%%$year' and pc.discount NOT IN('',0) and rd.type = 'OPD'   ");
 
@@ -924,13 +924,13 @@ public function getMonthlySenior($month,$day,$year,$type) {
 
 $date = $year."-".$month."-".$day;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT count(registrationNo) as regNo FROM registrationDetails WHERE dateRegistered IN ('$date') and type = '$type'   ");
 
@@ -948,13 +948,13 @@ return $row['regNo'];
 public function getAnnualSenior($month,$year,$type) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT count(rd.registrationNo) as regNo FROM registrationDetails rd,patientRecord pr WHERE pr.patientNo=rd.patientNo and rd.dateRegistered like '$year-$month%%%' and rd.type = '$type' and pr.Senior like 'YES%%%%'   ");
 
@@ -980,13 +980,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("select pc.description,sum(pc.cashPaid) as totalPaid from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and type ='OPD' and pc.datePaid  like '$year-$month%%%' and pc.title = '$title' and pc.status='PAID' group by pc.description order by totalPaid desc limit 20 ");
 
@@ -1028,13 +1028,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("select pc.description,sum(pc.total) as totalPaid from patientCharges pc,registrationDetails rd,patientPayment pp WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = pp.registrationNo and rd.type ='IPD' and pp.datePaid like '$year-$month%%%' and pc.title = '$title' group by pc.description order by totalPaid desc limit 20");
 
@@ -1074,13 +1074,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $type == "All" ) {
 $result = mysql_query("select pc.chargesCode,pc.description,sum(pc.quantity) as qtyDispensed from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.dateCharge like '$year-$month%%%' and pc.title = '$title' and pc.departmentStatus like 'dispensedBy%%%%' and pc.status not like 'DELETED_%%%%%%' group by pc.description order by qtyDispensed desc ");
@@ -1131,13 +1131,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("select sum(pc.cashPaid) as totalPaid from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and type ='OPD' and pc.datePaid IN ('$date') and pc.description = '$description' and pc.status='PAID' ");
 
@@ -1164,13 +1164,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("select sum(pc.total) as totalPaid from patientCharges pc,registrationDetails rd,patientPayment pp WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = pp.registrationNo and rd.type ='IPD' and pp.datePaid = '$date' and pc.description='$description' ");
 
@@ -1196,13 +1196,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $type == "All" ) {
 $result = mysql_query("select sum(pc.quantity) as qtyDispensed from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.dateCharge = '$date' and pc.description = '$description' and pc.chargesCode = '$chargesCode' and pc.departmentStatus like 'dispensedBy%%%%'  ");
@@ -1231,13 +1231,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("select pc.itemNo,pc.description,pc.total,pc.datePaid,pc.cashPaid,pc.orNO from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = '$registrationNo' and pc.cashPaid > 0 and pc.status in ('PAID','UNPAID') order by pc.orNO asc ");
@@ -1278,13 +1278,13 @@ $this->coconutFormStop();
 
 public function AddVoidPayment($patientName,$item,$amount,$time,$date,$user) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO voidPayment (patientName,item,amount,timeVoid,dateVoid,voidBy)
 VALUES
@@ -1319,13 +1319,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $datez = $month."_".$day."_".$year;
 
@@ -1375,13 +1375,13 @@ $this->coconutFormStop();
 //kuhain Lahat ng naibayad ng patient at i-sum 
 public function getAllPatientPayment($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pp.amountPaid) as amountPaid  FROM patientPayment pp WHERE pp.registrationNo = '$registrationNo'  ");
 
@@ -1396,13 +1396,13 @@ return $row['amountPaid'];
 //get and sum all cashUnpaid of the patient
 public function getCashUnpaid($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.cashUnpaid) as cashUnpaid  FROM patientCharges pc WHERE pc.registrationNo = '$registrationNo'  ");
 
@@ -1435,13 +1435,13 @@ public function checkingStop($patientNo,$dateRegister) {
 //$date = $month."_".$day."_".$year;
 //$date1 = $month1."_".$day1."_".$year1;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT registrationNo FROM registrationDetails WHERE patientNo = '$patientNo' and dateRegistered = '$dateRegister' ");
 
@@ -1463,13 +1463,13 @@ tr:hover{ background-color:yellow; color:black; }
 </style>
 ";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.Gender,pr.Senior,pr.PHIC,pr.civilStatus,pr.Address,pr.phicType,rd.registrationNo,rd.dateRegistered FROM patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and pr.completeName like '$name%%%%%%%' order by rd.registrationNo desc ");
 
@@ -1499,13 +1499,13 @@ public function getPHIC_supplies($registrationNo) {
 //$date = $month."_".$day."_".$year;
 //$date1 = $month1."_".$day1."_".$year1;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.phic >0 and pc.title = 'SUPPLIES' ");
 
@@ -1524,13 +1524,13 @@ public function getInventoryPrice($inventoryCode) {
 //$date = $month."_".$day."_".$year;
 //$date1 = $month1."_".$day1."_".$year1;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT Added,unitcost FROM inventory WHERE inventoryCode = '$inventoryCode' ");
 
@@ -1575,13 +1575,13 @@ tr:hover { background-color:yellow;color:black;}
 $date = $fromYear."-".$fromMonth."-".$fromDay;
 $date1 = $toYear."-".$toMonth."-".$toDay;
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $type == "All" ) {
 $result = mysql_query("SELECT pr.lastName,pr.firstName,rd.registrationNo,rd.dateUnregistered FROM registrationDetails rd,patientCharges pc,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') group by rd.registrationNo order by pr.lastName asc ");
@@ -1732,13 +1732,13 @@ $this->coconutTableStop();
 public function updatePrice_inventory($registrationNo,$username,$type,$status) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 //if( $type == "PhilHealth" ) {
@@ -1792,13 +1792,13 @@ $this->coconutFormStop();
 
 public function radioReportInsert($registrationNo,$itemNo,$date,$physician,$radioReport,$hospitalName,$hospitalAddress,$time,$approved,$approvedDate,$approvedTime,$approvedBy,$radtech) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO radioSavedReport (registrationNo,itemNo,date,physician,radioReport,hospitalName,hospitalAddress,time,approved,approvedDate,approvedTime,approvedBy,performed)
 VALUES
@@ -1822,13 +1822,13 @@ mysql_close($con);
 
 public function radioHeading($hospitalName,$hospitalAddress) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO radioHeading (hospital,address)
 VALUES
@@ -1850,13 +1850,13 @@ mysql_close($con);
 
 public function addRadioTemplate($title,$template) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO radioReportList (title,report)
 VALUES
@@ -1880,13 +1880,13 @@ mysql_close($con);
 
 public function getMasterListHospitalHeading($username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT * FROM radioHeading order by hospital asc ");
 
@@ -1924,13 +1924,13 @@ $this->coconutTableStop();
 
 public function getMasterListReportTemplate($username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT * FROM radioReportList order by title asc ");
 
@@ -1970,13 +1970,13 @@ public function getMedtechName($username) {
 
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT completeName FROM registeredUser WHERE username = '$username' ");
 
@@ -1992,13 +1992,13 @@ return $row['completeName'];
 
 public function addLaboratoryTemplate($title,$template) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO labResultList (title,template)
 VALUES
@@ -2032,13 +2032,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT templateNo,title,template FROM labResultList order by title asc ");
 
@@ -2070,13 +2070,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT templateNo,title,template FROM labResultList order by title asc ");
 
@@ -2098,13 +2098,13 @@ $this->coconutTableStop();
 
 public function addLaboratoryResultChecker($registrationNo,$itemNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO core2_laboratoryResultChecker (registrationNo,itemNo)
 VALUES
@@ -2130,13 +2130,13 @@ mysql_close($con);
 
 public function addLaboratoryResultInPatient($registrationNo,$itemNo,$chargesCode,$medtech,$date,$result,$time,$remarks,$morphology) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO labSavedResult (registrationNo,itemNo,chargesCode,medtech,date,result,time,remarks,morphology)
 VALUES
@@ -2165,13 +2165,13 @@ mysql_close($con);
 
 public function addPromisorryNote($registrationNo,$amount,$note,$date,$dueDate,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO promisorryNote (registrationNo,amount,note,startDate,dueDate,postedBy)
 VALUES
@@ -2208,13 +2208,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
@@ -2273,13 +2273,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 if( $batchNo != "" ) {
@@ -2340,13 +2340,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -2390,13 +2390,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 //$room = preg_split ("/\_/", $room); 
 
@@ -2440,13 +2440,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $month."_".$day."_".$year;
 
@@ -2503,13 +2503,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $month."_".$day."_".$year;
 
@@ -2561,13 +2561,13 @@ $this->coconutTableRowStop();
 public function getAnnualInventory($month,$year,$description,$inventoryCode,$type) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.quantity) as totalQTY FROM patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and pc.dateCharge like '$year-$month%%%' and pc.departmentStatus like 'dispensedBy%%%%%%' and pc.description = '$description' and pc.chargesCode = '$inventoryCode' and rd.type='$type'  ");
 
@@ -2583,13 +2583,13 @@ return $row['totalQTY'];
 public function getDeletedMeds($batchNo,$registrationNo) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $batchNo != "" ) {
 $result = mysql_query("SELECT status,description,quantity from patientCharges WHERE registrationNo='$registrationNo' and dispensedNo = '$batchNo' and status like 'DELETED%%%%%' ");
@@ -2614,13 +2614,13 @@ echo "</tr>";
 public function getBatchMeds($registrationNo,$dispensedNo) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT status,description,quantity,chargeBy,departmentStatus FROM patientCharges pc WHERE pc.registrationNo = '$registrationNo' and pc.dispensedNo = '$dispensedNo' and (title = 'MEDICINE' or title = 'SUPPLIES') and status not like 'DELETED_%%%%%%' order by description  ");
 
@@ -2664,13 +2664,13 @@ echo "</table>";
 public function getTotal_paidVia($registrationNo,$paidVia) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum($paidVia) as total FROM patientCharges where registrationNo = '$registrationNo'  ");
 
@@ -2685,13 +2685,13 @@ return $row['total'];
 public function showVoucherList($month,$day,$year,$month1,$day1,$year1,$show) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $month."_".$day."_".$year;
 $date1 =$month1."_".$day1."_".$year1;
@@ -2744,7 +2744,7 @@ width:76%;
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT description from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and service = 'ATTENDING'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -2779,7 +2779,7 @@ width:76%;
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT diagnosis from patientICD where registrationNo = '$registrationNo'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -2808,7 +2808,7 @@ width:76%;
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT icdCode from patientICD where registrationNo = '$registrationNo'  ") or die("Query fail: " . mysqli_error()); 
 

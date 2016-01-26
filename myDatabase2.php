@@ -43,13 +43,13 @@ tr:hover { background-color:yellow;color:black;}
 $date = $year."-".$month."-".$day;
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT referred,savedNo,registrationNo,itemNo,chargesCode,medtech,date,time FROM labSavedResult WHERE date = '$date' and status not like 'DELETED_%%%%%%%%%%' order by time desc ");
 //echo "<table border=1 cellspacing=0 rules=all>";
@@ -94,13 +94,13 @@ tr:hover { background-color:yellow;color:black;}
 $date = $year."-".$month."-".$day;
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT lsr.referred,lsr.savedNo,lsr.registrationNo,lsr.itemNo,lsr.chargesCode,lsr.medtech,lsr.date,lsr.time FROM labSavedResult lsr,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.itemNo = lsr.itemNo and lsr.date = '$date' and pr.completeName like '".mysql_real_escape_string($name)."%%%%%' order by lsr.time desc ");
 //echo "<table border=1 cellspacing=0 rules=all>";
@@ -150,13 +150,13 @@ font-size:12px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if($show == "All") {
 $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (cashPaid > 0 or amountPaidFromCreditCard > 0)  and status in ('PAID','UNPAID') order by dateCharge,timeCharge desc ");
@@ -351,13 +351,13 @@ font-size:12px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (title = 'MEDICINE' or title = 'SUPPLIES' or title = 'LABORATORY' or title = 'RADIOLOGY' or title = 'ECG' or title = 'NURSING-CHARGES' or title = 'MISCELLANEOUS' or title = 'OR/DR/ER FEE' or title = 'REHAB' or title = 'OXYGEN' or title='NBS') order by dateCharge,timeCharge asc ");
@@ -619,13 +619,13 @@ return $this->getDoctorsFee_atteding_cashPaid;
 
 public function getDoctorsFee_attending($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT cashPaid,status,total,cashUnpaid,phic,company FROM patientCharges WHERE registrationNo='$registrationNo' and service='ATTENDING' and title = 'PROFESSIONAL FEE' ");
 
@@ -670,13 +670,13 @@ return $this->getDoctorsFee_anesth_cashPaid;
 
 public function getDoctorsFee_anesth($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT status,cashPaid,total,cashUnpaid,phic,company FROM patientCharges pc,Doctors d WHERE pc.chargesCode = d.doctorCode and pc.registrationNo='$registrationNo' and d.Specialization1 = 'ANESTHESIOLOGIST' and pc.title = 'PROFESSIONAL FEE' ");
 
@@ -699,13 +699,13 @@ $this->getDoctorsFee_anesth_cashPaid = $row['cashPaid'];
 
 public function addPayment_new($registrationNo,$amountPaid,$datePaid,$timePaid,$paidBy,$paymentFor,$orNo,$paidVia,$pf,$control_datePaid,$receiptType,$creditCardNo,$shift,$collectionFor) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO patientPayment (registrationNo,amountPaid,datePaid,timePaid,paidBy,paymentFor,orNo,paidVia,pf,control_datePaid,receiptType,creditCardNo,shift,patientType,reportDate)
 VALUES
@@ -733,13 +733,13 @@ mysql_close($con);
 
 public function getPF_notAdmitting($registrationNo) { 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' and service != 'ADMITTING' ");
@@ -757,13 +757,13 @@ return $row['total'];
 
 public function getPF_Admitting($registrationNo) { 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' and service = 'ADMITTING' ");
@@ -780,13 +780,13 @@ return $row['total'];
 
 public function removeRoom($registrationNo,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 mysql_query("UPDATE patientCharges SET status='DELETED_".date("Y-m-d")."_".date("H:i:s")."_".$username."'
 WHERE title = 'Room and Board' and registrationNo = '$registrationNo' ");
@@ -801,13 +801,13 @@ public $getPatientRoomCount;
 
 public function getPatientRoom($registrationNo) { 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT description,sellingPrice,quantity from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board' ");
@@ -833,13 +833,13 @@ echo "</tr>";
 
 public function deleteUnclearCharges($registrationNo,$title) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 mysql_query("DELETE FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' and departmentStatus = '' and status ='UNPAID'  ");
 
@@ -852,13 +852,13 @@ mysql_close($con);
 
 public function sumPartial_new($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT (amountPaid + pf + admitting) as total FROM patientPayment WHERE registrationNo = '$registrationNo' ");
 
@@ -873,13 +873,13 @@ return $row['total'];
 
 public function discharged_inventory($registrationNo,$title) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(phic) as totalPHIC FROM patientCharges WHERE registrationNo = '$registrationNo' and title='$title' ");
 
@@ -908,13 +908,13 @@ echo "<style type='text/css'>";
 echo "tr:hover { background-color:yellow;color:black;}";
 echo "</style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $discharged = $month."_".$day."_".$year;
 $discharged1 = $month1."_".$day1."_".$year1;
@@ -941,13 +941,13 @@ $this->coconutTableRowStop();
 
 public function printLabRequest($registrationNo,$dateCharge) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT description,timeCharge,remarks,chargeBy,status from patientCharges WHERE registrationNo = '$registrationNo' and departmentStatus = '' and title = 'LABORATORY' and status not like 'DELETED_%%%%%%' and dateCharge = '$dateCharge' ");
 
@@ -1021,13 +1021,13 @@ echo "<style type='text/css'>";
 echo "tr:hover { background-color:yellow;color:black;}";
 echo "</style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $discharged = $month."_".$day."_".$year;
 $discharged1 = $month1."_".$day1."_".$year1;
@@ -1078,13 +1078,13 @@ $this->coconutTableRowStop();
 
 public function cashCollection_paid($registrationNo,$title,$datePaid) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(cashPaid) as cashPaid from patientCharges WHERE registrationNo = '$registrationNo' and datePaid = '$datePaid' and title='$title' ");
 
@@ -1140,13 +1140,13 @@ echo "<style type='text/css'>";
 echo "tr:hover { background-color:yellow;color:black;}";
 echo "</style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $discharged = $month."_".$day."_".$year;
 $discharged1 = $month1."_".$day1."_".$year1;
@@ -1200,13 +1200,13 @@ $this->coconutTableRowStop();
 
 public function requestCart($batchNo,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT description,quantity,verificationNo FROM inventoryManager where batchNo='$batchNo' and requestingUser='$username' ");
 
@@ -1233,13 +1233,13 @@ $this->coconutTableStop();
 
 
 public function getTransmitted_selected($transmitNo) {
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -1274,13 +1274,13 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT itemNo,description,sellingPrice FROM patientCharges WHERE registrationNo = '$registrationNo' and (title = 'LABORATORY' or title = 'MEDICINE' or title = 'XRAY' or title = 'ULTRASOUND' or title = 'ECG' or title = 'OR/DR/ER Fee' or title = 'SUPPLIES') and discount < 1 and phic < 1 and status = 'UNPAID' ");
 
@@ -1311,13 +1311,13 @@ $this->coconutTableStop();
 
 public function getPatient_in_the_room($room) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pr.lastName,pr.firstName,rd.dateRegistered,rd.registrationNo from patientRecord pr,registrationDetails rd WHERE rd.room = '$room' and rd.dateUnregistered = '' and pr.patientNo = rd.patientNo and rd.dateRegistered not like 'DELETED%%%%%%%%' ");
 
@@ -1344,13 +1344,13 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT * FROM room WHERE floor = '$floor' order by Description asc ");
 /*
@@ -1412,13 +1412,13 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
@@ -1477,13 +1477,13 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $year."-".$month."-".$day;
 
@@ -1541,13 +1541,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT orNO,description,quantity,cashPaid,paidBy,datePaid FROM patientCharges WHERE registrationNo='$registrationNo' and orNO != '' and status = 'PAID' ");
 
@@ -1616,13 +1616,13 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $this->selectNow("registeredUser","module","username",$username) == "ADMIN" ) {
 $result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and paymentFor in ('CUT-OFF HOSPITAL BILL') group by paymentNo order by completeName asc ");
@@ -1687,13 +1687,13 @@ echo "</tr>";
 //check kung mei laboratory result n?
 public function checkIfTitleExist($registrationNo,$title) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT title from patientCharges where registrationNo = '$registrationNo' and title = '$title'  ");
 
@@ -1711,13 +1711,13 @@ return mysql_num_rows($result);
 
 public function checkBalance($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(cashUnpaid) as balance FROM patientCharges where registrationNo = '$registrationNo' ");
@@ -1740,13 +1740,13 @@ mysql_close($con);
 
 public function addCashCollection($title,$amount,$date,$type,$fromOR,$toOR) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO cashCollection (title,amount,date,control_date,type,fromOR,toOR)
 VALUES
@@ -1777,13 +1777,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $year."-".$month."-".$day;
 $result = mysql_query("SELECT title,amount,type,fromOR,toOR,collectionNo FROM cashCollection where date = '$date' order by title asc ");
@@ -1834,13 +1834,13 @@ return $this->hmo_meds_cover;
 
 public function hmo_meds_group($registrationNo,$chargesCode) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.company) as totalCover from patientCharges pc WHERE pc.registrationNo='$registrationNo' and pc.chargesCode = '$chargesCode' and pc.title = 'MEDICINE' and pc. status = 'UNPAID'   "); 
 
@@ -1878,13 +1878,13 @@ return $this->hmo_others_cover;
 
 public function hmo_others_group($registrationNo,$chargesCode) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.company) as totalCover from patientCharges pc WHERE pc.registrationNo='$registrationNo' and pc.chargesCode = '$chargesCode' and pc.title IN ('LABORATORY','RADIOLOGY','SUPPLIES') and pc. status = 'UNPAID'   "); 
 
@@ -1933,13 +1933,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT company,phic,hmoPrice,description,chargesCode,sellingPrice FROM patientCharges where registrationNo = '$registrationNo' and title = 'MEDICINE' and status = 'UNPAID' and hmoPrice > 0 group by description order by description asc ");
@@ -1982,13 +1982,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT hmoPrice,description,chargesCode,sellingPrice FROM patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','SUPPLIES') and status ='UNPAID' and hmoPrice > 0 group by description order by description asc ");
@@ -2049,13 +2049,13 @@ echo "
 
 echo "</style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 if( $type == "All"  ) {
@@ -2142,13 +2142,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $year."-".$month."-".$day;
 $result = mysql_query("SELECT pt.checkedNo,rd.registrationNo,pr.lastName,pr.firstName,pr.middleName from patientRecord pr,registrationDetails rd,phicTransmit pt where pr.patientNo = rd.patientNo and rd.registrationNo = pt.registrationNo and pt.date = '$date' order by pr.lastName asc ");
@@ -2180,13 +2180,13 @@ $this->coconutTableStop();
 
 public function addVoucher_acct($voucherNo,$checkedNo,$paymentMode,$description,$amount,$payee,$date,$time,$accountTitle,$user) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO vouchers (voucherNo,checkedNo,paymentMode,description,amount,payee,date,time,accountTitle,user)
 VALUES
@@ -2345,13 +2345,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 if( $checkedNo == "" ) {
 $result = mysql_query("SELECT controlNo,checkedNo,date,payee,invoiceNo from vouchers limit 0,0 ");
@@ -2406,13 +2406,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $month."_".$day."_".$year;
 $date1 = $month1."_".$day1."_".$year1;
@@ -2462,13 +2462,13 @@ $this->coconutTableStop();
 
 public function phicReconcile($registrationNo,$refno,$amount,$remarks,$date) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO phicReconcile (registrationNo,refno,amount,remarks,date)
 VALUES
@@ -2494,13 +2494,13 @@ mysql_close($con);
 
 public function monthlyCashCollection($title,$date,$date1) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(amount) as amountCols FROM cashCollection WHERE title = '$title' and ( date between '$date' and '$date1' ) ");
 
@@ -2542,13 +2542,13 @@ tr:hover { background-color:yellow;color:black;}
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day;
@@ -2712,13 +2712,13 @@ public $getOPD_title_total;
 
 public function getOPD_title($month,$day,$year,$title,$user) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 $datez = $year."-".$month."-".$day;
 
 
@@ -2761,13 +2761,13 @@ $this->coconutTableStop();
 
 public function insertGeneratorLog($dateStart,$timeStart,$dateStop,$timeStop,$status,$user) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO generatorCharge (dateStart,timeStart,dateStop,timeStop,status,user)
 VALUES
@@ -2792,13 +2792,13 @@ mysql_close($con);
 
 public function insertGeneratorLog_new($dateStart,$timeStart,$dateStop,$timeStop,$status,$user,$hrs) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO generatorCharge (dateStart,timeStart,dateStop,timeStop,status,user,hours)
 VALUES
@@ -2825,13 +2825,13 @@ mysql_close($con);
 public $checkGenerator_total;
 public function checkGenerator($month,$day,$year,$month1,$day1,$year1,$registrationNo,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
 $result = mysql_query("SELECT * from generatorCharge WHERE (dateStart between '$date' and '$date1' )  ");
@@ -2871,13 +2871,13 @@ $this->coconutFormStop();
 
 public function showGeneratorList($month,$day,$year,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 $date = $year."-".$month."-".$day;
 $result = mysql_query("SELECT dateStart,timeStart,chargeNo from generatorCharge WHERE dateStart  = '$date' ");
 
@@ -2911,13 +2911,13 @@ echo "<Br>";
 
 public function addOrder($description,$sellingPrice,$unitCost,$batchNo,$dateOrder,$username,$qty,$supplier) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO orderForm (description,sellingPrice,unitcost,batchNo,dateOrder,orderBy,qty,supplier)
 VALUES
@@ -2948,13 +2948,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 if( $searchType == "brand" ) {
@@ -3016,13 +3016,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -3073,13 +3073,13 @@ text-decoration:none;
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $datez = $y."-".$m."-".$d;
 
@@ -3117,13 +3117,13 @@ text-decoration:none;
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $datez = $m."_".$d."_".$y;
 
@@ -3157,13 +3157,13 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -3209,13 +3209,13 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -3246,13 +3246,13 @@ echo "</table>";
 public function getQTY_dispensed($inventoryCode) { 
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT sum(quantity) as qtyDispensed from patientCharges WHERE chargesCode = '$inventoryCode' and (title = 'MEDICINE' or title = 'SUPPLIES') and departmentStatus like 'dispensedBy_%%%%%%%%' ");
@@ -3286,7 +3286,7 @@ tr:hover { background-color:yellow; color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3364,13 +3364,13 @@ echo "</table>";
 
 public function addBabyNow($mother,$baby) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO nbs (motherRegistrationNo,babyRegistrationNo)
 VALUES
@@ -3389,7 +3389,7 @@ mysql_close($con);
 public $getBabies_no=1;
 public function getBabies($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3406,7 +3406,7 @@ echo "<font color=red>[".$this->getBabies_no++.".</font>".$this->getPatientRecor
 
 public function countRow($table,$column) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3423,7 +3423,7 @@ return $row['cols'];
 
 public function androidViewPatient($doctorCode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select pr.lastName,pr.firstName,rd.registrationNo,pc.itemNo,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc,Doctors doc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and doc.doctorCode = '$doctorCode' and pc.chargesCode = doc.doctorCode and pc.dateCharge = '".date("Y-m-d")."' and rd.type='OPD' order by rd.pxCount ") or die("Query fail: " . mysqli_error()); 
 
@@ -3453,13 +3453,13 @@ tr:hover { background-color:black;}
 
 $this->getPatientProfile($registrationNo);
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -3550,13 +3550,13 @@ public $showCartMobile_total;
 //iLLbas Lhat ng chinarge
 public function showCartMobile($registrationNo,$batchNo,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pc.* FROM patientCharges pc where pc.registrationNo='$registrationNo' and status not like 'DELETED_%%%%%%%%' and pc.batchNo='$batchNo' order by pc.description asc  ");
 
@@ -3599,13 +3599,13 @@ echo "</div>";
 public function addCharges_cash_mobile($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room) {
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $sql="INSERT INTO patientCharges (status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,control_dateCharge,control_datePaid)
@@ -3657,13 +3657,13 @@ tr:hover { background-color:black;}
 
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT phic,preparation,inventoryCode,description,genericName,((unitcost * ".$this->percentage("medicine").") + unitcost) as sellingPrice,quantity,unitcost,Added FROM inventory WHERE $searchBy like '$searchDesc%%%%%%%' and inventoryType = 'medicine' and inventoryLocation = '$searchFrom' and status not like 'DELETED_%%%%%' and quantity > 0 order by $searchBy asc ");
 
@@ -3705,7 +3705,7 @@ echo "</table>";
 public function addNewPlan($registrationNo,$medicine,$timing,$instruction,$indication,$qty) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -3726,7 +3726,7 @@ $sql->close();
 public function addNewPlan_fromCharging($registrationNo,$medicine,$timing,$instruction,$indication,$qty,$batchNo,$room,$username) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -3752,7 +3752,7 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select planNo,medicine,timing,instruction,indication,qty from doctorsPlan where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -3772,7 +3772,7 @@ echo "</tr>";
 
 public function showAdvisedIn_SOAP_returns($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3786,7 +3786,7 @@ return $row['advised'];
 
 public function doctorsMedicinePlan_SOAP_returns($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3802,7 +3802,7 @@ return implode(",",$result_array);
 
 public function checkAdvisedFromCharges($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3817,7 +3817,7 @@ return $row['description'];
 
 public function showAdvisedFromCharges($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3842,7 +3842,7 @@ return "";
 
 public function mobileHospitalCharges($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select itemNo,description from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status not like 'DELETED_%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -3868,7 +3868,7 @@ echo "
 
 public function getPatientForResult_itemizedResult($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3891,7 +3891,7 @@ echo "
 
 public function getPatientForResult($doctorCode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -3958,7 +3958,7 @@ echo "<style type='text/css'>
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -4051,7 +4051,7 @@ echo "
 
 ";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -4105,7 +4105,7 @@ echo "</table>";
 
 public function getTotalPF($registrationNo,$columns) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $this->laboratoryCensus_count=0;
 
@@ -4122,13 +4122,13 @@ return $row['total'];
 
 public function getRoomPHIC_unpaid($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(cashUnpaid) as unpaid from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board'  ");
 
@@ -4151,7 +4151,7 @@ return $row['unpaid'];
 public function addReagents($referenceNo,$description,$qty,$dateIn,$user,$permanentReference) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -4176,13 +4176,13 @@ $sql->close();
 
 public function viewReagents($username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT referenceNo,description,qty,dateIn,dateOut,user from labReagents order by dateOut desc  ");
 
@@ -4218,13 +4218,13 @@ return $this->getReagentsWillBeUse_referenceNo;
 
 public function getReagentsWillBeUse($permanentReferenceNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT description,referenceNo,permanentReference from labReagents where permanentReference = '$permanentReferenceNo'  ");
 
@@ -4248,7 +4248,7 @@ echo "";
 public function useReagents($itemNo,$registrationNo,$permanentNo,$date) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -4271,7 +4271,7 @@ $sql->close();
 public function addDiet($dietName,$dietCode,$username) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -4300,13 +4300,13 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT dietNo,dietName,dietCode from dietList order by dietName asc  ");
 
@@ -4344,13 +4344,13 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pr.lastName,pr.firstName,rd.room,rd.diet,pr.Age,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateUnregistered = '' and rd.type='IPD' and room != 'ER_ER' and room != '' and room != 'OPD_OPD' ");
 
@@ -4379,7 +4379,7 @@ $this->coconutTableStop();
 
 public function countDeptRequest($title,$date) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if( $title == "MEDICINE" || $title == "SUPPLIES" ) {
 $result = mysqli_query($connection, " select count(itemNo) as totalItem from patientCharges where (title = '$title') and (dateCharge = '$date' or dateReturn = '$date') and (departmentStatus = '' or departmentStatus not like 'dispensedBy_%%%%%%') ") or die("Query fail: " . mysqli_error()); 
@@ -4402,7 +4402,7 @@ return $row['totalItem'];
 
 public function getRequestForCSR($date,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select requestingUser,batchNo from inventoryManager where requestTo_department = 'CSR' and dateRequested = '$date' and status = 'requesting' and dispensedDate = '' group by batchNo ") or die("Query fail: " . mysqli_error()); 
 
@@ -4416,7 +4416,7 @@ echo "</tr>";
 
 public function getRequestForCSR_itemized($batchNo,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select verificationNo,batchNo,inventoryCode,description,quantity,requestingDepartment,timeRequested from inventoryManager where batchNo = '$batchNo' and status = 'requesting' and requestTo_department = 'CSR' ") or die("Query fail: " . mysqli_error()); 
 
@@ -4456,7 +4456,7 @@ $this->coconutFormStop();
 
 public function getCSR_dispensed($date,$username,$status) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select verificationNo,inventoryCode,description,quantity,quantityIssued,requestingDepartment,requestingUser from inventoryManager where dispensedDate = '$date' and status = '$status' ") or die("Query fail: " . mysqli_error()); 
 
@@ -4497,7 +4497,7 @@ $this->coconutTableStop();
 public function addConsumed($inventoryCode,$department,$qty,$description,$date,$time,$username) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -4519,7 +4519,7 @@ $sql->close();
 
 public function getConsumed($date) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select inventoryCode,department,qty,description,date,time,username from inventoryConsumed where date = '$date' ") or die("Query fail: " . mysqli_error()); 
 
@@ -4551,7 +4551,7 @@ $this->coconutTableStop();
 public function csrReturnItem($verificationNo,$inventoryCode,$description,$qty,$borrowerDepartment,$borrowerUsername,$dateReturn,$timeReturn) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -4572,7 +4572,7 @@ $sql->close();
 
 public function getReturnedItem($date) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select inventoryCode,borrowerDepartment,description,qty,timeReturn,borrowerUsername from csrReturned where dateReturn = '$date' ") or die("Query fail: " . mysqli_error()); 
 
@@ -4605,7 +4605,7 @@ $this->coconutTableStop();
 
 public function getReceivingReport($date) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select inventoryCode,inventoryType,unitcost,suppliesUNITCOST,description,quantity,expiration,Added,preparation from inventory where dateAdded = '$date' and status not like 'DELETED_%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -4651,7 +4651,7 @@ $this->coconutTableStop();
 
 public function getRadiologyAttachment($registrationNo,$itemNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select itemNo,fileName,fileUrl,fileOwner,dateUploaded from uploadedFiles where registrationNo='$registrationNo' and itemNo=$itemNo ") or die("Query fail: " . mysqli_error()); 
 
@@ -4690,7 +4690,7 @@ $this->coconutTableStop();
 
 public function sumFromPharmacy($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select sum(cashUnpaid) as totalSum from patientCharges where registrationNo='$registrationNo' and status='UNPAID' and (title = 'MEDICINE' or title = 'SUPPLIES') ") or die("Query fail: " . mysqli_error()); 
 
@@ -4703,7 +4703,7 @@ return $row['totalSum'];
 
 public function sumFromNotPharmacy($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select sum(cashUnpaid) as totalSumz from patientCharges where registrationNo='$registrationNo' and status='UNPAID' and (title != 'MEDICINE' and title != 'SUPPLIES') ") or die("Query fail: " . mysqli_error()); 
 
@@ -4718,13 +4718,13 @@ return $row['totalSumz'];
 
 public function getCurrentPHIC_check_rBanny($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.phic >0 and status = 'UNPAID' ");
 
@@ -4741,13 +4741,13 @@ mysql_close($con);
 
 public function getCurrentPaid_check_rBanny($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT sum(pc.cashPaid) as totalPaid FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.cashPaid >0 and status = 'UNPAID' ");
 
@@ -4764,13 +4764,13 @@ mysql_close($con);
 
 public function getMaximumTotal_rBanny($registrationNo) { //kkuhain ang maximum sa medicine 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.phic=0 and pc.title != 'PROFESSIONAL FEE' and pc.rBannyStatus != 'exclude' and pc.remarks != 'takeHomeMeds' HAVING MAX(pc.cashUnpaid) ");
 
@@ -4786,13 +4786,13 @@ return $row['cashUnpaid']."_".$row['itemNo'];
 
 public function getMaximumTotal_rBanny_cash($registrationNo) { //kkuhain ang maximum sa medicine 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.cashPaid=0 and pc.title != 'PROFESSIONAL FEE' HAVING MAX(pc.cashUnpaid) ");
 
@@ -4807,13 +4807,13 @@ return $row['cashUnpaid']."_".$row['itemNo'];
 
 public function getMaximumTotal_rBanny_cash_cashier($registrationNo) { //rBanny pra sa cashier module
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.cashPaid=0 HAVING MAX(pc.cashUnpaid) ");
 
@@ -4829,13 +4829,13 @@ return $row['cashUnpaid']."_".$row['itemNo'];
 
 public function update_rBanny($registrationNo,$itemNo,$total) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 mysql_query("UPDATE patientCharges SET cashUnpaid = '$total',company = 0,phic = 0
 WHERE itemNo = '$itemNo' and registrationNo = '$registrationNo' and title != 'PROFESSIONAL FEE' ");
@@ -4846,13 +4846,13 @@ mysql_close($con);
 
 public function getReady_rBanny($registrationNo) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and rBannyStatus != 'exclude' ");
@@ -4882,7 +4882,7 @@ tr:hover { background-color:yellow;color:black;}
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select itemNo,description,sellingPrice,quantity,total,title,rBannyStatus,dateCharge from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' order by title,description asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -4930,7 +4930,7 @@ $this->coconutFormStop();
 
 public function checkIfRecordExist($lastName,$firstName,$middleName) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select patientNo from patientRecord where lastName = '$lastName' and firstName = '$firstName' and middleName = '$middleName' ") or die("Query fail: " . mysqli_error()); 
 
@@ -4947,7 +4947,7 @@ return $row['patientNo'];
 
 public function selectedNOD($registrationNo,$dateCharge,$from,$to) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select chargeBy from patientCharges where registrationNo=$registrationNo and (title='MEDICINE' or title='SUPPLIES') and departmentStatus not like 'dispensedBy%%%%' and dateCharge='$dateCharge' and (timeCharge between '$from' and '$to') group by chargeBy  ") or die("Query fail: " . mysqli_error()); 
 
@@ -4973,7 +4973,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select paymentFor,registrationNo,amountPaid,paidBy from patientPayment where datePaid = '$date' and paymentFor = 'REFUND'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -5004,7 +5004,7 @@ echo "</tr>";
 public function admissionDischargedRecord($patientNo,$registrationNo,$birthPlace,$nationality,$pxOccupation,$fathersName,$mothersName,$address,$contact1,$spouseName,$address1,$contactNo2,$admissionType,$ssc,$ws,$employerName,$dataGivenBy,$informantAddress,$patientRelation,$disposition,$result) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -5034,7 +5034,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,quantity,requestingDepartment,requestingUser,issuedBy from inventoryManager where dateIssued = '$date'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -5068,7 +5068,7 @@ $this->coconutTableStop();
 
 public function getAllPayment($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select sum(amountPaid) as totalz from patientPayment where registrationNo = '$registrationNo'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -5081,7 +5081,7 @@ return $row['totalz'];
 
 public function checkPermission($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select status from pxUnlocked where registrationNo = '$registrationNo' and status = 'Open'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -5094,7 +5094,7 @@ return $row['status'];
 
 public function showSupervisorLocked($registrationNo,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select unlockNo,timeOpen,timeClosed,dateOpen,dateClosed,supervisor,status from pxUnlocked where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -5133,7 +5133,7 @@ $this->coconutTableStop();
 public function addPermission($registrationNo,$timeOpen,$dateOpen,$username) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -5157,7 +5157,7 @@ $sql->close();
 public function returnInventory($itemNo,$registrationNo,$description,$qty,$returnDetails_nod,$returnNOD) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -5179,7 +5179,7 @@ $sql->close();
 
 public function showReturnz($registrationNo,$username,$module,$month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$nod) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,returnNo,itemNo,qty from returnInventory where registrationNo = '$registrationNo' and returnDetails_PHARMACY = ''  ") or die("Query fail: " . mysqli_error()); 
 
@@ -5212,7 +5212,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,quantity,inventoryType,Added,unitcost,inventoryCode from inventory where description like '$description%%%%%%%' or genericName like '$description%%%%%%' and status not like 'DELETED_%%%%%' and quantity > 0  ") or die("Query fail: " . mysqli_error()); 
 
@@ -5256,7 +5256,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select radioSavedNo,registrationNo,itemNo,physician from radioSavedReport where approved != 'yes' and physician = '$physician' group by itemNo ") or die("Query fail: " . mysqli_error()); 
 
@@ -5310,7 +5310,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
@@ -5341,7 +5341,7 @@ $this->coconutTableStop();
 
 public function getFirstCaseRate($icdCode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select hospital from availableICD where icdCode = '$icdCode' limit 1 ") or die("Query fail: " . mysqli_error()); 
 
@@ -5355,7 +5355,7 @@ return $row['hospital'];
 
 public function countDeptIssued($month,$day,$year,$inventoryCode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $datez = $year."-".$month."-".$day;
 
@@ -5370,7 +5370,7 @@ return $row['qty'];
 
 public function pxReturnInventory($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,qty,returnDetails_nod,returnNOD,returnDetails_PHARMACY,returnPHARMACY from returnInventory where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -5412,7 +5412,7 @@ tr:hover { background-color:yellow;color:black;}
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select registrationNo,itemNo,date from radioSavedReport where physician = '$doctors' and (date between '$date' and '$date1') order by date asc ") or die("Query fail: " . mysqli_error()); 
@@ -5454,7 +5454,7 @@ tr:hover { background-color:yellow;color:black;}
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $title=strtoupper($receiptType);
 
@@ -5516,7 +5516,7 @@ tr:hover { background-color:yellow;color:black;}
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select registrationNo,paymentFor,orNO,receiptType,amountPaid from patientPayment where datePaid = '$date' and receiptType = '$receiptType' and paidBy = '$username' and (timePaid between '$from' and '$to') order by orNO asc ") or die("Query fail: " . mysqli_error()); 
@@ -5558,7 +5558,7 @@ $this->coconutTableStop();
 
 public function listOfLab($registrationNo,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select itemNo,registrationNo,checkerNo from core2_laboratoryResultChecker where registrationNo = '$registrationNo' and status not like 'DELETED_%%%%%%%%%%%' order by checkerNo asc ") or die("Query fail: " . mysqli_error()); 
@@ -5590,7 +5590,7 @@ $this->coconutTableStop();
 public function request2bill($registrationNo,$dateRequest,$timeRequest,$requestBy) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -5612,7 +5612,7 @@ $sql->close();
 
 public function getRequest2bill($date,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select registrationNo,requestBy from billingRequest where dateRequest = '$date' and status = 'pending' ") or die("Query fail: " . mysqli_error()); 
@@ -5639,7 +5639,7 @@ $this->coconutTableStop();
 
 public function getPxNameByAttendingDoctor($doctorCode,$date,$date1,$type,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select pc.registrationNo,rd.patientNo from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and pc.chargesCode = '$doctorCode' and pc.title = 'PROFESSIONAL FEE' and pc.service = 'ATTENDING' and pc.status not like 'DELETED_%%%%' order by pc.pxName asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -5666,7 +5666,7 @@ return $this->getPxChargesByHorizontal_grandTotal;
 
 public function getPxChargesByHorizontal($date,$type,$registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pc.description,total from patientRecord pr,registrationDetails rd,patientCharges pc where pc.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pc.dateCharge = '$date' and rd.type='$type' and pc.title='$title' and pc.status not like 'DELETED_%%%%%' ") or die("Query fail: " . mysqli_error()); 
@@ -5685,7 +5685,7 @@ return implode(",",$result_array);
 
 public function countDateLabRow($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select count(dateCharge) as totalReg from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status not like 'DELETED_%%%%%%' group by dateCharge  ") or die("Query fail: " . mysqli_error()); 
@@ -5696,7 +5696,7 @@ return $result->num_rows;
 
 public function countFirstDateLab($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select  min(dateCharge) as dateCharge from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status not like 'DELETED_%%%%%%' group by dateCharge limit 1  ") or die("Query fail: " . mysqli_error()); 
@@ -5716,7 +5716,7 @@ return $this->getPxNameBasedOnDateCharged_rebateTotal;
 
 public function getPxNameBasedOnDateCharged($date,$date1,$type,$registrationNo,$patientNo,$type,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pc.pxName,pc.dateCharge,pc.registrationNo from patientCharges pc WHERE pc.registrationNo = '$registrationNo' and (pc.dateCharge between '$date' and '$date1') and pc.type='$type' and pc.title='$title' and pc.status not like 'DELETED_%%%%%%' and pc.pxName != '' group by pc.dateCharge ORDER BY dateCharge asc ") or die("Query fail: " . mysqli_error()); 
@@ -5752,7 +5752,7 @@ $this->coconutTableRowStop();
 
 public function getRequestedDept($inventoryCode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select description,quantity,inventoryLocation,dateAdded,addedBy from inventory where from_inventoryCode = '$inventoryCode' ") or die("Query fail: " . mysqli_error()); 
@@ -5782,7 +5782,7 @@ $this->coconutTableStop();
 
 public function getRoomForDischarged($registrationNo,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select itemNo,description from patientCharges where registrationNo='$registrationNo' and title = 'Room And Board' and status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
@@ -5813,7 +5813,7 @@ $this->coconutFormStop();
 
 public function checkAllReturns($registrationNo,$username) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select itemNo from patientCharges where status = 'Return' and registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
@@ -5830,7 +5830,7 @@ $this->getRoomForDischarged($registrationNo,$username);
 
 public function checkAllReturns_notification($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select itemNo from patientCharges where status = 'Return' and registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
@@ -5843,7 +5843,7 @@ return "<font color=red size=4>Patient has a pending returns</font>";
 
 public function checkForDispense_notification($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select itemNo from patientCharges where status = 'UNPAID' and departmentStatus ='' and registrationNo = '$registrationNo' and (title = 'MEDICINE' or title = 'SUPPLIES') ") or die("Query fail: " . mysqli_error()); 
@@ -5857,7 +5857,7 @@ return "<font color=red size=4>Patient has a pending meds/sup to dispense</font>
 
 public function showReturnsBeforeDischarge($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select  description from patientCharges where status = 'Return' and registrationNo = '$registrationNo'  ") or die("Query fail: " . mysqli_error()); 
@@ -5878,13 +5878,13 @@ $this->coconutTableRowStop();
 
 public function removePending($registrationNo,$username) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 mysql_query("UPDATE patientCharges SET status = 'DELETED_PENDING_".$username."[".date("Y-m-d")."]'
 WHERE registrationNo = '$registrationNo' and (title = 'MEDICINE' or title = 'SUPPLIES') and departmentStatus = '' ");
@@ -5943,7 +5943,7 @@ return $this->getPatientChargesForNewSOA_inventory_total_phic;
 
 public function getPatientChargesForNewSOA($registrationNo,$mode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $mode == "inventory" ) {
@@ -5996,13 +5996,13 @@ echo "</tr>";
 
 public function checkIfTitleExist_newDetailed($registrationNo,$title) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT title from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status not like 'DELETED%%%%' ");
 
@@ -6016,13 +6016,13 @@ return mysql_num_rows($result);
 
 public function checkIfTitleExist_newDetailed_opd($registrationNo,$title) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 $result = mysql_query("SELECT title from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status not like 'DELETED%%%%%' ");
 
@@ -6070,7 +6070,7 @@ return $this->newDetailed_inventory_hmo;
 
 public function newDetailed_inventory($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashPaid,pc.discount,pc.cashUnpaid,pc.company,pc.phic from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and pc.status = 'UNPAID' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6140,7 +6140,7 @@ return $this->newDetailed_inventory_wholeRecord_hmo;
 
 public function newDetailed_inventory_wholeRecord($patientNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashPaid,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.amountPaidFromCreditCard from patientCharges pc WHERE pc.registrationNo in ((select registrationNo from registrationDetails where patientNo = '$patientNo')) and pc.title = '$title' and pc.status in ('PAID','UNPAID') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6194,7 +6194,7 @@ return $this->newDetailed_inventory_package_company;
 
 public function newDetailed_inventory_package($registrationNo,$title,$condition) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and departmentStatus != '' and pc.inventoryFrom $condition 'OB PACKAGE' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6263,7 +6263,7 @@ return $this->newDetailed_inventory_company1_company1;
 
 public function newDetailed_inventory_company1($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.company1 from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and departmentStatus != '' and status != 'PAID' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6355,7 +6355,7 @@ return $this->newDetailed_hmo;
 
 public function newDetailed($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.doctorsPF,pc.cashPaid,pc.discount,pc.cashUnpaid,pc.title,pc.phic,pc.company,pc.amountPaidFromCreditCard from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and pc.status not like 'DELETED%%%%%%' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6432,7 +6432,7 @@ return $this->newDetailed_wholeRecord_hmo;
 
 public function newDetailed_wholeRecord($patientNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.doctorsPF,pc.cashPaid,pc.discount,pc.cashUnpaid,pc.title,pc.phic,pc.company,pc.amountPaidFromCreditCard from patientCharges pc WHERE pc.registrationNo in ((select registrationNo from registrationDetails where patientNo = '$patientNo')) and pc.title = '$title' and pc.status in ('PAID','UNPAID') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6495,7 +6495,7 @@ return $this->newDetailed_company1_company1;
 
 public function newDetailed_company1($registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.company1 from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and status != 'PAID' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6546,7 +6546,7 @@ echo "</tr>";
 
 public function newDetailed_discounted($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.discount from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and status = 'PAID' and pc.discount > 0 order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6585,7 +6585,7 @@ echo "</tr>";
 
 public function countChargesCode($chargesCode,$registrationNo,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if(($title=="MEDICINE")||($title=="SUPPLIES")){
 $totqty=0;
@@ -6632,7 +6632,7 @@ public function detailedTotalOnly_inventory($registrationNo,$title,$chargesCode,
 
 $this->detailedTotalOnly_inventory_totaltem = 0;
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.departmentStatus,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and departmentStatus != '' and (pc.status = 'UNPAID') and remarks = '' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
 
@@ -6693,7 +6693,7 @@ return $this->detailedTotalOnly_cash;
 
 public function detailedTotalOnly($registrationNo,$title,$chargesCode,$username,$show,$showdate) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6776,7 +6776,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $category != "" ) {
@@ -6898,7 +6898,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,pc.description,rd.room,pc.cashPaid,pc.discount,pr.Senior,pc.chargeBy,pc.datePaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$from' and '$to') and pc.title='$title' and pc.status = 'PAID' order by datePaid asc   ") or die("Query fail: " . mysqli_error()); 
@@ -6959,7 +6959,7 @@ public $getLaboratoryReport_discharged_cashUnpaid;
 
 public function getLaboratoryReport_discharged($from,$to,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.dateUnregistered,rd.room,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.type='IPD' and (rd.dateUnregistered between '$from' and '$to') order by dateUnregistered asc  ") or die("Query fail: " . mysqli_error()); 
@@ -7041,7 +7041,7 @@ public $getLaboratoryReport_unpaid_company1;
 
 public function getLaboratoryReport_unpaid($from,$to,$title) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,pc.description,pc.cashUnpaid,pc.phic,pc.company,rd.room,pc.company1,pc.dateCharge from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered != '' and (pc.dateCharge between '$from' and '$to') and pc.title='$title' and status = 'UNPAID' order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
@@ -7110,7 +7110,7 @@ $this->coconutTableStop();
 
 public function prePackage_selection($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select packageName,package_phicPrice,packagePrice from hospitalPackage group by packageName  ") or die("Query fail: " . mysqli_error()); 
@@ -7135,7 +7135,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,pc.description,pc.sellingPrice,pc.quantity,pc.total,pc.dateCharge,rd.room from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$from' and '$to') and pc.title = 'OXYGEN' order by pc.dateCharge,pr.lastName  ") or die("Query fail: " . mysqli_error()); 
@@ -7189,7 +7189,7 @@ $this->coconutTableStop();
 
 public function soaSummary_payType($registrationNo,$paymentType) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(amountPaid) as payment from patientPayment where registrationNo='$registrationNo' and paymentFor = '$paymentType' ") or die("Query fail: " . mysqli_error()); 
@@ -7218,7 +7218,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,rd.dateUnregistered from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$from' and '$to') and rd.type = 'IPD' order by rd.dateUnregistered,pr.lastName asc ") or die("Query fail: " . mysqli_error()); 
@@ -7278,7 +7278,7 @@ $this->coconutTableStop();
 
 public function adminSOA($date,$fromTime,$toTime) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateUnregistered = '$date' and (rd.timeUnregistered between '$fromTime' and '$toTime') and rd.type = 'IPD' ") or die("Query fail: " . mysqli_error()); 
@@ -7306,7 +7306,7 @@ return $this->cashCollection_mmc_total;
 
 public function cashCollection_mmc($date,$type) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select title,amount from cashCollection where date='$date' and type='$type'  ") or die("Query fail: " . mysqli_error()); 
@@ -7330,7 +7330,7 @@ echo "</tr>";
 public function addNameToCashCollection($preparedBy,$billingName,$date) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -7352,7 +7352,7 @@ $sql->close();
 public function addPhilhealthDeduction($registrationNo,$hospitalBill,$professionalFee,$case) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -7375,7 +7375,7 @@ public $reportWithOR;
 
 public function reportWithOR($from,$to) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pc.datePaid,pc.orNO,pc.description,pc.quantity,i.unitcost,i.suppliesUNITCOST,i.Added,i.inventoryType from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and (pc.datePaid between '$from' and '$to') and pc.status = 'PAID' and (pc.title = 'MEDICINE' or pc.title = 'SUPPLIES') order by pc.datePaid,pc.orNO asc ") or die("Query fail: " . mysqli_error()); 
@@ -7443,7 +7443,7 @@ a { text-decoration:none; color:black; }
 #ilaw:hover { background-color:yellow;color:black;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select sum($cols) as cols from patientCharges where (dateCharge between '$from' and '$to') and chargesCode='$chargesCode' ") or die("Query fail: " . mysqli_error()); 
 
@@ -7475,7 +7475,7 @@ a { text-decoration:none; color:white; }
 #ilaw:hover { background-color:yellow;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,sum(cashPaid) as cash,dateCharge,chargesCode,title,orNO,datePaid from patientCharges where (datePaid between '$from' and '$to') and title = '$title' and status = 'PAID' group by itemNo order by datePaid,orNO asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -7529,7 +7529,7 @@ a { text-decoration:none; color:white; }
 #ilaw:hover { background-color:yellow;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,sum(phic) as phic,sum(company) as company,dateCharge,chargesCode,title from patientCharges where (dateCharge between '$from' and '$to') and title = '$title' and status = 'UNPAID' and phic > 0 and company > 0 group by chargesCode order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -7560,7 +7560,7 @@ echo "</tr>";
 public function addMedicoLegal($registrationNo,$dateOfIncidence,$timeOfIncidence,$dateOfExamination,$timeOfExamination,$placeOfExamination,$placeOfExamination1,$nature,$pertinentPhysicalExamination,$dateAdded) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -7588,7 +7588,7 @@ a { text-decoration:none; color:white; }
 tr:hover { background-color:yellow;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select dateAdded from medicoLegal where registrationNo = '$registrationNo' order by dateAdded asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -7622,7 +7622,7 @@ a { text-decoration:none; color:white; }
 tr:hover { background-color:yellow;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if( $type == "company" ) {
 $result = mysqli_query($connection, " select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.dateRegistered,rd.dateUnregistered,rd.Company,sum(pc.company) as company,rd.registrationNo from registrationDetails rd,patientRecord pr,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.Company != '' and rd.type = 'IPD' group by pc.registrationNo order by rd.timeUnregistered asc") or die("Query fail: " . mysqli_error()); 
@@ -7695,7 +7695,7 @@ a { text-decoration:none; color:white; }
 tr:hover { background-color:yellow;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.room,rd.dateRegistered,rd.dateUnregistered from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.room like '$roomType%%%%%%%%%%' order by pr.lastName asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -7731,7 +7731,7 @@ return $this->cashCollection_mmc_monthly_total;
 
 public function cashCollection_mmc_monthly($date,$date1,$type) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select title,sum(amount) as amount from cashCollection where (date between '$date' and '$date1') and type='$type' group by title  ") or die("Query fail: " . mysqli_error()); 
@@ -7753,7 +7753,7 @@ echo "</tr>";
 
 public function cashCollection_mmc_customTotal_monthly($date,$date1,$type) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(amount) as total from cashCollection where (date between '$date' and '$date1') and type='$type'  ") or die("Query fail: " . mysqli_error()); 
@@ -7807,13 +7807,13 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and (pp.datePaid between '$date1' and '$date2') and paymentFor not in ('REFUND') group by paymentNo order by completeName asc ");
@@ -7914,13 +7914,13 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -7993,13 +7993,13 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 
@@ -8085,13 +8085,13 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->getDB(), $con);
+mysql_select_db($this->database, $con);
 
 
 $result = mysql_query("SELECT amount,payee,date,user,description FROM vouchers WHERE (date between '$date1' and '$date2') ");
@@ -8147,7 +8147,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select paymentFor,registrationNo,amountPaid,paidBy from patientPayment where (datePaid between '$date1' and '$date2') and paymentFor = 'REFUND'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -8188,7 +8188,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select pc.description,count(rd.registrationNo) as totalPx,pc.chargesCode from registrationDetails rd,patientCharges pc,patientRecord pr where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateRegistered between '$date1' and '$date2') and pc.title = 'PROFESSIONAL FEE' and pc.service = '$service' and rd.type = 'IPD' and pc.status = 'UNPAID' group by pc.chargesCode order by totalPx desc limit 5  ") or die("Query fail: " . mysqli_error()); 
 
@@ -8219,7 +8219,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.dateRegistered from registrationDetails rd,patientCharges pc,patientRecord pr where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateRegistered between '$date1' and '$date2') and pc.title = 'PROFESSIONAL FEE' and pc.service = '$service' and rd.type = 'IPD' and pc.status = 'UNPAID' and pc.chargesCode = '$chargesCode' order by pr.lastName ") or die("Query fail: " . mysqli_error()); 
 
@@ -8260,7 +8260,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT title,amount,date FROM cashCollection WHERE title = '$title' AND (date between '$date1' and '$date2') AND type = 'Disbursement' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8293,7 +8293,7 @@ $this->coconutTableStop();
 public function addCompanyPayment($refNo,$checkNo,$registrationNo,$amount,$tax,$discount,$company,$date,$postBy) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -8313,7 +8313,7 @@ $sql->close();
 public function addPHICPayment($refNo,$registrationNo,$amount,$tax,$date,$postBy) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -8343,7 +8343,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT refNo,checkNo,amountPaid,tax,discount,company,datePaid,postBy,dateEncoded from companyPayment where registrationNo = '$registrationNo' and status = '' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8457,7 +8457,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT refNo,amountPaid,tax,discount,company,datePaid,postBy from companyPayment where registrationNo = '$registrationNo' and company = '$company' and status not like 'DELETED%%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8498,7 +8498,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT refNo,amountPaid,tax,datePaid,postBy,dateEncoded from phicPayment where registrationNo = '$registrationNo' and status = '' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8589,7 +8589,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT refNo,amountPaid,datePaid,postBy from phicPayment where registrationNo = '$registrationNo' and status not like 'DELETED%%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8622,7 +8622,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(amountPaid) as paid from patientPayment where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8660,7 +8660,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(amountPaid) as paid,sum(tax) as tax,sum(discount) as discount from companyPayment where registrationNo = '$registrationNo' and status not like 'DELETED%%%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8684,7 +8684,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(amountPaid) as paid from phicPayment where registrationNo = '$registrationNo' and status not like 'DELETED%%%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8709,7 +8709,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum($type) as receivables from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' having (sum($type) > 0) ") or die("Query fail: " . mysqli_error()); 
 
@@ -8732,7 +8732,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $number_of_records_per_page=30;
 
@@ -8758,7 +8758,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.dateUnregistered,rd.registrationNo,sum(pc.phic) as phic from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered like '$discharged' group by pc.registrationNo having (sum(pc.phic) > 0) order by pr.lastName,pr.firstName asc limit $start,$to ") or die("Query fail: " . mysqli_error()); 
 
@@ -8811,7 +8811,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.registrationNo,rd.Company,cp.amountPaid,cp.datePaid,cp.tax,cp.discount,cp.refNo,cp.checkNo,cp.postBy from patientRecord pr,registrationDetails rd,companyPayment cp where pr.patientNo = rd.patientNo and rd.registrationNo = cp.registrationNo and (cp.$dateSource between '$datePaid' and '$datePaid1') and cp.status not like 'DELETED%%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8891,7 +8891,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(pc.cashUnpaid) as cash,sum(pc.phic) as phic,sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.room = '$room' and rd.type = 'IPD' and rd.dateUnregistered = '' and pc.status = 'UNPAID' and (pc.title = 'MEDICINE' or pc.title = 'SUPPLIES') and departmentStatus like 'dispensedBy%%%%%%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -8950,7 +8950,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.Company,rd.registrationNo,rd.dateRegistered,sum(pc.cashUnpaid) as cash,sum(pc.phic) as phic,sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.room = '$room' and rd.type = 'IPD' and rd.dateUnregistered = '' and (pc.status = 'UNPAID' or pc.status = 'Discharged') and (pc.title != 'MEDICINE' and pc.title != 'SUPPLIES')  ") or die("Query fail: " . mysqli_error()); 
 
@@ -8978,7 +8978,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT Description from room where floor = '$floor' order by Description asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9020,7 +9020,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.Company,cp.checkNo,cp.amountPaid,cp.tax,cp.discount,cp.datePaid,cp.postBy from patientRecord pr,registrationDetails rd,companyPayment cp where pr.patientNo = rd.patientNo and rd.registrationNo = cp.registrationNo and cp.refNo = '$refNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9057,7 +9057,7 @@ public $checkCharges_counter;
 public function checkCharges($registrationNo) {
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select description,total,status,cashUnpaid,company,registrationNo from patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'PAID') ") or die("Query fail: " . mysqli_error()); 
 
@@ -9103,7 +9103,7 @@ padding: 0;
 tr:hover { background-color:yellow;color:black;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.pxCount,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$date' order by rd.pxCount desc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9157,7 +9157,7 @@ padding: 0;
 tr:hover { background-color:yellow;color:black;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.pxCount,rd.registrationNo, rd.type from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$date' and rd.dateUnregistered = '' order by rd.pxCount desc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9233,7 +9233,7 @@ padding: 0;
 tr:hover { background-color:yellow;color:black;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.pxCount,rd.registrationNo,rd.timeRegistered from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$date' and rd.dateUnregistered = '' order by rd.pxCount desc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9273,7 +9273,7 @@ return $this->getPxBalance_balance;
 
 public function getPxBalance($patientNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT registrationNo,dateRegistered,balance from registrationDetails where (balance != '' or balance > 0) and patientNo = '$patientNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9299,7 +9299,7 @@ echo "
 tr:hover { background-color:yellow;color:black;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(cashUnpaid) as balance from patientCharges pc where pc.registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') ") or die("Query fail: " . mysqli_error()); 
 
@@ -9319,7 +9319,7 @@ echo "
 tr:hover { background-color:yellow;color:black;}
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum($cashPaid_cashPaidFromBalance) as paid from patientCharges pc where pc.registrationNo = '$registrationNo' and (status = 'PAID' or status = 'BALANCE') and $datePaid_datePaidFromBalance = '$date' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9341,7 +9341,7 @@ tr:hover { background-color:yellow;color:black;}
 
 $date = $year."-".$month."-".$day;
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,sum(pc.total) as total,rd.registrationNo from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.datePaid = '$date' group by rd.registrationNo") or die("Query fail: " . mysqli_error()); 
 
@@ -9365,7 +9365,7 @@ $this->coconutTableRowStop();
 
 public function stockCard_quantityRequesition($inventoryCode) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(quantityIssued) as qty from inventoryManager where inventoryCode = '$inventoryCode' and status = 'Received' ") or die("Query fail: " . mysqli_error()); 
@@ -9388,7 +9388,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(pc.quantity) as qtyOUT from patientCharges pc,inventory i where i.inventoryCode = pc.chargesCode and pc.chargesCode = '$inventoryCode' and pc.departmentStatus like 'dispensedBy_%%%%%%' and pc.status not like 'DELETED%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9410,7 +9410,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if( $show == "all" ) {
 $result = mysqli_query($connection, " SELECT inventoryCode,dateAdded,beginningQTY,unitcost,Added,addedBy,inventoryLocation,quantity,status from inventory where stockCardNo = '$stockCardNo' order by dateAdded desc ") or die("Query fail: " . mysqli_error());
@@ -9465,7 +9465,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pc.itemNo,rd.registrationNo,pc.description,pc.dateCharge from patientRecord pr,registrationDetails rd,patientCharges pc,SOAP s where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.itemNo = s.itemNo and rd.patientNo = '$patientNo' group by rd.registrationNo order by pc.dateCharge desc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9502,7 +9502,7 @@ tr:hover { background-color:yellow;color:black;}
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT ptNotesNo,date from ptNotes where patientNo = '$patientNo' and status not like 'DELETED%%%%' order by date desc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9549,7 +9549,7 @@ tr.table_header th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT sum(cashPaid) as cashPaid from patientCharges where registrationNo = '$registrationNo' and status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9584,7 +9584,7 @@ tr.table_header th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT title,description,cashPaid,paidVia,amountPaidFromCreditCard from patientCharges where registrationNo = '$registrationNo' and status = 'PAID' order by title asc") or die("Query fail: " . mysqli_error()); 
 
@@ -9627,7 +9627,7 @@ tr.table_header th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pc.paidVia,sum(cashPaid) as totalPaid,sum(amountPaidFromCreditCard) as creditCard,rd.dateRegistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.registrationNo = '$registrationNo' and pc.status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9679,7 +9679,7 @@ tr.table_header th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.registrationNo,pc.paidVia,pc.datePaid,pc.cashPaid,pc.description,pc.title,pc.amountPaidFromCreditCard from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$paidDate' and '$paidDate1') order by pc.title,pr.lastName,pc.timePaid,pc.datePaid ") or die("Query fail: " . mysqli_error()); 
 
@@ -9767,7 +9767,7 @@ tr.table_header_top th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select pc.dateCharge,sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = '$type' and pc.title = '$accountTitle' and (pc.dateCharge between '$date' and '$date1') and status not like 'DELETED%%%%%%%' group by pc.dateCharge order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -9832,7 +9832,7 @@ tr.table_header_top th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select pc.title,pc.datePaid,sum(pc.".$cols.") as cols from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = '$type' and (pc.datePaid between '$date' and '$date1') and status ='PAID' group by pc.datePaid,pc.title order by pc.title,pc.datePaid  ") or die("Query fail: " . mysqli_error()); 
 
@@ -9898,7 +9898,7 @@ tr.table_header_top th {
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select pc.title,sum(pc.total) as totalCreditPerAccountTitle from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.dateCharge between '$date' and '$date1') and status not like 'DELETED%%%%%%%' group by pc.title order by pc.title asc  ") or die("Query fail: " . mysqli_error()); 
 
@@ -9925,7 +9925,7 @@ public function accounting_trialBalance_cash_debit($year,$month,$day) {
 $date = $year."-".$month."-".$day;
 $date1 = $year."-".$month."-".($day+30);
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, "select sum(pc.cashPaid) as cashPaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and status = 'PAID' and paidVia = 'Cash'  ") or die("Query fail: " . mysqli_error()); 
 
@@ -9957,7 +9957,7 @@ return $this->detailedTotalOnly_deposit_total;
 
 public function detailedTotalOnly_deposit($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select datePaid,paymentFor,orNo,amountPaid from patientPayment where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
 
@@ -9992,7 +9992,7 @@ return $this->getTakeHomeMeds_total;
 
 public function getTakeHomeMeds($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select description,quantity,cashUnpaid,dateCharge from patientCharges where registrationNo = '$registrationNo' and title = 'MEDICINE' and remarks = 'takeHomeMeds' and status = 'UNPAID' order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -10039,7 +10039,7 @@ return $this->detailedTotalOnly_patientToPay_total;
 
 public function detailedTotalOnly_patientToPay($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select dateCharge,description,quantity,sellingPrice,total,cashUnpaid,title from patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status = 'UNPAID' order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
 
@@ -10137,7 +10137,7 @@ echo "</tr>";
 
 public function protacio_hmoSOA_ipd_total($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.company) as totCompany from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.company != 0 and pc.status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
@@ -10152,7 +10152,7 @@ return $row['totCompany'];
 
 public function protacio_hmoSOA_ipd_phic_hb($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.phic) as totPHIC from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID'and pc.title != 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
@@ -10167,7 +10167,7 @@ return $row['totPHIC'];
 
 public function protacio_hmoSOA_ipd_phic_pf($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.phic) as totPHIC from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID'and pc.title = 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
@@ -10193,7 +10193,7 @@ return $this->protacio_hmoSOA_ipd_attendingDoc_pf;
 
 public function protacio_hmoSOA_ipd_attendingDoc($registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pc.description,pc.total from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.service = 'ATTENDING' and pc.status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
@@ -10218,7 +10218,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.dateRegistered,rd.dateUnregistered,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$date' and '$date1') and rd.Company = '$hmo' and rd.type = 'IPD' order by rd.dateUnregistered asc ") or die("Query fail: " . mysqli_error()); 
@@ -10342,7 +10342,7 @@ echo "</table>";
 
 public function transactionSummary_opd_creditCard($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.amountPaidFromCreditCard) as creditCard from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
@@ -10357,7 +10357,7 @@ return $row['creditCard'];
 
 public function transactionSummary_opd_cash($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.cashPaid) as cashPaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
@@ -10375,7 +10375,7 @@ return $row['cashPaid'];
 
 public function transactionSummary_opd_company($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.dateCharge between '$date' and '$date1') and pc.status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
@@ -10390,7 +10390,7 @@ return $row['company'];
 
 public function transactionSummary_opd_revenueDiscount($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.discount) as disc from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.dateCharge between '$date' and '$date1') and pc.status not like 'DELETED%%%%%' ") or die("Query fail: " . mysqli_error()); 
@@ -10404,7 +10404,7 @@ return $row['disc'];
 
 public function transactionSummary_opd_clinicRevenue($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.cashPaid) as clinicRevenue from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' and pc.title = 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
@@ -10431,7 +10431,7 @@ return $this->transactionSummary_opd_department_company;
 
 public function transactionSummary_opd_department($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select sum(pc.phic) as phic,sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.dateCharge between '$date' and '$date1') and pc.status = 'UNPAID' and pc.title = '$dept' ") or die("Query fail: " . mysqli_error()); 
 
@@ -10447,7 +10447,7 @@ $this->transactionSummary_opd_department_company = $row['company'];
 
 public function transactionSummary_opd_department_cashPaid($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.cashPaid) as cashPaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' and pc.title = '$dept' ") or die("Query fail: " . mysqli_error()); 
@@ -10462,7 +10462,7 @@ return $row['cashPaid'];
 
 public function transactionSummary_opd_department_credit($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.status in ('UNPAID','PAID') and pc.title = '$dept' ") or die("Query fail: " . mysqli_error()); 
@@ -10477,7 +10477,7 @@ return $row['total'];
 
 public function transactionSummary_opd_department_debit($dept,$paymentMode,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.".$paymentMode.") as paymentMode from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.status = 'UNPAID' and pc.title = '$dept' ") or die("Query fail: " . mysqli_error()); 
@@ -10492,7 +10492,7 @@ return $row['paymentMode'];
 
 public function transactionSummary_opd_department_debit_paid($dept,$paymentMode,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $dept == "PROFESSIONAL FEE" ) {
@@ -10514,7 +10514,7 @@ return $row['pd'];
 
 public function transactionSummary_opd_department_debit_paid_pfCreditCard($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.doctorsPF) as pdPF from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' and pc.title = 'PROFESSIONAL FEE' and paidVia = 'Credit Card' and pc.doctorSpecialization != 'DERMATOLOGY' ") or die("Query fail: " . mysqli_error()); 
@@ -10530,7 +10530,7 @@ return $row['pdPF'];
 
 public function transactionSummary_opd_department_debit_covered($dept,$type,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $dept == "PROFESSIONAL FEE" ) {
@@ -10552,7 +10552,7 @@ return $row['covered'];
 
 public function transactionSummary_opd_department_debit_personalBalance($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.cashUnpaid) as bal from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.status in ('PAID','BALANCE') and pc.title = '$dept' ") or die("Query fail: " . mysqli_error()); 
@@ -10567,7 +10567,7 @@ return $row['bal'];
 
 public function transactionSummary_opd_department_debit_discount($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.discount) as discount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.title = '$dept' and pc.discount > 0 and pc.status in ('PAID','UNPAID') ") or die("Query fail: " . mysqli_error()); 
@@ -10588,7 +10588,7 @@ return $row['discount'];
 
 public function transactionSummary_ipd_department_debit($paymentMode,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pp.amountPaid) as pd from patientRecord pr,registrationDetails rd,patientPayment pp where pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pp.paidVia = '$paymentMode' != 'DEPOSIT' and rd.type='IPD' ") or die("Query fail: " . mysqli_error()); 
@@ -10603,7 +10603,7 @@ return $row['pd'];
 
 public function transactionSummary_ipd_department_debit_deposit($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pp.amountPaid) as pd from patientRecord pr,registrationDetails rd,patientPayment pp where pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
@@ -10618,7 +10618,7 @@ return $row['pd'];
 
 public function transactionSummary_ipd_department_debit_patientBalance($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(rd.balance) as balance from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.type = 'IPD' and (rd.dateUnregistered between '$date' and '$date1') ") or die("Query fail: " . mysqli_error()); 
@@ -10632,7 +10632,7 @@ return $row['balance'];
 
 public function transactionSummary_ipd_department_debit_phic($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.phic) as phic from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pc.status in ('UNPAID','Discharged') and rd.type='IPD' ") or die("Query fail: " . mysqli_error()); 
@@ -10647,7 +10647,7 @@ return $row['phic'];
 
 public function transactionSummary_ipd_department_debit_company($type,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pc.status in ('UNPAID','Discharged') and rd.type = 'IPD' and rd.companyType = '$type' ") or die("Query fail: " . mysqli_error()); 
@@ -10663,7 +10663,7 @@ return $row['company'];
 
 public function transactionSummary_ipd_department_debit_discount($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(discount) as discount from registrationDetails where (dateUnregistered between '$date' and '$date1') and type = 'IPD' ") or die("Query fail: " . mysqli_error()); 
@@ -10679,7 +10679,7 @@ return $row['discount'];
 
 public function transactionSummary_ipd_department_debit_cashUnpaid($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.cashUnpaid) as cashUnpaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_error()); 
@@ -10696,7 +10696,7 @@ return $row['cashUnpaid'];
 
 public function transactionSummary_ipd_department_totalCharges($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.total) as totalBill from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.status in ('UNPAID','Discharged') and (rd.dateUnregistered between '$date' and '$date1') and rd.type='IPD'") or die("Query fail: " . mysqli_error()); 
@@ -10711,7 +10711,7 @@ return $row['totalBill'];
 
 public function transactionSummary_ipd_department_totalPaid($date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, "select sum(pp.amountPaid) as totalPaid from registrationDetails rd,patientPayment pp where rd.registrationNo = pp.registrationNo and rd.type = 'IPD' and (rd.dateUnregistered between '$date' and '$date1') ") or die("Query fail: " . mysqli_error()); 
@@ -10726,7 +10726,7 @@ return $row['totalPaid'];
 
 public function transactionSummary_ipd_department_credit($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.status in ('UNPAID','Discharged') and pc.title = '$dept' ") or die("Query fail: " . mysqli_error()); 
@@ -10741,7 +10741,7 @@ return $row['total'];
 
 public function transactionSummary_ipd_department_inventory_credit($dept,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and (rd.dateUnregistered between '$date' and '$date1') and pc.status = 'UNPAID' and pc.title = '$dept' and pc.departmentStatus like 'dispensedBy%%%%%%' ") or die("Query fail: " . mysqli_error()); 
@@ -10757,7 +10757,7 @@ return $row['total'];
 
 public function transactionSummaryDischarge_totalPaid($paymentFor,$registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paymentFor = '$paymentFor' ") or die("Query fail: " . mysqli_error()); 
@@ -10771,7 +10771,7 @@ return $row['total'];
 
 public function transactionSummaryDischarge_totalCharges($cols,$registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum($cols) as total from patientCharges where status in ('UNPAID','Discharged') and registrationNo = '$registrationNo' and title not in ('MEDICINE','SUPPLIES') ") or die("Query fail: " . mysqli_error()); 
@@ -10786,7 +10786,7 @@ return $row['total'];
 
 public function transactionSummaryDischarge_totalInventory($cols,$registrationNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum($cols) as total from patientCharges where status ='UNPAID' and registrationNo = '$registrationNo' and title in ('MEDICINE','SUPPLIES') and departmentStatus like 'dispensedBy%%%%%%%'") or die("Query fail: " . mysqli_error()); 
@@ -10814,7 +10814,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, "select pr.lastName,pr.firstName,rd.Company,rd.registrationNo,rd.discount from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='IPD' order by rd.registrationNo asc  ") or die("Query fail: " . mysqli_error()); 
@@ -10898,7 +10898,7 @@ echo "<br><br>";
 
 public function transactionSummary_paidBalance($type,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(amountPaid) as total from patientPayment where (datePaid between '$date' and '$date1') and registrationNo like 'manual_%%%%%%' and patientType = '$type' ") or die("Query fail: " . mysqli_error()); 
@@ -10912,7 +10912,7 @@ return $row['total'];
 
 public function transactionSummary_paidBalance_paymentMode($type,$paidVia,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(amountPaid) as total from patientPayment where (datePaid between '$date' and '$date1') and registrationNo like 'manual_%%%%%%' and patientType = '$type' and paidVia = '$paidVia' ") or die("Query fail: " . mysqli_error()); 
@@ -10928,7 +10928,7 @@ return $row['total'];
 
 public function transactionSummary_dermaPayments($paidVia,$date,$date1) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(amountPaid) as total from patientPayment where (datePaid between '$date' and '$date1') and registrationNo like 'derma_%%%%%%' and patientType = 'OPD' and paidVia = '$paidVia' ") or die("Query fail: " . mysqli_error()); 
@@ -10951,7 +10951,7 @@ return $row['total'];
 
 public function _1stQuarterBeginningBalance($stockCardNo,$dateAdded) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(beginningCapital) as beginningBalance from inventory where stockCardNo = '$stockCardNo' and status not like 'DELETED%%%%' and dateAdded = '$dateAdded' ") or die("Query fail: " . mysqli_error()); 
@@ -10966,7 +10966,7 @@ return $row['beginningBalance'];
 
 public function _3monthsPurchases($date,$date1,$stockCardNo,$inventoryType) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select sum(beginningCapital) as totalPurchases from inventory where stockCardNo = '$stockCardNo' and status not like 'DELETED%%%%' and (dateAdded between '$date' and '$date1') and inventoryType = '$inventoryType' ") or die("Query fail: " . mysqli_error()); 
@@ -10988,7 +10988,7 @@ a {  border_bottom:10px; color:black; }
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select inventoryCode,description,unitcost,suppliesUNITCOST,opdPrice,ipdPrice,dateAdded,inventoryType,dateAdded from inventory where stockCardNo = '$stockCardNo' and status not like 'DELETED%%%%%' order by dateAdded asc ") or die("Query fail: " . mysqli_error()); 
@@ -11037,7 +11037,7 @@ a {  border_bottom:10px; color:black; }
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select inventoryCode,description,unitcost,suppliesUNITCOST,opdPrice,ipdPrice,dateAdded,inventoryType from inventory where stockCardNo = '$stockCardNo' and status not like 'DELETED%%%%%' order by dateAdded asc ") or die("Query fail: " . mysqli_error()); 
@@ -11089,7 +11089,7 @@ a {  border_bottom:10px; color:black; }
 </style>";
 
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select inventoryCode,stockCardNo,description,quantity,beginningQTY,unitcost,suppliesUNITCOST,beginningCapital,opdPrice,ipdPrice,dateAdded,inventoryType,dateAdded from inventory where stockCardNo = '$stockCardNo' and (dateAdded between '$date' and '$date1') and status not like 'DELETED%%%%%' order by dateAdded asc ") or die("Query fail: " . mysqli_error()); 
@@ -11145,7 +11145,7 @@ echo "</table>";
 public function inventoryMovement_insertEndingInventory($stockCardNo,$endingInventoryCols,$endingInventoryData) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -11185,7 +11185,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $medType == "all" ) {
@@ -11358,7 +11358,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $type == "all" ) {
@@ -11411,7 +11411,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 if( $type == "all" ) {
@@ -11435,7 +11435,7 @@ return $row['registrationNo'];
 public function addAccountTitle($username,$accountNo,$accountName,$dateAdded,$bold,$accountType,$parentTitle_of_accountType) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -11462,7 +11462,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, "select refNo,accountNo,accountTitle,bold from accountTitle where status != 'DELETED' and accountType = '$refNo' ") or die("Query fail: " . mysqli_error()); 
@@ -11500,7 +11500,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, "select refNo,accountNo,accountTitle,bold,accountType,parentTitle_of_accountType from accountTitle where status != 'DELETED' and accountType = '$refNo' ") or die("Query fail: " . mysqli_error()); 
@@ -11542,7 +11542,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, "select refNo,accountNo,accountTitle,accountType,bold from accountTitle where status != 'DELETED' and accountType = '$refNo' ") or die("Query fail: " . mysqli_error()); 
@@ -11584,7 +11584,7 @@ a {  border_bottom:10px; color:black; }
 </style>
 ";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, "select * from accountTitle where status != 'DELETED' and accountType = 'primaryTitle' order by AccountNo asc ") or die("Query fail: " . mysqli_error()); 
@@ -11648,7 +11648,7 @@ echo "</table>";
 
 public function accountTitleSelection_primaryTitle() {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 
@@ -11664,7 +11664,7 @@ echo "<option value='".$row['refNo']."'>$row[accountTitle]</option>";
 
 public function accountTitleSelection_subTitle($refNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 
@@ -11682,7 +11682,7 @@ echo "<option value='".$row['accountNo']."_".$row['accountTitle']."'>$row[accoun
 public function addDisbursement($transactionNo,$accountNo,$accountTitle,$paidTo,$narration,$invoiceNo,$dated,$debit,$credit,$username,$dateEncoded,$type) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -11716,7 +11716,7 @@ a {  border_bottom:10px; color:black; }
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select idNo,accountNo,accountTitle,paidTo,narration,invoiceNo,dated,debit,credit from disbursement where transactionNo = '$transactionNo' and status != 'DELETED' ") or die("Query fail: " . mysqli_error()); 
 
@@ -11776,7 +11776,7 @@ echo "</tr>";
 
 public function countDisbursementEntry($transactionNo,$type) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 
@@ -11804,7 +11804,7 @@ return $this->getDisbursementReport_individual_credit;
 
 public function getDisbursementReport_individual($transactionNo) {
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " select transactionNo,accountNo,accountTitle,paidTo,narration,invoiceNo,dated,debit,credit,dateEncoded from disbursement where transactionNo = '$transactionNo' and status != 'DELETED' and type = 'individual' ") or die("Query fail: " . mysqli_error()); 
 
@@ -11870,7 +11870,7 @@ a {  border_bottom:10px; color:black; }
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select idNo,transactionNo,accountNo,accountTitle,paidTo,narration,invoiceNo,dated,debit,credit,dateEncoded from disbursement where transactionNo = '$transactionNo' and status != 'DELETED' and type = 'group' ") or die("Query fail: " . mysqli_error()); 
@@ -11950,7 +11950,7 @@ a {  border_bottom:10px; color:black; }
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select transactionNo from disbursement where (dateEncoded between '$date' and '$date1') and status != 'DELETED' and type = 'group' group by transactionNo ") or die("Query fail: " . mysqli_error()); 
@@ -11979,7 +11979,7 @@ a {  border_bottom:10px; color:black; }
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select transactionNo from disbursement where (dateEncoded between '$date' and '$date1') and status != 'DELETED' and type = 'individual' group by transactionNo ") or die("Query fail: " . mysqli_error()); 
@@ -12006,7 +12006,7 @@ a {  border_bottom:10px; color:black; }
 
 </style>";
 
-$connection = mysqli_connect($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());      
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
 $result = mysqli_query($connection, " select transactionNo,paidTo,narration,dateEncoded,type from disbursement where (dateEncoded between '$date' and '$date1') and status != 'DELETED' group by transactionNo order by dateEncoded asc  ") or die("Query fail: " . mysqli_error()); 
@@ -12055,7 +12055,7 @@ echo "</tr>";
 public function addCollectionReport($registrationNo,$description,$amountPaid,$orNo,$type,$paidBy,$timePaid,$datePaid,$paidVia) {
 
 /* make your connection */
-$sql = new mysqli($this->myHost(),$this->getUser(),$this->getPass(),$this->getDB());
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */

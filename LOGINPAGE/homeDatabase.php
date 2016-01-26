@@ -3,10 +3,17 @@
 
 class synapse {
 
-public $myHost = 'localhost';
-public $username = 'root';
-public $password = 'Pr0taci001';
-public $database = 'Coconut';
+public $myHost;
+public $username;
+public $password;
+public $database;
+
+public function __construct() {
+$this->myHost = $_SERVER['DB_HOST'];
+$this->username = $_SERVER['DB_USER'];
+$this->password = $_SERVER['DB_PASS'];
+$this->database = $_SERVER['DB_DB'];
+}
 
 public function getMyUrl() {
 
