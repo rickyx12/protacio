@@ -1,4 +1,0 @@
-HOST=localhost
-USER=root
-PASS=Pr0taci001
-DATA=Coconut
