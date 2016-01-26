@@ -1,8 +1,0 @@
-$ sudo /opt/lampp/bin/mysql -u root -p
-Enter password:
-
-mysql> use mysql
-
-mysql> GRANT ALL ON *.* to root@'192.168.1.4' IDENTIFIED BY 'your-root-password'; 
-
-mysql> FLUSH PRIVILEGES;
