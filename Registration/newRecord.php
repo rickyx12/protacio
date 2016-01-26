@@ -149,14 +149,10 @@ $("#breadcrumbs a").hover(
 $ro->coconutUpperMenuStart();
 $ro->coconutUpperMenuStop();
 
-//get current registrationNos
+//get current registrationNo
 $registrationNo = $ro->selectNow("trackingNo","value","name","registrationNo");
-
-$ro->getPatientID();
-$myFile = $ro->getReportInformation("homeRoot")."/COCONUT/trackingNo/patientID.dat";
-$fh = fopen($myFile, 'r');
-$patientNo = fread($fh, 100);
-fclose($fh);
+//get current patientNo
+$patientNo = $ro->selectNow("trackingNo","value","name","patientNo");
 
 
 //newRecord_insert.php

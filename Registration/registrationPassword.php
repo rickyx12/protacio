@@ -94,7 +94,9 @@ $birthDate = $birthYear."-".$month."-".$day;
 
 try {
 $incrementRegNo = ($ro->selectNow("trackingNo","value","name","registrationNo") + 1);
+$incrementPatNo = ($ro->selectNow("trackingNo","value","name","patientNo") + 1);
 $ro->editNow("trackingNo","name","registrationNo","value",$incrementRegNo);
+$ro->editNow("trackingNo","name","patientNo","value",$incrementPatNo);
 
 if($registrationStatus == "new") { // Registration Status [new]
 
