@@ -151,13 +151,14 @@ $("#breadcrumbs a").hover(
 
 
 <?php
-
+/*
 $ro->getRegistrationNo();
 $myFile = $ro->getReportInformation("homeRoot")."/COCONUT/trackingNo/registrationNo.dat";
 $fh = fopen($myFile, 'r');
 $registrationNo = fread($fh, 100);
 fclose($fh);
-
+*/
+$registrationNo = $ro->selectNow("trackingNo","value","name","registrationNo");
 /*
 $ro->getPatientID();
 $myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/patientID.dat";
