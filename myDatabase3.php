@@ -2901,12 +2901,12 @@ return $row['total'];
 
 }
 
-public function stockCardMerge() {
+public function stockCardMerge($startLetter) {
 
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, "select stockCardNo,description,genericName from inventoryStockCard where inventoryType = 'medicine' and status not like 'DELETED%' order by genericName asc") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, "select stockCardNo,description,genericName from inventoryStockCard where inventoryType = 'medicine' and status not like 'DELETED%' and genericName like '$startLetter%%%%%%%%' order by genericName asc") or die("Query fail: " . mysqli_error()); 
 
 
 while($row = mysqli_fetch_array($result))
