@@ -2934,6 +2934,27 @@ echo "</tr>";
 
 
 
+public function editedAmount($itemNo,$registrationNo,$sellingPrice,$quantity,$discount,$total,$cashUnpaid,$company,$phic,$time,$date,$username) {
+
+/* make your connection */
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
+ 
+/* we will just create an insert query here, and use it,
+normally this would be done by form submission or other means */
+$query = "insert into editedAmount(itemNo,registrationNo,sellingPrice,quantity,discount,total,cashUnpaid,company,phic,time,date,username) values('$itemNo','$registrationNo','$sellingPrice','$quantity','$discount','$total','$cashUnpaid','$company','$phic','$time','$date','$username')";
+ 
+if ( $sql->query($query) ) {
+   //echo "A new entry has been added with the `id`";
+} else {
+    echo "There was a problem:<br />$query<br />{$sql->error}";
+}
+ 
+/* close our connection */
+$sql->close();
+}
+
+
+
 }
 
 
