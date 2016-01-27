@@ -1,0 +1,13 @@
+
+.txtAreaBig {
+	border: 1px solid #000;
+	color: #000;
+	height: 100px;
+	width: 400px;
+	padding:4px 4px 4px 5px;
+}
+
+
+.coconutButton {
+	border:1px solid #000; background-color:#3b5998; color:white;
+}

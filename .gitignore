@@ -1,0 +1,11 @@
+#no .wav files
+*.wav
+*~
+*.avi
+*.docx
+*.dcm
+*.ods
+*.zip
+*.odt
+.dat
+.db

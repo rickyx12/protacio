@@ -1,0 +1,25 @@
+
+<link rel="stylesheet" type="text/css" href="rickyCSS1.css" />
+
+<script type='text/javascript'>
+$("#breadcrumbs a").hover(
+    function () {
+        $(this).addClass("hover").children().addClass("hover");
+        $(this).parent().prev().find("span.arrow:first").addClass("pre_hover");
+    },
+    function () {
+        $(this).removeClass("hover").children().removeClass("hover");
+        $(this).parent().prev().find("span.arrow:first").removeClass("pre_hover");
+    }
+);
+</script>
+
+<ol id="breadcrumbs">
+    <li><a href="#"><font color=white>Home</font><span class="arrow"></span></a></li>
+    <li><a href="#" class="odd">World news<span class="arrow"></span></a></li>
+    <li><a href="#" class="preSelect">America<span class="arrow"></span></a></li>
+    <li><a href="#" class="selected"><font color=black>Economics</font><span class="arrow"></span></a></li>
+    <li><a href="#">America<span class="arrow"></span></a></li>
+    <li><a href="#" class="odd">Economics<span class="arrow"></span></a></li>
+    <li>&nbsp;&nbsp;</li>
+</ol

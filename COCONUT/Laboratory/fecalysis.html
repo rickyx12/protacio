@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><!-- InstanceBegin template="/Templates/beta.dwt" codeOutsideHTMLIsLocked="true" -->
+<html>
+<head>
+<title>addaccount</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+#Layer1 {
+	position:absolute;
+	left:473px;
+	top:242px;
+	width:237px;
+	height:24px;
+	z-index:1;
+}
+body {
+	background-color: #CCEEF4;
+	background-image: url();
+}
+#Layer2 {
+	position:absolute;
+	left:231px;
+	top:834px;
+	width:289px;
+	height:22px;
+	z-index:2;
+}
+#Layer3 {
+	position:absolute;
+	left:12px;
+	top:18px;
+	width:37px;
+	height:29px;
+	z-index:1;
+}
+a:link {
+	color: #000000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000000;
+}
+a:hover {
+	text-decoration: none;
+	color: #002969;
+}
+a:active {
+	text-decoration: none;
+}
+#Layer6 {position:absolute;
+	left:411px;
+	top:22px;
+	width:39px;
+	height:33px;
+	z-index:1;
+}
+.style18 {font-size: 12px}
+.style20 {font-size: 10px}
+.style7 {	color: #FF0000;
+	font-weight: bold;
+}
+.style57 {
+	font-size: 24px;
+	font-weight: bold;
+	color: #FF0080;
+}
+.style59 {font-size: 14px; font-weight: bold; color: #FF0080; }
+.style60 {color: #FF0080}
+.style62 {font-size: 14px; font-weight: bold; color: #FF0080; font-family: Verdana, Arial, Helvetica, sans-serif; }
+.style63 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.style65 {font-size: 12px; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; }
+.style66 {font-family: Verdana, Arial, Helvetica, sans-serif}
+.style67 {font-size: 14px}
+.style68 {
+	color: #FF0080;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+-->
+</style>
+</head><SCRIPT LANGUAGE="JavaScript">
+<!-- Original:  Tom Khoury (twaks@yahoo.com) -->
+
+<!-- This script and many more are available free online at -->
+<!-- The JavaScript Source!! http://javascript.internet.com -->
+
+<!-- Begin
+function placeFocus() {
+if (document.forms.length > 0) {
+var field = document.forms[0];
+for (i = 0; i < field.length; i++) {
+if ((field.elements[i].type == "text") || (field.elements[i].type == "textarea") || (field.elements[i].type.toString().charAt(0) == "s")) {
+document.forms[0].elements[i].focus();
+break;
+         }
+      }
+   }
+}
+//  End -->
+</script>
+</head>
+<form name="adddonor" 
+action="http://$ipaddress/cgi-bin/Fecalysis.cgi">
+
+ 
+
+<body text="#000000" alink="#666600">
+<span class="style57">FECALYSIS</span>
+<table width="610" border="0" cellpadding="0" cellspacing="0" bgcolor="#E3E4FA">
+    <tr>
+      <td class="style18"><span class="style62">LAB NO. </span></td>
+      <td><span class="style63"><font color="#000000">
+        <input name="labno" type="text" class="style59" value='$Acctno' " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </font></span></td>
+    </tr>
+    <tr>
+      <td class="style62">Fecalysis No. </td>
+      <td><span class="style63"><font color="#000000">
+        <input name="testno" type="text" id="testno" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </font></span></td>
+    </tr>
+     <tr>
+      <td class="style62">Enter Date </td>
+      <td><span class="style63"><font color="#000000">
+        <input name="dateresult" type="text" id="dateresult" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </font></span></td>
+    </tr>
+    <tr>
+      <td width="208" class="style62">PHYSICIAN</td>
+      <td width="402"><span class="style63"><font color="#000000">
+        <input name="physician" type="text" id="physician" value='$ap' "class="style59"  " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </font></span></td>
+    </tr>
+    <tr>
+      <td class="style59"><span class="style65">PATHOLOGIST</span></td>
+      <td><select name="pathologist"  class="style62" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+        <option></option>
+       <option>Noemia D. Bartolome, M.D.,FPSP</option>
+
+      </select></td>
+    </tr>
+    <tr>
+      <td class="style59"><span class="style65">MEDICAL TECHNOLOGIST </span></td>
+      <td><span class="style66">
+        <label>
+  <select name="medtech" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+    <option></option>
+    <option>Grace T. larroza, R.M.T.</option>
+        <option>Helen Grace P. umipig, M.T.</option>
+        <option>Emjie P. Pantorilla, M.T.</option>
+        <option>Janice S. Tutanes, M.T., RN</option>
+        <option>Judith Anne A. Sandig , M.T.</option>
+        <option>Rey D. Larroza, R.M.T.</option>
+
+    
+  </select>
+  <input name="examrequested" type="hidden" id="examrequested" value="Fecalysis">
+        </label>
+      </span></td>
+    </tr>
+    <tr>
+      <td class="style59"><span class="style66"><strong><span class="style60">SPECIMEN</span></strong></span></td>
+      <td><span class="style66"><strong><font color="#000000"><strong><font color="#000000">
+        <input name="specimen" type="text" class="style59" id="testno" value='Stool' " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </font></strong></font></strong></span></td>
+    </tr>
+    <tr>
+      <td class="style59"><span class="style66"><strong>Examination</strong></span></td>
+      <td><input name="examination" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;" value=""></td>
+    </tr>
+    <tr>
+      <td class="style59">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+</table>
+  <label></label>
+ 
+  
+  <table width="84%" border="0" cellpadding="0" cellspacing="0" bordercolor="#000000" bgcolor="#E3E4FA">
+    <tr>
+      <td width="24%" class="style65"><span class="style68">Color</span></td>
+      <td width="24%" class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="color" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td width="29%" class="style65"><span class="style68">ENTAMOEBA HYSTOLYTICA:</span></td>
+      <td width="23%" class="style65"><span class="style66"></span></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style68">Consistency</span></td>
+      <td class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="consistency" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td class="style65"><span class="style68">   Cyst</span></td>
+      <td class="style65"><input name="cyst" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style68">Parasitic Ova:</span></td>
+      <td class="style65">&nbsp;</td>
+      <td class="style65"><span class="style68">Throphozite</span></td>
+      <td class="style65"><input name="throphozite" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+tr>
+      <td width="24%" class="style65"><span class="style68">Color</span></td>
+      <td width="24%" class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="color" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td width="29%" class="style65"><span class="style68">E. COLI:</span></td>
+      <td width="23%" class="style65"><span class="style66"></span></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style68">Consistency</span></td>
+      <td class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="consistency" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td class="style65"><span class="style68">   Cyst</span></td>
+      <td class="style65"><input name="cyst1" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style68">Parasitic Ova:</span></td>
+      <td class="style65">&nbsp;</td>
+      <td class="style65"><span class="style68">Throphozite</span></td>
+      <td class="style65"><input name="throphozite1" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+
+    <tr>
+      <td class="style65"><span class="style68">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ascaris</span></td>
+      <td class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="ascaris" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td class="style65"><span class="style68">Pus Cells</span></td>
+      <td class="style65"><input name="puscells" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style68">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trichiuris</span></td>
+      <td class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="trichirius" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td class="style65"><span class="style68">Red Blood Cells</span></td>
+      <td class="style65"><input name="rbc" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style68">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hookworm</span></td>
+      <td class="style65"><span class="style66"><font color="#000000"><strong>
+        <input type="text" name="hookworm" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </strong></font></span></td>
+      <td class="style65"><span class="style68">Charcot Leyden Crystals</span></td>
+      <td class="style65"><input name="clc" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65">&nbsp;</td>
+      <td class="style65">&nbsp;</td>
+      <td class="style65"><span class="style68">Fat Globules </span></td>
+      <td class="style65"><span class="style66">
+        <input name="fatglobules" type="text" class="style67" id="fatglobules" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+      </span></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style66"></span></td>
+      <td class="style65"><span class="style66"></span></td>
+      <td class="style65"><span class="style66"><span class="style68">Bacteria</span></span></td>
+      <td class="style65"><input name="bacteria" type="text" class="style67" id="bacteria" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65"><span class="style66"></span></td>
+      <td class="style65"><span class="style66"></span></td>
+      <td class="style65"><span class="style68">Occult Blood</span></td>
+      <td class="style65"><input name="occultblood" type="text" class="style67" " style="background-color:#B1FB17; font-weight: bold; color: #FF0080;" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></td>
+    </tr>
+    <tr>
+      <td class="style65">&nbsp;</td>
+      <td class="style65">&nbsp;</td>
+      <td class="style65">&nbsp;</td>
+      <td class="style65">&nbsp;</td>
+    </tr>
+</table>
+  <table width="784" border="0" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC" bgcolor="#E3E4FA" class="style7">
+    <tr>
+      <td width="784" height="30" class="style18"><span class="style66">Remarks:</span><font color="#000000"><strong>
+        <textarea name="remarks" cols="100" rows="8" class="style59" id="remarks" style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></textarea>
+      </strong></font></td>
+    </tr>
+     <tr>
+      <td height="30" class="style18"><span class="style66">Refno</span><font color="#000000"><strong>
+        <input name="refno""5" class="style59" id="refno" style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;" value="$refno" size>
+      </strong></font></td>
+    </tr>
+    <tr>
+      <td height="30" class="style18">
+        <p><span class="style62">Patient</span><font color="#000000">&nbsp;&nbsp; 
+        <input name="patient" type="text" value="$patient" class="style59" " style="background-color:#B1FB17" onKeyDown="if(event.keyCode==13) event.keyCode=9;">
+        </font></p>
+      <p><span class="style20">        </p>
+      <span class="style20">
+      <input name="Submit" type="submit" class="style59" style="background-color:#B1FB17" value="Submit">
+      <label>
+      <input type="reset" name="Submit2" value="Reset"  class="style59" style="background-color:#B1FB17">
+      </label>
+      </span> </p></td>
+    </tr>
+</table>
+  <span class="style20"><strong><font color="#000000"></font></strong></span><span class="style18"><strong><font color="#000000"><br>
+          </font></strong></span>
+</body>
+
+</html>
+

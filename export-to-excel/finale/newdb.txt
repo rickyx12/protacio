@@ -1,0 +1,36 @@
+create database system;
+use system;
+
+create table tbl
+(
+username varchar (20) primary key,
+password varchar (20)
+);
+
+
+insert into tbl values ('admin','password');
+insert into tbl values ('user','password');
+
+
+create table pt_info
+(
+id varchar (30) primary key,
+roomnum int,
+physician varchar (60),
+lname varchar (60),
+fname varchar (60),
+m_initial varchar (10),
+diagnosis varchar (60),
+permadd varchar (60),
+dob date,
+gender varchar (6),
+civilstat varchar (10),
+occup varchar (60),
+religion varchar (60),
+fathersname varchar (60),
+mothersname varchar (60),
+date_ad date,
+time_ad varchar (20),
+date_dis date,
+time_dis varchar (20)
+);
