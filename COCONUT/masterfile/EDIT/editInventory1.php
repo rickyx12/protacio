@@ -59,6 +59,14 @@ $ro->inventoryAdjustment($inventoryCode,$stockCardNo,$terms1,round($accountPayab
 //do nothing
 }
 
+//edit history
+$qty = $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode);
+$unitcost = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode);
+$opdPrice = $ro->selectNow("inventory","opdPrice","inventoryCode",$inventoryCode);
+$ipdPrice = $ro->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode);
+
+$ro->editedInventory($stockCardNo,$inventoryCode,$description,$generic,$qty,$unitcost,$opdPrice,$ipdPrice,$inventoryType,date("H:i:s"),date("Y-m-d"),$username);
+
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"description",$description);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"genericName",$generic);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"unitcost",$unitcost);

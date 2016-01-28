@@ -2954,6 +2954,26 @@ $sql->close();
 }
 
 
+public function editedInventory($stockCardNo,$inventoryNo,$description,$genericName,$quantity,$unitcost,$opdPrice,$ipdPrice,$inventoryType,$time,$date,$username) {
+
+/* make your connection */
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
+ 
+/* we will just create an insert query here, and use it,
+normally this would be done by form submission or other means */
+$query = "insert into editedInventory(stockCardNo,inventoryCode,description,genericName,quantity,unitcost,opdPrice,ipdPrice,inventoryType,time,date,username) values('$stockCardNo','$inventoryNo','$description','$genericName','$quantity','$unitcost','$opdPrice','$ipdPrice','$inventoryType','$time','$date','$username')";
+ 
+if ( $sql->query($query) ) {
+   //echo "A new entry has been added with the `id`";
+} else {
+    echo "There was a problem:<br />$query<br />{$sql->error}";
+}
+ 
+/* close our connection */
+$sql->close();
+}
+
+
 
 }
 

@@ -1,5 +1,6 @@
 <?php
 include("../../../myDatabase.php");
+$stockCardNo = $_GET['stockCardNo'];
 $inventoryCode = $_GET['inventoryCode'];
 $description = $_GET['description'];
 $sellingPrice = $_GET['sellingPrice'];
@@ -11,6 +12,7 @@ $phic = $_GET['phic'];
 $remarks = $_GET['remarks'];
 $supplier = $_GET['supplier'];
 $criticalLevel = $_GET['criticalLevel'];
+$username = $_GET['username'];
 $ro = new database();
 ?>
 
@@ -100,22 +102,22 @@ echo "<br><table border=0 cellpadding=0 cellspacing=0>";
 echo "<input type=hidden name='inventoryCode' value='$inventoryCode'>";
 echo "<tr>";
 echo "<td><font class='labelz'>Description&nbsp;</font></td>";
-echo "<td><input type=text class='txtBox' name='description' value='$description'></td>";
+echo "<td><input type=text class='txtBox' name='description' value='$description' autocomplete='off'></td>";
 echo "</tr>";
 echo "<tr>";
 echo "<td><font class='labelz'>Unit Cost&nbsp;</font></td>";
-echo "<td><input type=text class='shortField' name='unitcost' value='$unitcost'></td>";
+echo "<td><input type=text class='shortField' name='unitcost' value='$unitcost' autocomplete='off'></td>";
 echo "</tr>";
 echo "<tr>";
 
 echo "<td><font class='labelz'>Selling Price&nbsp;</font></td>";
-echo "<td><input type=text class='shortField' name='additional' value='$sellingPrice'></td>";
+echo "<td><input type=text class='shortField' name='additional' value='$sellingPrice' autocomplete='off'></td>";
 echo "</tr>";
 
 
 echo "<tr>";
 echo "<td><font class='labelz'>Quantity&nbsp;</font></td>";
-echo "<td><input type=text class='shortField' name='quantity' value='$quantity' readonly></td>";
+echo "<td><input type=text class='shortField' name='quantity' value='$quantity' autocomplete='off'></td>";
 echo "</tr>";
 
 /*
@@ -198,6 +200,8 @@ echo "<p id='curTime'>";
 echo "</div>";
 echo "<input type='submit' value='Proceed'>";
 echo "<input type='hidden' name='preparation' value=''>";
+$ro->coconutHidden("stockCardNo",$stockCardNo);
+$ro->coconutHidden("username",$username);
 echo "</form>";
 echo "</body>";
 

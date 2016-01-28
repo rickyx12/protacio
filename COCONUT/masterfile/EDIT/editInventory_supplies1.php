@@ -1,5 +1,6 @@
 <?php
-include("../../../myDatabase.php");
+include("../../../myDatabase3.php");
+$stockCardNo = $_POST['stockCardNo'];
 $inventoryCode = $_POST['inventoryCode'];
 $description = $_POST['description'];
 $additional = $_POST['additional']; //unitcost
@@ -11,8 +12,9 @@ $phic = $_POST['phic'];
 $remarks = $_POST['remarks'];
 $supplier = $_POST['supplier'];
 $criticalLevel = $_POST['criticalLevel'];
+$username  = $_POST['username'];
 
-$ro = new database();
+$ro = new database3();
 
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"description",$description);
 
@@ -24,6 +26,16 @@ $ro->editNow("inventory","inventoryCode",$inventoryCode,"Added",$additional);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"unitcost",$additional);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"suppliesUNITCOST",$unitcost);
 }
+
+//edit history
+$generic = "";
+$inventoryType = "supplies";
+$qty = $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode);
+$unitcost = $ro->selectNow("inventory","suppliesUNITCOST","inventoryCode",$inventoryCode);
+$opdPrice = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode);
+$ipdPrice = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode);
+
+$ro->editedInventory($stockCardNo,$inventoryCode,$description,$generic,$qty,$unitcost,$opdPrice,$ipdPrice,$inventoryType,date("H:i:s"),date("Y-m-d"),$username);
 
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"quantity",$quantity);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"dateAdded",$dateAdded);
