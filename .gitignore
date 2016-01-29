@@ -7,5 +7,6 @@
 *.ods
 *.zip
 *.odt
-.dat
-.db
+*.dat
+*.db
+*.htaccess
