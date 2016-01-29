@@ -2,52 +2,36 @@
 
 
 class hospitalPackage {
-/*
-public $myHost = 'localhost';
-public $username = 'root';
-public $password = 'Pr0taci001';
-public $database = 'Coconut';
-*/
+
+
+public $myHost;
+public $username;
+public $password;
+public $database;
 
 
 public function myHost(){
-$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
-$fh = fopen($myFile, 'r');
-$theData = fread($fh,filesize($myFile));
-$assoc_array = array();
-$databaseInfo = explode("\n", $theData);
-$databaseHOST = explode("=",$databaseInfo[0]);
-return $databaseHOST[1];
+return $this->myHost;
 }
 
 public function getUser(){
-$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
-$fh = fopen($myFile, 'r');
-$theData = fread($fh,filesize($myFile));
-$assoc_array = array();
-$databaseInfo = explode("\n", $theData);
-$databaseUSER = explode("=",$databaseInfo[1]);
-return $databaseUSER[1];
+return $this->username;
 }
 
 public function getPass(){
-$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
-$fh = fopen($myFile, 'r');
-$theData = fread($fh,filesize($myFile));
-$assoc_array = array();
-$databaseInfo = explode("\n", $theData);
-$databasePASS = explode("=",$databaseInfo[2]);
-return $databasePASS[1];
+return $this->password;
 }
 
 public function getDB(){
-$myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/database.txt";
-$fh = fopen($myFile, 'r');
-$theData = fread($fh,filesize($myFile));
-$assoc_array = array();
-$databaseInfo = explode("\n", $theData);
-$databaseDB = explode("=",$databaseInfo[3]);
-return $databaseDB[1];
+return $this->database;
+}
+
+
+public function __construct() {
+$this->myHost = $_SERVER['DB_HOST'];
+$this->username = $_SERVER['DB_USER'];
+$this->password = $_SERVER['DB_PASS'];
+$this->database = $_SERVER['DB_DB'];
 }
 
 

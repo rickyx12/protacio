@@ -39,7 +39,7 @@ $newQTY = ($currentQTY - $itemQTY); // less sa inventory as in qty after ibawas 
 $ro->editNow("inventory","inventoryCode",$packageIncluded[1],"quantity",$newQTY); // update qty sa database
 $ro->addCharges_cash_autoDispense("UNPAID",$registrationNo,$packageIncluded[1],$packageIncluded[0],$medPrice[1],"0.00","0.00","0.00","0.00","0.00",$ro->getSynapseTime(),date("Y-m-d"),$username,$services,$packageIncluded[2],"Cash","0.00",$batchNo,$itemQTY,$ro->selectNow("inventory","inventoryLocation","inventoryCode",$packageIncluded[1]),$ro->getRegistrationDetails_branch(),$ro->getRegistrationDetails_room(),"dispensedBy_".$username,$ro->getSynapseTime());
 }else {
-$ro->addCharges_cash("UNPAID",$registrationNo,$packageIncluded[1],$packageIncluded[0],$medPrice,"0.00",$medPrice,$medPrice,"0.00","0.00",$ro->getSynapseTime(),date("Y-m-d"),$username,$services,$packageIncluded[2],"Cash","0.00",$batchNo,$itemQTY,$ro->selectNow("inventory","inventoryLocation","inventoryCode",$packageIncluded[1]),$ro->getRegistrationDetails_branch(),$ro->getRegistrationDetails_room(),"","","");
+$ro->addCharges_cash("UNPAID",$registrationNo,$packageIncluded[1],$packageIncluded[0],$medPrice,"0.00",$medPrice,$medPrice,"0.00","0.00",$ro->getSynapseTime(),date("Y-m-d"),$username,$services,$packageIncluded[2],"Cash","0.00",$batchNo,$itemQTY,$ro->selectNow("inventory","inventoryLocation","inventoryCode",$packageIncluded[1]),$ro->getRegistrationDetails_branch(),$ro->getRegistrationDetails_room(),"","","","","","");
 }
 
 
@@ -77,7 +77,8 @@ $ro->editNow("registrationDetails","registrationNo",$registrationNo,"prePackage"
 
 
 }
-
+$incrementBatchNo = ($ro->selectNow("trackingNo","value","name","batchNo") + 1);
+$ro->editNow("trackingNo","name","batchNo","value",$incrementBatchNo);
 
 /*
 echo "
