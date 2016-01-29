@@ -3,39 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Add Discount</title>
-<script type="text/JavaScript">
-<!--
-function placeFocus() {
-if (document.forms.length > 0) {
-var field = document.forms[0];
-for (i = 0; i < field.length; i++) {
-if ((field.elements[i].type == "text") || (field.elements[i].type == "textarea") || (field.elements[i].type.toString().charAt(0) == "s")) {
-document.forms[0].elements[i].focus();
-break;
-         }
-      }
-   }
-}
-
-//-->
-</script>
-<style type='text/css'>
-.txtBox {border: 1px solid #000;color: #000;height: 30px;width: 320px;padding:4px 4px 4px 5px;}
-.shortField {border: 1px solid #000;color: #000;height: 30px;width: 120px;padding:4px 4px 4px 5px;}
-.labelz {font-size:13px;}
-.comboBox {border: 1px solid #000;color: #000;height: 30px;width: 320px;padding:4px 4px 4px 5px;}
-.comboBoxShort {border: 1px solid #000;color: #000;height: 30px;width: 65px;padding:4px 4px 4px 5px;}
-.panz{border: 1px solid #000;color: #000;height: 18px;width: 20px;border-color:white black black black;font-size:18px;text-align:center;}
-.panz1{border: 1px solid #000;color: #000;height: 18px;width: 20px;border-color:white black black white;font-size:18px;text-align:center;}
-</style>
-</head>
-
-<body onload="placeFocus()">
 <?php
 include("../../myDatabase.php");
 $registrationNo = $_GET['registrationNo'];
 $username = $_GET['username'];
 $ro = new database();
+$ro->coconutDesign();
 $ro->getPatientProfile($registrationNo);
 echo "
 <form method='get' action='addDiscount1.php'>
@@ -50,18 +23,27 @@ echo "
 if($ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" ) {
 echo "
   <tr>
-    <td><font class='labelz'><b>Discount (Cash)</b></font></td>
+    <td>Discount (Cash)</td>
     <td><input type=text maxlength=10 name='discount' autocomplete='off' value='".$ro->getRegistrationDetails_discount()."' class='shortField'></td>
   </tr>
   <tr>
-    <td><font class='labelz'><b>Discount(Company)</b></font></td>
+    <td>Discount(Company)</td>
     <td><input type=text maxlength=10 name='companyDiscount' autocomplete=off value='".$ro->selectNow("registrationDetails","companyDiscount","registrationNo",$registrationNo)."' class='shortField'></td>
   </tr>
 ";
+echo "<Tr>";
+echo "<td>Discount Type</td>";
+echo "<td>";
+$ro->coconutComboBoxStart_long("discountType");
+$ro->showOption("discountType","discountType");
+$ro->coconutComboBoxStop();
+echo "</td>";
+echo "</tr>";
 }
 else {
 echo $ro->coconutHidden("discount","");
 echo $ro->coconutHidden("companyDiscount","");
+echo $ro->coconutHidden("discountType","");
 }
 
 echo "

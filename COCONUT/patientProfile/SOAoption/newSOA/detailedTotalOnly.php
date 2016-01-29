@@ -1068,7 +1068,7 @@ $outStandingBill = (( ($total - $totalCaseRate) ) + $ro->getTakeHomeMeds_total()
 $outStandingBill_company = (($companyTotal)-($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue));
 
 echo "<tr>";
-echo "<td>&nbsp;<font size=2><b>DISCOUNT</b></font></td>";
+echo "<td>&nbsp;<font size=2><b>".$ro->selectNow("registrationDetails","discountType","registrationNo",$registrationNo)."</b></font></td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";

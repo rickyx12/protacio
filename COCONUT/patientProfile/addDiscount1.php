@@ -37,11 +37,13 @@ $registrationNo=$_GET['registrationNo'];
 $username=$_GET['username'];
 $discount=$_GET['discount'];
 $companyDiscount=$_GET['companyDiscount'];
+$discountType = $_GET['discountType'];
 
 $ro = new database();
 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"discount",$discount);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"companyDiscount",$companyDiscount);
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"discountType",$discountType);
 
 echo "
 <script type='text/javascript'>

@@ -110,6 +110,8 @@ body.onload=function() { history.go();  }
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=OTHERS&username=<?php echo $username; ?>" target="departmentX">Other's</a></li>
 
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addDiscountType.php" target="departmentX">Add Discount Type</a></li>
+
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchStockCard.php?username=<?php echo $username; ?>" target="departmentX">Add Inventory</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Doctor/addNewDoctor.php?username=<?php echo $username; ?>" target="departmentX">Doctor</a></li>
@@ -192,6 +194,8 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=All" target='departmentX'>Pharmacy</a></li>
                    
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=CSR&branch=All&show=All" target='departmentX'>CSR</a></li>
+
+ <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/listDiscountType.php" target='departmentX'>Discount Type</a></li>
 
                 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/doctor.php?username=<?php echo $username; ?>&show=All" target='departmentX'>Doctor</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/doctorService.php?username=<?php echo $username; ?>&show=All" target='departmentX'>Doctor Service</a></li>
