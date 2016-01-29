@@ -2923,7 +2923,7 @@ echo "<td>".$row['genericName']."</td>";
 echo "<td>".$this->stockCardMerge_inventory($row['stockCardNo'])."</td>";
 echo "<td>".$this->stockCardMerge_patientCharges($row['stockCardNo'])."</td>";
 echo "<td><a href='/COCONUT/inventory/stockCard/deleteStockCard.php?stockCardNo=$row[stockCardNo]&startLetter=$startLetter'>DEL</td>";
-echo "<td><a href='/COCONUT/inventory/stockCard/rename.php?stockCardNo=$row[stockCardNo]'>RENAME</td>";
+echo "<td><a href='/COCONUT/inventory/stockCard/rename.php?stockCardNo=$row[stockCardNo]&startLetter=$startLetter'>RENAME</td>";
 echo "</tr>";
 }
 

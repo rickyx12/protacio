@@ -1,7 +1,7 @@
 <?php
 include("../../../myDatabase.php");
 $stockCardNo = $_GET['stockCardNo'];
-
+$startLetter = $_GET['startLetter'];
 $ro = new database();
 $ro->coconutDesign();
 
@@ -11,6 +11,7 @@ echo "Generic:&nbsp;<b>".$ro->selectNow("inventoryStockCard","genericName","stoc
 
 $ro->coconutFormStart("get","rename1.php");
 $ro->coconutHidden("stockCardNo",$stockCardNo);
+$ro->coconutHidden("startLetter",$startLetter);
 echo "<Br><br>";
 echo "New Description:";
 $ro->coconutTextBox("description",$ro->selectNow("inventoryStockCard","description","stockCardNo",$stockCardNo));
