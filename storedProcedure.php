@@ -1,6 +1,19 @@
 <?php
 include("myDatabase.php");
 
+
+public $myHost;
+public $username;
+public $password;
+public $database;
+
+public function __construct() {
+$this->myHost = $_SERVER['DB_HOST'];
+$this->username = $_SERVER['DB_USER'];
+$this->password = $_SERVER['DB_PASS'];
+$this->database = $_SERVER['DB_DB'];
+}
+
 class storedProcedure extends database {
 
 public function getTransactionPatient($m,$d,$y,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$module,$branch,$username) {

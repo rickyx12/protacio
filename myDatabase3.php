@@ -4,6 +4,19 @@ include("myDatabase2.php");
 class database3 extends database2 {
 
 
+public $host;
+public $username;
+public $password;
+public $database;
+
+public function __construct() {
+$this->host = $_SERVER['DB_HOST'];
+$this->username = $_SERVER['DB_USER'];
+$this->password = $_SERVER['DB_PASS'];
+$this->database = $_SERVER['DB_DB'];
+}
+
+
 public function getBalances($date1,$date2,$username,$shift) {
 
 echo "
@@ -2971,6 +2984,50 @@ if ( $sql->query($query) ) {
  
 /* close our connection */
 $sql->close();
+}
+
+
+
+public function addDiscountTypez($discountType) {
+
+/* make your connection */
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
+ 
+/* we will just create an insert query here, and use it,
+normally this would be done by form submission or other means */
+$query = "insert into discountType(discountType) values('$discountType')";
+ 
+if ( $sql->query($query) ) {
+   //echo "A new entry has been added with the `id`";
+} else {
+    echo "There was a problem:<br />$query<br />{$sql->error}";
+}
+ 
+/* close our connection */
+$sql->close();
+}
+
+
+
+public function listDiscountType() {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "select discountType from discountType") or die("Query fail: " . mysqli_error()); 
+
+echo "<br><br><br><center>";
+$this->coconutTableStart();
+$this->coconutTableRowStart();
+$this->coconutTableHeader("Discount Type");
+$this->coconutTableRowStop();
+while($row = mysqli_fetch_array($result))
+{
+$this->coconutTableRowStart();
+$this->coconutTableData($row['discountType']);
+$this->coconutTableRowStop();
+}
+
 }
 
 

@@ -3,7 +3,17 @@ include("myDatabase.php");
 
 class database1 extends database  {
 
+public $host;
+public $username;
+public $password;
+public $database;
 
+public function __construct() {
+$this->host = $_SERVER['DB_HOST'];
+$this->username = $_SERVER['DB_USER'];
+$this->password = $_SERVER['DB_PASS'];
+$this->database = $_SERVER['DB_DB'];
+}
 
 
 public function getTotalPx($month,$day,$year,$month1,$day1,$year1,$type) {

@@ -3,6 +3,19 @@ include("myDatabase1.php");
 
 class database2 extends database1 {
 
+
+public $host;
+public $username;
+public $password;
+public $database;
+
+public function __construct() {
+$this->host = $_SERVER['DB_HOST'];
+$this->username = $_SERVER['DB_USER'];
+$this->password = $_SERVER['DB_PASS'];
+$this->database = $_SERVER['DB_DB'];
+}
+
 function ENCRYPT_DECRYPT($Str_Message) {
     $Len_Str_Message=STRLEN($Str_Message);
     $Str_Encrypted_Message="";
