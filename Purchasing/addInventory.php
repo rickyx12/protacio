@@ -50,11 +50,15 @@ $description1 = $_GET['description'];
 $genericName1 = $_GET['genericName'];
 
 if( $status == "new" ) {
+$stockCardNo = $ro->selectNow("trackingNo","value","name","stockCardNo");
+/*
 $ro->getInventoryStockCardNo();
 $myFile = $ro->getReportInformation("homeRoot")."/COCONUT/trackingNo/stockCardNo.dat";
 $fh = fopen($myFile, 'r');
 $stockCardNo = fread($fh, 100);
 fclose($fh);
+*/
+
 }else {
 $stockCardNo=$oldStockCardNo;
 }

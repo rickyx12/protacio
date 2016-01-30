@@ -49,7 +49,8 @@ $expiration = $year."-".$month."-".$day;
 
 if( $status == "new" ) { //new inventory w/ stock card
 $ro->addInventoryStockCard($stockCardNo,$description,$generic,date("Y-m-d"),$addedBy,$inventoryType);
-
+$incrementStockCardNo = ($ro->selectNow("trackingNo","value","name","stockCardNo") + 1);
+$ro->editNow("trackingNo","name","stockCardNo","value",$incrementStockCardNo);
 if( $inventoryType == "supplies" ) {
 
 if((!is_numeric($quantity))||(!is_numeric($unitcost))||(!is_numeric($pricing))||(!is_numeric($freegoods))||(!is_numeric($criticalLevel))){
