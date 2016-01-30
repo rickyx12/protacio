@@ -320,7 +320,7 @@ echo "
             </tr>
 ";
 
-$asql=mysql_query("SELECT refNo, description, unit, unitPrice, quantity, fgquantity FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo LIMIT $page,$num");
+$asql=mysql_query("SELECT inventoryCode,refNo, description, unit, unitPrice, quantity, fgquantity FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo LIMIT $page,$num");
 while($afetch=mysql_fetch_array($asql)){
 $refNo=$afetch['refNo'];
 $description=$afetch['description'];
@@ -328,6 +328,7 @@ $unit=$afetch['unit'];
 $unitPrice=$afetch['unitPrice'];
 $quantity=$afetch['quantity'];
 $fgquantity=$afetch['fgquantity'];
+$inventoryCode=$afetch['inventoryCode'];
 
 $unitPricefmt=number_format($unitPrice,2,'.',',');
 
@@ -342,11 +343,12 @@ echo "
               <td class='style2'><div align='left'>&nbsp;$description</div></td>
               <td class='style2'><div align='right'>$unitPricefmt&nbsp;</div></td>
               <td class='style2'><div align='right'>$amountfmt&nbsp;</div></td>
-              <form id='Edit' name='Edit' method='get' action='AddPurchasedItemsEIConf.php'>
+              <form id='Edit' name='Edit' method='get' action='redirectEdit.php'>
               <input type='hidden' name='username' value='$username' />
               <input type='hidden' name='sino' value='$sino' />
               <input type='hidden' name='page' value='$page' />
               <input type='hidden' name='refNo' value='$refNo' />
+              <input type='hidden' name='inventoryCode' value='$inventoryCode' />
               <td class='style2'><div align='center'>
                 <input type='submit' name='Edit' class='button1' value='  E  ' />
               </div></td>
