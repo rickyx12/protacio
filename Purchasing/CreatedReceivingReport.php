@@ -343,7 +343,7 @@ echo "
               <td class='style2'><div align='left'>&nbsp;$description</div></td>
               <td class='style2'><div align='right'>$unitPricefmt&nbsp;</div></td>
               <td class='style2'><div align='right'>$amountfmt&nbsp;</div></td>
-              <form id='Edit' name='Edit' method='get' action='redirectEdit.php'>
+              <form id='Edit' name='Edit' method='get' action='editPurchasing.php'>
               <input type='hidden' name='username' value='$username' />
               <input type='hidden' name='sino' value='$sino' />
               <input type='hidden' name='page' value='$page' />
