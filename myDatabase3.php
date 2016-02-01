@@ -186,13 +186,15 @@ $this->coconutTableRowStop();
 
 
 
-
+/*
 $this->getVouchersNo();
 $myFile = $this->getReportInformation("homeRoot")."/COCONUT/trackingNo/voucherNo.dat";
 $fh = fopen($myFile, 'r');
 $voucherNo = fread($fh, 100);
 fclose($fh);
 $voucherNo1 = "AP".$voucherNo;
+*/
+$voucherNo1 = $this->selectNow("trackingNo","value","name","voucherNo");
 //insert to purchaseJournal
 $this->accounting_purchaseJournal_accountsPayable = ( $this->accounting_purchaseJournal_itemized_purchases + $this->accounting_purchaseJournal_itemized_inputVAT );
 
@@ -205,7 +207,8 @@ $this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoice
 }else {
 $this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"ACCOUNTS-PAYABLE","",round($this->accounting_purchaseJournal_accountsPayable,2),$row['siNo'],$row['transactionDate']);
 }
-
+$incrementVoucherNo = ($this->selectNow("trackingNo","value","name","voucherNo"));
+$this->editNow("trackingNo","name","voucherNo","value",$incrementVoucherNo);
 }else {
 //do nothing
 }
