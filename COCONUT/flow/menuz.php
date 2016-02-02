@@ -95,6 +95,9 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/accounting/p
 echo "<input type='submit' value='Purchase Journal' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/dermaPx_date.php' target='rightFrame'>";
+echo "<input type='submit' value='Derma Patient' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/accounting/inventoryAdjustmentDate.php' target='rightFrame'>";
 echo "<input type='submit' value='Inventory Adjustment' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";

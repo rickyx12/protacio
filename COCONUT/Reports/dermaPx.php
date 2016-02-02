@@ -1,8 +1,17 @@
 <?php
 include("../../myDatabase3.php");
+$fromMonth = $_GET['fromMonth'];
+$fromDay = $_GET['fromDay'];
+$fromYear = $_GET['fromYear'];
+$toMonth = $_GET['toMonth'];
+$toDay = $_GET['toDay'];
+$toYear = $_GET['toYear'];
 
 $ro = new database3();
 
-$ro->getDermaPx("2016-01-01","2016-01-31");
+$date = $fromYear."-".$fromMonth."-".$fromDay;
+$date1 = $toYear."-".$toMonth."-".$toDay;
+
+$ro->getDermaPx($date,$date1);
 
 ?>
