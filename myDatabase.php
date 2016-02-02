@@ -3749,6 +3749,26 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 
 }
 
+public function who_occupied_d_room($roomNo) {
+
+
+$con = mysql_connect($this->host,$this->username,$this->password);
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+
+mysql_select_db($this->database, $con);
+
+$result = mysql_query("SELECT registrationNo,room from registrationDetails WHERE room like '$roomNo%%%' and dateUnregistered = ''  ");
+
+while($row = mysql_fetch_array($result))
+  {
+return $row['registrationNo'];
+  }
+
+
+}
 
 public function showVacantRoom($branch) {
 
@@ -3760,11 +3780,15 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT Description FROM room WHERE status = 'Vacant' order by Description asc ");
+$result = mysql_query("SELECT Description FROM room order by Description asc ");
 
 while($row = mysql_fetch_array($result))
   {
+if( $this->who_occupied_d_room($row['Description']) == NULL ) {
 echo "<option value='".$row['Description']."'>".$row['Description']."</option>";
+}else {
+echo "<option value='#' style='color:red' disabled>".$row['Description']."-Occupied</option>";
+}
   }
 
 }
@@ -7547,28 +7571,6 @@ return $row['amountPaid'];
 
 }
 
-
-
-public function who_occupied_d_room($roomNo) {
-
-
-$con = mysql_connect($this->host,$this->username,$this->password);
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db($this->database, $con);
-
-$result = mysql_query("SELECT registrationNo,room from registrationDetails WHERE room like '$roomNo%%%' and dateUnregistered = ''  ");
-
-while($row = mysql_fetch_array($result))
-  {
-return $row['registrationNo'];
-  }
-
-
-}
 
 
 
