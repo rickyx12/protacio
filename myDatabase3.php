@@ -3042,6 +3042,89 @@ $this->coconutTableRowStop();
 }
 
 
+public function chargesEditHistory($itemNo) {
+
+echo "
+<style type='text/css'>
+tr:hover { background-color:yellow; color:black;}
+a {  border_bottom:10px; color:black; }
+
+tr.border_bottom td {
+  border-bottom:1pt solid #CCCCCC;
+}
+
+</style>";
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "select itemNo,date,sellingPrice,quantity,discount,total,cashUnpaid,company,phic,username from editedAmount where itemNo = '$itemNo' order by time,date asc") or die("Query fail: " . mysqli_error()); 
+
+echo "<br><br><br><center>";
+$this->coconutTableStart();
+$this->coconutTableRowStart();
+$this->coconutTableHeader("Date");
+$this->coconutTableHeader("Description");
+$this->coconutTableHeader("Price");
+$this->coconutTableHeader("QTY");
+$this->coconutTableHeader("Discount");
+$this->coconutTableHeader("Total");
+$this->coconutTableHeader("CASH");
+$this->coconutTableHeader("HMO");
+$this->coconutTableHeader("PHIC");
+$this->coconutTableHeader("Edit by");
+$this->coconutTableRowStop();
+while($row = mysqli_fetch_array($result))
+{
+$this->coconutTableRowStart();
+$this->coconutTableData($row['date']);
+$this->coconutTableData($this->selectNow("patientCharges","description","itemNo",$row['itemNo']));
+$this->coconutTableData($row['sellingPrice']);
+$this->coconutTableData($row['quantity']);
+$this->coconutTableData($row['discount']);
+$this->coconutTableData($row['total']);
+$this->coconutTableData($row['cashUnpaid']);
+$this->coconutTableData($row['company']);
+$this->coconutTableData($row['phic']);
+$this->coconutTableData($row['username']);
+$this->coconutTableRowStop();
+}
+$this->coconutTableStop();
+echo "<br><br>";
+
+$this->coconutTableStart();
+$this->coconutTableRowStart();
+$this->coconutTableHeader("Date");
+$this->coconutTableHeader("Description");
+$this->coconutTableHeader("Price");
+$this->coconutTableHeader("QTY");
+$this->coconutTableHeader("Discount");
+$this->coconutTableHeader("Total");
+$this->coconutTableHeader("CASH");
+$this->coconutTableHeader("HMO");
+$this->coconutTableHeader("PHIC");
+$this->coconutTableHeader("&nbsp;");
+$this->coconutTableRowStop();
+$this->coconutTableRowStart();
+$this->coconutTableData("&nbsp;<font color=red>".$this->selectNow("patientCharges","dateCharge","itemNo",$itemNo)."</font>&nbsp;&nbsp;&nbsp;");
+$this->coconutTableData($this->selectNow("patientCharges","description","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","sellingPrice","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","quantity","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","discount","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","total","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","cashUnpaid","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","company","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","phic","itemNo",$itemNo));
+$this->coconutTableData($this->selectNow("patientCharges","chargeBy","itemNo",$itemNo));
+$this->coconutTableRowStop();
+$this->coconutTableStop();
+
+
+
+
+}
+
+
 
 }
 

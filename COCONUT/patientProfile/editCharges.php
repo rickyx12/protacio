@@ -40,6 +40,10 @@ font-size:13px;
 
 
 ";
+if($ro->selectNow("editedAmount","editNo","itemNo",$itemNo) != "") {
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/chargesEditHistory.php?itemNo=$itemNo' style='text-decoration:none; color:red'>View Edit History</a>";
+}else { }
+
 echo "<br><br>";
 echo "<center><div style='border:1px solid #000000; width:500px; height:auto;	'>";
 

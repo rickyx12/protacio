@@ -64,7 +64,10 @@ $beforeEdit_total = $ro->selectNow("patientCharges","total","itemNo",$itemNo);
 $beforeEdit_cash = $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemNo);
 $beforeEdit_company = $ro->selectNow("patientCharges","company","itemNo",$itemNo);
 $beforeEdit_phic = $ro->selectNow("patientCharges","phic","itemNo",$itemNo);
-$ro->editedAmount($itemNo,$registrationNo,$beforeEdit_sellingPrice,$beforeEdit_quantity,$beforeEdit_discount,$beforeEdit_total,$beforeEdit_cash,$beforeEdit_company,$beforeEdit_phic,date("H:i:s"),date("Y-m-d"),$username);
+$beforeEdit_user = $ro->selectNow("patientCharges","chargeBy","itemNo",$itemNo);
+$beforeEdit_dateCharge = $ro->selectNow("patientCharges","dateCharge","itemNo",$itemNo);
+$beforeEdit_timeCharge = $ro->selectNow("patientCharges","timeCharge","itemNo",$itemNo);
+$ro->editedAmount($itemNo,$registrationNo,$beforeEdit_sellingPrice,$beforeEdit_quantity,$beforeEdit_discount,$beforeEdit_total,$beforeEdit_cash,$beforeEdit_company,$beforeEdit_phic,$beforeEdit_timeCharge,$beforeEdit_dateCharge,$beforeEdit_user);
 //if tally execute edit
 $ro->editCharges($itemNo,"description",$description);
 $ro->editCharges($itemNo,"sellingPrice",$sellingPrice);
@@ -84,7 +87,9 @@ $ro->editCharges($itemNo,"timePaid",$timePaid);
 $ro->editCharges($itemNo,"paidBy",$paidBy);
 $ro->editCharges($itemNo,"phic",$phicCovered);
 $ro->editCharges($itemNo,"remarks",$remarks);
-
+$ro->editCharges($itemNo,"chargeBy",$username);
+$ro->editCharges($itemNo,"dateCharge",date("Y-m-d"));
+$ro->editCharges($itemNo,"timeCharge",date("H:is:"));
 if($title=="DERMA"){
 $dermaCapital=$_GET['dermaCapital'];
 $ro->editCharges($itemNo,"dermaCapital",$dermaCapital);
