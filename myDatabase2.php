@@ -1379,7 +1379,7 @@ while($row = mysql_fetch_array($result))
 echo "<tr>";
 
 if( $this->getPatient_in_the_room($row['Description']) != "" ) {
-echo "<td>&nbsp;<font size=1 color=red>".$descz[0]."</font><br>
+echo "<td>&nbsp;<font size=1 color=red>".$row['Description']."</font><br>
 ".$this->getPatient_in_the_room($row['Description'])."
 </td>";
 $this->listRoom_total++;
