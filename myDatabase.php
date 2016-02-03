@@ -8418,14 +8418,14 @@ echo "</tr>";
 while($row = mysql_fetch_array($result))
   {
 echo "<tr>";
-$myRoom = preg_split ("/\_/", $row['Description']); 
+//$myRoom = preg_split ("/\_/", $row['Description']); 
 echo "<td>&nbsp;".$myRoom[0]."&nbsp;</td>";
 echo "<td>&nbsp;".$row['type']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['rate']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['floor']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['branch']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['status']."&nbsp;</td>";
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/Department/redirect.php?username=&registrationNo=".$this->who_occupied_d_room($myRoom[0])."' target='_blank'>".$this->who_occupied_d_room($myRoom[0])."</a>&nbsp;</td>";
+echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/Department/redirect.php?username=&registrationNo=".$this->who_occupied_d_room($row['Description'])."' target='_blank'>".$this->who_occupied_d_room($row['Description'])."</a>&nbsp;</td>";
 
 
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/editRoom.php?roomNo=$row[roomNo]&description=$row[Description]&type=$row[type]&rate=$row[rate]&branch=$row[branch]&username=$username&show=$show&desc=$desc&floor=$row[floor]&status=$row[status]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/pencil.jpeg'></a>&nbsp;</td>";
