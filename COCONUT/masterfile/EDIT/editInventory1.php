@@ -60,12 +60,14 @@ $ro->inventoryAdjustment($inventoryCode,$stockCardNo,$terms1,round($accountPayab
 }
 
 //edit history
-$qty = $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode);
-$unitcost = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode);
-$opdPrice = $ro->selectNow("inventory","opdPrice","inventoryCode",$inventoryCode);
-$ipdPrice = $ro->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode);
-
-$ro->editedInventory($stockCardNo,$inventoryCode,$description,$generic,$qty,$unitcost,$opdPrice,$ipdPrice,$inventoryType,date("H:i:s"),date("Y-m-d"),$username);
+$beforeEdit_qty = $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode);
+$beforeEdit_unitcost = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode);
+$beforeEdit_opdPrice = $ro->selectNow("inventory","opdPrice","inventoryCode",$inventoryCode);
+$beforeEdit_ipdPrice = $ro->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode);
+$beforeEdit_dateAdded = $ro->selectNow("inventory","dateAdded","inventoryCode",$inventoryCode);
+$beforeEdit_timeAdded = $ro->selectNow("inventory","timeAdded","inventoryCode",$inventoryCode);
+$beforeEdit_username = $ro->selectNow("inventory","addedBy","inventoryCode",$inventoryCode);
+$ro->editedInventory($stockCardNo,$inventoryCode,$description,$generic,$beforeEdit_qty,$beforeEdit_unitcost,$beforeEdit_opdPrice,$beforeEdit_ipdPrice,$inventoryType,$beforeEdit_timeAdded,$beforeEdit_dateAdded,$beforeEdit_username);
 
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"description",$description);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"genericName",$generic);
@@ -87,6 +89,9 @@ $ro->editNow("inventory","inventoryCode",$inventoryCode,"supplier",$supplier);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"locked",$lock);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"ipdPrice",$ipdPrice);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"opdPrice",$opdPrice);
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"timeAdded",date("H:i:s"));
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"dateAdded",date("Y-m-d"));
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"addedBy",$username);
 if( $inventoryType == "medicine" ) {
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"beginningCapital", $unitcost * $quantity  );
 }else {

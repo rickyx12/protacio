@@ -3118,11 +3118,81 @@ $this->coconutTableData($this->selectNow("patientCharges","phic","itemNo",$itemN
 $this->coconutTableData($this->selectNow("patientCharges","chargeBy","itemNo",$itemNo));
 $this->coconutTableRowStop();
 $this->coconutTableStop();
+}
 
 
+
+public function showEditedInventory($inventoryCode) {
+
+echo "
+<style type='text/css'>
+tr:hover { background-color:yellow; color:black;}
+a {  border_bottom:10px; color:black; }
+
+tr.border_bottom td {
+  border-bottom:1pt solid #CCCCCC;
+}
+
+</style>";
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "select description,genericName,quantity,unitcost,opdPrice,ipdPrice,inventoryType,date,username from editedInventory where inventoryCode = '$inventoryCode' ") or die("Query fail: " . mysqli_error()); 
+
+echo "<br><br><br><center>";
+$this->coconutTableStart();
+$this->coconutTableRowStart();
+$this->coconutTableHeader("Date");
+$this->coconutTableHeader("Description");
+$this->coconutTableHeader("Generic");
+$this->coconutTableHeader("QTY");
+$this->coconutTableHeader("Unitcost");
+$this->coconutTableHeader("OPD");
+$this->coconutTableHeader("IPD");
+$this->coconutTableHeader("User");
+$this->coconutTableRowStop();
+while($row = mysqli_fetch_array($result))
+{
+$this->coconutTableRowStart();
+$this->coconutTableData($row['date']);
+$this->coconutTableData($row['description']);
+$this->coconutTableData($row['genericName']);
+$this->coconutTableData($row['quantity']);
+$this->coconutTableData($row['unitcost']);
+$this->coconutTableData($row['opdPrice']);
+$this->coconutTableData($row['ipdPrice']);
+$this->coconutTableData($row['username']);
+$this->coconutTableRowStop();
+}
+$this->coconutTableStop();
+echo "<Br><br>";
+
+$this->coconutTableStart();
+$this->coconutTableRowStart();
+$this->coconutTableHeader("Date");
+$this->coconutTableHeader("Description");
+$this->coconutTableHeader("Generic");
+$this->coconutTableHeader("QTY");
+$this->coconutTableHeader("Unitcost");
+$this->coconutTableHeader("OPD");
+$this->coconutTableHeader("IPD");
+$this->coconutTableHeader("User");
+$this->coconutTableRowStop();
+$this->coconutTableRowStart();
+$this->coconutTableData($this->selectNow("inventory","dateAdded","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","description","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","genericName","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","quantity","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","unitcost","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","opdPrice","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode));
+$this->coconutTableData($this->selectNow("inventory","addedBy","inventoryCode",$inventoryCode));
+$this->coconutTableRowStop();
+$this->coconutTableStop();
 
 
 }
+
 
 
 

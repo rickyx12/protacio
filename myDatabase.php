@@ -7999,7 +7999,11 @@ echo "<td>&nbsp;<a href='/COCONUT/inventory/transferInventory.php?stockCardNo=$r
 echo "<td>&nbsp;<font class='data'>".$row['inventoryCode']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'><a href='/COCONUT/inventory/salesCost.php?stockCardNo=$row[stockCardNo]' style='text-decoration:none; color:black;'>".$row['stockCardNo']."</a></font>&nbsp;</td>";
 
+if($this->selectNow("editedInventory","editNo","inventoryCode",$row['inventoryCode']) != "" ) {
+echo "<td>&nbsp;<a href='/COCONUT/inventory/viewDispensing_date.php?inventoryCode=$row[inventoryCode]&description=$row[description]' style='text-decoration:none; color:black;' target='_blank'><font class='data'>".$row['description']."</font></a><Br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/editHistory.php?inventoryCode=$row[inventoryCode]' style='text-decoration:none; color:red; font-size:11px;'>&nbsp;View Edit History</a>&nbsp;</td>";
+}else {
 echo "<td>&nbsp;<a href='/COCONUT/inventory/viewDispensing_date.php?inventoryCode=$row[inventoryCode]&description=$row[description]' style='text-decoration:none; color:black;' target='_blank'><font class='data'>".$row['description']."</font></a>&nbsp;</td>";
+}
 echo "<td>&nbsp;<font class='data'>".$row['genericName']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".number_format($row['quantity'],2)."</font></td>";
 
