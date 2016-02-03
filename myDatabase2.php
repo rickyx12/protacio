@@ -1321,7 +1321,7 @@ $this->coconutTableStop();
 
 
 
-
+/*
 public function getPatient_in_the_room($room) {
 
 $con = mysql_connect($this->host,$this->username,$this->password);
@@ -1341,7 +1341,7 @@ return "&nbsp;<font size=1 color=black>$row[registrationNo]-".$row['lastName']."
   }
 
 }
-
+*/
 public $listRoom_total;
 
 public function listRoom_total() {

@@ -3749,6 +3749,7 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 
 }
 
+/*
 public function who_occupied_d_room($roomNo) {
 
 
@@ -3769,6 +3770,27 @@ return $row['registrationNo'];
 
 
 }
+*/
+
+public function getPatient_in_the_room($room) {
+
+$con = mysql_connect($this->host,$this->username,$this->password);
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+
+mysql_select_db($this->database, $con);
+
+$result = mysql_query("SELECT pr.lastName,pr.firstName,rd.dateRegistered,rd.registrationNo from patientRecord pr,registrationDetails rd WHERE rd.room = '$room' and rd.dateUnregistered = '' and pr.patientNo = rd.patientNo and rd.dateRegistered not like 'DELETED%%%%%%%%' ");
+
+
+while($row = mysql_fetch_array($result))
+  {
+return "&nbsp;<font size=1 color=black>$row[registrationNo]-".$row['lastName'].", ".$row['firstName']." </font>";
+  }
+
+}
 
 public function showVacantRoom($branch) {
 
@@ -3784,11 +3806,11 @@ $result = mysql_query("SELECT Description FROM room order by Description asc ");
 
 while($row = mysql_fetch_array($result))
   {
-    //$patient = ($ro->selectNow("patientRecord","completeName","patientNo",$this->selectNow("registrationDetails","patientNo","registrationNo",$this->who_occupied_d_room($row['Description']))));
-    if($this->who_occupied_d_room($row['Description']) == "") {
+    $patient = $this->getPatient_in_the_room($row['Description']);
+    if($patient == "") {
     echo "<option value='".$row['Description']."'>".$row['Description']."</option>";
   }else {
-    echo "<option value='".$row['Description']."' style='color:red;' disabled>".$row['Description']." - ".$this->who_occupied_d_room($row['Description'])."</option>";
+    echo "<option value='".$row['Description']."' style='color:red;' disabled>".$row['Description']." - ".$patient."</option>";
   }
   }
 
@@ -8411,7 +8433,7 @@ echo "<th>&nbsp;Type&nbsp;</th>";
 echo "<th>&nbsp;Rate&nbsp;</th>";
 echo "<th>&nbsp;Floor&nbsp;</th>";
 echo "<th>&nbsp;Branch&nbsp;</th>";
-echo "<th>&nbsp;Status&nbsp;</th>";
+//echo "<th>&nbsp;Status&nbsp;</th>";
 echo "<th>&nbsp;Patient&nbsp;</th>";
 echo "<th></th>";
 echo "</tr>";
@@ -8424,8 +8446,8 @@ echo "<td>&nbsp;".$row['type']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['rate']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['floor']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['branch']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['status']."&nbsp;</td>";
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/Department/redirect.php?username=&registrationNo=".$this->who_occupied_d_room($myRoom[0])."' target='_blank'>".$this->who_occupied_d_room($myRoom[0])."</a>&nbsp;</td>";
+//echo "<td>&nbsp;".$row['status']."&nbsp;</td>";
+echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/Department/redirect.php?username=&registrationNo=".$this->getPatient_in_the_room($row['Description'])."' target='_blank'>".$this->getPatient_in_the_room($row['Description'])."</a>&nbsp;</td>";
 
 
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/editRoom.php?roomNo=$row[roomNo]&description=$row[Description]&type=$row[type]&rate=$row[rate]&branch=$row[branch]&username=$username&show=$show&desc=$desc&floor=$row[floor]&status=$row[status]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/pencil.jpeg'></a>&nbsp;</td>";
