@@ -3780,20 +3780,14 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT Description FROM room order by Description asc ");
+$result = mysql_query("SELECT Description FROM room WHERE status = 'Vacant' order by Description asc ");
 
 while($row = mysql_fetch_array($result))
   {
-if( $this->who_occupied_d_room($row['Description']) == NULL ) {
-echo "<option value='".$row['Description']."'>".$row['Description']."</option>";
-}else {
-echo "<option value='#' style='color:red' disabled>".$row['Description']."-Occupied</option>";
-}
+    echo "<option value='".$row['Description']."'>".$row['Description']."</option>";
   }
 
 }
-
-
 
 public function showExam() {
 
