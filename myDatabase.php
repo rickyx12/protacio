@@ -3780,11 +3780,16 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT Description FROM room WHERE status = 'Vacant' order by Description asc ");
+$result = mysql_query("SELECT Description FROM room order by Description asc ");
 
 while($row = mysql_fetch_array($result))
   {
+    //$patient = ($ro->selectNow("patientRecord","completeName","patientNo",$this->selectNow("registrationDetails","patientNo","registrationNo",$this->who_occupied_d_room($row['Description']))));
+    if($this->who_occupied_d_room($row['Description']) == "") {
     echo "<option value='".$row['Description']."'>".$row['Description']."</option>";
+  }else {
+    echo "<option value='".$row['Description']."' style='color:red;' disabled>".$row['Description']." - ".$this->who_occupied_d_room($row['Description'])."</option>";
+  }
   }
 
 }
