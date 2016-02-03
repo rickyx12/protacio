@@ -1378,7 +1378,7 @@ while($row = mysql_fetch_array($result))
 $descz = preg_split ("/_/", $row['Description']); 
 echo "<tr>";
 
-if( $row['status'] == "Occupied" ) {
+if( $this->getPatient_in_the_room($descz[0]) != "" ) {
 echo "<td>&nbsp;<font size=1 color=red>".$descz[0]."</font><br>
 ".$this->getPatient_in_the_room($row['Description'])."
 </td>";
