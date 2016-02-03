@@ -1365,7 +1365,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT * FROM room WHERE floor = '$floor' order by Description asc ");
+$result = mysql_query("SELECT Description FROM room WHERE floor = '$floor' order by Description asc ");
 /*
 echo "<center>";
 echo "<table border=1 cellspacing=0 rules=all width='15%'>";
@@ -1375,16 +1375,16 @@ echo "</tr>";
 */
 while($row = mysql_fetch_array($result))
   {
-$descz = preg_split ("/_/", $row['Description']); 
+//$descz = preg_split ("/_/", $row['Description']); 
 echo "<tr>";
 
-if( $this->getPatient_in_the_room($descz[0]) != "" ) {
+if( $this->getPatient_in_the_room($row['Description']) != "" ) {
 echo "<td>&nbsp;<font size=1 color=red>".$descz[0]."</font><br>
 ".$this->getPatient_in_the_room($row['Description'])."
 </td>";
 $this->listRoom_total++;
 }else {
-echo "<td>&nbsp;<font size=1 color=blue>".$descz[0]."</font></tD>";
+echo "<td>&nbsp;<font size=1 color=blue>".$row['Description']."</font></tD>";
 }
 
 /*
