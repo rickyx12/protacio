@@ -57,6 +57,7 @@ $ro->coconutComboBoxStart_short("shift");
 echo "<option value='1'>1</option>";
 echo "<option value='2'>2</option>";
 echo "<option value='3'>3</option>";
+echo "<option value='all'>all</option>";
 $ro->coconutComboBoxStop();
 echo "</td>";
 echo "</tr>";
