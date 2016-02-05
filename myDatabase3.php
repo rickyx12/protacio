@@ -1433,7 +1433,7 @@ a {  border_bottom:10px; color:black; }
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if($shift == "all") {
-$result = mysqli_query($connection, " select reportShift,registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift in ('1','2','3') and status IN ('PAID','UNPAID') and orNO != '' group by paidVia,registrationNo order by reportShift,orNO asc") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select reportShift,registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift in ('1','2','3') and status IN ('PAID','UNPAID') and orNO != '' group by paidVia,registrationNo order by reportShift asc") or die("Query fail: " . mysqli_error()); 
 }else {
 $result = mysqli_query($connection, " select registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift = '$shift' and status IN ('PAID','UNPAID') and orNO != '' group by paidVia,registrationNo order by orNO asc") or die("Query fail: " . mysqli_error()); 
 }
@@ -3262,6 +3262,50 @@ $this->coconutTableStop();
 
 
 }
+
+
+public function addDailyCashierAttribute($attributeName,$attributeValue,$shift,$date) {
+
+/* make your connection */
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
+ 
+/* we will just create an insert query here, and use it,
+normally this would be done by form submission or other means */
+$query = "insert into dailyCashiersAttr(attributeName,attributeValue,shift,date) values('$attributeName','$attributeValue','$shift','$date')";
+ 
+if ( $sql->query($query) ) {
+   //echo "A new entry has been added with the `id`";
+}else {
+    echo "There was a problem:<br />$query<br />{$sql->error}";
+}
+ 
+/* close our connection */
+$sql->close();
+}
+
+
+
+
+public function getDailyCashiersAttribute($shift,$date) {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "select attrNo,attributeName,attributeValue from dailyCashiersAttr where shift='$shift' and date='$date' ") or die("Query fail: " . mysqli_error()); 
+
+echo "<table border=0>";
+while($row = mysqli_fetch_array($result))
+{
+echo "<tr>";
+echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/Cashier/cashierReport/deleteAttribute.php?attrNo=$row[attrNo]&date=$date&shift=$shift' style='text-decoration:none; color:black;'><font size=2>".$row['attributeName']."</font></a></td>";
+echo "<td><font size=2>-------></font></td>";
+echo "<td><font size=2>".$row['attributeValue']."</font></td>";
+echo "</tr>";
+}
+echo "</table>";
+}
+
+
 
 
 
