@@ -3297,9 +3297,9 @@ echo "<table border=0>";
 while($row = mysqli_fetch_array($result))
 {
 echo "<tr>";
-echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/Cashier/cashierReport/deleteAttribute.php?attrNo=$row[attrNo]&date=$date&shift=$shift' style='text-decoration:none; color:black;'><font size=2>".$row['attributeName']."</font></a></td>";
+echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/Cashier/cashierReport/deleteAttribute.php?attrNo=$row[attrNo]&date=$date&shift=$shift' style='text-decoration:none; color:black;'><font size=3>".$row['attributeName']."</font></a></td>";
 echo "<td><font size=2>-------></font></td>";
-echo "<td><font size=2>".$row['attributeValue']."</font></td>";
+echo "<td><font size=3>".$row['attributeValue']."</font></td>";
 echo "</tr>";
 }
 echo "</table>";
