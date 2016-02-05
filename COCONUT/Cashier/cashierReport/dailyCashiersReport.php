@@ -27,7 +27,7 @@ function printF(printData)
 <div id='printData'>
 
 <?php
-echo "<img src='http://".$ro->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/ProtacioHeader.png' width='100%' height='20%'>";
+echo "<img src='http://".$ro->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/ProtacioHeader.png' width='100%' height='10%'>";
 
 echo "<style type='text/css'>
 .txt {
