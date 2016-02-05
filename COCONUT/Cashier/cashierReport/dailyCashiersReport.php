@@ -16,7 +16,12 @@ echo "<style type='text/css'>
 }
 </style>";
 
-echo "<center><br><Br>";
+echo "<center>
+<Br>
+<font><a href='http://".$ro->getMyUrl()."/COCONUT/Cashier/cashierReport/attributes_handler.php?date=$date&shift=$shift' style='text-decoration:none;'>Revenue Report</a></font>
+<br>
+$date
+<br><Br>";
 echo "<table border=0 width='50%' cellspacing=0>";
 echo "<Tr>";
 
@@ -218,6 +223,8 @@ echo "</tr>";
 
 
 echo "</table>";
-}else { }
+}else { 
+$ro->getDailyCashiersAttribute($shift,$date);
+}
 
 ?>
