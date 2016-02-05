@@ -10,6 +10,8 @@ $ro = new database3();
 
 $date = $year."-".$month."-".$day;
 
+echo "<img src='http://".$ro->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/ProtacioHeader.png' width='100%' height='20%'>";
+
 echo "<style type='text/css'>
 .txt {
 	font-size:13px;
@@ -22,7 +24,7 @@ echo "<center>
 <br>
 $date
 <br><Br>";
-echo "<table border=0 width='50%' cellspacing=0>";
+echo "<table border=0 width='100%' cellspacing=0>";
 echo "<Tr>";
 
 if($shift == "all") {
@@ -30,7 +32,7 @@ echo "<th>Shift</th>";
 }else { }
 
 echo "<th>Date</th>";
-echo "<th>Cash/Check</th>";
+echo "<th>Ca/Ch</th>";
 echo "<th>OR#</th>";
 echo "<th>Patient Name</th>";
 echo "<th>Amount</th>";
