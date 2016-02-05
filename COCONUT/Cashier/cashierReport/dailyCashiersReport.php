@@ -9,7 +9,24 @@ $username = "sion";
 $ro = new database3();
 
 $date = $year."-".$month."-".$day;
+?>
 
+<script type="text/javascript">
+function printF(printData)
+{
+	var a = window.open ('',  '',"status=1,scrollbars=1, width=auto,height=auto");
+	a.document.write(document.getElementById(printData).innerHTML.replace(/<a\/?[^>]+>/gi, ''));
+	a.document.close();
+	a.focus();
+	a.print();
+	a.close();
+}
+</script>
+
+<a href="#" onClick="printF('printData')" style="text-decoration:none; color:black;">PRINT</a>
+<div id='printData'>
+
+<?php
 echo "<img src='http://".$ro->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/ProtacioHeader.png' width='100%' height='20%'>";
 
 echo "<style type='text/css'>
@@ -240,3 +257,4 @@ $ro->getDailyCashiersAttribute($shift,$date);
 }
 
 ?>
+</div>
