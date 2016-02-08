@@ -88,7 +88,7 @@ $ro->editCharges($itemNo,"paidBy",$paidBy);
 $ro->editCharges($itemNo,"phic",$phicCovered);
 $ro->editCharges($itemNo,"remarks",$remarks);
 $ro->editCharges($itemNo,"chargeBy",$username);
-$ro->editCharges($itemNo,"dateCharge",date("Y-m-d"));
+$ro->editCharges($itemNo,"dateCharge",$dateCharge);
 $ro->editCharges($itemNo,"timeCharge",date("H:is:"));
 if($title=="DERMA"){
 $dermaCapital=$_GET['dermaCapital'];
