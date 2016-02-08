@@ -1716,6 +1716,7 @@ SELECT * from patientPayment where paymentNo = '$paymentNo'";
 if ( $sql->query($query) ) {
  //echo "A new entry has been added with the `id`";
 $this->editNow("patientPayment","paymentNo",$paymentNo,"reportDate",$reportDate);
+$this->editNow("patientPayment","paymentNo",$paymentNo,"datePaid",$reportDate);
 $this->editNow("patientPayment","paymentNo",$paymentNo,"shift",$reportShift);
 } else {
 echo "There was a problem:<br />$query<br />{$sql->error}";
