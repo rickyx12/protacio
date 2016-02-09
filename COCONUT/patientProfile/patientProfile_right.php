@@ -33,18 +33,18 @@ echo "<br>";
 if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) {
 
 if($ro->getRegistrationDetails_dateUnregistered() == "" ) {
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharge_new.php?registrationNo=$registrationNo&protoType=Discharged&room=".$ro->getRegistrationDetails_room()."&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font><br>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharge_new.php?registrationNo=$registrationNo&protoType=Discharged&room=".$ro->getRegistrationDetails_room()."&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
 }else {
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharged.php?registrationNo=$registrationNo&protoType=Undischarged&room=&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font><br>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharged.php?registrationNo=$registrationNo&protoType=Undischarged&room=&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
 }
 
 }else {
 
 
 if($ro->getRegistrationDetails_dateUnregistered() == "" ) {
-echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font><br>";
+echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
 }else {
-echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font><br>";
+echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue' >View Discharged History</font></a><br>";
 }
 
 

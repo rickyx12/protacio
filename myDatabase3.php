@@ -3328,6 +3328,33 @@ $sql->close();
 
 
 
+public function viewDischargedHistory($registrationNo) {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "select status,time,date,username from dischargeHistory where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
+
+$this->coconutTableStart();
+$this->coconutTableRowStart();
+$this->coconutTableHeader("Status");
+$this->coconutTableHeader("Time");
+$this->coconutTableHeader("Date");
+$this->coconutTableHeader("User");
+$this->coconutTableRowStop();
+while($row = mysqli_fetch_array($result))
+{
+$this->coconutTableRowStart();
+$this->coconutTableData($row['status']);
+$this->coconutTableData($row['time']);
+$this->coconutTableData($row['date']);
+$this->coconutTableData($row['username']);
+$this->coconutTableRowStop();
+}
+$this->coconutTableStop();
+}
+
+
 
 
 }
