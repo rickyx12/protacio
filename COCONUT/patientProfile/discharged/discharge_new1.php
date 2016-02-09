@@ -1,5 +1,5 @@
 <?php
-include("../../../myDatabase2.php");
+include("../../../myDatabase3.php");
 if( isset($_GET['itemNo']) ) {
 $itemNo = $_GET['itemNo'];
 $countItem = count($itemNo);
@@ -10,7 +10,7 @@ $countItem = "";
 $registrationNo = $_GET['registrationNo'];
 $username = $_GET['username'];
 
-$ro = new database2();
+$ro = new database3();
 
 if( isset($_GET['itemNo']) ) {
 for( $x=0;$x<$countItem;$x++ ) {
@@ -24,7 +24,7 @@ $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"timeUnregis
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh",$username);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"unregisteredBy",$username);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")."@".$ro->getSynapseTime());
-
+$ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),date("Y-m-d"),$username);
 
 echo "<center><br><Br><Br><font color=red>Patient Discharged</font>";
 

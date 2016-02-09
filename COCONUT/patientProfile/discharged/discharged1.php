@@ -1,11 +1,11 @@
 <?php
-include("../../../storedProcedure.php");
+include("../../../myDatabase3.php");
 $registrationNo = $_GET['registrationNo'];
 $protoType = $_GET['protoType'];
 $room = $_GET['room'];
 $username = $_GET['username'];
-$ro = new storedProcedure();
 
+$ro = new database3();
 
 if($protoType == "Discharged") {
 $ro->EditNow("room","Description",$room,"Status","Vacant");
@@ -27,7 +27,7 @@ $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"room","");
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"unregisteredBy","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date","");
-
+$ro->addDischargeHistory($registrationNo,"Open",date("H:i:s"),date("Y-m-d"),$username);
 }
 echo "
 <script type='text/javascript'>";
