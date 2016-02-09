@@ -6297,10 +6297,10 @@ if (!$con)
 mysql_select_db($this->database, $con);
 
 if( $type == "OPD" ) {
-$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and (pc.status = 'UNPAID' or pc.status = 'BALANCE') and rd.type in ('OPD','walkin') group by rd.registrationNo order by pr.lastName asc   ");
+$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and pc.status = 'UNPAID' and rd.type in ('OPD','walkin') group by rd.registrationNo order by pr.lastName asc   ");
 
 }else {
-$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and (pc.status = 'UNPAID' or pc.status = 'BALANCE') and rd.type='$type' group by rd.registrationNo order by pr.lastName asc   ");
+$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and pc.status = 'UNPAID' and rd.type='$type' group by rd.registrationNo order by pr.lastName asc   ");
 }
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";

@@ -1,5 +1,5 @@
 <?php
-include("../../myDatabase2.php");
+include("../../myDatabase3.php");
 $registrationNo = $_GET['registrationNo'];
 $cashInputted = $_GET['cashInputted'];
 $targetAmount = $_GET['targetAmount'];
@@ -8,7 +8,7 @@ $orNO = $_GET['orNO'];
 $datePaid = $_GET['datePaid'];
 $shift = $_GET['shift'];
 
-$ro = new database2();
+$ro = new database3();
 $excessPaid1=0;
 //echo ( $cash - $targetAmount );
 echo "<center><br>";
@@ -49,7 +49,7 @@ $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregis
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")); //set as MGH [LOCKED ACCOUNT] 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"balance",$ro->getTotal("cashUnpaid","",$registrationNo)); 
-
+$ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),date("Y-m-d"),$username);
 }else {
 echo "2";
 $ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid","0");
@@ -96,6 +96,7 @@ $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregis
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered",date("H:i:s")); //time discharged
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")); //set as MGH [LOCKED ACCOUNT] 
+$ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),date("Y-m-d"),$username);
 }
 
 $excessPaid1 = $excessPaid;

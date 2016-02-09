@@ -1,5 +1,5 @@
 <?php
-include("../../myDatabase2.php");
+include("../../myDatabase3.php");
 $cashierPaid = $_GET['cashierPaid'];
 $countz = count($cashierPaid);
 $totalPaid = $_GET['totalPaid'];
@@ -20,7 +20,7 @@ $year = $_GET['year']; // year paid
 
 $shift = $_GET['shift'];
 
-$ro = new database2();
+$ro = new database3();
 
 $ro->getPatientProfile($registrationNo);
 
@@ -88,6 +88,7 @@ $ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharg
 $ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"timeUnregistered",date("H:i:s")); //time discharged
 $ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
 $ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"mgh_date",$datePaid); //set as MGH [LOCKED ACCOUNT] 
+$ro->addDischargeHistory($ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"Closed",date("H:i:s"),date("Y-m-d"),$username);
 }
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"control_datePaid",$year."-".$month."-".$day);
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"reportShift",$shift);
