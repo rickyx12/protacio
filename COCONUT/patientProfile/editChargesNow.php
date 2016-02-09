@@ -67,6 +67,15 @@ $beforeEdit_phic = $ro->selectNow("patientCharges","phic","itemNo",$itemNo);
 $beforeEdit_user = $ro->selectNow("patientCharges","chargeBy","itemNo",$itemNo);
 $beforeEdit_dateCharge = $ro->selectNow("patientCharges","dateCharge","itemNo",$itemNo);
 $beforeEdit_timeCharge = $ro->selectNow("patientCharges","timeCharge","itemNo",$itemNo);
+
+//kung ndi inedit ng user ung dateCharge then use current date
+if($beforeEdit_dateCharge == $dateCharge) {
+$dateCharge = date("Y-m-d");
+}else {
+//kung inedit ng user ung dateCharge then use the inputted date by the user
+$dateCharge = $dateCharge;
+}
+
 $ro->editedAmount($itemNo,$registrationNo,$beforeEdit_sellingPrice,$beforeEdit_quantity,$beforeEdit_discount,$beforeEdit_total,$beforeEdit_cash,$beforeEdit_company,$beforeEdit_phic,$beforeEdit_timeCharge,$beforeEdit_dateCharge,$beforeEdit_user);
 //if tally execute edit
 $ro->editCharges($itemNo,"description",$description);
