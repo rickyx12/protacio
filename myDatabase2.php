@@ -4828,7 +4828,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.cashPaid=0 HAVING MAX(pc.cashUnpaid) ");
+$result = mysql_query("SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.cashUnpaid > 0 HAVING MAX(pc.cashUnpaid) ");
 
 
 while($row = mysql_fetch_array($result))
