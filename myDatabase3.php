@@ -1680,25 +1680,21 @@ echo "</form>";
 
 
 
-public function editHistory($itemNo,$reportDate,$reportShift) {
+public function voidItemized_OPD($collectionNo,$itemNo,$username) {
 
 /* make your connection */
 $sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
-$query = "INSERT INTO patientCharges_history
-SELECT * from patientCharges where itemNo = '$itemNo'";
+$query = "INSERT INTO collectionReport_void(collectionNo,registrationNo,itemNo,shift,description,amountPaid,orNo,type,paidBy,timePaid,datePaid,paidVia,voidBy)
+SELECT collectionNo,registrationNo,itemNo,shift,description,amountPaid,orNo,type,paidBy,timePaid,datePaid,paidVia,'$username' from collectionReport where itemNo = '$itemNo' and collectionNo = '$collectionNo' ";
  
 if ( $sql->query($query) ) {
  //echo "A new entry has been added with the `id`";
-$this->editNow("patientCharges","itemNo",$itemNo,"datePaid",$reportDate);
-$this->editNow("patientCharges","itemNo",$itemNo,"reportShift",$reportShift);
-
 } else {
     echo "There was a problem:<br />$query<br />{$sql->error}";
 }
- 
 /* close our connection */
 $sql->close();
 }
