@@ -12065,14 +12065,14 @@ echo "</tr>";
 
 
 
-public function addCollectionReport($registrationNo,$description,$amountPaid,$orNo,$type,$paidBy,$timePaid,$datePaid,$paidVia) {
+public function addCollectionReport($registrationNo,$itemNo,$shift,$description,$amountPaid,$orNo,$type,$paidBy,$timePaid,$datePaid,$paidVia) {
 
 /* make your connection */
 $sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
-$query = "insert into collectionReport(registrationNo,description,amountPaid,orNo,type,paidBy,timePaid,datePaid,paidVia) values('$registrationNo','$description','$amountPaid','$orNo','$type','$paidBy','$timePaid','$datePaid','$paidVia')";
+$query = "insert into collectionReport(registrationNo,itemNo,shift,description,amountPaid,orNo,type,paidBy,timePaid,datePaid,paidVia) values('$registrationNo','$itemNo','$shift','$description','$amountPaid','$orNo','$type','$paidBy','$timePaid','$datePaid','$paidVia')";
  
 if ( $sql->query($query) ) {
    //echo "A new entry has been added with the `id`";

@@ -2,6 +2,7 @@
 include("../../myDatabase3.php");
 $cashierPaid = $_GET['cashierPaid'];
 $countz = count($cashierPaid);
+$registrationNo = $_GET['registrationNo'];
 $totalPaid = $_GET['totalPaid'];
 $username = $_GET['username'];
 $serverTime = $_GET['serverTime'];
@@ -72,23 +73,25 @@ $payables = ($grandTotal - $ro->sumPartialPayment($registrationNo));
 
 if( $ro->getRegistrationDetails_type() == "OPD" || $ro->getRegistrationDetails_type() == "walkin" ) {
 if($chargeStatus == "UNPAID") {
-if($totalPaid >= $payables ) {//os
+if($totalPaid >= $payables ) {
 for($x=0;$x<$countz;$x++) {
-$natira = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]); 
+//$natira = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]); 
+
+$cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
 
 if( $paidVia == "Cash" ) {
-$ro->paymentManager($cashierPaid[$x],"PAID",$username,($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x])),$datePaid,date("H:i:s"),"0",$reportDate);
+$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0",$reportDate);
 }else {
-$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x])),$datePaid,date("H:i:s"),"0");
+$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
 }
 
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"orNO",$orNO);
 if($comp==''){
-$ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"dateUnregistered",$datePaid); //date discharged
-$ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"timeUnregistered",date("H:i:s")); //time discharged
-$ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
-$ro->editNow("registrationDetails","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"mgh_date",$datePaid); //set as MGH [LOCKED ACCOUNT] 
-$ro->addDischargeHistory($ro->selectNow("patientCharges","registrationNo","itemNo",$cashierPaid[$x]),"Closed",date("H:i:s"),date("Y-m-d"),$username);
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",$datePaid); //date discharged
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered",date("H:i:s")); //time discharged
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",$datePaid); //set as MGH [LOCKED ACCOUNT] 
+$ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),date("Y-m-d"),$username);
 }
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"control_datePaid",$year."-".$month."-".$day);
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"reportShift",$shift);
@@ -99,83 +102,21 @@ if($paymentType != "Cash") {
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"paidVia",$paymentType);
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"orNO",$orNO);
 }else {
-echo "";
+echo "";//credit card
 }
-
+$ro->addCollectionReport($registrationNo,$cashierPaid[$x],$shift,"OPD",$cashPaid,$orNO,"OPD",$username,date("H:i:s"),$datePaid,$paidVia);
 }
-}//os
-
-
+}
 else {
-
 $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/Cashier/rBanny_cash.php?registrationNo=$registrationNo&cash=&targetAmount=$totalPaid&cashInputted=$totalPaid&username=$username&orNO=$orNO&datePaid=$datePaid&shift=$shift");
-
-//$unpaid = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]);
-/*
-for($x=0;$x<$countz;$x++) {
-
-$paymentEachCharges = ( $totalPaid / $ro->countPatientCharges($registrationNo) );
-$unpaid = ( $ro->getItemNo_total($cashierPaid[$x]) - $paymentEachCharges );
-//$ro->paymentManager($cashierPaid[$x],"BALANCE",$username,$paymentEachCharges,date("Y-m-d"),date("H:i:s"),$unpaid);
-//$ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"orNO",$orNO);
-
-echo "Paid:".$totalPaid."<br>";
-echo "No. of Charges:".$ro->countPatientCharges($registrationNo)."<Br>";
-echo "Payment Each Charges".($totalPaid / $ro->countPatientCharges($registrationNo));
-echo "<Br>";
-echo "Charges:".$ro->selectNow("patientCharges","description","itemNo",$cashierPaid[$x])."Price-".$ro->selectNow("patientCharges","total","itemNo",$cashierPaid[$x])."-Payment:".$paymentEachCharges."-Balance:".$unpaid."<br>";
-
-if($paymentType != "Cash") {
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"paidVia",$paymentType);
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"orNO",$orNO);
+}
 }else {
-echo "";
+echo "$itemNo is not UNPAID";
 }
 
-}
-*/
-}
-
-$ro->addCollectionReport($registrationNo,"OPD",$totalPaid,$orNO,"OPD",$username,date("H:i:s"),date("Y-m-d"),$paidVia);
-}// IF (UNPAID)
-
-
-else if( $chargeStatus == "BALANCE" ) {
-
-for( $z=0;$z<$countz;$z++ ) {
-
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"status","PAID");
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"cashPaidFromBalance",$ro->selectNow("patientCharges","cashUnpaid","itemNo",$cashierPaid[$z]));
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"cashUnpaid","0.00");
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"datePaidFromBalance",$datePaid);
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"timePaidFromBalance",date("H:i:s"));
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"paidByFromBalance",$username);
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"orNOFromBalance",$orNO);
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$z],"reportShiftFromBalance",$shift);
-}
-
-if($comp==''){
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",date("Y-m-d")); //date discharged
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered",date("H:i:s")); //time discharged
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")); //set as MGH [LOCKED ACCOUNT] 
-}
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"balance",$ro->getTotal("cashUnpaid","",$registrationNo)); 
-}else {
-
-for($x=0;$x<$countz;$x++) { //FOR LOOP
-$ro->payBalance($cashierPaid[$x],date("M_d_Y"),$serverTime,$username,$totalPaid);
-$ro->updateStatus($cashierPaid[$x],"PAID");
-$ro->editCharges($cashierPaid[$x],"cashUnpaid","0");
-}// FOR LOOP
-
-}
-}else if( $ro->getRegistrationDetails_type() == "IPD" ) {
-
-$ro->addPayment($registrationNo,$totalPaid,date("Y-m-d"),$ro->getSynapseTime(),$username,"FULL PAYMENT",$orNO,$paymentType);
 
 }else {
-echo "<font color=red>I can't Determine if ".$ro->getPatientRecord_completeName()." is an OPD or IPD. Pls Check Before I Can Proceed to Payment Processing</font> ";
+echo "The Patient is not OPD nor walkin";
 }
 
 $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/individualPayment/toDispense.php?registrationNo=$registrationNo&module=PHARMACY&username=$username&month=".date("m")."&day=".date("d")."&year=".date("Y")."&fromTime_hour=00&fromTime_minutes=00&fromTime_seconds=00&toTime_hour=24&toTime_minutes=00&toTime_seconds=00&nod=");
