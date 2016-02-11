@@ -35,7 +35,7 @@ echo "<META HTTP-EQUIV='Refresh'CONTENT='2;URL=addPayment.php?registrationNo=$re
 }
 else{
 $ro->addPayment_new($registrationNo,$amountPaid,$datePaid,date("H:i:s"),$username,$paymentFor,$orNo,$paidVia,$pf,$year."-".$month."-".$day,$receiptType,$ro->ENCRYPT_DECRYPT($creditCardNo),$shift,$collectionFor);
-$ro->addCollectionReport($registrationNo,$paymentFor,$amountPaid,$orNo,"IPD",$username,date("H:i:s"),date("Y-m-d"),$paidVia);
+$ro->addCollectionReport($registrationNo,"",$shift,$paymentFor,$amountPaid,$orNo,"IPD",$username,date("H:i:s"),$datePaid,$paidVia,$username);
 }
 
 ?>
