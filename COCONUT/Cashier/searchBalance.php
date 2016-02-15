@@ -74,6 +74,7 @@ echo "&nbsp;<input type=text name='patientBalance' id='patientBalance' style='
     	onblur='SetMsg(this,false);'
 	onkeyup='showResult();' 
 	value='Search Patient with Balance'
+	autocomplete='off'
 >";
 
 echo "<p id='curTime'></p>";

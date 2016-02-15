@@ -6488,22 +6488,22 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(firstName) as firstName,pc.cashUnpaid,pc.description,pc.datePaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pr.completeName like '$completeName%%%%%%%' and pc.status='BALANCE' ");
+$result = mysql_query("SELECT pr.lastName,pr.firstName,rd.registrationNo,rd.registrationNo,rd.dateUnregistered,sum(pc.cashUnpaid) as bal from patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pr.completeName like '$completeName%%%%%%%' and pc.status not like 'DELETED%%%%%%%' and pc.cashUnpaid > 0 group by rd.registrationNo ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
-echo "<td>&nbsp;Patient&nbsp;</td>";
-echo "<td>&nbsp;Description&nbsp;</td>";
-echo "<td>&nbsp;Date of Balance&nbsp;</td>";
-echo "<td>&nbsp;Balance&nbsp;</td>";
+echo "<Th>Reg#</th>";
+echo "<th>&nbsp;Patient&nbsp;</th>";
+echo "<Th>Date</th>";
+echo "<Th>BALANCE</th>";
 echo "</tr>";
 while($row = mysql_fetch_array($result))
   {
 echo "<tr>";
+echo "<td>&nbsp;".$row['registrationNo']."</td>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Cashier/balanceProfile.php?registrationNo=$row[registrationNo]&username=$username'>".$row['lastName']." ".$row['firstName']."</a>&nbsp;</td>";
-echo "<td>&nbsp;".$row['description']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['datePaid']."&nbsp;</td>";
-echo "<td>&nbsp;".number_format($row['cashUnpaid'],2)."&nbsp;</td>";
+echo "<td>&nbsp;".$row['dateUnregistered']."</td>";
+echo "<td>&nbsp;".$row['bal']."</td>";
 echo "</tr>";
   }
 echo "</table>";
