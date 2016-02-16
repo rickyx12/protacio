@@ -1268,7 +1268,7 @@ while($row = mysql_fetch_array($result))
 $this->coconutTableRowStart();
 $this->coconutHidden("registrationNo",$registrationNo);
 $this->coconutHidden("username",$user);
-$this->coconutTableData("<input type='checkbox' name='itemNo[]' value='".$row['itemNo']."_".$row['total']."' >");
+$this->coconutTableData("<input type='checkbox' name='itemNo[]' value='".$row['itemNo']."' >");
 $this->coconutTableData($row['orNO']);
 $this->coconutTableData($row['description']);
 $this->coconutTableData($row['datePaid']);

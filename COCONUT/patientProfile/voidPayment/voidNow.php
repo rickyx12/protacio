@@ -10,21 +10,18 @@ $ro->getPatientProfile($registrationNo);
 
 for($x=0;$x<$countz;$x++) {
 
-$ricky = preg_split ("/\_/", $itemNo[$x]); // combine itemNo + total  = itemNo_total 
-$itemNo = $ricky[0];
-$collectionNo = $ro->selectNow("collectionReport","collectionNo","itemNo",$itemNo);
-$ro->getPatientChargesToEdit($ricky[0]);
+$collectionNo = $ro->selectNow("collectionReport","collectionNo","itemNo",$itemNo[$x]);
 
-$ro->addVoidPayment($registrationNo."_".$ro->getPatientRecord_completeName(),$ricky[0]."_".$ro->patientCharges_Description(),$ro->patientCharges_cashPaid(),$ro->getSynapseTime(),date("Y-m-d"),$user);
-$ro->voidItemized_OPD($collectionNo,$itemNo,$user);
+$ro->addVoidPayment($registrationNo."_".$ro->getPatientRecord_completeName(),$itemNo[$x]."_".$ro->patientCharges_Description(),$ro->patientCharges_cashPaid(),$ro->getSynapseTime(),date("Y-m-d"),$user);
+$ro->voidItemized_OPD($collectionNo,$itemNo[$x],$user);
 
-$ro->editNow("patientCharges","itemNo",$ricky[0],"status","UNPAID");
-$ro->editNow("patientCharges","itemNo",$ricky[0],"orNo","");
-$ro->editNow("patientCharges","itemNo",$ricky[0],"cashPaid","0");
-$ro->editNow("patientCharges","itemNo",$ricky[0],"datePaid","");
-$ro->editNow("patientCharges","itemNo",$ricky[0],"timePaid","");
-$ro->editNow("patientCharges","itemNo",$ricky[0],"paidBy","");
-//$ro->editNow("patientCharges","itemNo",$ricky[0],"cashUnpaid",$ricky[1]);
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"status","UNPAID");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"orNo","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashPaid","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"datePaid","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"timePaid","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"paidBy","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",$ro->selectNow("patientCharges","total","itemNo",$itemNo[$x]));
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered","");
 
