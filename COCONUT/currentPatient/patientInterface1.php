@@ -371,7 +371,7 @@ echo  "<a href='#'>PhilHealth<span class='arrow'></span></a>";
 if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) != "" ) {
 echo "&nbsp;&nbsp;<font color=red>LOCKED @ ".$ro->selectNow("registrationDetails","mgh_date","registrationNo",$registrationNo)."</font>";
 
-if( $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" || $ro->selectNow("registeredUser","module","username",$username) == "ER" ) { // check user kung allowed mag unlock
+if( $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" || $ro->selectNow("registeredUser","module","username",$username) == "ER" || $ro->selectNow("registeredUser","module","username",$username) == "ADMIN" ) { // check user kung allowed mag unlock
 
 if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD" ) {
 echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/MGH/directUnlock.php?registrationNo=$registrationNo&username=$username'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=blue><< Unlock >></font></a>";
