@@ -24,7 +24,7 @@ $ro->editNow("patientCharges","itemNo",$ricky[0],"cashPaid","0");
 $ro->editNow("patientCharges","itemNo",$ricky[0],"datePaid","");
 $ro->editNow("patientCharges","itemNo",$ricky[0],"timePaid","");
 $ro->editNow("patientCharges","itemNo",$ricky[0],"paidBy","");
-$ro->editNow("patientCharges","itemNo",$ricky[0],"cashUnpaid",$ricky[1]);
+//$ro->editNow("patientCharges","itemNo",$ricky[0],"cashUnpaid",$ricky[1]);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered","");
 
