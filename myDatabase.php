@@ -1440,7 +1440,7 @@ echo "<td>&nbsp;<a href='#'>".number_format(trim($sellingPrice),2)."</a>&nbsp;</
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/balanceAmount.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$sellingPrice&discount=0&timeCharge=$serverTime&chargeBy=$username&service=$row[Service]&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&paycash=no&remarks=&stockCardNo='><font color=blue>Add</font></a>&nbsp;";
 
 
-if($this->selectNow("registeredUser","module","username",$username) == "PHARMACY" || $this->selectNow("registeredUser","module","username",$username) == "CASHIER") {
+if($this->selectNow("registeredUser","module","username",$username) == "PHARMACY" || $this->selectNow("registeredUser","module","username",$username) == "BILLING" || $this->selectNow("registeredUser","module","username",$username) == "CASHIER") {
 
 $this->getPatientProfile($registrationNo);
 
