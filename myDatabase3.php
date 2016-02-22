@@ -2380,7 +2380,7 @@ echo "<td align='right'>&nbsp;".($row['phic'])."</td>";
 echo "<td align='right'>&nbsp;".($row['cashPaid'])."</td>";
 echo "<td align='right'>&nbsp;".($row['amountPaidFromCreditCard'])."</td>";
 if($manualTotal != $row['total']) {
-echo "<td align='right'>&nbsp;<font color=red>".($row['total'])."</font></td>";
+echo "<td align='right'>&nbsp;".$row['registrationNo']."-<font color=red>".($row['total'])."</font></td>";
 }else {
 echo "<td align='right'>&nbsp;".($row['total'])."</td>";
 }
