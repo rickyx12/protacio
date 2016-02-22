@@ -13,6 +13,8 @@ $ro = new database3();
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
 
+
+
 echo $date;
 echo "<Br>".$date1;
 echo "<br><br>";
@@ -32,4 +34,6 @@ echo "<Br>";
 echo "IPD:&nbsp;".number_format($ro->showAllAccountTitle_ipd_total(),2);
 echo "<br>";
 echo "Total:&nbsp;".number_format($ro->showPFaccounts_total() + $ro->_opd_totalz + $ro->showAllAccountTitle_ipd_total(),2);
+
+
 ?>

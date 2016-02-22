@@ -1473,7 +1473,12 @@ $this->dailyCashiersReport_opd_total += $this->dailyCashiersReport_pd_opd_credit
 echo "<tr>";
 
 if($shift == "all") {
+if($this->selectNow("registrationDetails","dateUnregistered","registrationNo",$row['registrationNo']) == "") {
+echo "<td>&nbsp;<font size=2>".$row['reportShift']." - Not Discharged</font></td>";
+}else {
 echo "<td>&nbsp;<font size=2>".$row['reportShift']."</font></td>";
+}
+
 }else { }
 echo "<td>&nbsp;<font size=2>".$date."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['paidVia']."</font></td>";
@@ -1756,6 +1761,22 @@ return $row['pdMethod'];
 
 }
 
+public function showAllAccountTitle_debit_paid($date1,$date2,$cols,$type,$title) {
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+
+$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date1' and '$date2') and rd.type = '$type' and pc.status in ('UNPAID','Discharged','PAID') and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['pdMethod'];
+}
+
+}
+
+
 
 public $showAllAccountTitle_cash;
 public $showAllAccountTitle_hmo;
@@ -2000,26 +2021,42 @@ echo "<tr>";
 while($row = mysqli_fetch_array($result))
 {
 
-$this->_opd_discount += $this->showAllAccountTitle_debit($date1,$date2,"discount","OPD",$row['title']);
-$this->showAllAccountTitle_opd_unpaid += $this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","OPD",$row['title']);
-$this->showAllAccountTitle_opd_hmo += $this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']);
-$this->showAllAccountTitle_opd_phic += $this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']);
-$this->showAllAccountTitle_opd_cash += $this->showAllAccountTitle_debit($date1,$date2,"cashPaid","OPD",$row['title']);
-$this->showAllAccountTitle_opd_creditCard += $this->showAllAccountTitle_debit($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']);
-$this->showAllAccountTitle_opd_discount += $this->showAllAccountTitle_debit($date1,$date2,"discount","OPD",$row['title']);
-$this->_opd_totalz += $this->showAllAccountTitle_debit($date1,$date2,"total","OPD",$row['title']);
+$disc = round($this->showAllAccountTitle_debit($date1,$date2,"discount","OPD",$row['title']),2);
+$unpaid = round($this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","OPD",$row['title']),2);
+$companyHMO = round($this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']),2);
+$phic = round($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']),2);
+$paid = round($this->showAllAccountTitle_debit_paid($date1,$date2,"cashPaid","OPD",$row['title']),2);
+$cr = round($this->showAllAccountTitle_debit_paid($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']),2);
+$totalIndividual = ($this->showAllAccountTitle_debit($date1,$date2,"total","OPD",$row['title']));
+$totalIndividual1 = round($totalIndividual,2);
+
+$this->_opd_discount += $disc;
+$this->showAllAccountTitle_opd_unpaid += $unpaid;
+$this->showAllAccountTitle_opd_hmo += $companyHMO;
+$this->showAllAccountTitle_opd_phic += $phic;
+$this->showAllAccountTitle_opd_cash += $paid;
+$this->showAllAccountTitle_opd_creditCard += $cr;
+$this->showAllAccountTitle_opd_discount += $disc;
+$this->_opd_totalz += $totalIndividual1;
 
 $_total = ( $this->_opd_discount + $this->showAllAccountTitle_opd_unpaid + $this->showAllAccountTitle_opd_hmo + $this->showAllAccountTitle_opd_phic + $this->showAllAccountTitle_opd_cash + $this->showAllAccountTitle_opd_creditCard  );
+$manualTotal = ( $disc + $unpaid + $companyHMO + $phic + $paid + $cr );
+
 
 echo "<Tr>";
+if( $manualTotal != $totalIndividual1 ) {
+echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:red;' target='_blank'>$row[title]</a></td>";
+}else {
 echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:black;' target='_blank'>$row[title]</a></td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"discount","OPD",$row['title']),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","OPD",$row['title']),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"cashPaid","OPD",$row['title']),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"total","OPD",$row['title']),2),2)."</td>";
+}
+
+echo "<td align='right'>&nbsp;".number_format($disc,2)."</td>";
+echo "<td align='right'>&nbsp;".number_format($unpaid,2)."</td>";
+echo "<td align='right'>&nbsp;".number_format($companyHMO,2)."</td>";
+echo "<td align='right'>&nbsp;".number_format($phic,2)."</td>";
+echo "<td align='right'>&nbsp;".number_format($paid,2)."</td>";
+echo "<td align='right'>&nbsp;".number_format($cr,2)."</td>";
+echo "<td align='right'>&nbsp;".number_format($totalIndividual1,2)."</td>";
 echo "</tr>";
 }
 echo "<tr>";
@@ -2076,7 +2113,7 @@ public function showPFaccounts($date,$date1) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select pc.itemNo,pc.registrationNo,sum(pc.discount) as disc,sum(pc.cashUnpaid) as unpaid,sum(pc.company) as hmo,sum(pc.phic) as phic,sum(pc.cashPaid) as cashPaid,sum(amountPaidFromCreditCard) as creditCard,sum(doctorsPF) as pf,sum(pc.total) as totalPF from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pc.paidVia = 'Cash' and pc.title = 'PROFESSIONAL FEE' and rd.type='OPD' and pc.status in ('PAID','UNPAID') ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pc.itemNo,pc.registrationNo,sum(pc.discount) as disc,sum(pc.cashUnpaid) as unpaid,sum(pc.company) as hmo,sum(pc.phic) as phic,sum(pc.cashPaid) as cashPaid,sum(amountPaidFromCreditCard) as creditCard,sum(doctorsPF) as pf,sum(pc.total) as totalPF from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and pc.paidVia = 'Cash' and pc.title = 'PROFESSIONAL FEE' and rd.type='OPD' and pc.status in ('PAID','UNPAID') ") or die("Query fail: " . mysqli_error()); 
 
 echo "<table border=0 width='80%'>";
 echo "<tr>";
@@ -2093,8 +2130,8 @@ echo "<th>&nbsp;TOTAL</th>";
 echo "</tr>";
 while($row = mysqli_fetch_array($result))
 {
-$this->showPFaccounts_total = $row['totalPF'];
 $this->showPFaccounts_creditCard($date,$date1);
+$this->showPFaccounts_total = ($row['totalPF'] + $this->showPFaccounts_creditCard_totalCard());
 
 echo "</tr>";
 echo "<td><font size=2><a href='/COCONUT/Reports/doctorReport/transactionSummary_pf.php?date=$date&date1=$date1' style='text-decoration:none; color:black;' target='_blank'>Professional Fee</a></font></td>";
@@ -2107,7 +2144,7 @@ echo "<td align='right'>&nbsp;".number_format(round($row['pf'],2),2)."</td>";
 //echo "<td align='right'>&nbsp;".number_format(round($row['creditCard'],2),2)."</td>";
 echo "<td align='right'>&nbsp;".number_format(round($this->showPFaccounts_creditCard_totalCard(),2),2)."</td>";
 echo "<td align='right'>&nbsp;".number_format(round($this->showPFaccounts_creditCard_payables(),2),2)."</td>";
-echo "<td align='right'>&nbsp;".number_format(round($row['totalPF'],2),2)."</td>";
+echo "<td align='right'>&nbsp;".number_format(round($this->showPFaccounts_total,2),2)."</td>";
 echo "</tr>";
 }
 echo "</table>";
@@ -2297,7 +2334,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status in ('PAID','UNPAID','Discharged') ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and rd.type='OPD' and pc.title = '$title' and pc.status in ('PAID','UNPAID','Discharged') ") or die("Query fail: " . mysqli_error()); 
 
 echo "<Br><br><center>";
 echo "<Table border=0 width='90%'>";
@@ -2323,8 +2360,18 @@ $this->patientAccountOPD_cashpaid += $row['cashPaid'];
 $this->patientAccountOPD_creditCard += $row['amountPaidFromCreditCard'];
 $this->patientAccountOPD_total += $row['total'];
 
+$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
+
 echo "<tr>";
+if($row['cashPaid'] > 0 || $row['amountPaidFromCreditCard'] > 0) {
+if($row['dateUnregistered'] != $row['datePaid']) {
+echo "<td>&nbsp;<a href='/COCONUT/billing/fixDischargeDate.php?date=$date&date1=$date1&title=$title&type=OPD&registrationNo=$row[registrationNo]&datePaid=$row[datePaid]' style='color:red; text-decoration:none;'>".$row['lastName'].", ".$row['firstName']."</a><br><font size=2 color=red>Reg#:&nbsp;".$row['registrationNo']."</font><br><font size=2 color=red>Date Pd:&nbsp;".$row['datePaid']."</font><br><font size=2 color=red>Discharged:&nbsp;".$row['dateUnregistered']."</font></td>";
+}else {
 echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+}
+}else {
+echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+}
 echo "<td>&nbsp;".$row['description']."</td>";
 echo "<td align='right'>&nbsp;".($row['discount'])."</td>";
 echo "<td align='right'>&nbsp;".($row['cashUnpaid'])."</td>";
@@ -2332,7 +2379,11 @@ echo "<td align='right'>&nbsp;".($row['company'])."</td>";
 echo "<td align='right'>&nbsp;".($row['phic'])."</td>";
 echo "<td align='right'>&nbsp;".($row['cashPaid'])."</td>";
 echo "<td align='right'>&nbsp;".($row['amountPaidFromCreditCard'])."</td>";
+if($manualTotal != $row['total']) {
+echo "<td align='right'>&nbsp;<font color=red>".($row['total'])."</font></td>";
+}else {
 echo "<td align='right'>&nbsp;".($row['total'])."</td>";
+}
 echo "</tr>";
 }
 echo "<tr>";
@@ -2375,7 +2426,7 @@ a {  border_bottom:10px; color:black; }
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.company,pc.phic,pc.cashUnpaid,pc.doctorsPF,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,pc.datePaid,pc.reportShift from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type = 'OPD' and pc.status in ('UNPAID','PAID') and pc.title = 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.company,pc.phic,pc.cashUnpaid,pc.doctorsPF,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,pc.datePaid,pc.reportShift from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and rd.type = 'OPD' and pc.status in ('UNPAID','PAID') and pc.title = 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
 
 echo "<table border=1 width='90%' cellspacing=0>";
 echo "<tr>";
