@@ -40,7 +40,7 @@ echo "<center>
 <font><a href='http://".$ro->getMyUrl()."/COCONUT/Cashier/cashierReport/attributes_handler.php?date=$date&shift=$shift' style='text-decoration:none;'>Revenue Report</a></font>
 <br>
 $date
-<br><Br>";
+<br>Shift:&nbsp;$shift<Br>";
 echo "<table border=0 width='100%' cellspacing=0>";
 echo "<Tr>";
 
