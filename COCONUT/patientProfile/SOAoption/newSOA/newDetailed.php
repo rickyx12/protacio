@@ -903,7 +903,11 @@ echo "</tr>";
 echo "<tr>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
-echo "<td><font size=2><b>Discount</b></font></td>";
+if($ro->selectNow("registrationDetails","discountType","registrationNo",$registrationNo) == "") {
+echo "<td><font size=2><b>DISCOUNT</b></font></td>";
+}else {
+echo "<td><font size=2><b>".$ro->selectNow("registrationDetails","discountType","registrationNo",$registrationNo)."</b></font></td>";
+}
 echo "<td><font size=1>=====></font></td>";
 echo "<td><font size=2><b>".number_format($total_disc,2)."</b></font></td>";
 echo "</tr>";
