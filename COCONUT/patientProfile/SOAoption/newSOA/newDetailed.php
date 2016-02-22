@@ -165,7 +165,7 @@ tr:hover { background-color:yellow;color:black;}
 
 echo "<img src='ProtacioHeader.png' width='100%' height='10%'></center>";
 
-echo "<br><center><div style='border:0px solid #000000; width:825px; height:auto; border-color:black black black black;'>";
+echo "<br><div style='border:0px solid #000000; width:825px; height:auto; border-color:black black black black;'>";
 //echo "<font size=4><b>".$ro->getReportInformation("hmoSOA_name")."</b></font><br>";
 //echo "<font size=2>".$ro->getReportInformation("hmoSOA_address")."</font><br>";
 //echo "<font size=2>".$ro->getRegistrationDetails_branch()."</font><br>";
