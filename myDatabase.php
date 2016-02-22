@@ -6313,7 +6313,6 @@ echo "</tr>";
 while($row = mysql_fetch_array($result))
   {
 echo "<tr>";
-$this->getPaymentHistory_showUp_returnPaid_setter($row['registrationNo']);
 $this->getPatientProfile($row['registrationNo']);
 $disc = $row['total'] * $this->getRegistrationDetails_discount();
 $grandTotal = $row['total'] - $disc;
