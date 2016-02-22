@@ -4897,7 +4897,7 @@ tr:hover { background-color:yellow;color:black;}
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select itemNo,description,sellingPrice,quantity,total,title,rBannyStatus,dateCharge from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' order by title,dateCharge,description asc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select itemNo,description,sellingPrice,quantity,total,title,rBannyStatus,dateCharge from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' order by description,dateCharge asc ") or die("Query fail: " . mysqli_error()); 
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/rBanny/itemException1.php");
 $this->coconutHidden("registrationNo",$registrationNo);
