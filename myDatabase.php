@@ -14306,6 +14306,7 @@ echo "<td>&nbsp;<font class='data' color=red>".$row['paidVia']."</font>&nbsp;</t
 }else {
 echo "<td>&nbsp;<font class='data' color=blue>".$row['paidVia']."</font>&nbsp;</td>";
 }
+echo "<td>&nbsp;<center><font class='data' color=black>".number_format($row['discount'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=red>".number_format($row['cashUnpaid'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=blue>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=darkgreen>".number_format($row['phic'],2)."</font></center>&nbsp;</td>";
