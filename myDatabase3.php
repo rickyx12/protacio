@@ -2461,7 +2461,7 @@ echo "<td>&nbsp;<font size=2>".$row['datePaid']." (".$row['reportShift'].")</fon
 echo "<td>&nbsp;</td>";
 }
 
-if($row['status'] == "PAID") {
+if($row['cashPaid'] > 0) {
 if($row['orNO'] == "") {
 echo "<td>&nbsp;<font size=2 color=red>".$row['lastName'].", ".$row['firstName']."</font></td>";
 }else if($row['datePaid'] != $row['dateUnregistered']) {
