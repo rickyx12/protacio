@@ -2426,7 +2426,7 @@ a {  border_bottom:10px; color:black; }
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.company,pc.phic,pc.cashUnpaid,pc.doctorsPF,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,pc.datePaid,pc.reportShift,[c.orNO from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and rd.type = 'OPD' and pc.status in ('UNPAID','PAID') and pc.title = 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.company,pc.phic,pc.cashUnpaid,pc.doctorsPF,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,pc.datePaid,pc.reportShift,pc.orNO from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and rd.type = 'OPD' and pc.status in ('UNPAID','PAID') and pc.title = 'PROFESSIONAL FEE' ") or die("Query fail: " . mysqli_error()); 
 
 echo "<table border=1 width='90%' cellspacing=0>";
 echo "<tr>";
