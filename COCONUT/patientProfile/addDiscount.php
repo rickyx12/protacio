@@ -10,8 +10,17 @@ $username = $_GET['username'];
 $ro = new database();
 $ro->coconutDesign();
 $ro->getPatientProfile($registrationNo);
+
+$target="";
+
+if($ro->getRegistrationDetails_type() == "IPD") {
+$target = "addDiscount1.php";
+}else {
+$target = "rBanny_discount.php";
+}
+
 echo "
-<form method='get' action='addDiscount1.php'>
+<form method='get' action='$target'>
 <center>
 <br />
 <div style='border:1px solid #000000; width:500px; height:auto; border-color:black black black black;'>

@@ -3458,6 +3458,36 @@ $this->coconutTableStop();
 
 
 
+public function getCurrentDiscount_rBanny($registrationNo) {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "SELECT sum(pc.discount) as totalDisc FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.discount >0 and status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['totalDisc'];
+}
+
+}
+
+
+public function getHighestTotal_rBanny($registrationNo) {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection,"SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.discount=0 and pc.title != 'PROFESSIONAL FEE' and pc.rBannyStatus != 'exclude' and pc.remarks != 'takeHomeMeds' HAVING MAX(pc.cashUnpaid)") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['cashUnpaid']."_".$row['itemNo'];
+}
+
+}
+
+
 
 }
 
