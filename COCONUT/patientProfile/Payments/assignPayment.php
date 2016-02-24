@@ -19,16 +19,19 @@ $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"cashUnpaid",($ro->pati
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"company",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"phic",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"discount",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"total",($ro->patientCharges_total() + $ro->patientCharges_discount()));
 }else if($assignPayment[1] == "hmo") {
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"company",($ro->patientCharges_total() + $ro->patientCharges_discount()));
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"cashUnpaid",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"phic",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"discount",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"total",($ro->patientCharges_total() + $ro->patientCharges_discount()));
 }else if($assignPayment[1] == "phic") {
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"phic",($ro->patientCharges_total() + $ro->patientCharges_discount()));
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"cashUnpaid",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"company",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"discount",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"total",($ro->patientCharges_total() + $ro->patientCharges_discount()));
 }else {
 echo "";
 }
