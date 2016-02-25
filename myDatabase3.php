@@ -3478,7 +3478,7 @@ public function getHighestTotal_rBanny($registrationNo) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection,"SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.discount=0 and pc.title != 'PROFESSIONAL FEE' and pc.rBannyStatus != 'exclude' and pc.remarks != 'takeHomeMeds' HAVING MAX(pc.cashUnpaid)") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection,"SELECT pc.cashUnpaid,pc.itemNo from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' and pc.sellingPrice > 0 and pc.discount=0 and pc.title != 'PROFESSIONAL FEE' and pc.title in ('LABORATORY','MEDICINE','XRAY','ULTRASOUND','ECG','OR/DR/ER Fee','SUPPLIES') HAVING MAX(pc.cashUnpaid)") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
