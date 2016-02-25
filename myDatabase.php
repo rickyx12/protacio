@@ -2959,13 +2959,10 @@ mysql_select_db($this->database, $con);
 $patno=$this->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
 echo strtoupper($this->selectNow("patientRecord","lastName","patientNo",$patno)).", ".strtoupper($this->selectNow("patientRecord","firstName","patientNo",$patno));
 
-//$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') and cashUnpaid > 0 group by itemNo order by description asc ");
 
-if( $statusType == "BALANCE" ) {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') and cashUnpaid > 0 group by itemNo order by description asc ");
-}else {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = '$statusType' and cashUnpaid > 0 group by itemNo order by description asc ");
-}
+
+$result = mysql_query("SELECT *,sum(discount) as disc FROM patientCharges where registrationNo = '$registrationNo' and status = '$statusType' and cashUnpaid > 0 group by itemNo order by description asc ");
+
 
 
 echo "<body onload='DisplayTime();'>";
@@ -2979,8 +2976,14 @@ $this->coconutHidden("reportDate",$reportDate);
 echo "<div style='border:1px solid #000000; width:550px; height:90px; border-color:black black black black;'>";
 echo "<br>&nbsp;&nbsp;";
 echo "<font>Payment</font>";
-echo "&nbsp;&nbsp;<input type=text name='totalPaid' autocomplete='off' class='shortField' value='".($grandTotal)."'> &nbsp;&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Cashier/creditCardPayment.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&registrationNo=$registrationNo&shift=$shift&reportDate=$reportDate'><font size=2 color=red>[Credit Card]</font></a>&nbsp;&nbsp;&nbsp;&nbsp;
- <br>";
+echo "&nbsp;&nbsp;<input type=text name='totalPaid' autocomplete='off' class='shortField' value='".($grandTotal)."'> &nbsp;&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Cashier/creditCardPayment.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&registrationNo=$registrationNo&shift=$shift&reportDate=$reportDate'><font size=2 color=red>[Credit Card]</font></a>&nbsp;&nbsp;&nbsp;&nbsp;";
+
+
+if($this->getTotal("discount","",$registrationNo) < 1) {
+echo "<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/discountManualInput.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=2 color=blue>[Add Discount]</font></a><Br>";
+}else {
+echo "<font size=2>Discount:&nbsp;".$this->getTotal("discount","",$registrationNo)."</font><Br>";
+}
 
 $this->coconutHidden("paymentType","Cash");
 echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font>OR#</font><input type=text autocomplete='off' name='orNO' class='shortField'>";
