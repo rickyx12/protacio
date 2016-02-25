@@ -1250,7 +1250,7 @@ if (!$con)
 mysql_select_db($this->database, $con);
 
 
-$result = mysql_query("select pc.itemNo,pc.description,pc.total,pc.datePaid,pc.cashPaid,pc.orNO from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = '$registrationNo' and pc.cashPaid > 0 and pc.status in ('PAID','UNPAID') order by pc.orNO asc ");
+$result = mysql_query("select pc.itemNo,pc.description,pc.total,pc.datePaid,pc.cashPaid,pc.orNO from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = '$registrationNo' and (pc.cashPaid > 0 or pc.amountPaidFromCreditCard > 0) and pc.status in ('PAID','UNPAID') order by pc.orNO asc ");
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/patientProfile/voidPayment/voidNow.php");
 echo "<Center>";
