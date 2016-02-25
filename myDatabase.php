@@ -2980,7 +2980,7 @@ echo "&nbsp;&nbsp;<input type=text name='totalPaid' autocomplete='off' class='sh
 
 
 if($this->getTotal("discount","",$registrationNo) < 1) {
-echo "<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/discountManualInput.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=2 color=blue>[Add Discount]</font></a><Br>";
+echo "<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/discount/discount.php?registrationNo=$registrationNo&username=$username' style='text-decoration:none;'><font size=2 color=blue>[Add Discount]</font></a><Br>";
 }else {
 echo "<font size=2>Discount:&nbsp;".$this->getTotal("discount","",$registrationNo)."</font><Br>";
 }
