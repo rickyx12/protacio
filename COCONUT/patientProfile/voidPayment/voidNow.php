@@ -15,13 +15,17 @@ $collectionNo = $ro->selectNow("collectionReport","collectionNo","itemNo",$itemN
 $ro->addVoidPayment($registrationNo."_".$ro->getPatientRecord_completeName(),$itemNo[$x]."_".$ro->patientCharges_Description(),$ro->patientCharges_cashPaid(),$ro->getSynapseTime(),date("Y-m-d"),$user);
 $ro->voidItemized_OPD($collectionNo,$itemNo[$x],$user);
 
+$newCashUnpaid = ($ro->selectNow("patientCharges","sellingPrice","itemNo",$itemNo[$x]) * $ro->selectNow("patientCharges","quantity","itemNo",$itemNo[$x]));
+
+$newCashUnpaid1 = ($newCashUnpaid - $ro->selectNow("patientCharges","discount","itemNo",$itemNo[$x]));
+
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"status","UNPAID");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"orNo","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashPaid","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"datePaid","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"timePaid","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"paidBy","");
-$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",$ro->selectNow("patientCharges","total","itemNo",$itemNo[$x]));
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",$newCashUnpaid1);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered","");
 
