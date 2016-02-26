@@ -3489,6 +3489,23 @@ return $row['cashUnpaid']."_".$row['itemNo'];
 
 
 
+public function getRegistrationCensusChart($type,$date,$date1) {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "SELECT count(registrationNo) as totalPx from registrationDetails where (dateRegistered between '$date' and '$date1') and type = '$type' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['totalPx'];
+}
+
+}
+
+
+
+
 }
 
 

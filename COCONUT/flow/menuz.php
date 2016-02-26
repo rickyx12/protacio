@@ -113,4 +113,8 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/in
 echo "<input type='submit' value='Inventory Sheet (Supplies)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/flow/chartList.php' target='rightFrame'>";
+echo "<input type='submit' value='Chart' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 ?>
