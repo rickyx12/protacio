@@ -3508,7 +3508,7 @@ public function getCashPaidChart_opd($cols,$date,$date1) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, "SELECT sum(pc.".$cols.") as totalPd from registrationDetails rd,patientCharges pc where rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.".$cols." > 0 ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, "SELECT sum(pc.".$cols.") as totalPd from registrationDetails rd,patientCharges pc where rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.".$cols." > 0 and pc.status in ('PAID','UNPAID') ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -3526,7 +3526,7 @@ public function getCashPaidChart_ipd($date,$date1) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, "SELECT sum(pp.amountPaid) as totPd from registrationDetails rd,patientPayment pp where rd.registrationNo = pp.registrationNo and (pp.datePaid between '$date' and '$date1') and rd.type='IPD' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, "SELECT sum(pp.amountPaid) as totPd from patientPayment pp where (pp.datePaid between '$date' and '$date1') and pp.paymentFor in ('DEPOSIT','HOSPITAL BILL') ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
