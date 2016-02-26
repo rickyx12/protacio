@@ -61,6 +61,11 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/graphicalRep
 echo "<input type=submit value='Registration Census' class='button'>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/graphicalReport/selectShift_weeklyCash.php'>";
+echo "<input type=submit value='Cash Paid' class='button'>";
+echo "</form>";
+
+
 echo "<Br>";
 echo "</div>";
 
