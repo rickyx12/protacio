@@ -42,6 +42,14 @@ function ENCRYPT_DECRYPT($Str_Message) {
 }
 
 
+public function formatDate($date) {
+  $date1 = preg_split ("/\-/", $date); 
+  $month = ['01'=>'Jan','02'=>'Feb','03'=>'Mar','04'=>'Apr','05'=>'May','06'=>'Jun','07'=>'Jul','08'=>'Aug','09'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec'];
+  return $month[$date1[1]]." ".$date1[2].", ".$date1[0];
+}
+
+
+
 //********************** LAB RESULT **************************//
 
 public function listLaboratory_done($month,$day,$year) {
@@ -6643,49 +6651,44 @@ return $this->detailedTotalOnly_inventory_cash;
 
 public function detailedTotalOnly_inventory($registrationNo,$title,$chargesCode,$username,$show,$showdate) {
 
-$this->detailedTotalOnly_inventory_totaltem = 0;
+  $this->detailedTotalOnly_inventory_totaltem = 0;
 
-$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.departmentStatus,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and departmentStatus != '' and (pc.status = 'UNPAID') and remarks = '' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
+  $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.departmentStatus,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and departmentStatus != '' and (pc.status = 'UNPAID') and remarks = '' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
 
-$this->detailedTotalOnly_inventory_totalCharges=0;
-$this->detailedTotalOnly_inventory_company=0;
-$this->detailedTotalOnly_inventory_cash=0;
+  $this->detailedTotalOnly_inventory_totalCharges=0;
+  $this->detailedTotalOnly_inventory_company=0;
+  $this->detailedTotalOnly_inventory_cash=0;
 
-while($row = mysqli_fetch_array($result))
-  {
-
-
-if( $row['status'] == "UNPAID" ) {
-$this->detailedTotalOnly_inventory_totalCharges += $row['total'];
-$this->detailedTotalOnly_inventory_company += $row['company'];
-$this->detailedTotalOnly_inventory_cash += $row['cashUnpaid'];
-}else { }
-
-echo "<tr>";
-//echo "<td>&nbsp;<font size=2>".$row['itemNo']."</font></td>";
-if( $row['chargesCode'] == $chargesCode )  {
-echo "<td>&nbsp;<font size=2 color=red>".$row['dateCharge']."</font></td>";
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&showdate=$showdate&chargesCode=$row[chargesCode]' title='TOTAL QTY: ".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2 color=red>".$row['description']."</font></a></td>";
-echo "<td>&nbsp;<font size=2 color=red>".$row['quantity']."</font></td>";
-echo "<td>&nbsp;<font size=2 color=red>".number_format($row['sellingPrice'],2)."</font></td>";
-echo "<td>&nbsp;<font size=2 color=red>".number_format($row['total'],2)."</font></td>";
-}else {
-echo "<td>&nbsp;<font size=2>".$row['dateCharge']."</font></td>";
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&showdate=$showdate&chargesCode=$row[chargesCode]' title='TOTAL QTY: ".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2>".$row['description']."</font></a></td>";
-echo "<td>&nbsp;<font size=2>".$row['quantity']."</font></td>";
-echo "<td>&nbsp;<font size=2>".number_format($row['sellingPrice'],2)."</font></td>";
-echo "<td>&nbsp;<font size=2>".number_format($row['total'],2)."</font></td>";
-}
+  while($row = mysqli_fetch_array($result)) {
 
 
+    if( $row['status'] == "UNPAID" ) {
+      $this->detailedTotalOnly_inventory_totalCharges += $row['total'];
+      $this->detailedTotalOnly_inventory_company += $row['company'];
+      $this->detailedTotalOnly_inventory_cash += $row['cashUnpaid'];
+    }else { }
 
+    echo "<tr>";
+    //echo "<td>&nbsp;<font size=2>".$row['itemNo']."</font></td>";
+    if( $row['chargesCode'] == $chargesCode )  {
+      echo "<td>&nbsp;<font size=2 color=red>".$this->formatDate($row['dateCharge'])."</font></td>";
+      echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&showdate=$showdate&chargesCode=$row[chargesCode]' title='TOTAL QTY: ".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2 color=red>".$row['description']."</font></a></td>";
+      echo "<td>&nbsp;<font size=2 color=red>".$row['quantity']."</font></td>";
+      echo "<td>&nbsp;<font size=2 color=red>".number_format($row['sellingPrice'],2)."</font></td>";
+      echo "<td>&nbsp;<font size=2 color=red>".number_format($row['total'],2)."</font></td>";
+    }else {
+      echo "<td>&nbsp;<font size=2>".$this->formatDate($row['dateCharge'])."</font></td>";
+      echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&showdate=$showdate&chargesCode=$row[chargesCode]' title='TOTAL QTY: ".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2>".$row['description']."</font></a></td>";
+      echo "<td>&nbsp;<font size=2>".$row['quantity']."</font></td>";
+      echo "<td>&nbsp;<font size=2>".number_format($row['sellingPrice'],2)."</font></td>";
+      echo "<td>&nbsp;<font size=2>".number_format($row['total'],2)."</font></td>";
+    }
+    echo "</tr>";
+  }
 
-echo "</tr>";
-}
-
-}
+  }
 
 
 public $detailedTotalOnly_total;
@@ -6706,65 +6709,61 @@ return $this->detailedTotalOnly_cash;
 
 public function detailedTotalOnly($registrationNo,$title,$chargesCode,$username,$show,$showdate) {
 
-$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
+  $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
 
-$this->detailedTotalOnly_total=0;
-$this->detailedTotalOnly_company=0;
-$this->detailedTotalOnly_cash=0;
+  $this->detailedTotalOnly_total=0;
+  $this->detailedTotalOnly_company=0;
+  $this->detailedTotalOnly_cash=0;
 
-while($row = mysqli_fetch_array($result))
+  while($row = mysqli_fetch_array($result))
   {
-if( $row['status'] == "UNPAID" || $row['status'] == "Discharged" ) {
-$this->detailedTotalOnly_total += $row['total'];
-$this->detailedTotalOnly_company += $row['company'];
-$this->detailedTotalOnly_cash += $row['cashUnpaid'];
-}else { }
+  if( $row['status'] == "UNPAID" || $row['status'] == "Discharged" ) {
+  $this->detailedTotalOnly_total += $row['total'];
+  $this->detailedTotalOnly_company += $row['company'];
+  $this->detailedTotalOnly_cash += $row['cashUnpaid'];
+  }else { }
 
-echo "<tr>";
-if( $row['chargesCode'] == $chargesCode ){
-echo "<td>&nbsp;<font size=2 color=red>".$row['dateCharge']."</font></td>";
-//echo "<td>&nbsp;<font size=2>".$row['itemNo']."</font></td>";
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&chargesCode=$row[chargesCode]&showdate=$showdate' title='".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2 color=red>".$row['description']."</font></a></td>";
-echo "<td>&nbsp;<font size=2 color=red>".$row['quantity']."</font></td>";
-if( $row['title']=="PROFESSIONAL FEE"){
-$pfsp=$row['sellingPrice'];
-$truepf=preg_split('[/]',$pfsp);
+  echo "<tr>";
+  if( $row['chargesCode'] == $chargesCode ){
+    echo "<td>&nbsp;<font size=2 color=red>".$this->formatDate($row['dateCharge'])."</font></td>";
+    //echo "<td>&nbsp;<font size=2>".$row['itemNo']."</font></td>";
+    echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&chargesCode=$row[chargesCode]&showdate=$showdate' title='".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2 color=red>".$row['description']."</font></a></td>";
+    echo "<td>&nbsp;<font size=2 color=red>".$row['quantity']."</font></td>";
+    if( $row['title']=="PROFESSIONAL FEE"){
+    $pfsp=$row['sellingPrice'];
+    $truepf=preg_split('[/]',$pfsp);
 
-echo "<td>&nbsp;<font size=2 color=red>".$truepf[0]."</font></td>";
-}
-else{
-echo "<td>&nbsp;<font size=2 color=red>".$row['sellingPrice']."</font></td>";
-}
-echo "<td>&nbsp;<font size=2 color=red>".$row['total']."</font></td>";
-}else {
-echo "<td>&nbsp;<font size=2>".$row['dateCharge']."</font></td>";
-//echo "<td>&nbsp;<font size=2>".$row['itemNo']."</font></td>";
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&showdate=$showdate&chargesCode=$row[chargesCode]' title='".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2>".$row['description']."</font></a></td>";
+    echo "<td>&nbsp;<font size=2 color=red>".$truepf[0]."</font></td>";
+    }
+    else{
+      echo "<td>&nbsp;<font size=2 color=red>".$row['sellingPrice']."</font></td>";
+    } 
+      echo "<td>&nbsp;<font size=2 color=red>".$row['total']."</font></td>";
+  }else {
+  echo "<td>&nbsp;<font size=2>".$this->formatDate($row['dateCharge'])."</font></td>";
+  //echo "<td>&nbsp;<font size=2>".$row['itemNo']."</font></td>";
+  echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=$registrationNo&username=$username&show=$show&showdate=$showdate&chargesCode=$row[chargesCode]' title='".$this->countChargesCode($row['chargesCode'],$registrationNo,$row['title'])."'><font size=2>".$row['description']."</font></a></td>";
 
-if( $row['title'] == "PROFESSIONAL FEE" ) {
-echo "<td>&nbsp;</td>";
-}else {
-echo "<td>&nbsp;<font size=2>".$row['quantity']."</font></td>";
-}
+  if( $row['title'] == "PROFESSIONAL FEE" ) {
+  echo "<td>&nbsp;</td>";
+  }else {
+  echo "<td>&nbsp;<font size=2>".$row['quantity']."</font></td>";
+  }
 
-if( $row['title']=="PROFESSIONAL FEE"){
-$pfsp=$row['sellingPrice'];
-$truepf=preg_split('[/]',$pfsp);
-
-echo "<td>&nbsp;<font size=2>".$truepf[0]."</font></td>";
-}
-else{
-echo "<td>&nbsp;<font size=2>".$row['sellingPrice']."</font></td>";
-}
-echo "<td>&nbsp;<font size=2>".$row['total']."</font></td>";
-}
-
-
-echo "</tr>";
-}
+  if( $row['title']=="PROFESSIONAL FEE"){
+    $pfsp=$row['sellingPrice'];
+    $truepf=preg_split('[/]',$pfsp);
+    echo "<td>&nbsp;<font size=2>".$truepf[0]."</font></td>";
+  } else{
+    echo "<td>&nbsp;<font size=2>".$row['sellingPrice']."</font></td>";
+  } 
+    echo "<td>&nbsp;<font size=2>".$row['total']."</font></td>";
+  }
+  echo "</tr>";
+  }
 
 }
 
@@ -9980,7 +9979,7 @@ while($row = mysqli_fetch_array($result))
 $this->detailedTotalOnly_deposit_total += $row['amountPaid'];
 
 echo "<tr>";
-echo "<td>&nbsp;<font size=2>".$row['datePaid']."</font></td>";
+echo "<td>&nbsp;<font size=2>".$this->formatDate($row['datePaid'])."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['paymentFor']."</font></td>";
 echo "<td>&nbsp;<font size=2>OR#:".$row['orNo']."</font></td>";
 echo "<td>&nbsp;</td>";

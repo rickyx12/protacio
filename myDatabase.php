@@ -3,6 +3,7 @@
 
 class database  {
 
+
 //database credentials
 public $host;
 public $username;
