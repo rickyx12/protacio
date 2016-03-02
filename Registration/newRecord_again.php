@@ -210,7 +210,7 @@ echo "<br>";
 echo "<input type=text name='patientContact' class='myInformation' id='info' placeholder='Contact#' value='".$ro->getContactNo_patientRecord()."' >";
 echo "<br>";
 
-echo "<input type=text name='email' class='myInformation' autocomplete='off' placeholder='Email Address' >";
+echo "<input type=text name='email' class='myInformation' autocomplete='off' value='".$ro->selectNow("patientRecord","email","patientNo",$patientNo)."' placeholder='Email Address' >";
 
 
 $bday = preg_split ("/\-/",$ro->getBirthDate_patientRecord()); 
