@@ -140,9 +140,8 @@ $disdatefmt=date("M d, Y");
 if($showdate==1){
 if($disdate==''){
 echo "<td><font class='labelz'><b>Discharged Date:</b></font></td><td><a href='manualdate.php?registrationNo=$registrationNo&username=$username&show=$show&chargesCode=$chargesCode&showdate=$showdate'><font size=2 color=black>".date("M d, Y")."</font></a></td>";
-}
-else{
-echo "<td><font class='labelz'><b>Discharge Date:</b></font></td><td><a href='manualdate.php?registrationNo=$registrationNo&username=$username&show=$show&chargesCode=$chargesCode&showdate=$showdate'><font size=2 color=black>".$disdatefmt."</font></a></td>";
+}else{
+echo "<td><font class='labelz'><b>Discharge Date:</b></font></td><td><a href='manualdate.php?registrationNo=$registrationNo&username=$username&show=$show&chargesCode=$chargesCode&showdate=$showdate'><font size=2 color=black>".$ro->formatDate($disdate)."</font></a></td>";
 }
 }
 else if($showdate==2){
