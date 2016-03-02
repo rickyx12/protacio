@@ -351,6 +351,8 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/doctorReport/selectShift_ADMIN.php?username=x" target="departmentX">OPD PF (Summary)</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=x&switch=x" target="departmentX">Statistics of Procedure</a></li>
 
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Company/selectCompany.php" target="departmentX">Aging of Accounts</a></li>
+
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/accounting/cashDisbursement/disbursementPage.php?username=<?php echo $username; ?>" target="departmentX">Disbursement</a></li>
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/billing/selectShift.php?username=<?php echo $username; ?>&branch=<?php echo $ro->getUserBranch_username($username,$module) ?>" target="departmentX">Discharged</a></li>
