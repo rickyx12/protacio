@@ -45,26 +45,26 @@ echo "<input type='submit' value='Collection Report' style='border:1px solid #ff
 echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/Census/registrationCensus.php' target='rightFrame'>";
-$ro->coconutHidden("fromMonth",$curDate[1]);
-$ro->coconutHidden("fromDay",$curDate[2]);
-$ro->coconutHidden("fromYear",$curDate[0]);
-$ro->coconutHidden("toMonth",$curDate[1]);
-$ro->coconutHidden("toDay",$curDate[2]);
-$ro->coconutHidden("toYear",$curDate[0]);
-$ro->coconutHidden("type","IPD");
-$ro->coconutHidden("dept","");
-$ro->coconutHidden("username","");
-echo "<input type='submit' value='Admission' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+	$ro->coconutHidden("fromMonth",$curDate[1]);
+	$ro->coconutHidden("fromDay",$curDate[2]);
+	$ro->coconutHidden("fromYear",$curDate[0]);
+	$ro->coconutHidden("toMonth",$curDate[1]);
+	$ro->coconutHidden("toDay",$curDate[2]);
+	$ro->coconutHidden("toYear",$curDate[0]);
+	$ro->coconutHidden("type","IPD");
+	$ro->coconutHidden("dept","");
+	$ro->coconutHidden("username","");
+	echo "<input type='submit' value='Admission' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/paidIPD.php' target='rightFrame'>";
-$ro->coconutHidden("month",$curDate[1]);
-$ro->coconutHidden("day",$curDate[2]);
-$ro->coconutHidden("year",$curDate[0]);
-$ro->coconutHidden("month1",$curDate[1]);
-$ro->coconutHidden("day1",$curDate[2]);
-$ro->coconutHidden("year1",$curDate[0]);
-echo "<input type='submit' value='Discharged' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+	$ro->coconutHidden("month",$curDate[1]);
+	$ro->coconutHidden("day",$curDate[2]);
+	$ro->coconutHidden("year",$curDate[0]);
+	$ro->coconutHidden("month1",$curDate[1]);
+	$ro->coconutHidden("day1",$curDate[2]);
+	$ro->coconutHidden("year1",$curDate[0]);
+	echo "<input type='submit' value='Discharged' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Cashier/expenses.php' target='rightFrame'>";
@@ -86,10 +86,15 @@ echo "<input type='submit' value='Transaction Summary' style='border:1px solid #
 echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Doctor/doctorModule/doctorPF_shift.php' target='rightFrame'>";
-echo "<input type='submit' value='PF/Doctor' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
-$ro->coconutHidden("username","x");
-$ro->coconutHidden("module","shortcut");
+	echo "<input type='submit' value='PF/Doctor' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+	$ro->coconutHidden("username","x");
+	$ro->coconutHidden("module","shortcut");
 echo "</form>";
+
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Company/selectCompany.php' target='rightFrame'>";
+	echo "<input type='submit' value='Aging of Accounts' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/accounting/purchaseJournalDate.php' target='rightFrame'>";
 echo "<input type='submit' value='Purchase Journal' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
