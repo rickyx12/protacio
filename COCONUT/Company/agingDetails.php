@@ -51,7 +51,6 @@ $_120days = 0;
 <? for($a=0,$b=0,$c=0,$d=0;$a<$countLastName,$b<$countFirstName,$c<$countRegistrationNo,$d<$countDateUnregistered;$a++,$b++,$c++,$d++) { ?> 
 <? $companyBalance = ($ro->aging_of_accounts_details_amount($registrationNo[$c]) - $ro->aging_of_accounts_details_payment($registrationNo[$c]));  ?>
 <tr>
-
 <? if($companyBalance > 0) { ?>
 
 <td><? echo $lastName[$a].", ".$firstName[$b]; ?><br><? echo $ro->formatDate($dateUnregistered[$d]) ?></td>
