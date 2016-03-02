@@ -1,9 +1,11 @@
 <?php
 include("../../myDatabase2.php");
+include "../../myDatabase4.php";
 $registrationNo = $_GET['registrationNo'];
 $username = $_GET['username'];
 
 $ro = new database2();
+$ro1 = new database4();
 $ro->getPatientProfile($registrationNo);
 $ro->setPatientRecord($ro->getRegistrationDetails_patientNo());
 echo "
@@ -72,7 +74,7 @@ echo "<br><font class='informationLabel'>Admission#:</font>&nbsp;<font color='bl
 echo "<br><font class='informationLabel'>Age:</font>&nbsp;".$ro->getPatientRecord_age();
 echo "<br><font class='informationLabel'>Gender:</font>&nbsp;".$ro->getPatientRecord_gender();
 //echo "<br><font class='informationLabel'>Civil Status:</font>&nbsp;".$ro->getPatientRecord_civilStatus();
-echo "<br><font class='informationLabel'>Birth Date:</font>&nbsp;".$ro->getPatientRecord_Birthdate();
+echo "<br><font class='informationLabel'>Birth Date:</font>&nbsp;".$ro1->formatDate($ro->getPatientRecord_Birthdate());
 echo "<br><font class='informationLabel'>Contact No#:</font>&nbsp;".$ro->getPatientRecord_contactNo();
 echo "<br><font class='informationLabel'>Senior:</font>&nbsp;".$ro->getPatientRecord_senior();
 echo "<br><font class='informationLabel'>Senior ID#:</font>&nbsp;".$ro->selectNow("registrationDetails","seniorID","registrationNo",$registrationNo);
@@ -92,7 +94,7 @@ echo "<br><font class='informationLabel'>Company2:</font>&nbsp;".$ro->selectNow(
 //echo "<br><font class='informationLabel'>Mother's Name:</font>&nbsp;".$ro->selectNow("patientRecord","mothersName","patientNo",$ro->getRegistrationDetails_patientNo());
 //echo "<br><font class='informationLabel'>Father's Name:</font>&nbsp;".$ro->selectNow("patientRecord","fathersName","patientNo",$ro->getRegistrationDetails_patientNo());
 echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro->getRegistrationDetails_timeRegistered();
-echo "<br><font class='informationLabel'>Date Registered:</font>&nbsp;".$ro->getRegistrationDetails_dateRegistered();
+echo "<br><font class='informationLabel'>Date Registered:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateRegistered());
 //echo "<br><font class='informationLabel'>Branch Registered:</font>&nbsp;".$ro->getRegistrationDetails_branch();
 echo "<br><font class='informationLabel'>Case Type:</font>&nbsp;<a href='#' style='text-decoration:none; color:black;'>".$ro->selectNow("registrationDetails","privateORhouse_case","registrationNo",$registrationNo)."</a>";
 //selectNow($table,$cols,$identifier,$identifierData)
@@ -128,7 +130,7 @@ echo "<br><font class='informationLabel' color=red>Current Balance:</font>&nbsp;
 
 if($ro->getRegistrationDetails_dateUnregistered() != "") {
 echo "<br><font class='informationLabel'>Time Discharged:</font>&nbsp;".$ro->getRegistrationDetails_timeUnregistered();
-echo "<br><font class='informationLabel'>Discharged:</font>&nbsp;".$ro->getRegistrationDetails_dateUnregistered();
+echo "<br><font class='informationLabel'>Discharged:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateUnregistered());
 }else {
 echo "";
 }
