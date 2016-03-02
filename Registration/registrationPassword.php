@@ -42,6 +42,7 @@ $from = $_POST['from'];
 $manual_patientID = $_POST['manual_patientID'];
 $manual_caseno = $_POST['manual_caseno'];
 $pxCount = $_POST['pxCount'];
+$email = $_POST['email'];
 
 $ro = new database();
 
@@ -100,7 +101,7 @@ $ro->editNow("trackingNo","name","patientNo","value",$incrementPatNo);
 
 if($registrationStatus == "new") { // Registration Status [new]
 
-$ro->addNewPatientRecord($patientNo,$manual_patientID,$lastname,$firstname,$middlename,$completeName,$ro->calculate_age($birthDate),$patientContact,$birthDate,$gender,$seniorCitizen,$address,$philHealth,$civilStatus,$religion);
+$ro->addNewPatientRecord($patientNo,$manual_patientID,$lastname,$firstname,$middlename,$completeName,$ro->calculate_age($birthDate),$patientContact,$birthDate,$gender,$seniorCitizen,$address,$philHealth,$civilStatus,$religion,$email);
 
 if($room == "OPD") {
 $ro->addNewRegistration($patientNo,$registrationNo,$manual_patientID,$manual_caseno,$bloodpressure,$patientTemperature,$height,$weight,$company,$diagnosis,$dateRegistered,$serverTime,$ro->getUserBranch($password),"OPD","OPD_OPD",$ro->getUserRegistered(),$casetype,"2000",date("Y-m-d"),$diet,$pulse,$respiratory,$from,$pxCount);
@@ -123,6 +124,7 @@ $ro->addCharges_cash("UNPAID",$registrationNo,$room,$room,$ro->room_rate(),0,$ro
 else {  // Registration Status [old]
 
 $ro->editNow("patientRecord","patientNo",$patientNo,"Age",$ro->calculate_age($birthDate));
+$ro->editNow("patientRecord","patientNo",$patientNo,"email",$email);
 
 if($room == "OPD") {
 $ro->addNewRegistration($patientNo,$registrationNo,$manual_patientID,$manual_caseno,$bloodpressure,$patientTemperature,$height,$weight,$company,$diagnosis,$dateRegistered,$serverTime,$ro->getUserBranch($password),"OPD","OPD_OPD",$ro->getUserRegistered(),$casetype,"2000",date("Y-m-d"),$diet,$pulse,$respiratory,$from,$pxCount);

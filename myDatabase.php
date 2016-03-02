@@ -676,32 +676,30 @@ mysql_close($con);
 
 
 
-public function addNewPatientRecord($patientNo,$manual_patientID,$lastName,$firstName,$middleName,$completeName,$age,$patientContact,$birthDate,$gender,$senior,$address,$phic,$civilStatus,$religion) {
+public function addNewPatientRecord($patientNo,$manual_patientID,$lastName,$firstName,$middleName,$completeName,$age,$patientContact,$birthDate,$gender,$senior,$address,$phic,$civilStatus,$religion,$email) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
+  $con = mysql_connect($this->host,$this->username,$this->password);
+  if (!$con) {
+    die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db($this->database, $con);
+  mysql_select_db($this->database, $con);
 
-$sql="INSERT INTO patientRecord (patientNo,manual_patientNo,lastName,firstName,middleName,completeName,Birthdate,Age,Gender,Senior,Address,contactNo,PHIC,religion,civilStatus)
-VALUES
-('$patientNo','$manual_patientID','$lastName','$firstName','$middleName','$completeName','$birthDate','$age','$gender','$senior','$address','$patientContact','$phic','$religion','$civilStatus')";
+  $sql="INSERT INTO patientRecord (patientNo,manual_patientNo,lastName,firstName,middleName,completeName,Birthdate,Age,Gender,Senior,Address,contactNo,PHIC,religion,civilStatus,email)
+  VALUES
+  ('$patientNo','$manual_patientID','$lastName','$firstName','$middleName','$completeName','$birthDate','$age','$gender','$senior','$address','$patientContact','$phic','$religion','$civilStatus','$email')";
 
-if (!mysql_query($sql,$con))
+  if (!mysql_query($sql,$con))
   {
   die('Error: ' . mysql_error());
   }
-/*
-echo "<script type='text/javascript' >";
-echo "alert('$service was Successfully Added to the List of Service in $category');";
-echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
-echo "</script>";
-*/
-mysql_close($con);
-
+  /*
+  echo "<script type='text/javascript' >";
+  echo "alert('$service was Successfully Added to the List of Service in $category');";
+  echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
+  echo "</script>";
+  */
+  mysql_close($con);
 }
 
 

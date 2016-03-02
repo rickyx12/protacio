@@ -35,6 +35,7 @@ $from = $_GET['from'];
 $manual_patientID = $_GET['manual_patientID'];
 $manual_caseno = $_GET['manual_caseno'];
 $pxCount = $_GET['pxCount'];
+$email = $_GET['email'];
 
 $ro = new database2();
 
@@ -151,8 +152,7 @@ echo "<Br><Br><center><div style='border:1px solid #000000; width:500px; height:
 echo "<form method='post' action='registrationPassword.php'>";
 echo "<br><br>";
 echo "<font size=3>Password:</font>&nbsp;";
-echo "<input type=password name='password' class='txtBox' id='Password' 
- >";
+echo "<input type=password name='password' class='txtBox' id='Password' >";
 echo "<br><br><input type=submit value='Verify' style='border:1px solid #000000; background:#3b5998 no-repeat 4px 4px; color:white;'>";
 echo "</div></center>";
 echo "<input type=hidden name='patientNo' value='$patientNo'>";
@@ -190,6 +190,7 @@ echo "<input type=hidden name='from' value='$from' >";
 echo "<input type=hidden name='manual_patientID' value='$manual_patientID' >";
 echo "<input type=hidden name='manual_caseno' value='$manual_caseno' >";
 echo "<input type=hidden name='pxCount' value='$pxCount' >";
+echo "<input type=hidden name='email' value='$email' >";
 echo "</form>";
 
 

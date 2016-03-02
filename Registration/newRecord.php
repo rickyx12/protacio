@@ -59,7 +59,7 @@ echo ".txtBox {
 
 
 
-input[type=text] {
+#info[type=text] {
     text-transform:uppercase;
 }
 
@@ -70,24 +70,6 @@ echo "</style>";
 ?>
 
 <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/rickyCSS1.css" />
-
-<script type='text/javascript'>
-var record = 'Search Record';
-function SetMsg (txt,active) {
-    if (txt == null) return;
-    
- 
-    if (active) {
-        if (txt.value == record) txt.value = '';                     
-    } else {
-        if (txt.value == '') txt.value = record;
-    }
-}
-
-window.onload=function() { SetMsg1(document.getElementById('searchRecord', false)); }
-
-</script>
-
 
 
 <style type='text/css'>
@@ -164,17 +146,19 @@ echo "<input type='text' name='pxCount' style='border:1px solid #000; width:5%; 
 echo "<br>";
 echo "<div style='border:1px solid #000000; width:500px; heigh:480px; border-color:black black black black;'>";
 echo "<br>";
-echo "<input type=text name='manual_patientID' class='myInformation' id='firstname' autocomplete='off' placeholder='Patient ID#' >";
+echo "<input type=text name='manual_patientID' class='myInformation' id='info' autocomplete='off' placeholder='Patient ID#' >";
 echo "<br>";
-echo "<input type=text name='manual_caseno' class='myInformation' id='firstname' autocomplete='off' placeholder='Case#' >";
+echo "<input type=text name='manual_caseno' class='myInformation' id='info' autocomplete='off' placeholder='Case#' >";
 echo "<br>";
-echo "<input type=text name='lastname' class='myInformation' id='firstname' autocomplete='off' placeholder='LAST NAME' >";
+echo "<input type=text name='lastname' class='myInformation' id='info' autocomplete='off' placeholder='LAST NAME' >";
 echo "<br>";
-echo "<input type=text name='firstname' class='myInformation' id='firstname' autocomplete='off' placeholder='FIRST NAME' >";
+echo "<input type=text name='firstname' class='myInformation' id='info' autocomplete='off' placeholder='FIRST NAME' >";
 echo "<br>";
-echo "<input type=text name='middlename' class='myInformation' id='middlename' autocomplete='off' placeholder='MIDDLE NAME' >";
+echo "<input type=text name='middlename' class='myInformation' id='info' autocomplete='off' placeholder='MIDDLE NAME' >";
 echo "<br>";
-echo "<input type=text name='patientContact' class='myInformation' id='patientContact' autocomplete='off' placeholder='Contact No#' >";
+echo "<input type=text name='patientContact' class='myInformation' id='info' autocomplete='off' placeholder='Contact No#' >";
+echo "<br>";
+echo "<input type=text name='email' class='myInformation' autocomplete='off' placeholder='Email Address' >";
 
 
 echo "<br><Br>&nbsp;<span class='style3'>Birth Date:</span>&nbsp;

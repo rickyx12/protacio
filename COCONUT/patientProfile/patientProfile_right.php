@@ -100,6 +100,7 @@ echo "<br><font class='informationLabel'>Case Type:</font>&nbsp;<a href='#' styl
 //selectNow($table,$cols,$identifier,$identifierData)
 echo "<br><font class='informationLabel'>Room:</font>&nbsp;".$room[0];
 echo "<br><font class='informationLabel'>Address:</font>&nbsp;".$ro->getPatientRecord_address();
+echo "<br><font class='informationLabel'>Email:</font>&nbsp;".$ro->selectNow("patientRecord","email","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo));
 echo "<br><font class='informationLabel'>Registered By:</font>&nbsp;".$ro->getRegistrationDetails_registeredBy();
 
 

@@ -64,7 +64,7 @@ echo "
 border: 1px solid #000;
 }
 
-input[type=text] {
+#info[type=text] {
     text-transform:uppercase;
 }
 
@@ -194,20 +194,24 @@ echo "<br>";
 echo "<input type=text name='manual_patientID' class='myInformation' id='firstname' value='".$ro->selectNow("patientRecord","manual_patientNo","patientNo",$patientNo)."' autocomplete='off' placeholder='Patient ID#' >";
 
 echo "<br>";
-echo "<input type=text name='manual_caseno' class='myInformation' id='firstname' autocomplete='off' placeholder='Case#' >";
+echo "<input type=text name='manual_caseno' class='myInformation' id='info' autocomplete='off' placeholder='Case#' >";
 
 echo "<br>";
-echo "<input type=text name='lastname' class='myInformation' id='lastname' placeholder='LAST NAME' value='".$ro->getLastName_patientRecord()."' >";
+echo "<input type=text name='lastname' class='myInformation' id='info' placeholder='LAST NAME' value='".$ro->getLastName_patientRecord()."' >";
 
 echo "<br>";
-echo "<input type=text name='firstname' class='myInformation' id='firstname' placeholder='FIRST NAME' value='".$ro->getFirstName_patientRecord()."' >";
+echo "<input type=text name='firstname' class='myInformation' id='info' placeholder='FIRST NAME' value='".$ro->getFirstName_patientRecord()."' >";
 
 
 echo "<br>";
-echo "<input type=text name='middlename' class='myInformation' id='middlename' placeholder='MIDDLE NAME' value='".$ro->getMiddleName_patientRecord()."' >";
+echo "<input type=text name='middlename' class='myInformation' id='info' placeholder='MIDDLE NAME' value='".$ro->getMiddleName_patientRecord()."' >";
 
 echo "<br>";
-echo "<input type=text name='patientContact' class='myInformation' id='patientContact' placeholder='Contact#' value='".$ro->getContactNo_patientRecord()."' >";
+echo "<input type=text name='patientContact' class='myInformation' id='info' placeholder='Contact#' value='".$ro->getContactNo_patientRecord()."' >";
+echo "<br>";
+
+echo "<input type=text name='email' class='myInformation' autocomplete='off' placeholder='Email Address' >";
+
 
 $bday = preg_split ("/\-/",$ro->getBirthDate_patientRecord()); 
 
