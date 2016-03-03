@@ -9,12 +9,16 @@ $count = count($siNo);
 $invoiceNo = $_GET['invoiceNo'];
 $username = $_GET['username'];
 
+$voucherNo = $ro->selectNow("trackingNo","value","name","trackingNo");
+$ro->editNow("trackingNo","name","trackingNo","value",($voucherNo + 1));
 
+/*
 $ro->getVouchersNo();
 $myFile = $ro->getReportInformation("homeRoot")."/COCONUT/trackingNo/voucherNo.dat";
 $fh = fopen($myFile, 'r');
 $voucherNo = fread($fh, 100);
 fclose($fh);
+*/
 /*
 for($x=0;$x<$count;$x++) {
 //echo $siNo[$x];
