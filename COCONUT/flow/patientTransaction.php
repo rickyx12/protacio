@@ -1,7 +1,7 @@
 <?
 include "../../myDatabase4.php";
 $ro = new database4();
-$date = "2016-02-02";
+$date = $_GET['date'];
 $ro->patient_with_transaction($date);
 $ro->inpatient_payment($date);
 $registrationNo = $ro->patient_with_transaction_registrationNo();
