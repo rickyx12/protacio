@@ -319,6 +319,8 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/stockCard/sortStockCard.php" target="departmentX">Merge Stock Card</a></li>
 
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/accounting/purchaseJournalDate.php" target="departmentX">Purchase Journal</a></li>
+
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/availableMedicine/expiredMed.php?username=<?php echo $username; ?>.php?username=<?php echo $username; ?>" target="departmentX">Expiration</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/dailyCashiersReport_date.php?username=<?php echo $username; ?>.php?username=<?php echo $username; ?>" target="departmentX">Daily Cashiers Report</a></li>
