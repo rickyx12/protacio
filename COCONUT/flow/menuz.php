@@ -81,6 +81,11 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Cashier/cash
 echo "<input type='submit' value='Daily Cashier's Report' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/flow/patientTransaction.php' target='rightFrame'>";
+$ro->coconutHidden("date",$datez);
+echo "<input type='submit' value='Daily Transaction' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/transactionSummaryDate.php' target='rightFrame'>";
 echo "<input type='submit' value='Transaction Summary' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
