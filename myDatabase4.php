@@ -259,6 +259,7 @@ private $inpatient_payment_lastName;
 private $inpatient_payment_firstName;
 private $inpatient_payment_paymentFor;
 private $inpatient_payment_registrationNo;
+private $inpatient_payment_patientNo;
 
 public function inpatient_payment_lastName() {
 	return $this->inpatient_payment_lastName;
@@ -272,23 +273,27 @@ public function inpatient_payment_paymentFor() {
 public function inpatient_payment_registrationNo() {
 	return $this->inpatient_payment_registrationNo;
 }
+public function inpatient_payment_paymentNo() {
+	return $this->inpatient_payment_paymentNo;
+}
 
 public function inpatient_payment($date) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,pp.paymentFor,pp.amountPaid from patientRecord pr,registrationDetails rd,patientPayment pp where pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and pp.datePaid = '$date' and rd.type = 'IPD' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,pp.paymentFor,pp.amountPaid,pp.paymentNo from patientRecord pr,registrationDetails rd,patientPayment pp where pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and pp.datePaid = '$date' and rd.type = 'IPD' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->inpatient_payment_lastName[] = $row['lastName'];
 		$this->inpatient_payment_firstName[] = $row['firstName'];
 		$this->inpatient_payment_paymentFor[] = $row['paymentFor'];
 		$this->inpatient_payment_registrationNo[] = $row['registrationNo'];
+		$this->inpatient_payment_paymentNo[] = $row['paymentNo'];
 			}
 }
 
 
-public function inpatient_payment_paid($registrationNo,$paymentMode) {
+public function inpatient_payment_paid($registrationNo,$paymentNo,$paymentMode) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select amountPaid as pd from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paymentMode'  ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select amountPaid as pd from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paymentMode' and paymentNo = '$paymentNo'  ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		($row['pd'] > 0) ? $x = $row['pd'] : $x = 0;

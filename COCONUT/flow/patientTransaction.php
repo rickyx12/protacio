@@ -14,6 +14,7 @@ $ipd_lastName = $ro->inpatient_payment_lastName();
 $ipd_firstName = $ro->inpatient_payment_firstName();
 $paymentFor = $ro->inpatient_payment_paymentFor();
 $ipd_registrationNo = $ro->inpatient_payment_registrationNo();
+$ipd_paymentNo = $ro->inpatient_payment_paymentno();
 
 $countReg = count($registrationNo);
 $countFN = count($firstName);
@@ -25,6 +26,7 @@ $ipdFN = count($ipd_firstName);
 $ipdLN = count($ipd_lastName);
 $ipdPaymentFor = count($paymentFor);
 $ipdRegistrationNo = count($ipd_registrationNo);
+$ipdPaymentNo = count($ipd_paymentNo);
 
 $total = 0;
 $balance = 0;
@@ -99,7 +101,7 @@ $ipd_creditCard = 0;
       		</tr>
       	</tbody>
 	      	<tbody>	
-		      	<? for($a=0,$b=0,$c=0,$d=0;$a<$ipdFN,$b<$ipdLN,$c<$ipdPaymentFor,$d<$ipdRegistrationNo;$a++,$b++,$c++,$d++) { ?>
+		      	<? for($a=0,$b=0,$c=0,$d=0,$e=0;$a<$ipdFN,$b<$ipdLN,$c<$ipdPaymentFor,$d<$ipdRegistrationNo,$e<$ipdPaymentNo;$a++,$b++,$c++,$d++,$e++) { ?>
 		      		<tr>
 		      				<? $ipd_cash += $ro->inpatient_payment_paid($ipd_registrationNo[$d],"Cash") ?>
 		      				<? $ipd_creditCard += $ro->inpatient_payment_paid($ipd_registrationNo[$d],"Credit Card"); ?>
@@ -109,8 +111,8 @@ $ipd_creditCard = 0;
       					<td><? //echo number_format($ro->patient_with_transaction_total($ipd_registrationNo[$d]),2) ?></td>
       					<td></td>
       					<td><? //echo number_format($ro->patient_with_transaction_company($ipd_registrationNo[$d]),2) ?></td>
-      					<td><? echo number_format($ro->inpatient_payment_paid($ipd_registrationNo[$d],"Cash"),2) ?></td>
-      					<td><? echo number_format($ro->inpatient_payment_paid($ipd_registrationNo[$d],"Credit Card"),2) ?></td>
+      					<td><? echo number_format($ro->inpatient_payment_paid($ipd_registrationNo[$d],$ipd_paymentNo[$e],"Cash"),2) ?></td>
+      					<td><? echo number_format($ro->inpatient_payment_paid($ipd_registrationNo[$d],$ipd_paymentNo[$e],"Credit Card"),2) ?></td>
       				</tr>	
 		      	<? } ?>
       		</tbody>
