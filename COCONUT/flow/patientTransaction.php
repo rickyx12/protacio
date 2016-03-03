@@ -103,8 +103,8 @@ $ipd_creditCard = 0;
 	      	<tbody>	
 		      	<? for($a=0,$b=0,$c=0,$d=0,$e=0;$a<$ipdFN,$b<$ipdLN,$c<$ipdPaymentFor,$d<$ipdRegistrationNo,$e<$ipdPaymentNo;$a++,$b++,$c++,$d++,$e++) { ?>
 		      		<tr>
-		      				<? $ipd_cash += $ro->inpatient_payment_paid($ipd_registrationNo[$d],"Cash") ?>
-		      				<? $ipd_creditCard += $ro->inpatient_payment_paid($ipd_registrationNo[$d],"Credit Card"); ?>
+		      				<? $ipd_cash += $ro->inpatient_payment_paid($ipd_registrationNo[$d],$ipd_paymentNo[$e],"Cash") ?>
+		      				<? $ipd_creditCard += $ro->inpatient_payment_paid($ipd_registrationNo[$d],$ipd_paymentNo[$e],"Credit Card"); ?>
 		      			<td></td>
       					<td><? echo $ipd_lastName[$b] ?>, <? echo $ipd_firstName[$a] ?></td>
       					<td><? echo $paymentFor[$c] ?></td>
