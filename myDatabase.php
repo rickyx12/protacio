@@ -4083,7 +4083,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT i.stockCardNo,i.phic,i.preparation,i.inventoryCode,i.description,i.genericName,((i.unitcost * ".$this->percentage("medicine").") + i.unitcost) as sellingPrice,i.quantity,i.unitcost,i.Added,i.ipdPrice,i.opdPrice,i.locked FROM inventoryStockCard isc,inventory i WHERE isc.stockCardNo = i.stockCardNo and (i.description like '%%%%%%$searchDesc%%%%%%%' or i.genericName like '%%%%%%$searchDesc%%%%%%%' ) and i.inventoryType = 'medicine' and i.inventoryLocation = '$searchFrom' and i.status not like 'DELETED_%%%%%' and isc.status like 'DELETED%%%%' and i.quantity > 0 order by i.".$searchBy." asc ");
+$result = mysql_query("SELECT i.stockCardNo,i.phic,i.preparation,i.inventoryCode,i.description,i.genericName,((i.unitcost * ".$this->percentage("medicine").") + i.unitcost) as sellingPrice,i.quantity,i.unitcost,i.Added,i.ipdPrice,i.opdPrice,i.locked FROM inventoryStockCard isc,inventory i WHERE isc.stockCardNo = i.stockCardNo and (i.description like '%%%%%%$searchDesc%%%%%%%' or i.genericName like '%%%%%%$searchDesc%%%%%%%' ) and i.inventoryType = 'medicine' and i.inventoryLocation = '$searchFrom' and i.status not like 'DELETED_%%%%%' and isc.status not like 'DELETED%%%%' and i.quantity > 0 order by i.".$searchBy." asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
