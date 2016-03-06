@@ -9,11 +9,10 @@ $registrationNo = $_GET['registrationNo'];
 
 $ro = new database();
 
-if($date == $date1) {
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",$datePaid);
+//echo "Start date and End Date is not match";
+$dateDischarged = $ro->doubleSelectNow("patientCharges","reportDate","registrationNo",$registrationNo,"status","PAID");
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",$dateDischarged);
 $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/billing/patientAccount.php?date=$date&date1=$date1&type=$type&title=$title");
-}else {
-echo "Start date and End Date is not match";
-}
+
 
 ?>
