@@ -114,6 +114,10 @@ echo "<input type='submit' value='Inventory Adjustment' style='border:1px solid 
 echo "</form>";
 
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/new_inventory_list.php' target='rightFrame'>";
+echo "<input type='submit' value='Inventory List(New)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/inventoryList1.php' target='_blank'>";
 echo "<input type='submit' value='Inventory Sheet (Medicine)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
@@ -125,6 +129,11 @@ echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/flow/chartList.php' target='rightFrame'>";
 echo "<input type='submit' value='Chart' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/endingInventory.php' target='rightFrame'>";
+echo "<input type='hidden' name='inventoryType' value='medicine'>";
+echo "<input type='submit' value='Ending Inv' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
 ?>
