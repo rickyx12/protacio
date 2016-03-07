@@ -306,6 +306,11 @@ private $inventory_list_inventoryCode;
 private $inventory_list_stockCardNo;
 private $inventory_list_description;
 private $inventory_list_genericName;
+private $inventory_list_qty;
+private $inventory_list_unitcost;
+private $inventory_list_ipdPrice;
+private $inventory_list_opdPrice;
+private $inventory_list_dateAdded;
 
 public function inventory_list_inventoryCode() {
 	return $this->inventory_list_inventoryCode;
@@ -319,18 +324,78 @@ public function inventory_list_description() {
 public function inventory_list_genericName() {
 	return $this->inventory_list_genericName;
 }
+public function inventory_list_qty() {
+	return $this->inventory_list_qty;
+}
+public function inventory_list_unitcost() {
+	return $this->inventory_list_unitcost;
+}
+public function inventory_list_ipdPrice() {
+	return $this->inventory_list_ipdPrice;
+}
+public function inventory_list_opdPrice() {
+	return $this->inventory_list_opdPrice;
+}
+public function inventory_list_dateAdded() {
+	return $this->inventory_list_dateAdded;
+}
 
-public function inventory_list($inventoryType) {
+
+public function inventory_list($type) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select i.inventoryCode,i.stockCardNo,i.description,i.genericName,i.quantity from inventory i order by i.genericName and i.status not like 'DELETED' order by i.genericName asc ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT i.inventoryCode,i.stockCardNo,i.description,i.genericName,i.quantity,i.unitcost,i.ipdPrice,i.opdPrice,i.dateAdded from inventory i where i.status not like 'DELETED%%%%%' and i.quantity > 0 and i.inventoryType = '$type' order by i.genericName asc") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->inventory_list_inventoryCode[] = $row['inventoryCode'];
 		$this->inventory_list_stockCardNo[] = $row['stockCardNo'];
 		$this->inventory_list_description[] = $row['description'];
 		$this->inventory_list_genericName[] = $row['genericName'];
+		$this->inventory_list_qty[] = $row['quantity'];
+		$this->inventory_list_unitcost[] = $row['unitcost'];
+		$this->inventory_list_ipdPrice[] = $row['ipdPrice'];
+		$this->inventory_list_opdPrice[] = $row['opdPrice'];
+		$this->inventory_list_dateAdded[] = $row['dateAdded'];
 	}
 }
+
+
+private $insertNow_cols;
+private $insertNow_data;
+private $insertNow_totalArray;
+private $insertNow_a;
+
+public function insertNow($table,$data) {
+
+	$this->insertNow_totalArray = count($data);
+	$this->insertNow_a = 0;
+	$this->insertNow_cols=""; //pra sa looping alisin ung last value nea n gling s huling loop. 
+	$this->insertNow_data="";
+	/* make your connection */
+	$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
+ 	
+ 	$table = "insert into ".$table;
+ 	foreach($data as $c => $d) {
+		
+ 		if(++$this->insertNow_a == $this->insertNow_totalArray) { //knuha q ung last array pra matanggal ung comma sa $d
+ 			$this->insertNow_cols .= $c;
+ 			$this->insertNow_data .= "'".$d."'";
+ 		}else {
+ 			$this->insertNow_cols .= $c.",";
+ 			$this->insertNow_data .= "'".$d."',";
+ 		}
+	} 
+	$query = $table."(".$this->insertNow_cols.") values(".$this->insertNow_data.")";
+	if ( $sql->query($query) ) {
+   	//echo "new entry has been added with the `id`";
+	} else {
+    echo "There was a problem:<br />$query<br />{$sql->error}";
+	}	
+	/* close our connection */
+	$sql->close();
+}
+
+
+
 
 
 
