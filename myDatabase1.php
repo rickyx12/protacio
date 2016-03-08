@@ -1250,7 +1250,7 @@ if (!$con)
 mysql_select_db($this->database, $con);
 
 
-$result = mysql_query("select pc.itemNo,pc.description,pc.total,pc.datePaid,pc.cashPaid,pc.orNO from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = '$registrationNo' and (pc.cashPaid > 0 or pc.amountPaidFromCreditCard > 0) and pc.status in ('PAID','UNPAID') order by pc.orNO asc ");
+$result = mysql_query("select pc.itemNo,pc.description,pc.total,pc.datePaid,pc.cashPaid,pc.orNO,pc.paidVia,pc.amountPaidFromCreditCard,doctorsPF,doctorsPF_payable from patientCharges pc,registrationDetails rd WHERE pc.registrationNo = rd.registrationNo and pc.registrationNo = '$registrationNo' and (pc.cashPaid > 0 or pc.amountPaidFromCreditCard > 0) and pc.status in ('PAID','UNPAID') order by pc.orNO asc ");
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/patientProfile/voidPayment/voidNow.php");
 echo "<Center>";
@@ -1260,7 +1260,13 @@ $this->coconutTableHeader("");
 $this->coconutTableHeader("OR#");
 $this->coconutTableHeader("Description");
 $this->coconutTableHeader("Date Paid");
-$this->coconutTableHeader("Amount Paid");
+$this->coconutTableHeader("Paid");
+if($this->selectNow("patientCharges","paidVia","registrationNo",$registrationNo) == "Cash") {
+$this->coconutTableHeader("PF");
+}else {
+$this->coconutTableHeader("PayablesPF");
+}
+$this->coconutTableHeader("PaidVia");
 $this->coconutTableRowStop();
 $x=1;
 while($row = mysql_fetch_array($result))
@@ -1272,9 +1278,16 @@ $this->coconutTableData("<input type='checkbox' name='itemNo[]' value='".$row['i
 $this->coconutTableData($row['orNO']);
 $this->coconutTableData($row['description']);
 $this->coconutTableData($row['datePaid']);
-$this->coconutTableData($row['cashPaid']);
+if($row['paidVia'] == "Cash"){
+  $this->coconutTableData($row['cashPaid']);
+  $this->coconutTableData($row['doctorsPF']);
+}else {
+  $this->coconutTableData($row['amountPaidFromCreditCard']);
+  $this->coconutTableData($row['doctorsPF_payable']);
+}
+$this->coconutTableData($row['paidVia']);
 $this->coconutTableRowStop();
-  }
+}
 $this->coconutTableStop();
 echo "<Br>";
 $this->coconutButton("Void Payment");
