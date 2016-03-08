@@ -26,6 +26,11 @@ $ro->editNow("patientCharges","itemNo",$itemNo[$x],"datePaid","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"timePaid","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"paidBy","");
 $ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",$newCashUnpaid1);
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"amountPaidFromCreditCard","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"doctorsPF","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"doctorsPF_payable","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cardType","");
+$ro->editNow("patientCharges","itemNo",$itemNo[$x],"reportShift","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered","");
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered","");
 
