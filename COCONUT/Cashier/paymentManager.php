@@ -13,7 +13,6 @@ $registrationNo = $_GET['registrationNo'];
 $cardType = $_GET['cardType'];
 $creditCardNo = $_GET['creditCardNo'];
 $paidVia = $_GET['paidVia'];
-$reportDate = $_GET['reportDate'];
 
 $month = $_GET['month']; // month paid
 $day = $_GET['day']; // day paid
@@ -80,9 +79,18 @@ for($x=0;$x<$countz;$x++) {
 $cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
 
 if( $paidVia == "Cash" ) {
-$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0",$reportDate);
+$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+}else {
+
+if($ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "PROFESSIONAL FEE") {
+$payablesPF = $ro->selectNow("patientCharges","doctorsPF","itemNo",$cashierPaid[$x]);
+$totalCreditCard = ( $cashPaid + $payablesPF );
+$ro->paymentManager_creditCard_PF($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0",$payablesPF);
+$ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"doctorsPF","0");
 }else {
 $ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+}
+
 }
 
 $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"orNO",$orNO);
@@ -108,7 +116,7 @@ $ro->addCollectionReport($registrationNo,$cashierPaid[$x],$shift,"OPD",$cashPaid
 }
 }
 else {
-$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/Cashier/rBanny_cash.php?registrationNo=$registrationNo&cash=&targetAmount=$totalPaid&cashInputted=$totalPaid&username=$username&orNO=$orNO&datePaid=$datePaid&shift=$shift");
+//$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/Cashier/rBanny_cash.php?registrationNo=$registrationNo&cash=&targetAmount=$totalPaid&cashInputted=$totalPaid&username=$username&orNO=$orNO&datePaid=$datePaid&shift=$shift");
 }
 }else {
 echo "$itemNo is not UNPAID";
@@ -119,7 +127,7 @@ echo "$itemNo is not UNPAID";
 echo "The Patient is not OPD nor walkin";
 }
 
-$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/individualPayment/toDispense.php?registrationNo=$registrationNo&module=PHARMACY&username=$username&month=".date("m")."&day=".date("d")."&year=".date("Y")."&fromTime_hour=00&fromTime_minutes=00&fromTime_seconds=00&toTime_hour=24&toTime_minutes=00&toTime_seconds=00&nod=");
+//$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/individualPayment/toDispense.php?registrationNo=$registrationNo&module=PHARMACY&username=$username&month=".date("m")."&day=".date("d")."&year=".date("Y")."&fromTime_hour=00&fromTime_minutes=00&fromTime_seconds=00&toTime_hour=24&toTime_minutes=00&toTime_seconds=00&nod=");
 
 
 
