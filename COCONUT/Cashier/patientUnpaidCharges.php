@@ -12,7 +12,6 @@ $toTime_hour = $_GET['toTime_hour'];
 $toTime_minutes = $_GET['toTime_minutes'];
 $toTime_seconds = $_GET['toTime_seconds'];
 $shift = $_GET['shift'];
-$reportDate = $_GET['reportDate'];
 
 
 $ro = new database();
@@ -39,7 +38,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>User</font>&nbs
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Payment</font>&nbsp;</th>";
 echo "</tr>";
 */
-$ro->getPatientChargesUnpaid($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$registrationNo,$shift,"UNPAID",$reportDate);
+$ro->getPatientChargesUnpaid($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$registrationNo,$shift,"UNPAID","");
 //echo "</table>";
 
 echo "<br>";
