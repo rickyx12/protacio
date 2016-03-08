@@ -3241,7 +3241,7 @@ echo "<td><input type=checkbox name='cashierPaid[]' value='$row[itemNo]' checked
 echo "<td><center><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/verifyDelete.php?registrationNo=$registrationNo&itemNo=$row[itemNo]&description=$row[description]'>
 <img src='http://".$this->getMyUrl()."/COCONUT/myImages/delete.jpeg' />
 </a></center></td>";
-echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/Cashier/pfCashier.php?itemNo=$row[itemNo]'>".$row['description']."</a></font>&nbsp;</td>";
+echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/Cashier/pfCashier.php?itemNo=$row[itemNo]&month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&registrationNo=$registrationNo&shift=$shift'>".$row['description']."</a></font>&nbsp;</td>";
 
 if($row['title'] == "PROFESSIONAL FEE") {
 echo "<td><font class='data'>".number_format($price[0],2)."</font>/<font class='data'>".$price[1]."</font>&nbsp;</td>";
@@ -6368,7 +6368,7 @@ echo "</table>";
 
 
 
-public function paymentManager($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid,$reportDate) {
+public function paymentManager($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid) {
 
 $con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
@@ -6378,14 +6378,14 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',cashPaid='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid',reportDate='$reportDate' WHERE itemNo = '$itemNo'
+mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',cashPaid='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
  ");
 
 mysql_close($con);
 
 }
 
-public function paymentManager_creditCard($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid,$reportDate) {
+public function paymentManager_creditCard($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid) {
 
 $con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
@@ -6395,7 +6395,24 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid',reportDate='$reportDate' WHERE itemNo = '$itemNo'
+mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
+ ");
+
+mysql_close($con);
+
+}
+
+public function paymentManager_creditCard_PF($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid,$pf) {
+
+$con = mysql_connect($this->host,$this->username,$this->password);
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+
+mysql_select_db($this->database, $con);
+
+mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',doctorsPF_payable='$pf',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
  ");
 
 mysql_close($con);
