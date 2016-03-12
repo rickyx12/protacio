@@ -728,9 +728,9 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$sql="INSERT INTO patientPayment (registrationNo,amountPaid,datePaid,timePaid,paidBy,paymentFor,orNo,paidVia,pf,control_datePaid,receiptType,creditCardNo,shift,patientType,reportDate)
+$sql="INSERT INTO patientPayment (registrationNo,amountPaid,datePaid,timePaid,paidBy,paymentFor,orNo,paidVia,pf,control_datePaid,receiptType,creditCardNo,shift,patientType)
 VALUES
-('$registrationNo','$amountPaid','$datePaid','$timePaid','$paidBy','$paymentFor','$orNo','$paidVia','$pf','$control_datePaid','$receiptType','$creditCardNo',$shift,'$collectionFor','$datePaid')";
+('$registrationNo','$amountPaid','$datePaid','$timePaid','$paidBy','$paymentFor','$orNo','$paidVia','$pf','$control_datePaid','$receiptType','$creditCardNo','$shift','$collectionFor')";
 
 echo "PAYMENT ADDED";
 
