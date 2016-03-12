@@ -119,7 +119,7 @@ else {
 $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/Cashier/rBanny_cash.php?registrationNo=$registrationNo&cash=&targetAmount=$totalPaid&cashInputted=$totalPaid&username=$username&orNO=$orNO&datePaid=$datePaid&shift=$shift");
 }
 }else {
-echo "$itemNo is not UNPAID";
+echo "not UNPAID";
 }
 
 

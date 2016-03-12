@@ -3271,6 +3271,16 @@ echo "</body>";
 
 
 
+public function getPatientCharges_balance_total($registrationNo) {
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $result = mysqli_query($connection, "SELECT sum(cashUnpaid) as unpaid FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and paidVia ='Cash' and status not like 'DELETED%%%%'") or die("Query fail: " . mysqli_error()); 
+
+  while($row = mysqli_fetch_array($result)) {
+    ($row['unpaid'] > 0) ? $x = $row['unpaid'] : $x = 0;
+    return $x;
+  }
+}
+
 
 public function getPatientCharges_balance($registrationNo,$username) {
 
@@ -3311,17 +3321,60 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status='BALANCE' and paidVia ='Cash' group by itemNo order by description asc ");
+$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and paidVia ='Cash' and status not like 'DELETED%%%%%%' group by itemNo order by description asc ");
 
 echo "<body onload='DisplayTime();'>";
 echo "<form method='get' action='paymentManager.php'>";
-echo "<div style='border:1px solid #000000; width:200px; height:60px; border-color:black black black black;'>";
-echo "<br>&nbsp;&nbsp;<font class='labelz'>Cash:</font>&nbsp;&nbsp;<input type=text name='totalPaid' class='shortField' value='".$this->getTotalBalance($registrationNo)."'><br>";
-echo "<br><input type=submit value='Payment' style='border:1px solid #000; background-color:#3b5998; color:white'>";
+echo "<div style='border:1px solid #000000; width:1000px; height:160px; border-color:black black black black;'>";
+echo "<br>&nbsp;&nbsp;<font class='labelz'>Cash:</font>&nbsp;&nbsp;<input type=text name='totalPaid' class='shortField' value='".$this->getPatientCharges_balance_total($registrationNo)."'><br>";
+echo "&nbsp;&nbsp;&nbsp;<font class='labelz' color='red'>OR#:</font>&nbsp;<input type='text' class='shortField' name='orNO' autocomplete='off' value=''><br>";
+echo "&nbsp;&nbsp;&nbsp;<font class='labelz'>Date Paid</font>:&nbsp;";
+$this->coconutComboBoxStart_short("month");
+echo "<option value='01'>Jan</option>";
+echo "<option value='02'>Feb</option>";
+echo "<option value='03'>Mar</option>";
+echo "<option value='04'>Apr</option>";
+echo "<option value='05'>May</option>";
+echo "<option value='06'>Jun</option>";
+echo "<option value='07'>Jul</option>";
+echo "<option value='08'>Aug</option>";
+echo "<option value='09'>Sep</option>";
+echo "<option value='10'>Oct</option>";
+echo "<option value='11'>Nov</option>";
+echo "<option value='12'>Dec</option>";
+$this->coconutComboBoxStop();
+echo "-";
+$this->coconutComboBoxStart_short("day");
+$x=32;
+for($a=1;$a<$x;$a++) {
+if($a < 10) {
+echo "<option value='0$a'>0$a</option>";
+}else {
+echo "<option value='$a'>$a</option>";
+}
+}
+$this->coconutComboBoxStop();
+echo "-";
+$this->coconutTextBox_short("year",date("Y"));
+echo "<br>";
+echo "&nbsp;&nbsp;Shift:&nbsp;";
+$this->coconutComboBoxStart_long("shift");
+echo "<option>Morning</option>";
+echo "<option>Noon</option>";
+echo "<option>Afternoon</option>";
+echo "<option>Night</option>";
+$this->coconutComboBoxStop();
+echo "<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=submit value='Payment' style='border:1px solid #000; background-color:#3b5998; color:white'>";
 echo "<br></div><br><br>";
-echo "<input type=hidden name='username' value='$username'>";
-echo "<input type=hidden name='serverTime' value='".date("H:i:s")."'>";
-echo "<input type=hidden name='chargeStatus' value='BALANCE'>";
+$this->coconutHidden("username",$username);
+$this->coconutHidden("registrationNo",$registrationNo);
+$this->coconutHidden("paymentType","Cash");
+$this->coconutHidden("serverTime",date("H:i:s"));
+$this->coconutHidden("chargeStatus","");
+$this->coconutHidden("cardType","");
+$this->coconutHidden("creditCardNo","");
+$this->coconutHidden("paidVia","Cash");
+$this->coconutHidden("chargeStatus","UNPAID");
 while($row = mysql_fetch_array($result))
   {
 echo "<tr>";

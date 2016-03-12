@@ -3,7 +3,7 @@ include("../../myDatabase.php");
 $registrationNo = $_GET['registrationNo'];
 $username = $_GET['username'];
 $ro = new database();
-
+$ro->coconutDesign();
 ?>
 
 <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/rickyCSS1.css" />
@@ -12,7 +12,7 @@ $ro = new database();
 
 $ro->getPatientProfile($registrationNo);
 
-echo "<br><font>Patient:</font>&nbsp;<font class='labelz'><b>".$ro->getPatientRecord_completeName()."</b></font>";
+echo "<br><font>Patient:</font>&nbsp;<font class='labelz'><b>".$ro->getPatientRecord_completeName()." - $registrationNo</b></font>";
 echo "<br><br>";
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
