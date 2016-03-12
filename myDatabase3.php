@@ -698,7 +698,7 @@ public function opdTransaction_balance($registrationNo) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select sum(cashUnpaid) as bal from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(cashUnpaid) as bal from patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
