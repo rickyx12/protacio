@@ -53,7 +53,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<td>Report Shift</td>";
 echo "<td>";
-$ro->coconutComboBoxStart_short("shift");
+$ro->coconutComboBoxStart_long("shift");
 echo "<option value='Morning'>Morning</option>";
 echo "<option value='Noon'>Noon</option>";
 echo "<option value='Afternoon'>Afternoon</option>";
