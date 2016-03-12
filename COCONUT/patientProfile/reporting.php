@@ -36,7 +36,13 @@ echo "</tr>";
 echo "<tr>";
 echo "<td>Reporting Shift</td>";
 echo "<td>";
-$ro->coconutTextBox("reportShift",$ro->selectNow("patientCharges","reportShift","registrationNo",$registrationNo));
+$ro->coconutComboBoxStart_long("reportShift");
+echo "<option value='".$ro->doubleSelectNow("patientCharges","reportShift","registrationNo",$registrationNo,"status","PAID")."'>".$ro->doubleSelectNow("patientCharges","reportShift","registrationNo",$registrationNo,"status","PAID")."</option>";
+echo "<option value='Morning'>Morning</option>";
+echo "<option value='Noon'>Noon</option>";
+echo "<option value='Afternoon'>Afternoon</option>";
+echo "<option value='Night'>Night</option>";
+$ro->coconutComboBoxStop();
 echo "</td>";
 echo "</tr>";
 
@@ -50,7 +56,7 @@ echo "</td>";
 echo "</tr>";
 
 }else {
-
+//
 }
 
 echo "</table>";

@@ -15,13 +15,8 @@ $branch = $_GET['branch'];
 $type = $_GET['type'];
 $shift = $_GET['shift'];
 
-$reportMonth = $_GET['reportMonth'];
-$reportDay = $_GET['reportDay'];
-$reportYear = $_GET['reportYear'];
-
 $ro = new database();
 
-$reportDate = $reportYear."-".$reportMonth."-".$reportDay;
 
 if( $shift == "" ) {
 
@@ -33,12 +28,14 @@ echo "<frameset cols='100%,0%' framespacing='0' border='1'>";
 echo " <frame src='request2billUpdate.php?month=$month&day=$day&year=$year&username=$username'  scrolling=yes style='overflow-x:hidden;' frameborder=1 framespacing=1 name='patientList' />";
 }else if( $type == "OPD" ){
 echo "<frameset cols='260%,850%' framespacing='0' border='1'>";
-echo " <frame src='cashierUpdate.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&module=$module&username=$username&branch=$branch&type=$type&shift=$shift&reportDate=$reportDate'  scrolling=yes style='overflow-x:hidden;' frameborder=1 framespacing=1 name='patientList' />";
+echo " <frame src='cashierUpdate.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&module=$module&username=$username&branch=$branch&type=$type&shift=$shift'  scrolling=yes style='overflow-x:hidden;' frameborder=1 framespacing=1 name='patientList' />";
 }else { }
 
 echo "<frame src='cashierPage.php'  scrolling=yes frameborder=1 framespacing=1 name='patientCharges' />";
 echo "</frameset>";
 
 }
+
+
 
 ?>

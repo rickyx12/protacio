@@ -14,7 +14,6 @@ $username = $_GET['username'];
 $branch = $_GET['branch'];
 $type = $_GET['type'];
 $shift = $_GET['shift'];
-$reportDate = $_GET['reportDate'];
 
 $ro = new database();
 
@@ -40,7 +39,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
 document.getElementById('tablediv').innerHTML=xmlhttp.responseText;
 }
 }
-xmlhttp.open('GET','unPaidPatient.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&module=$module&username=$username&branch=$branch&type=$type&shift=$shift&reportDate=$reportDate',true);
+xmlhttp.open('GET','unPaidPatient.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&module=$module&username=$username&branch=$branch&type=$type&shift=$shift',true);
 xmlhttp.send();
 
 window.setTimeout(function(){ RefreshTable()},5500);
@@ -53,5 +52,5 @@ window.setTimeout(function(){ RefreshTable()},5500);
 </body>
 </html>";
 
-
+//
 ?>

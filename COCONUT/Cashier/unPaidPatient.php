@@ -13,11 +13,11 @@ $username = $_GET['username'];
 $branch = $_GET['branch'];
 $type = $_GET['type'];
 $shift = $_GET['shift'];
-$reportDate = $_GET['reportDate'];
+
 
 $ro = new database();
 
-
+//
 $ptime=date("YmdHis");
 
 $s1s=date("Ymd")."083000";
@@ -34,6 +34,7 @@ $s3s2e=date("Ymd")."082959";
 echo "<font size=1>BRANCH:</font> <font size=2 color=red>$branch</font>";
 echo "<br><font size=1>DATE:</font> <font size=1>$year-$month-$day</font><br><font size=1>$fromTime_hour:$fromTime_minutes:$fromTime_seconds - $toTime_hour:$toTime_minutes:$toTime_seconds</font>";
 
+/*
 if((($ptime>=$s1s)&&($ptime<=$s1e))&&($shift!=1)){
 echo "
 <br /><br />
@@ -55,12 +56,12 @@ echo "
 <br /><br />
 ";
 }
+*/
 
+$ro->getUnpaidPatient($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,$type,$shift);
 
-$ro->getUnpaidPatient($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,$type,$shift,$reportDate);
+$ro->getUnpaidPatient($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,"walkin",$shift);
 
-$ro->getUnpaidPatient($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,"walkin",$shift,$reportDate);
-
-$ro->getUnpaidPatientCompany($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,$type,$shift,$reportDate);
+$ro->getUnpaidPatientCompany($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,$type,$shift);
 
 ?>

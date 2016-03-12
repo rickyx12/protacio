@@ -140,46 +140,15 @@ echo "<td>&nbsp;</td>";
 echo "</tr>";
 
 echo "<tr>";
-echo "<td><font color=red>Report Shift</font></td>";
+echo "<td><font color=red>Report Shift</font>&nbsp;</td>";
 echo "<td>";
-$ro->coconutComboBoxStart_short("shift");
+$ro->coconutComboBoxStart_long("shift");
 echo "<option value=''></option>";
-echo "<option value='1'>1</option>";
-echo "<option value='2'>2</option>";
-echo "<option value='3'>3</option>";
+echo "<option value='Morning'>Morning</option>";
+echo "<option value='Noon'>Noon</option>";
+echo "<option value='Afternoon'>Afternoon</option>";
+echo "<option value='Night'>Night</option>";
 $ro->coconutComboBoxStop();
-echo "</td>";
-echo "</tr>";
-
-echo "<tr>";
-echo "<td><font color=red>Report Date&nbsp;</font></td>";
-echo "<td>
-<select name='reportMonth' class='comboBoxShort'>  
-<option value='".date("m")."'>".date("M")."</option>
-<option value='01'>Jan</option>
-<option value='02'>Feb</option>
-<option value='03'>Mar</option>
-<option value='04'>Apr</option>
-<option value='05'>May</option>
-<option value='06'>Jun</option>
-<option value='07'>Jul</option>
-<option value='08'>Aug</option>
-<option value='09'>Sep</option>
-<option value='10'>Oct</option>
-<option value='11'>Nov</option>
-<option value='12'>Dec</option>
-</select>";
-echo "&nbsp;<select name='reportDay' class='comboBoxShort'>";
-echo "<option value='".date("d")."'>".date("d")."</option>";
-for($x=1;$x<32;$x++) {
-if($x<10) {
-echo "<option value='0$x'>0$x</option>";
-}else {
-echo "<option value='$x'>$x</option>";
-}
-}
-echo "</select>";
-echo "&nbsp;<input type=text name='reportYear' class='shortField' value='".date("Y")."'>";
 echo "</td>";
 echo "</tr>";
 
@@ -189,5 +158,5 @@ echo "</div>";
 
 echo "<input type=hidden name='branch' value='".$ro->getUserBranch_dept($username,$module)."'>";
 echo "</form>";
-
+///
 ?>

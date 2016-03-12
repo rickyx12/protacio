@@ -4,7 +4,7 @@
 class database  {
 
 
-//database credentials
+///database credentials
 public $host;
 public $username;
 public $password;
@@ -6274,7 +6274,7 @@ echo "</table>";
 
 
 //KKUHAIN UNG MGA PATIENT CHARGES N ANG STATUS AY UNPAID
-public function getUnpaidPatient($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,$type,$shift,$reportDate) {
+public function getUnpaidPatient($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$branch,$type,$shift) {
 
 echo "
 <style type='text/css'>
@@ -6328,7 +6328,7 @@ echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Cashier/patientUnp
 }
 
 } else {
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Cashier/patientUnpaidCharges.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&registrationNo=$row[registrationNo]&shift=$shift&reportDate=$reportDate' target='patientCharges'><font class='Unpaid'>".$row['lastName'].", ".$row['firstName']."</font></a>&nbsp;</td>";
+echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Cashier/patientUnpaidCharges.php?month=$month&day=$day&year=$year&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&registrationNo=$row[registrationNo]&shift=$shift' target='patientCharges'><font class='Unpaid'>".$row['lastName'].", ".$row['firstName']."</font></a>&nbsp;</td>";
 }
 
 if( $type == "OPD" ) {
