@@ -683,7 +683,7 @@ public function opdTransaction_cashPaid($registrationNo) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and cashPaid > 0 ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
