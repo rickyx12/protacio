@@ -93,7 +93,7 @@ echo "<br><font class='informationLabel'>Company2:</font>&nbsp;".$ro->selectNow(
 
 //echo "<br><font class='informationLabel'>Mother's Name:</font>&nbsp;".$ro->selectNow("patientRecord","mothersName","patientNo",$ro->getRegistrationDetails_patientNo());
 //echo "<br><font class='informationLabel'>Father's Name:</font>&nbsp;".$ro->selectNow("patientRecord","fathersName","patientNo",$ro->getRegistrationDetails_patientNo());
-echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro->getRegistrationDetails_timeRegistered();
+echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro1->formatTime($ro->getRegistrationDetails_timeRegistered());
 echo "<br><font class='informationLabel'>Date Registered:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateRegistered());
 //echo "<br><font class='informationLabel'>Branch Registered:</font>&nbsp;".$ro->getRegistrationDetails_branch();
 echo "<br><font class='informationLabel'>Case Type:</font>&nbsp;<a href='#' style='text-decoration:none; color:black;'>".$ro->selectNow("registrationDetails","privateORhouse_case","registrationNo",$registrationNo)."</a>";
@@ -130,7 +130,7 @@ echo "<br><font class='informationLabel' color=red>Current Balance:</font>&nbsp;
 */
 
 if($ro->getRegistrationDetails_dateUnregistered() != "") {
-echo "<br><font class='informationLabel'>Time Discharged:</font>&nbsp;".$ro->getRegistrationDetails_timeUnregistered();
+echo "<br><font class='informationLabel'>Time Discharged:</font>&nbsp;".$ro1->formatTime($ro->getRegistrationDetails_timeUnregistered());
 echo "<br><font class='informationLabel'>Discharged:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateUnregistered());
 }else {
 echo "";
