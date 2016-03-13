@@ -698,7 +698,7 @@ public function opdTransaction_balance($registrationNo) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select sum(cashUnpaid) as bal from patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(cashUnpaid) as bal from patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status not like 'DELETED%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -2362,15 +2362,7 @@ $this->patientAccountOPD_total += $row['total'];
 $manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
 
 echo "<tr>";
-if($row['cashPaid'] > 0 || $row['amountPaidFromCreditCard'] > 0) {
-if($row['dateUnregistered'] != $row['datePaid']) {
-echo "<td>&nbsp;<a href='/COCONUT/billing/fixDischargeDate.php?date=$date&date1=$date1&title=$title&type=OPD&registrationNo=$row[registrationNo]&datePaid=$row[datePaid]' style='color:red; text-decoration:none;'>".$row['lastName'].", ".$row['firstName']."</a><br><font size=2 color=red>Reg#:&nbsp;".$row['registrationNo']."</font><br><font size=2 color=red>Date Pd:&nbsp;".$row['datePaid']."</font><br><font size=2 color=red>Discharged:&nbsp;".$row['dateUnregistered']."</font></td>";
-}else {
 echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
-}
-}else {
-echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
-}
 echo "<td>&nbsp;".$row['description']."</td>";
 echo "<td align='right'>&nbsp;".($row['discount'])."</td>";
 echo "<td align='right'>&nbsp;".($row['cashUnpaid'])."</td>";
