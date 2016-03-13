@@ -33,6 +33,10 @@ public function formatDate($date) {
 	return $month[$date1[1]]." ".$date1[2].", ".$date1[0];
 }
 
+public function formatTime($time) {
+	return date('h:i:s A', strtotime($time));
+}
+
 public function getStartingDate($currentDate,$no_of_days_to_subract) {
 	$date = date_create($currentDate);
 	date_sub($date,date_interval_create_from_date_string($no_of_days_to_subract." days"));
