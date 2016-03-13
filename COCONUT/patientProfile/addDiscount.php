@@ -30,6 +30,8 @@ echo "
 
 
 if($ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" ) {
+
+if($ro->getRegistrationDetails_type() == "IPD") {
 echo "
   <tr>
     <td>Discount (Cash)</td>
@@ -40,6 +42,9 @@ echo "
     <td><input type=text maxlength=10 name='companyDiscount' autocomplete=off value='".$ro->selectNow("registrationDetails","companyDiscount","registrationNo",$registrationNo)."' class='shortField'></td>
   </tr>
 ";
+}else {
+  $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/discount/discount.php?registrationNo=$registrationNo&username=$username");
+}
 echo "<Tr>";
 echo "<td>Discount Type</td>";
 echo "<td>";
