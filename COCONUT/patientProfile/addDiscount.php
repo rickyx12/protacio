@@ -10,15 +10,12 @@ $username = $_GET['username'];
 $ro = new database();
 $ro->coconutDesign();
 $ro->getPatientProfile($registrationNo);
-
 $target="";
-
 if($ro->getRegistrationDetails_type() == "IPD") {
 $target = "addDiscount1.php";
 }else {
 $target = "rBanny_discount.php";
 }
-
 echo "
 <form method='get' action='$target'>
 <center>
@@ -27,11 +24,7 @@ echo "
 <br />
 <table border=0 cellpadding=0 cellspacing=0>
 ";
-
-
 if($ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" ) {
-
-if($ro->getRegistrationDetails_type() == "IPD") {
 echo "
   <tr>
     <td>Discount (Cash)</td>
@@ -42,9 +35,6 @@ echo "
     <td><input type=text maxlength=10 name='companyDiscount' autocomplete=off value='".$ro->selectNow("registrationDetails","companyDiscount","registrationNo",$registrationNo)."' class='shortField'></td>
   </tr>
 ";
-}else {
-  $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/discount/discount.php?registrationNo=$registrationNo&username=$username");
-}
 echo "<Tr>";
 echo "<td>Discount Type</td>";
 echo "<td>";
@@ -59,7 +49,6 @@ echo $ro->coconutHidden("discount","");
 echo $ro->coconutHidden("companyDiscount","");
 echo $ro->coconutHidden("discountType","");
 }
-
 echo "
   <tr>
     <td>&nbsp;</td>
