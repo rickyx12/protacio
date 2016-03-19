@@ -196,7 +196,7 @@ public function patient_with_transaction_pxCount() {
 
 public function patient_with_transaction($date) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,rd.Company,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.datePaid = '$date' and rd.type = 'OPD' order by pxCount asc ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,rd.Company,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.datePaid = '$date' and rd.type = 'OPD' group by rd.registrationNo order by pxCount asc ") or die("Query fail: " . mysqli_error()); 
 	while($row = mysqli_fetch_array($result)) {
 	$this->patient_with_transaction_registrationNo[] = $row['registrationNo'];
 	$this->patient_with_transaction_lastName[] = $row['lastName'];
