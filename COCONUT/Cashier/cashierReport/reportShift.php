@@ -164,9 +164,10 @@ echo "
 $ro->coconutComboBoxStart_long("shift");
 echo "
   <option>-Select Shift-</option>
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
+  <option>Morning</option>
+  <option>Noon</option>
+  <option>Afternoon</option>
+  <option>Night</option>
 ";
 $ro->coconutComboBoxStop();
 echo "
