@@ -259,6 +259,7 @@ public function patient_with_transaction_creditCard($registrationNo) {
 }
 
 
+private $inpatient_payment_paymentNo;
 private $inpatient_payment_lastName;
 private $inpatient_payment_firstName;
 private $inpatient_payment_paymentFor;
