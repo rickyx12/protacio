@@ -8,6 +8,16 @@
   <link rel="stylesheet" href="../../../bootstrap-3.3.6/css/bootstrap.min.css">
  <script src="../../../bootstrap-3.3.6/js/bootstrap.min.js"></script>
 
+ <style>
+ .check {
+    text-decoration: :none;
+ }
+ 
+ .colorz {
+    color:orange;
+ }
+ </style>
+
  <script>
 
  		function loadTable() {
@@ -17,18 +27,26 @@
             	$.each(result, function(i,field){
             		table += "<tr>";
             		if(field.checked == "check") {
-            		table += "<td><a href='#' id='checker' style='text-decoration:none; color:orange;' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
+            		table += "<td><a href='#' id='checker' class='check colorz' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
+                    table += "<td><font class='check colorz'>"+field.sellingPrice+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.total+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.cashUnpaid+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.company+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.phic+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.chargeBy+"</td>";
+                    table += "<td><font class='check colorz'>"+field.timeCharge+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.dateCharge+"</font></td>";
             		}else {
             		table += "<td><a href='#' id='checker' style='text-decoration:none; color:black;' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
+                    table += "<td><font class='check'>"+field.sellingPrice+"</font></td>";
+                    table += "<td><font class='check'>"+field.total+"</font></td>";
+                    table += "<td><font class='check'>"+field.cashUnpaid+"</font></td>";
+                    table += "<td><font class='check'>"+field.company+"</font></td>";
+                    table += "<td><font class='check'>"+field.phic+"</font></td>";
+                    table += "<td><font class='check'>"+field.chargeBy+"</font></td>";
+                    table += "<td><font class='check'>"+field.timeCharge+"</font></td>";
+                    table += "<td><font class='check'>"+field.dateCharge+"</font></td>";
             		}
-            		table += "<td>"+field.sellingPrice+"</td>";
-            		table += "<td>"+field.total+"</td>";
-            		table += "<td>"+field.cashUnpaid+"</td>";
-            		table += "<td>"+field.company+"</td>";
-            		table += "<td>"+field.phic+"</td>";
-            		table += "<td>"+field.chargeBy+"</td>";
-            		table += "<td>"+field.timeCharge+"</td>";
-            		table += "<td>"+field.dateCharge+"</td>";
             		table += "</tr>";
             		               
             });
