@@ -486,7 +486,7 @@ public function get_patient_charges_checked(){
 
 public function get_patient_charges($registrationNo) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select itemNo,registrationNo,description,sellingPrice,total,cashUnpaid,company,phic,chargeBy,dateCharge,timeCharge,checked from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%'") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select itemNo,registrationNo,description,sellingPrice,total,cashUnpaid,company,phic,chargeBy,dateCharge,timeCharge,checked from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' order by description,dateCharge asc") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->get_patient_charges_itemNo[] = $row['itemNo'];

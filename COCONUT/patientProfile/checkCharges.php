@@ -21,7 +21,7 @@ array_push($myData,[
 	"company" => $ro->get_patient_charges_company()[$x],
 	"phic" => $ro->get_patient_charges_phic()[$x],
 	"chargeBy" => $ro->get_patient_charges_chargeBy()[$x],
-	"dateCharge" => $ro->get_patient_charges_dateCharge()[$x],
+	"dateCharge" => $ro->formatDate($ro->get_patient_charges_dateCharge()[$x]),
 	"timeCharge" => $ro->get_patient_charges_timeCharge()[$x],
 	"checked" => $ro->get_patient_charges_checked()[$x]
 
