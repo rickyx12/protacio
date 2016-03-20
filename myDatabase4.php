@@ -194,9 +194,16 @@ public function patient_with_transaction_pxCount() {
 	return $this->patient_with_transaction_pxCount;
 }
 
-public function patient_with_transaction($date) {
+public function patient_with_transaction($date,$shift) {
+
+	$this->patient_with_transaction_registrationNo = array();
+	$this->patient_with_transaction_lastName = array();
+	$this->patient_with_transaction_firstName = array();
+	$this->patient_with_transaction_patientCompany = array();
+	$this->patient_with_transaction_pxCount = array();
+
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,rd.Company,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.datePaid = '$date' and rd.type = 'OPD' group by rd.registrationNo order by pxCount asc ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,rd.Company,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.datePaid = '$date' and pc.reportShift = '$shift' and rd.type = 'OPD' group by rd.registrationNo order by pxCount asc ") or die("Query fail: " . mysqli_error()); 
 	while($row = mysqli_fetch_array($result)) {
 	$this->patient_with_transaction_registrationNo[] = $row['registrationNo'];
 	$this->patient_with_transaction_lastName[] = $row['lastName'];
@@ -266,6 +273,7 @@ private $inpatient_payment_paymentFor;
 private $inpatient_payment_registrationNo;
 private $inpatient_payment_patientNo;
 
+
 public function inpatient_payment_lastName() {
 	return $this->inpatient_payment_lastName;
 }
@@ -282,17 +290,32 @@ public function inpatient_payment_paymentNo() {
 	return $this->inpatient_payment_paymentNo;
 }
 
-public function inpatient_payment($date) {
+public function inpatient_payment($date,$shift) {	
+
+	unset($this->inpatient_payment_paymentNo);
+unset($this->inpatient_payment_lastName);
+unset($this->inpatient_payment_firstName);
+unset($this->inpatient_payment_paymentFor);
+unset($this->inpatient_payment_registrationNo);
+unset($this->inpatient_payment_patientNo);
+
+
+	$this->inpatient_payment_registrationNo = array();
+	$this->inpatient_payment_lastName = array();
+	$this->inpatient_payment_firstName = array();
+	$this->inpatient_payment_paymentFor = array();
+	$this->inpatient_payment_paymentNo = array();
+
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,pp.paymentFor,pp.amountPaid,pp.paymentNo from patientRecord pr,registrationDetails rd,patientPayment pp where pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and pp.datePaid = '$date' and rd.type = 'IPD' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,pp.paymentFor,pp.amountPaid,pp.paymentNo from patientRecord pr,registrationDetails rd,patientPayment pp where pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and pp.datePaid = '$date' and pp.shift = '$shift' and rd.type = 'IPD' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
+		$this->inpatient_payment_registrationNo[] = $row['registrationNo'];
 		$this->inpatient_payment_lastName[] = $row['lastName'];
 		$this->inpatient_payment_firstName[] = $row['firstName'];
 		$this->inpatient_payment_paymentFor[] = $row['paymentFor'];
-		$this->inpatient_payment_registrationNo[] = $row['registrationNo'];
 		$this->inpatient_payment_paymentNo[] = $row['paymentNo'];
-			}
+	}
 }
 
 
@@ -400,7 +423,86 @@ public function insertNow($table,$data) {
 }
 
 
+private $get_patient_charges_itemNo;
+private $get_patient_charges_registrationNo;
+private $get_patient_charges_description;
+private $get_patient_charges_sellingPrice;
+private $get_patient_charges_total;
+private $get_patient_charges_cashUnpaid;
+private $get_patient_charges_company;
+private $get_patient_charges_phic;
+private $get_patient_charges_chargeBy;
+private $get_patient_charges_dateCharge;
+private $get_patient_charges_timeCharge;
+private $get_patient_charges_checked;
 
+public function get_patient_charges_itemNo() {
+	return $this->get_patient_charges_itemNo;
+}
+
+public function get_patient_charges_registrationNo() {
+	return $this->get_patient_charges_registrationNo;
+}
+
+public function get_patient_charges_description() {
+	return $this->get_patient_charges_description;
+}
+
+public function get_patient_charges_sellingPrice() {
+	return $this->get_patient_charges_sellingPrice;
+}
+
+public function get_patient_charges_total() {
+	return $this->get_patient_charges_total;
+}
+
+public function get_patient_charges_cashUnpaid() {
+	return $this->get_patient_charges_cashUnpaid;
+}
+
+public function get_patient_charges_company() {
+	return $this->get_patient_charges_company;
+}
+
+public function get_patient_charges_phic() {
+	return $this->get_patient_charges_phic;
+}
+
+public function get_patient_charges_chargeBy() {
+	return $this->get_patient_charges_chargeBy;
+}
+
+public function get_patient_charges_dateCharge() {
+	return $this->get_patient_charges_dateCharge;
+}
+
+public function get_patient_charges_timeCharge() {
+	return $this->get_patient_charges_timeCharge;
+}
+
+public function get_patient_charges_checked(){
+	return $this->get_patient_charges_checked;
+}
+
+public function get_patient_charges($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "select itemNo,registrationNo,description,sellingPrice,total,cashUnpaid,company,phic,chargeBy,dateCharge,timeCharge,checked from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%'") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->get_patient_charges_itemNo[] = $row['itemNo'];
+		$this->get_patient_charges_registrationNo[] = $row['registrationNo'];
+		$this->get_patient_charges_description[] = $row['description'];
+		$this->get_patient_charges_sellingPrice[] = $row['sellingPrice'];
+		$this->get_patient_charges_total[] = $row['total'];
+		$this->get_patient_charges_cashUnpaid[] = $row['cashUnpaid'];
+		$this->get_patient_charges_company[] = $row['company'];
+		$this->get_patient_charges_phic[] = $row['phic'];
+		$this->get_patient_charges_chargeBy[] = $row['chargeBy'];
+		$this->get_patient_charges_dateCharge[] = $row['dateCharge'];
+		$this->get_patient_charges_timeCharge[] = $row['timeCharge'];
+		$this->get_patient_charges_checked[] = $row['checked'];
+	}
+}
 
 
 
