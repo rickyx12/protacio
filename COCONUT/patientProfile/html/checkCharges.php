@@ -27,7 +27,7 @@
             	$.each(result, function(i,field){
             		table += "<tr>";
             		if(field.checked == "check") {
-            		table += "<td><a href='#' id='checker' class='check colorz' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
+            		table += "<td><a href='#' id='checker' class='check colorz' onclick='checkNow("+field.itemNo+"); return false'>"+field.description+"</a></td>";
                     table += "<td><font class='check colorz'>"+field.sellingPrice+"</font></td>";
                     table += "<td><font class='check colorz'>"+field.quantity+"</td>"
                     table += "<td><font class='check colorz'>"+field.total+"</font></td>";
@@ -38,7 +38,7 @@
                     table += "<td><font class='check colorz'>"+field.timeCharge+"</font></td>";
                     table += "<td><font class='check colorz'>"+field.dateCharge+"</font></td>";
             		}else {
-            		table += "<td><a href='#' id='checker' style='text-decoration:none; color:black;' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
+            		table += "<td><a href='#' id='checker' style='text-decoration:none; color:black;' onclick='checkNow("+field.itemNo+"); return false'>"+field.description+"</a></td>";
                     table += "<td><font class='check'>"+field.sellingPrice+"</font></td>";
                     table += "<td><font class='check'>"+field.quantity+"</font></td>"
                     table += "<td><font class='check'>"+field.total+"</font></td>";
