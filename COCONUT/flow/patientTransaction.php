@@ -220,11 +220,11 @@ $ipd_creditCard = 0;
             <!--morning-->
     		<? for($a=0,$b=0,$c=0,$d=0,$e=0;$a<$countFN_moring,$b<$countLN_morning,$c<$countReg_morning,$d<$countPXComp_morning,$e<$countPX_morning;$a++,$b++,$c++,$d++,$e++) { ?>
     				<tr>
-    						<? $total_morning += $ro->patient_with_transaction_total($registrationNo[$c]) ?>
-    						<? $balance_morning += $ro->patient_with_transaction_balance($registrationNo[$c]) ?>
-    						<? $card_morning += $ro->patient_with_transaction_company($registrationNo[$c]) ?>
-    						<? $cash_morning += $ro->patient_with_transaction_cash($registrationNo[$c]) ?>
-    						<? $creditCard_morning += $ro->patient_with_transaction_creditCard($registrationNo[$c]) ?>
+    						<? $total_morning += $ro->patient_with_transaction_total($registrationNo_morning[$c]) ?>
+    						<? $balance_morning += $ro->patient_with_transaction_balance($registrationNo_morning[$c]) ?>
+    						<? $card_morning += $ro->patient_with_transaction_company($registrationNo_morning[$c]) ?>
+    						<? $cash_morning += $ro->patient_with_transaction_cash($registrationNo_morning[$c]) ?>
+    						<? $creditCard_morning += $ro->patient_with_transaction_creditCard($registrationNo_morning[$c]) ?>
 
     					<td><? //echo $pxCount[$e]; ?></td>
     					<td><? echo $lastName_morning[$b].", ".$firstName_morning[$a] ?></td>
