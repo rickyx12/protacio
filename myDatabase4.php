@@ -427,6 +427,7 @@ private $get_patient_charges_itemNo;
 private $get_patient_charges_registrationNo;
 private $get_patient_charges_description;
 private $get_patient_charges_sellingPrice;
+private $get_patient_charges_qty;
 private $get_patient_charges_total;
 private $get_patient_charges_cashUnpaid;
 private $get_patient_charges_company;
@@ -450,6 +451,10 @@ public function get_patient_charges_description() {
 
 public function get_patient_charges_sellingPrice() {
 	return $this->get_patient_charges_sellingPrice;
+}
+
+public function get_patient_charges_qty() {
+	return $this->get_patient_charges_qty;
 }
 
 public function get_patient_charges_total() {
@@ -486,13 +491,14 @@ public function get_patient_charges_checked(){
 
 public function get_patient_charges($registrationNo) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select itemNo,registrationNo,description,sellingPrice,total,cashUnpaid,company,phic,chargeBy,dateCharge,timeCharge,checked from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' order by description,dateCharge asc") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select itemNo,registrationNo,description,sellingPrice,quantity,total,cashUnpaid,company,phic,chargeBy,dateCharge,timeCharge,checked from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' order by description,dateCharge asc") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->get_patient_charges_itemNo[] = $row['itemNo'];
 		$this->get_patient_charges_registrationNo[] = $row['registrationNo'];
 		$this->get_patient_charges_description[] = $row['description'];
 		$this->get_patient_charges_sellingPrice[] = $row['sellingPrice'];
+		$this->get_patient_charges_qty[] = $row['quantity'];
 		$this->get_patient_charges_total[] = $row['total'];
 		$this->get_patient_charges_cashUnpaid[] = $row['cashUnpaid'];
 		$this->get_patient_charges_company[] = $row['company'];

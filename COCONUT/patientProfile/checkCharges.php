@@ -16,6 +16,7 @@ array_push($myData,[
 	"itemNo" => $itemNo[$x],
 	"description" => $ro->get_patient_charges_description()[$x],
 	"sellingPrice" => $ro->get_patient_charges_sellingPrice()[$x],
+	"quantity" => $ro->get_patient_charges_qty()[$x],
 	"total" => $ro->get_patient_charges_total()[$x],
 	"cashUnpaid" => $ro->get_patient_charges_cashUnpaid()[$x],
 	"company" => $ro->get_patient_charges_company()[$x],

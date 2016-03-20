@@ -12,7 +12,7 @@
  .check {
     text-decoration: :none;
  }
- 
+
  .colorz {
     color:orange;
  }
@@ -29,6 +29,7 @@
             		if(field.checked == "check") {
             		table += "<td><a href='#' id='checker' class='check colorz' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
                     table += "<td><font class='check colorz'>"+field.sellingPrice+"</font></td>";
+                    table += "<td><font class='check colorz'>"+field.quantity+"</td>"
                     table += "<td><font class='check colorz'>"+field.total+"</font></td>";
                     table += "<td><font class='check colorz'>"+field.cashUnpaid+"</font></td>";
                     table += "<td><font class='check colorz'>"+field.company+"</font></td>";
@@ -39,6 +40,7 @@
             		}else {
             		table += "<td><a href='#' id='checker' style='text-decoration:none; color:black;' onclick='checkNow("+field.itemNo+")'>"+field.description+"</a></td>";
                     table += "<td><font class='check'>"+field.sellingPrice+"</font></td>";
+                    table += "<td><font class='check'>"+field.quantity+"</font></td>"
                     table += "<td><font class='check'>"+field.total+"</font></td>";
                     table += "<td><font class='check'>"+field.cashUnpaid+"</font></td>";
                     table += "<td><font class='check'>"+field.company+"</font></td>";
@@ -96,6 +98,7 @@
 			<tr>
 			<th>Description</th>
 			<th>Price</th>
+            <th>QTY</th>
 			<th>Total</th>
 			<th>Cash</th>
 			<th>Company</th>
