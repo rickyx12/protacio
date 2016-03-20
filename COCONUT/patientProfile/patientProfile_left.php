@@ -146,6 +146,8 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paidItems.p
 
 echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paidItems.php?status=PAID&username=$username&registrationNo=".$ro->getRegistrationDetails_registrationNo()."' target='rightFrame'><font size=2>Paid</font></a></li>";
 
+echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/html/checkCharges.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."' target='rightFrame'><font size=2>Check Charges</font></a></li>";
+
 echo "<li><a href='http://".$ro->getMyUrl()."/BillingReports/BillingChargesSummary.php?username=$username&registrationNo=".$ro->getRegistrationDetails_registrationNo()."' target='rightFrame'><font size=2>Charges Summary</font></a></li>";
 
 echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/oldRecord/showRecord.php?patientNo=".$ro->getRegistrationDetails_patientNo()."&username=$username' target='rightFrame'><font size=2>Record's</font></a></li>";
