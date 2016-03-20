@@ -1,8 +1,20 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/coreClass/database/dbAuthenticate.php");
+
 
 
 class inventoryMovement {
+
+private $dbHost;
+private $dbUser;
+private $dbPass;
+private $dbDB;
+
+public function __construct(){
+	$this->dbHost = $_SERVER['DB_HOST'];
+	$this->dbUser = $_SERVER['DB_USER'];
+	$this->dbPass = $_SERVER['DB_PASS'];
+	$this->dbDB = $_SERVER['DB_DB'];
+}
 
 public function inventoryMovement_list_forEnding($year,$title,$medType,$username) {
 
@@ -12,7 +24,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 
 if( $medType == "all" ) {
@@ -66,7 +78,7 @@ echo "</form>";
 public function addEndingInvty3($stockCardNo,$endingInvty) {
 
 /* make your connection */
-$sql = new mysqli(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);
+$sql = new mysqli($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
@@ -90,7 +102,7 @@ $sql->close();
 
 public function inventoryMovement_latestUnitcost($stockCardNo,$type) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 if( $type == "medicine" ) {
 $result = mysqli_query($connection, " select (unitcost) as unitcost from inventory where stockCardNo = '$stockCardNo' order by inventoryCode desc limit 1 ") or die("Query fail: " . mysqli_error()); 
@@ -108,7 +120,7 @@ $result->close();
 
 public function inventoryMovement_latestEncoded($inventoryCode,$stockCardNo) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, " select beginningQTY from inventory where inventoryCode = '$inventoryCode' and stockCardNo = '$stockCardNo' order by inventoryCode desc limit 1 ") or die("Query fail: " . mysqli_error()); 
 
@@ -122,7 +134,7 @@ $result->close();
 
 public function inventoryMovement_returnItems($inventoryCode,$stockCardNo,$title) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, " select sum(quantity) as returnz from patientCharges where chargesCode = '$inventoryCode' and stockCardNo = '$stockCardNo' and title = '$title' and returnFlag = 'return' ") or die("Query fail: " . mysqli_error()); 
 
@@ -137,7 +149,7 @@ public $inventoryMovement_listReturnItems_total;
 
 public function inventoryMovement_listReturnItems($inventoryCode,$stockCardNo,$title) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,pc.description,pc.quantity from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.chargesCode = '$inventoryCode' and pc.stockCardNo='$stockCardNo' and pc.title='$title' and returnFlag = 'return' ") or die("Query fail: " . mysqli_error()); 
 
@@ -168,7 +180,7 @@ $result->close();
 
 public function inventoryMovement_dispensedItems($inventoryCode,$stockCardNo,$title) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, "  select sum(pc.dispenseQTY) as dispense from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.chargesCode = '$inventoryCode' and pc.stockCardNo='$stockCardNo' and pc.title='$title' and dispenseFlag='dispense' and status != 'PAID' ") or die("Query fail: " . mysqli_error()); 
 
@@ -184,7 +196,7 @@ public $inventoryMovement_showDispensed_total;
 
 public function inventoryMovement_showDispensed($inventoryCode,$stockCardNo,$title) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, "  select pr.lastName,pr.firstName,pc.description,pc.dispenseQTY,pc.dateCharge,rd.type,rd.dateRegistered,rd.dateUnregistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.chargesCode = '$inventoryCode' and pc.stockCardNo = '$stockCardNo' and pc.title = '$title' and dispenseFlag = 'dispense' and status != 'PAID' ") or die("Query fail: " . mysqli_error()); 
 
@@ -230,7 +242,7 @@ $result->close();
 
 public function inventoryMovement_soldItems($stockCardNo,$type) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, " select sum(pc.quantity) as qty from patientCharges pc where pc.stockCardNo = '$stockCardNo' and pc.title='$type' and pc.status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
 
@@ -246,7 +258,7 @@ public $inventoryMovement_listSoldItems_amountPdtotal;
 
 public function inventoryMovement_listSoldItems($stockCardNo,$title) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,pc.description,pc.quantity,pc.datePaid,pc.orNO,pc.cashPaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.stockCardNo = '$stockCardNo' and pc.title='$title' and pc.status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
 
@@ -293,7 +305,7 @@ tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 
 $result = mysqli_query($connection, " select inventoryCode,stockCardNo,description,genericName,preparation,unitcost,phicPrice,companyPrice,quantity,expiration,addedBy,dateAdded,timeAdded,inventoryLocation,inventoryType,branch,transition,remarks,phic,Added,criticalLevel,accountTitle,supplier,autoDispense,status,beginningCapital,beginningQTY,suppliesUNITCOST,from_inventoryCode,classification,ipdPrice,opdPrice,invoiceNo,fgQuantity,unitOfMeasure,end,endBy,endDate,lastEnd_QTY,encodedQTY from inventory where status not like 'DELETED%%%%%%' and inventoryType = '$type' and revision = 'beta2' and inventoryLocation = '$inventoryLocation' order by description asc ") or die("Query fail: " . mysqli_error()); 
@@ -386,7 +398,7 @@ $result->close();
 
 public function getStockCardNo($chargesCode) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, "select stockCardNo from inventory where inventoryCode='$chargesCode' ") or die("Query fail: " . mysqli_error()); 
 
@@ -400,13 +412,13 @@ return $row['stockCardNo'];
 
 public function updateStockCardNo($chargesCode,$stockCardNo) {
 
-$con = mysql_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword);
+$con = mysql_connect($this->dbHost,$this->dbUser,$this->dbPass);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db(dbAuthenticate::$dbName, $con);
+mysql_select_db($this->dbDB, $con);
 
 mysql_query("UPDATE patientCharges SET stockCardNo='$stockCardNo' where chargesCode = '$chargesCode' ");
 
@@ -416,7 +428,7 @@ mysql_close($con);
 
 public function inventoryMovement_updateStockCardNo($date,$date1,$title) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, "select pc.chargesCode,pc.stockCardNo,pc.itemNo,pc.description from patientCharges pc where (pc.dateCharge between '$date' and '$date1') and pc.title = '$title' ") or die("Query fail: " . mysqli_error()); 
 
@@ -443,7 +455,7 @@ echo "</table>";
 
 public function showEnding($username,$status,$stockCardNo,$description,$genericName) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
 $result = mysqli_query($connection, "select inventoryCode,description,genericName,quantity,endDate,endBy from inventory where stockCardNo = '$stockCardNo' and end='yes' order by endDate desc ") or die("Query fail: " . mysqli_error()); 
 
@@ -475,13 +487,13 @@ echo "</table>";
 
 public function endInventory($stockCardNo,$description,$generic,$unitcost,$quantity,$expiration,$addedBy,$dateAdded,$timeAdded,$inventoryLocation,$inventoryType,$branch,$transition,$remarks,$preparation,$phic,$added,$criticalLevel,$supplier,$begCapital,$begQTY,$suppliesUNITCOST,$autoDispense,$status,$classification,$from_inventoryCode,$ipdPrice,$opdPrice,$unitOfMeasure,$end,$endBy,$endDate) {
 
-$con = mysql_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword);
+$con = mysql_connect($this->dbHost,$this->dbUser,$this->dbPass);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db(dbAuthenticate::$dbName, $con);
+mysql_select_db($this->dbDB, $con);
 
 $sql="INSERT INTO inventory (stockCardNo,description,genericName,unitcost,quantity,expiration,addedBy,dateAdded,timeAdded,inventoryLocation,inventoryType,branch,transition,remarks,preparation,phic,Added,criticalLevel,supplier,beginningCapital,beginningQTY,suppliesUNITCOST,autoDispense,classification,from_inventoryCode,ipdPrice,opdPrice,unitOfMeasure,end,endBy,endDate)
 VALUES
@@ -504,7 +516,7 @@ public function endInventory_removeMainItem($inventoryCode,$username,$date) {
 
 
 // Create connection
-$conn = new mysqli(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);
+$conn = new mysqli($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -528,9 +540,9 @@ public $getAdmissionKit_No;
 
 public function getAdmissionKit($date,$date1) {
 
-$connection = mysqli_connect(dbAuthenticate::$dbHost,dbAuthenticate::$dbUsername,dbAuthenticate::$dbPassword,dbAuthenticate::$dbName);      
+$connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
-$result = mysqli_query($connection, "select pr.lastName,pr.firstName,pc.description,pc.quantity,rd.dateRegistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.chargesCode = '348' and pc.title = 'SUPPLIES' and (pc.dateCharge between '$date' and '$date1') order by rd.dateRegistered,pr.lastName asc") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, "select pr.lastName,pr.firstName,pc.description,pc.quantity,rd.dateRegistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.chargesCode = '348' and pc.title = 'SUPPLIES' and pc.status not like 'DELETED%' and (pc.dateCharge between '$date' and '$date1') order by rd.dateRegistered,pr.lastName asc") or die("Query fail: " . mysqli_error()); 
 
 
 echo "<table border=1 cellspacing=0>";
