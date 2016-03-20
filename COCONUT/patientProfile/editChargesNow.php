@@ -96,9 +96,10 @@ $ro->editCharges($itemNo,"timePaid",$timePaid);
 $ro->editCharges($itemNo,"paidBy",$paidBy);
 $ro->editCharges($itemNo,"phic",$phicCovered);
 $ro->editCharges($itemNo,"remarks",$remarks);
-$ro->editCharges($itemNo,"chargeBy",$username);
-$ro->editCharges($itemNo,"dateCharge",$dateCharge);
-$ro->editCharges($itemNo,"timeCharge",date("H:is:"));
+//ndi pde ma edit e2 kc ung billing nag rreconcile based s original date charge 
+//$ro->editCharges($itemNo,"chargeBy",$username);
+//$ro->editCharges($itemNo,"dateCharge",$dateCharge);
+//$ro->editCharges($itemNo,"timeCharge",date("H:is:"));
 if($title=="DERMA"){
 $dermaCapital=$_GET['dermaCapital'];
 $ro->editCharges($itemNo,"dermaCapital",$dermaCapital);
