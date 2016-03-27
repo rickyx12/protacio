@@ -9,7 +9,7 @@ $reportDate;
 if(isset($_POST["date"])) {
 $reportDate = $_POST["date"];
 }else {
-$reportDate = "2016-03-02";
+$reportDate = date("Y-m-d");
 }
 
 
@@ -33,7 +33,7 @@ $reportDate = "2016-03-02";
 		</style>
 		<script>
 			$(document).ready(function() {
-				$("#patient").load("hmoPatient_table.php");
+				$("#patient").load("hmoPatient_table.php",{date:<?php echo $reportDate ?>});
 
 
 				$("#fromDate").datepicker({

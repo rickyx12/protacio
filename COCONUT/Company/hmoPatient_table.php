@@ -2,15 +2,13 @@
 include "../../myDatabase4.php"; 
 include "../../myDatabase.php";
 
+$reportDate = $_POST["date"];
+
 $ro = new database4();
 $ro1 = new database();
 $reportDate;
 
-if(isset($_POST["date"])) {
-$reportDate = $_POST["date"];
-}else {
-$reportDate = "2016-03-02";
-}
+
 
 ?>
 
@@ -135,6 +133,7 @@ $reportDate = "2016-03-02";
 </div>
 
 <div class="col-md-4">
+<input type="hidden" name="reportDate" value="<?php echo $reportDate ?>">
  <button type="submit" class="btn btn-success">Add Shift >></button>
 </div>
 </div>

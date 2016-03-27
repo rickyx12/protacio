@@ -1,8 +1,7 @@
 <?php
 include "../../myDatabase4.php";
 $registrationNo = $_POST["registrationNo"];
-
-$registrationNoCount = count($registrationNo);
+$reportDate = $_POST["reportDate"];
 $ro = new database4();
 /*
 echo $registrationNo;
@@ -19,7 +18,7 @@ history.back();
 foreach($registrationNo as $x) {
 $shift = $_POST["shift"];
 $ro->get_hmo_charges_setShift($x,$shift);
-header("Location: hmoPatient.php");
+header("Location: hmoPatient.php?date=$reportDate");
 }
 }
 //$ro->get_hmo_charges_setShift($registrationNo,$shift);
