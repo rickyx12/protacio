@@ -39,9 +39,9 @@ $reportDate = date("Y-m-d");
 				$("#fromDate").datepicker({
 					dateFormat:'yy-mm-dd',
 					onSelect:function(dateText) {
-					
+							$("#patient").html('<Br><br><img src="../myImages/heartLoading.gif" style="height:100%; width: 100%;">');
 							$("#patient").load("hmoPatient_table.php",{date:dateText},function() {
-								alert("Date Change");
+								//alert("Date Change");
 							});
 						
 					}
