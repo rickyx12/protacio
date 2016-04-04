@@ -69,12 +69,12 @@ $beforeEdit_dateCharge = $ro->selectNow("patientCharges","dateCharge","itemNo",$
 $beforeEdit_timeCharge = $ro->selectNow("patientCharges","timeCharge","itemNo",$itemNo);
 
 //kung ndi inedit ng user ung dateCharge then use current date
-if($beforeEdit_dateCharge == $dateCharge) {
-$dateCharge = date("Y-m-d");
-}else {
+//if($beforeEdit_dateCharge == $dateCharge) {
+//$dateCharge = date("Y-m-d");
+//}else {
 //kung inedit ng user ung dateCharge then use the inputted date by the user
-$dateCharge = $dateCharge;
-}
+//$dateCharge = $dateCharge;
+//}
 
 $ro->editedAmount($itemNo,$registrationNo,$beforeEdit_sellingPrice,$beforeEdit_quantity,$beforeEdit_discount,$beforeEdit_total,$beforeEdit_cash,$beforeEdit_company,$beforeEdit_phic,$beforeEdit_timeCharge,$beforeEdit_dateCharge,$beforeEdit_user);
 //if tally execute edit
@@ -91,9 +91,9 @@ $ro->editCharges($itemNo,"service",$service);
 $ro->editCharges($itemNo,"cashUnpaid",$cashCovered);
 $ro->editCharges($itemNo,"company",$companyCovered);
 $ro->editCharges($itemNo,"branch",$branch);
-$ro->editCharges($itemNo,"datePaid",$datePaid);
-$ro->editCharges($itemNo,"timePaid",$timePaid);
-$ro->editCharges($itemNo,"paidBy",$paidBy);
+//$ro->editCharges($itemNo,"datePaid",$datePaid);
+//$ro->editCharges($itemNo,"timePaid",$timePaid);
+//$ro->editCharges($itemNo,"paidBy",$paidBy);
 $ro->editCharges($itemNo,"phic",$phicCovered);
 $ro->editCharges($itemNo,"remarks",$remarks);
 //ndi pde ma edit e2 kc ung billing nag rreconcile based s original date charge 
@@ -106,6 +106,7 @@ $ro->editCharges($itemNo,"dermaCapital",$dermaCapital);
 }
 
 }
+
 
 echo "
 <script type='text/javascript'>
