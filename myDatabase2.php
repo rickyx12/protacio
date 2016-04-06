@@ -10185,7 +10185,7 @@ public function protacio_hmoSOA_ipd_total($registrationNo) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select sum(pc.company) as totCompany from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.company != 0 and pc.status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(pc.company) as totCompany from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.company != 0 and pc.status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
