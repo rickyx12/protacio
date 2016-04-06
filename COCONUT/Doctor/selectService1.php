@@ -88,20 +88,10 @@ echo "<input type=hidden name='discount' value='$discount'>";
 */
 
 
-if($ro->selectNow("Doctors","status","doctorCode",$chargesCode) == "consultant") {
-$doc = preg_split("/[\s,_-]+/",$description);
-$lastName = substr($doc[0],0,1);
-$firstName = substr($doc[1],0,1);
-
-if( $description == "Boniol, Ramon Agustine D. MD" ) { //dalawa kc name nea kea hardcode q nlng R.A.B
-	($doc[2] != "") ? $_2ndName = substr($doc[2],0,1) : $x=""; 
+if($ro->selectNow("Doctors","initial","doctorCode",$chargesCode) != "") {
+$initial = $ro->selectNow("Doctors","initial","doctorCode",$chargesCode);
 }else {
-	$_2ndName = "";
-}
-}else {
-$firstName = "";
-$_2ndName = "";
-$lastName = "";
+$initial = "";
 }
 
 echo "<table border=0>";
@@ -109,7 +99,7 @@ echo "<tr>";
 echo "<td>&nbsp;</td><td><font class='labelz' color=black><b>$description</b></font></td>";
 echo "</tr>";
 echo "<tr>";
-echo "<td><font class='labelz'>Service</font></td><td><input type=text class='txtBox' name='service' value='".$service."     ".$firstName." ".$_2ndName." ".$lastName."'></td>";
+echo "<td><font class='labelz'>Service</font></td><td><input type=text class='txtBox' name='service' value='".$service."    ".$initial."'></td>";
 echo "</tr>";
 echo "<tr>";
 //echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value=".$ro->cashAmount()."/".$docShare."></td>";
