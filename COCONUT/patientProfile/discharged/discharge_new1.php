@@ -1,5 +1,11 @@
 <?php
 include("../../../myDatabase3.php");
+$monthDischarged = $_GET['monthDischarged'];
+$dayDischarged = $_GET['dayDischarged'];
+$yearDischarged = $_GET['yearDischarged'];
+
+$dateDischarged = $yearDischarged."-".$monthDischarged."-".$dayDischarged;
+
 if( isset($_GET['itemNo']) ) {
 $itemNo = $_GET['itemNo'];
 $countItem = count($itemNo);
@@ -19,12 +25,12 @@ $ro->editNow("patientCharges","itemNo",$itemNo[$x],"status","Discharged");
 }
 }else { }
 
-$ro->EditNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",date("Y-m-d"));
+$ro->EditNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",$dateDischarged);
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered",$ro->getSynapseTime());
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh",$username);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"unregisteredBy",$username);
-$ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")."@".$ro->getSynapseTime());
-$ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),date("Y-m-d"),$username);
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",$dateDischarged."@".$ro->getSynapseTime());
+$ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),$dateDischarged,$username);
 
 echo "<center><br><Br><Br><font color=red>Patient Discharged</font>";
 
