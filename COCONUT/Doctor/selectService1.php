@@ -88,6 +88,7 @@ echo "<input type=hidden name='discount' value='$discount'>";
 */
 
 
+if($ro->selectNow("Doctors","status","doctorCode",$chargesCode) == "consultant") {
 $doc = preg_split("/[\s,_-]+/",$description);
 $lastName = substr($doc[0],0,1);
 $firstName = substr($doc[1],0,1);
@@ -97,7 +98,11 @@ if( $description == "Boniol, Ramon Agustine D. MD" ) { //dalawa kc name nea kea 
 }else {
 	$_2ndName = "";
 }
-
+}else {
+$firstName = "";
+$_2ndName = "";
+$lastName = "";
+}
 
 echo "<table border=0>";
 echo "<tr>";
