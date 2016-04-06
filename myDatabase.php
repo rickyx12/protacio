@@ -2843,17 +2843,59 @@ echo strtoupper($this->selectNow("patientRecord","lastName","patientNo",$patno))
 $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') group by itemNo order by description asc ");
 
 echo "<body onload='DisplayTime();'>";
-echo "<form method='get' action='paymentManager.php'>";
+echo "<form method='get' action='dischargedCompany.php'>";
 $this->coconutHidden("registrationNo",$registrationNo);
-$this->coconutHidden("shift",$shift);
+//$this->coconutHidden("shift",$shift);
+
+
+echo "Date ";
+$this->coconutComboBoxStart_short("monthDischarged");
+echo "<option value='".date("m")."'>".date("M")."</option>";
+echo "<option value='01'>Jan</option>";
+echo "<option value='02'>Feb</option>";
+echo "<option value='03'>Mar</option>";
+echo "<option value='04'>Apr</option>";
+echo "<option value='05'>May</option>";
+echo "<option value='06'>Jun</option>";
+echo "<option value='07'>Jul</option>";
+echo "<option value='08'>Aug</option>";
+echo "<option value='09'>Sep</option>";
+echo "<option value='10'>Oct</option>";
+echo "<option value='11'>Nov</option>";
+echo "<option value='12'>Dec</option>";
+$this->coconutComboBoxStop();
+echo "-";
+$this->coconutComboBoxStart_short("dayDischarged");
+echo "<option value='".date("d")."'>".date("d")."</option>";
+for($x=1;$x<32;$x++) {
+if($x < 10) {
+echo "<option value='0$x'>$x</option>";
+}else {
+echo "<option value='$x'>$x</option>";
+}
+}
+$this->coconutComboBoxStop();
+echo "-";
+$this->coconutTextBox_short("yearDischarged",date("Y"));
+echo "<br>";
+echo "Shift ";
+$this->coconutComboBoxStart_long("shift");
+echo "<option value='$shift'>$shift</option>";
+echo "<option>Morning</option>";
+echo "<option>Noon</option>";
+echo "<option>Afternoon</option>";
+echo "<option>Night</option>";
+$this->coconutComboBoxStop();
 
 
 echo "<input type=hidden name='username' value='$username'>";
 echo "<input type=hidden name='serverTime' value='".date("H:i:s")."'>";
-
-
+echo "<Br><br>";
+$this->coconutButton("Discharged");
+echo "<br><br>";
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
+echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'></font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'></font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Description</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Price</font>&nbsp;</th>";
@@ -2874,6 +2916,7 @@ while($row = mysql_fetch_array($result))
 $price = preg_split ("/\//", $row['sellingPrice']); 
 
 echo "<tr>";
+echo "<td><input type='checkbox' name='itemNo[]' value='$row[itemNo]' checked></td>";
 echo "<td><center><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/verifyDelete.php?registrationNo=$registrationNo&itemNo=$row[itemNo]&description=$row[description]&quantity=$row[quantity]&username=$username&show=&desc='>
 <img src='http://".$this->getMyUrl()."/COCONUT/myImages/delete.jpeg' />
 </a></center></td>";

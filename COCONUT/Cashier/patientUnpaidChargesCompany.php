@@ -14,6 +14,8 @@ $toTime_seconds = $_GET['toTime_seconds'];
 $shift = $_GET['shift'];
 
 $ro = new database();
+$ro->coconutDesign();
+
 $ro->getPatientProfile($registrationNo);
 ?>
 
