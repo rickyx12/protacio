@@ -9165,7 +9165,7 @@ echo "<td>&nbsp;</td>";
 
 
 if( $row['title'] == "PROFESSIONAL FEE" ) {
-echo "<td>&nbsp;<font size=2>$row[service] ".$this->selectNow("Doctors","initial","doctorCode",$row['chargesCode'])."</font></td>";
+echo "<td>&nbsp;<font size=2>$row[service]</font></td>";
 }else {
 echo "<td>&nbsp;<font size=2>$row[description]</font></td>";
 }
