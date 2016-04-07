@@ -9124,7 +9124,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT pc.branch,rd.registrationNo,upper(pr.lastname) as lastname,upper(pr.firstname) as firstname,pc.description,pc.company,pc.quantity,pc.dateCharge,pc.title,pc.service from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.Company = '$company' and rd.type='$type' and (rd.dateRegistered between '$fromDate' and '$toDate') and pc.company != 0 and status = 'UNPAID' order by rd.dateRegistered,pr.lastName,rd.timeRegistered asc  ");
+$result = mysql_query("SELECT pc.branch,rd.registrationNo,upper(pr.lastname) as lastname,upper(pr.firstname) as firstname,pc.description,pc.company,pc.quantity,pc.dateCharge,pc.title,pc.service,pc.chargesCode from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.Company = '$company' and rd.type='$type' and (rd.dateRegistered between '$fromDate' and '$toDate') and pc.company != 0 and status = 'UNPAID' order by rd.dateRegistered,pr.lastName,rd.timeRegistered asc  ");
 
 
 
@@ -9165,7 +9165,7 @@ echo "<td>&nbsp;</td>";
 
 
 if( $row['title'] == "PROFESSIONAL FEE" ) {
-echo "<td>&nbsp;<font size=2>$row[service]</font></td>";
+echo "<td>&nbsp;<font size=2>$row[service] ".$this->selectNow("Doctors","initial","doctorCode",$row['chargesCode'])."</font></td>";
 }else {
 echo "<td>&nbsp;<font size=2>$row[description]</font></td>";
 }
