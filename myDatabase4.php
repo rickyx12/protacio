@@ -37,6 +37,11 @@ public function formatTime($time) {
 	return date('h:i:s A', strtotime($time));
 }
 
+public function number_format($number) {
+	($number > 0) ? $x = number_format($number,2) : $x = "";
+	return $x;
+}
+
 public function getStartingDate($currentDate,$no_of_days_to_subract) {
 	$date = date_create($currentDate);
 	date_sub($date,date_interval_create_from_date_string($no_of_days_to_subract." days"));
