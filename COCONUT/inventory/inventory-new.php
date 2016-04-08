@@ -33,7 +33,11 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Hello</h1>
+
+		
+		<div class="col-md-3">
+			<h3>Medicine</h3>
+		</div>
 		<table id="myTable" class="table table-hover">
 			<thead>
 				<tr>
