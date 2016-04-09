@@ -612,6 +612,37 @@ public function get_hmo_patient_total($registrationNo) {
 }
 
 
+private $get_opd_collection_collectionNo;
+
+public function get_opd_collection_collectionNo() {
+	return $this->get_opd_collection_collectionNo;
+}
+
+public function get_opd_collection($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT collectionNo FROM collectionReport WHERE registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->get_opd_collection_collectionNo[] = $row['collectionNo'];
+	}
+}
+
+
+private $opdPayment_updater_itemNo;
+
+public function opdPayment_updater_itemNo() {
+	return $this->opdPayment_updater_itemNo;
+}
+
+/*temporary function lng e2*/
+public function opdPayment_updater($date,$date1) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT itemNo from patientCharges where (datePaid between '$date' and '$date1') ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->opdPayment_updater_itemNo[] = $row['itemNo'];
+	}
+}
 
 
 
