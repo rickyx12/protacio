@@ -76,10 +76,20 @@ if($totalPaid >= $payables ) {
 for($x=0;$x<$countz;$x++) {
 //$natira = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]); 
 
-$cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
+//$cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
+
+$cashPaid = $totalPaid;
 
 if( $paidVia == "Cash" ) {
+
+//check kung meron ng payment sa collectionReport table ung charges
+if($ro->selectNow("collectionReport","collectionNo","itemNo",$cashierPaid[$x]) != "") {
+$totalCashPaid = $cashPaid + $ro->selectNow("collectionReport","amountPaid","itemNo",$cashierPaid[$x]);
+$ro->paymentManager($cashierPaid[$x],"PAID",$username,$totalCashPaid,$datePaid,date("H:i:s"),"0");
+}else {
 $ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+}
+
 }else {
 
 if($ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "PROFESSIONAL FEE") {
