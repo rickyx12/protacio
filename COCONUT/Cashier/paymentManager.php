@@ -76,9 +76,9 @@ if($totalPaid >= $payables ) {
 for($x=0;$x<$countz;$x++) {
 //$natira = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]); 
 
-//$cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
+$cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
 
-$cashPaid = $totalPaid;
+//$cashPaid = $totalPaid;
 
 if( $paidVia == "Cash" ) {
 
