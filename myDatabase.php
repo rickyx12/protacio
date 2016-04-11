@@ -1446,7 +1446,7 @@ $this->getPatientProfile($registrationNo);
 echo "|&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableCharges/addCharges.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$row[sellingPrice]&discount=0&timeCharge=$serverTime&chargeBy=$username&service=Examination&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&room=OPD_OPD&paycash=yes&remarks='><font color=red>Pay Cash</font></a>&nbsp;";
 
 
-echo "|&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableCharges/addCharges_date.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$sellingPrice&discount=0&timeCharge=$serverTime&chargeBy=$username&service=$row[Service]&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&paycash=no&remarks=&url=/COCONUT/availableCharges/addCharges_date1.php&stockCardNo='><font size=2 color=brown>Add w/ Date</font></a>&nbsp;";
+echo "|&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableCharges/chargesWithDate_redirect.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$sellingPrice&discount=0&timeCharge=$serverTime&chargeBy=$username&service=$row[Service]&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&paycash=no&remarks=&url=/COCONUT/availableCharges/addCharges_date1.php&stockCardNo='><font size=2 color=brown>Add w/ Date</font></a>&nbsp;";
 
 }else {
 echo "";
