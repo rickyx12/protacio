@@ -19,7 +19,25 @@ $inventoryFrom = $_GET['inventoryFrom'];
 $paycash = $_GET['paycash'];
 $remarks = $_GET['remarks'];
 
+if(isset($_GET['month']) && isset($_GET['day']) && isset($_GET['year']) ) {
+	$month = $_GET['month'];
+	$day = $_GET['day'];
+	$year = $_GET['year'];
+}else {
+	$month ="";
+	$day = "";
+	$year= "";
+}
+
 $ro = new database();
+
+$dateCharge = $year."-".$month."-".$day;
+
+if($dateCharge == "") {
+$dateCharge = date("Y-m-d");
+}else {
+$dateCharge = $dateCharge;
+}
 
 ?>
 <!doctype html>
@@ -69,6 +87,7 @@ $ro = new database();
 				<input type="hidden" name="inventoryFrom" value="<?php echo $inventoryFrom ?>">
 				<input type="hidden" name="paycash" value="<?php echo $paycash ?>">
 				<input type="hidden" name="remarks" value="<?php echo $remarks ?>">
+				<input type="hidden" name="dateCharge" value="<?php echo $dateCharge ?>"
 			</div>
 		</div>
 		</form>

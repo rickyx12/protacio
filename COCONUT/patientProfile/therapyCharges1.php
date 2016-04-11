@@ -22,6 +22,7 @@ $remarks = $_POST['remarks'];
 $hospital = $_POST['hospital'];
 $pf = $_POST['pf'];
 $therapist = $_POST['therapist'];
+$dateCharge = $_POST['dateCharge'];
 
 $ro = new database4();
 $ro1 = new database();
@@ -40,7 +41,7 @@ $myData = array(
 		"phic" => "0",
 		"company" => "0",
 		"timeCharge" => $timeCharge,
-		"dateCharge" => date("Y-m-d"),
+		"dateCharge" => $dateCharge,
 		"chargeBy" => $chargeBy,
 		"service" => $service,
 		"title" => $title,
