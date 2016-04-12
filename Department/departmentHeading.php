@@ -163,7 +163,7 @@ echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/supplier.php?us
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=medicine&branch=All&show=All" target="_blank">Medicine Master List</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/inventory-new.php" target="departmentX">Medicine</a></li>';
+echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/medicine-new.php" target="departmentX">Medicine</a></li>';
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=supplies&branch=All&show=All" target="_blank">Supplies Master List</a></li>';
 
