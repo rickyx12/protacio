@@ -221,10 +221,22 @@ public function patient_with_transaction($date,$shift) {
 
 public function patient_with_transaction_total($registrationNo) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select sum(total) as total from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%%%' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select sum(discount) as discount,sum(cashUnpaid) as unpaid,sum(company) as company,sum(cashPaid) as cash,sum(amountPaidFromCreditCard) as creditCard  from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%%%' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
-		($row['total'] > 0) ? $x = $row['total'] : $x = 0;
+		$total = ( $row['discount'] + $row['unpaid'] + $row['company'] + $row['cash'] + $row['creditCard'] );
+		($total > 0) ? $x = $total : $x = 0;
+		return $x;
+	}
+}
+
+
+public function patient_with_transaction_discount($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "select sum(discount) as discount from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%%%' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		($row['discount'] > 0) ? $x = number_format($row['discount'],2) : $x = 0;
 		return $x;
 	}
 }
@@ -270,45 +282,20 @@ public function patient_with_transaction_creditCard($registrationNo) {
 	}
 }
 
-
 private $patient_with_transaction_hmo_registrationNo;
-private $patient_with_transaction_hmo_lastName;
-private $patient_with_transaction_hmo_firstName;
-private $patient_with_transaction_hmo_patientCompany;
 
 public function patient_with_transaction_hmo_registrationNo() {
 	return $this->patient_with_transaction_hmo_registrationNo;
 }
 
-public function patient_with_transaction_hmo_lastName(){
-	return $this->patient_with_transaction_hmo_lastName;
-}
-
-public function patient_with_transaction_hmo_firstName(){
-	return $this->patient_with_transaction_hmo_firstName;
-}
-
-public function patient_with_transaction_hmo_patientCompany() {
-	return $this->patient_with_transaction_hmo_patientCompany;
-}
-
 public function patient_with_transaction_hmo($date,$shift) {
 
-	$this->patient_with_transaction_hmo_registrationNo = array();
-	$this->patient_with_transaction_hmo_lastName = array();
-	$this->patient_with_transaction_hmo_firstName = array();
-	$this->patient_with_transaction_hmo_patientCompany = array();
-
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo,rd.Company,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateRegistered = '$date' and rd.Company != '' and pc.datePaid < 1 and pc.reportShift = '$shift' and rd.type = 'OPD' group by rd.registrationNo order by pxCount asc ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select rd.registrationNo from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateRegistered = '$date' and rd.Company != '' and pc.datePaid < 1 and pc.reportShift = '$shift' and rd.type = 'OPD' group by rd.registrationNo order by pxCount asc ") or die("Query fail: " . mysqli_error()); 
 	while($row = mysqli_fetch_array($result)) {
-	$this->patient_with_transaction_hmo_registrationNo[] = $row['registrationNo'];
-	$this->patient_with_transaction_hmo_lastName[] = $row['lastName'];
-	$this->patient_with_transaction_hmo_firstName[] = $row['firstName'];
-	$this->patient_with_transaction_hmo_patientCompany[] = $row['Company'];
+		$this->patient_with_transaction_hmo_registrationNo[] = $row['registrationNo'];
 	}
 }
-
 
 
 private $inpatient_payment_paymentNo;
