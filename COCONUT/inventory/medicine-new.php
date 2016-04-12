@@ -21,7 +21,7 @@
 
 				$(document).on("click","#deleteNow<?php echo $inventoryCode ?>",function(){ 
 					$.post("medicine-new-delete.php",{inventoryCode:<?php echo $inventoryCode ?>},function(data){
-						$("#myTable").load("inventory-new.php #myTable");	
+						$("#myTable").load("medicine-new.php #myTable");	
 					});
 				});
 
@@ -46,7 +46,7 @@
 					}
 
 					$.post("medicine-new-update.php",myData,function(data) {
-						$("#myTable").load("inventory-new.php #myTable");
+						$("#myTable").load("medicine-new.php #myTable");
 					})
 				})
 
