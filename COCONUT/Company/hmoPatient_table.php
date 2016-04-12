@@ -70,7 +70,7 @@ $reportDate;
 			
 			
 					<tr>
-						<td><input type="checkbox" class="form-control" name="registrationNo[]" value="<?php echo $registrationNo ?>"></td>
+						<td><input type="checkbox" name="registrationNo[]" value="<?php echo $registrationNo ?>"></td>
 						<td><a id="patientName" data-toggle="modal" data-target="#chargesModal<?php echo $registrationNo ?>" href="#"><?php echo $ro1->selectNow("patientRecord","lastName","patientNo",$patientNo) ?>, <?php echo $ro1->selectNow("patientRecord","firstName","patientNo",$patientNo) ?></a></td>
 						<td><?php echo $ro1->selectNow("registrationDetails","Company","patientNo",$patientNo) ?></td>
 						<td><?php echo number_format($ro->get_hmo_patient_total($registrationNo),2) ?></td>
