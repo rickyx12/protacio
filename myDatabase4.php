@@ -614,6 +614,21 @@ public function get_opd_collection($registrationNo) {
 	}
 }
 
+private $deleted_inventory_inventoryCode;
+
+public function deleted_inventory_inventoryCode() {
+	return $this->deleted_inventory_inventoryCode;
+}
+
+public function deleted_inventory($search,$inventoryType) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT inventoryCode FROM inventory WHERE status like 'DELETED%' and (genericName like '$search%' or description like '$search%') and inventoryType = '$inventoryType' order by genericName asc") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->deleted_inventory_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
 
 private $opdPayment_updater_itemNo;
 
