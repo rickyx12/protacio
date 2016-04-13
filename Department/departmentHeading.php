@@ -161,11 +161,12 @@ echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchInventor
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/supplier.php?username='.$username.'" target="_blank">Supplier Master List</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=medicine&branch=All&show=All" target="_blank">Medicine Master List</a></li>';
+//echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=medicine&branch=All&show=All" target="_blank">Medicine Master List</a></li>';
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/medicine-new.php" target="departmentX">Medicine</a></li>';
+echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/supplies-new.php" target="departmentX">Supplies</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=supplies&branch=All&show=All" target="_blank">Supplies Master List</a></li>';
+//echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=supplies&branch=All&show=All" target="_blank">Supplies Master List</a></li>';
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/Maintenance/addSupplier.php?username='.$username.'" target="_blank">Add Supplier</a></li>';
 
