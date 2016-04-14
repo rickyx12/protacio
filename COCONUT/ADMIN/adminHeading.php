@@ -192,7 +192,10 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
 
 		<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Departamental Examination Census</a></li>
 */
-?>		
+?>
+
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/ADMIN/census/census-new.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Registered Patients</a></li>
+
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift_registered.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Registration Census</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Summary Laboratory Census</a></li>
