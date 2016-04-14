@@ -18,7 +18,6 @@
 				var search = $("#search").val();
 
 				if( event.which == 13 ){
-					var search  = $("#search").val();
 
 						
 						$.getJSON("deleted-medicine-search.php",{search:search},function(result){
@@ -50,7 +49,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
-					<h3>Deleted Inventory</h3>
+					<h3>Deleted Medicine</h3>
 					<div class="form-group">
 						<input type="text" id="search" class="form-control" autocomplete="off" placeholder="Search Deleted Medicine">
 					</div>
