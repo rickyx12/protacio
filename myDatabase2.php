@@ -10225,8 +10225,9 @@ return $row['totPHIC'];
 }
 
 
-public $protacio_hmoSOA_ipd_attendingDoc_docName;
-public $protacio_hmoSOA_ipd_attendingDoc_pf;
+private $protacio_hmoSOA_ipd_attendingDoc_docName;
+private $protacio_hmoSOA_ipd_attendingDoc_pf;
+private $protacio_hmoSOA_ipd_attendingDoc_initial;
 
 public function protacio_hmoSOA_ipd_attendingDoc_docName() {
 return $this->protacio_hmoSOA_ipd_attendingDoc_docName;
@@ -10236,17 +10237,22 @@ public function protacio_hmoSOA_ipd_attendingDoc_pf() {
 return $this->protacio_hmoSOA_ipd_attendingDoc_pf;
 }
 
+public function protacio_hmoSOA_ipd_attendingDoc_initial(){
+  return $this->protacio_hmoSOA_ipd_attendingDoc_initial;
+}
+
 public function protacio_hmoSOA_ipd_attendingDoc($registrationNo) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select pc.description,pc.total from patientCharges pc where pc.registrationNo = '$registrationNo' and pc.service = 'ATTENDING' and pc.status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pc.description,pc.total,d.initial from patientCharges pc,Doctors d where pc.registrationNo = '$registrationNo' and pc.chargesCode = d.doctorCode and pc.title = 'PROFESSIONAL FEE' and pc.status = 'UNPAID' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
-$this->protacio_hmoSOA_ipd_attendingDoc_docName = $row['description'];
-$this->protacio_hmoSOA_ipd_attendingDoc_pf = $row['total'];
+$this->protacio_hmoSOA_ipd_attendingDoc_docName[] = $row['description'];
+$this->protacio_hmoSOA_ipd_attendingDoc_pf[] = $row['total'];
+$this->protacio_hmoSOA_ipd_attendingDoc_initial[] = $row['initial'];
 }
 
 }
@@ -10280,13 +10286,18 @@ while($row = mysqli_fetch_array($result))
   {
 
 $this->protacio_hmoSOA_ipd_attendingDoc($row['registrationNo']);
-$doctor = preg_split ("/\s+/", $this->protacio_hmoSOA_ipd_attendingDoc_docName());
 $dateReg = preg_split ("/\-/", $row['dateRegistered']); 
 $dateDischarged = preg_split ("/\-/", $row['dateUnregistered']); 
 $this->protacio_hmoSOA_ipd_grandTotal += $this->protacio_hmoSOA_ipd_total($row['registrationNo']);
 
 echo "<tr>";
-echo "<td width='30%'><font size=2>".$row['lastName'].", ".$row['firstName']."</font><br><font size=2 color=blue><b>".substr($doctor[0],0,1).substr($doctor[1],0,1)."-".$this->protacio_hmoSOA_ipd_attendingDoc_pf()."</b></font><br><font size=2 color='blue'><b>1st case rate-H-".$this->protacio_hmoSOA_ipd_phic_hb($row['registrationNo'])."/PF-".$this->protacio_hmoSOA_ipd_phic_pf($row['registrationNo'])."</b></font></td>";
+echo "<td width='30%'><font size=2>".$row['lastName'].", ".$row['firstName']."</font><br><font size=2 color=blue><b>"; 
+
+for($doctor=0,$pf=0;$doctor<count($this->protacio_hmoSOA_ipd_attendingDoc_initial()),$pf<count($this->protacio_hmoSOA_ipd_attendingDoc_pf());$doctor++,$pf++) {
+echo $this->protacio_hmoSOA_ipd_attendingDoc_initial()[$doctor]."-".number_format($this->protacio_hmoSOA_ipd_attendingDoc_pf()[$pf],2)."/";
+}
+
+echo "</b></font><br><font size=2 color='blue'><b>1st case rate-H-".number_format($this->protacio_hmoSOA_ipd_phic_hb($row['registrationNo']),2)."/PF-".$this->protacio_hmoSOA_ipd_phic_pf($row['registrationNo'])."</b></font></td>";
 echo "<td width='20%' align='center'>&nbsp;<font size=2>".$dateReg[1]."-".$dateReg[2]."-".$dateDischarged[2]."-".$dateReg[0]."</font><br>&nbsp;<br>&nbsp;</td>";
 echo "<td width='20%' align='center'>&nbsp;<font size=2>CONFINEMENT</font><Br>&nbsp;<br>&nbsp;</td>";
 echo "<td width='20%' align='center'>&nbsp;<font size=2><span style='border-bottom:1px solid black;'>".number_format($this->protacio_hmoSOA_ipd_total($row['registrationNo']),2)."</span></font><br>&nbsp;<br>&nbsp;</td>";
