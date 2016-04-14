@@ -1,5 +1,7 @@
 <? include "../../../myDatabase4.php" ?>
+<? include "../../../myDatabase.php" ?>
 <? $ro4 = new database4() ?>
+<? $ro = new database() ?>
 <? if(isset($_POST['date'])) {
 	$date = $_POST['date'];
 }else {
@@ -45,32 +47,21 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-5">
 					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Patient</th>
-								<th>Total</th>
 							</tr>
 						</thead>
 						<tbody>
-							<? for($a=0,$b=0,$c=0;$a<count($ro4->opd_patient_census_firstName()),$b<count($ro4->opd_patient_census_lastName()),$c< count($ro4->opd_patient_census_registrationNo());$a++,$b++,$c++) { ?>
+							<? foreach($ro4->opd_patient_census_registrationNo() as $registrationNo) { ?>
 								<tr>
-									<? $totalRevenue += $ro4->patient_with_transaction_total($ro4->opd_patient_census_registrationNo()[$c]) ?>
-									<td><? echo $count++ ?></td>
-									<td><? echo $ro4->opd_patient_census_lastName()[$b] ?>, <? echo $ro4->opd_patient_census_firstName()[$a] ?></td>
-									<td><? ($ro4->patient_with_transaction_total($ro4->opd_patient_census_registrationNo()[$c]) > 0) ? $print = number_format($ro4->patient_with_transaction_total($ro4->opd_patient_census_registrationNo()[$c]),2) : $print = ""; echo $print ?></td>
+									<td>&nbsp;<? echo $ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo) ?></td>
+									<td>&nbsp;<? echo $ro->selectNow("patientRecord","lastName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?>, <? echo $ro->selectNow("patientRecord","firstName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?></td>
 								</tr>
-
 							<? } ?>
-						</tbody>
-						<tbody>
-							<tr>
-								<td>Px</td>
-								<td><? echo ($count-1) ?></td>
-								<td><? echo number_format($totalRevenue,2) ?></td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
