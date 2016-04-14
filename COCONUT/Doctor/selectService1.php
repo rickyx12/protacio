@@ -88,7 +88,7 @@ echo "<input type=hidden name='discount' value='$discount'>";
 */
 
 
-if($ro->selectNow("Doctors","initial","doctorCode",$chargesCode) != "") {
+if($ro->selectNow("Doctors","role","doctorCode",$chargesCode) == "consultant") {
 $initial = $ro->selectNow("Doctors","initial","doctorCode",$chargesCode);
 }else {
 $initial = "";
