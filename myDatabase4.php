@@ -629,6 +629,33 @@ public function deleted_inventory($search,$inventoryType) {
 	}
 }
 
+private $opd_patient_census_lastName;
+private $opd_patient_census_firstName;
+private $opd_patient_census_registrationNo;
+
+public function opd_patient_census_lastName() {
+	return $this->opd_patient_census_lastName;
+}
+
+public function opd_patient_census_firstName() {
+	return $this->opd_patient_census_firstName;
+}
+
+public function opd_patient_census_registrationNo() {
+	return $this->opd_patient_census_registrationNo;
+}
+
+public function opd_patient_census($date,$date1) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT pr.lastName,pr.firstName,rd.registrationNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.cashPaid > 0 or pc.company > 0 or pc.amountPaidFromCreditCard > 0) and rd.type = 'OPD'  and rd.dateRegistered between '$date' and '$date1' and status not like 'DELETED%' group by rd.registrationNo order by pr.lastName asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->opd_patient_census_lastName[] = $row['lastName'];
+		$this->opd_patient_census_firstName[] = $row['firstName'];
+		$this->opd_patient_census_registrationNo[] = $row['registrationNo'];
+	}
+}
+
 
 private $opdPayment_updater_itemNo;
 
