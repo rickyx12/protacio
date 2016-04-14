@@ -41,12 +41,13 @@ echo "<td id='rowz'>&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/
 
 echo "<td id='rowz'>&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/19.gif'><a href='http://".$ro->getMyUrl()."/COCONUT/availableMisc/showMisc.php?registrationNo=$registrationNo&username=$username&inventoryFrom=PHARMACY&batchNo=$batchNo&room=$room' target='selectedFrame'>Misc</a>&nbsp;</td>";
 
-echo "<td id='rowz'>&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/19.gif'><a href='http://".$ro->getMyUrl()."/COCONUT/madeUpCharges/?registrationNo=$registrationNo&username=$username&room=$room&batchNo=$batchNo' target='selectedFrame'>Other Charges</a>&nbsp;</td>";
+//echo "<td id='rowz'>&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/19.gif'><a href='http://".$ro->getMyUrl()."/COCONUT/madeUpCharges/?registrationNo=$registrationNo&username=$username&room=$room&batchNo=$batchNo' target='selectedFrame'>Other Charges</a>&nbsp;</td>";
 
+/*
 if($ro->selectNow("registrationDetails","type","registrationNo",$registrationNo)=='OPD') {
 echo "<td id='rowz'>&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/19.gif'><a href='http://".$ro->getMyUrl()."/COCONUT/dermaCharges/?registrationNo=$registrationNo&username=$username&room=$room&batchNo=$batchNo' target='selectedFrame'>Derma</a>&nbsp;</td>";
 }
-
+*/
 echo "</tr>";
 echo "</table>";
 echo "</body>";
