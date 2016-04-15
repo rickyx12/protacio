@@ -33,11 +33,11 @@ $ro->coconutUpperMenuStop();
 
 //echo "<iframe src='http://".$ro->getMyUrl()."/MainPage.php' width='73%' height='555'  name='welcome' border=1 frameborder=no></iframe>";
 
-echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/flow/opdTransaction.php' width='80%' height='510'  name='welcome' border=1 frameborder=no></iframe>";
+echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/ADMIN/census/census-new.php' width='100%' height='510'  name='welcome' border=1 frameborder=no></iframe>";
 
 //echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/Laboratory/testDone/testDone_update.php' width='27%' height='555'  name='welcome' border=1 frameborder=no></iframe>";
 //}
-echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/room/listRoom1.php' width='20%' height='510'  name='welcome' border=1 frameborder=no></iframe>";
+//echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/room/listRoom1.php' width='20%' height='510'  name='welcome' border=1 frameborder=no></iframe>";
 
 //echo "<hr><center><font size=1.5>Email me at <b>aizekrysler@gmail.com</b> | Facebook <b>aizekrysler@yahoo.com.ph</b></font>";
 
