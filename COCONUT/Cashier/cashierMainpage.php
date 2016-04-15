@@ -75,7 +75,6 @@ echo "</script>";
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/accounting/voucher/addVoucher.php?username=<?php echo $username; ?>" target="departmentX">Expenses</a></li>
 
-
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/manualPayment.php?username=<?php echo $username; ?>&paymentType=manual_" target="departmentX">Manual Payments</a></li>
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/manualPayment.php?username=<?php echo $username; ?>&paymentType=derma_" target="departmentX">Derma Payments</a></li>
@@ -106,6 +105,8 @@ echo "</script>";
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashCollection/cashCollectionMenu.php?username=<?php echo $username; ?>" target="departmentX">Cash Collection</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/hmoSOA_type.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company (Receivable)</a></li>
+
+  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/hmoSOA_type.php?username=<?php echo $username; ?>" target="departmentX">HMO SOA</a></li>  
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/summarizeReportShift.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Summarize Collection&status=PAID" target="departmentX">Summarize Collection</a></li>
 
