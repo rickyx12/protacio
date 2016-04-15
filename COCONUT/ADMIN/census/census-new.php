@@ -1,15 +1,16 @@
 <? include "../../../myDatabase4.php" ?>
-<? include "../../../myDatabase.php" ?>
+<? include "../../../myDatabase2.php" ?>
 <? $ro4 = new database4() ?>
-<? $ro = new database() ?>
+<? $ro = new database2() ?>
 <? if(isset($_POST['date'])) {
 	$date = $_POST['date'];
 }else {
 	$date = date("Y-m-d");
 } ?>
 <? $ro4->opd_patient_census($date,$date) ?>
+<? $ro4->room_list() ?>
 <? $count = 1 ?>
-<? $totalRevenue = 0 ?>
+<? $totalAdmitted = 1 ?>
 <!doctype html>
 <html>
 	<head>
@@ -43,7 +44,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-2">
-					 <input type="text" id="date" value="<? echo $date ?>" class="form-control">
+					 <input type="text" id="date" readonly="true" value="<? echo $ro4->formatDate($date) ?>" class="form-control">
 				</div>
 			</div>
 			<div class="row">
@@ -53,6 +54,7 @@
 							<tr>
 								<th>#</th>
 								<th>Patient</th>
+								<th>&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -60,6 +62,33 @@
 								<tr>
 									<td>&nbsp;<? echo $ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo) ?></td>
 									<td>&nbsp;<? echo $ro->selectNow("patientRecord","lastName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?>, <? echo $ro->selectNow("patientRecord","firstName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?></td>
+
+									<? if($ro->selectNow("registrationDetails","mgh_date","registrationNo",$registrationNo) != "") { ?>
+										<td><span class="glyphicon glyphicon-ok"></span></td>
+									<? }else { ?>
+										<td>&nbsp;</td>
+									<? } ?>
+								</tr>
+							<? } ?>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="col-md-1"></div>
+
+				<div class="col-md-6">
+					<table class="table table-hover">
+						<thead>
+							<th>Room</th>
+							<th>Patient</th>
+						</thead>
+						<tbody>
+							
+							<? foreach($ro4->room_list_description() as $description) { ?>
+								<? $ro->currentAdmittedPatient($description) ?>
+								<tr>
+									<td><? echo $description ?></td>
+									<td><? echo $ro->currentAdmittedPatient_name() ?>
 								</tr>
 							<? } ?>
 						</tbody>
