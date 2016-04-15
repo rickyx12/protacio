@@ -646,6 +646,20 @@ public function opd_patient_census($date,$date1) {
 	}
 }
 
+private $room_list_description;
+
+public function room_list_description() {
+	return $this->room_list_description;
+}
+
+public function room_list() {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT Description FROM room ORDER BY Description ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->room_list_description[] = $row['Description'];
+	}
+}
 
 private $opdPayment_updater_itemNo;
 
