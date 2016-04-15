@@ -8952,13 +8952,14 @@ $this->currentAdmittedPatient_inventory_company = $row['company'];
 
 
 
-public $currentAdmittedPatient_name;
-public $currentAdmittedPatient_registrationNo;
-public $currentAdmittedPatient_dateRegistered;
-public $currentAdmittedPatient_cashUnpaid;
-public $currentAdmittedPatient_phic;
-public $currentAdmittedPatient_company;
-public $currentAdmittedPatient_registrationDetailsCompany;
+
+private $currentAdmittedPatient_name;
+private $currentAdmittedPatient_registrationNo;
+private $currentAdmittedPatient_dateRegistered;
+private $currentAdmittedPatient_cashUnpaid;
+private $currentAdmittedPatient_phic;
+private $currentAdmittedPatient_company;
+private $currentAdmittedPatient_registrationDetailsCompany;
 
 public function currentAdmittedPatient_name() {
 return $this->currentAdmittedPatient_name;
@@ -8997,17 +8998,17 @@ tr:hover { background-color:yellow;color:black;}
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.Company,rd.registrationNo,rd.dateRegistered,sum(pc.cashUnpaid) as cash,sum(pc.phic) as phic,sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.room = '$room' and rd.type = 'IPD' and rd.dateUnregistered = '' and (pc.status = 'UNPAID' or pc.status = 'Discharged') and (pc.title != 'MEDICINE' and pc.title != 'SUPPLIES')  ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " SELECT pr.lastName,pr.firstName,rd.Company,rd.registrationNo,rd.dateRegistered,sum(pc.cashUnpaid) as cash,sum(pc.phic) as phic,sum(pc.company) as company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.room = '$room' and rd.type = 'IPD' and rd.dateUnregistered = '' and (pc.status = 'UNPAID' or pc.status = 'Discharged') and rd.dateRegistered not like 'DELETED%' and (pc.title != 'MEDICINE' and pc.title != 'SUPPLIES')  ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
   {
-$this->currentAdmittedPatient_name = strtoupper($row['lastName'])." ".strtoupper($row['firstName']);
-$this->currentAdmittedPatient_registrationNo = $row['registrationNo'];
-$this->currentAdmittedPatient_dateRegistered = $row['dateRegistered'];
-$this->currentAdmittedPatient_cashUnpaid = $row['cash'];
-$this->currentAdmittedPatient_phic = $row['phic'];
-$this->currentAdmittedPatient_company = $row['company'];
-$this->currentAdmittedPatient_registrationDetailsCompany = $row['Company'];
+  $this->currentAdmittedPatient_name = strtoupper($row['lastName'])." ".strtoupper($row['firstName']);
+  $this->currentAdmittedPatient_registrationNo = $row['registrationNo'];
+  $this->currentAdmittedPatient_dateRegistered = $row['dateRegistered'];
+  $this->currentAdmittedPatient_cashUnpaid = $row['cash'];
+  $this->currentAdmittedPatient_phic = $row['phic'];
+  $this->currentAdmittedPatient_company = $row['company'];
+  $this->currentAdmittedPatient_registrationDetailsCompany = $row['Company'];
 }
 
 }
