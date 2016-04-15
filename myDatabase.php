@@ -2948,6 +2948,16 @@ echo "</body>";
 }
 //End Cashier List Company
 
+//check kung dispensed nba lahat ng inventory charges ng patient
+public function check_dispensed_all($registrationNo) {
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $result = mysqli_query($connection, "SELECT itemNo FROM patientCharges WHERE departmentStatus not like 'dispensedBy%' and registrationNo = '$registrationNo' and title in ('MEDICINE','SUPPLIES') and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+  while($row = mysqli_fetch_array($result)) {
+    return $row['itemNo'];
+  }
+}
+
+
 
 public function getPatientChargesUnpaid($month,$day,$year,$fromTime_hour,$fromTime_minutes,$fromTime_seconds,$toTime_hour,$toTime_minutes,$toTime_seconds,$username,$registrationNo,$shift,$statusType,$reportDate) {
 
@@ -3064,7 +3074,11 @@ echo "-";
 $this->coconutTextBox_short("year",date("Y"));
 
 
+if( $this->check_dispensed_all($registrationNo) != "" ) {
+echo "<br><br>[<font color=red>Medicine/Supplies need to be dispense first before payment</font>]";
+}else {
 echo "<br>&nbsp;&nbsp;&nbsp;<input type=submit value='Paid' style='border:1px solid #000; background-color:#3b5998; color:white'>";
+}
 echo "<br></div><br><br>";
 echo "<input type=hidden name='username' value='$username'>";
 echo "<input type=hidden name='serverTime' value='".date("H:i:s")."'>";
