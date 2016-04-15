@@ -9031,10 +9031,9 @@ $result = mysqli_query($connection, " SELECT Description from room where floor =
 
 while($row = mysqli_fetch_array($result))
   {
-
 $this->currentAdmittedPatient($row['Description']);
 $this->currentAdmittedPatient_inventory($row['Description']);
-
+$this->coconutHidden("registrationNo[]",$this->currentAdmittedPatient_registrationNo());
 
 $currentAdmitted_cash = (( $this->currentAdmittedPatient_cashUnpaid() + $this->currentAdmittedPatient_inventory_cash() ) - $this->getTotalPatientPayment($this->currentAdmittedPatient_registrationNo()));
 $currentAdmitted_phic = ( $this->currentAdmittedPatient_phic() + $this->currentAdmittedPatient_inventory_phic() );
@@ -9051,6 +9050,7 @@ $this->coconutTableData("<font size=2>".$this->currentAdmittedPatient_registrati
 ( $currentAdmitted_company > 0 ) ? $this->coconutTableData("<font size=2>".number_format($currentAdmitted_company,2)."</font>") : $this->coconutTableData("");
 $this->coconutTableRowStop();
 }
+
 
 }
 
