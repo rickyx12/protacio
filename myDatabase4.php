@@ -661,6 +661,21 @@ public function room_list() {
 	}
 }
 
+private $ipd_census_id;
+
+public function ipd_census_id() {
+	return $this->ipd_census_id;
+}
+
+public function ipd_census($date) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT id FROM ipdCensus WHERE date = '$date' ORDER BY id asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->ipd_census_id[] = $row['id'];
+	}
+}
+
 private $opdPayment_updater_itemNo;
 
 public function opdPayment_updater_itemNo() {
