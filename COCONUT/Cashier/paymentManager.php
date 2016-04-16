@@ -74,6 +74,7 @@ if( $ro->getRegistrationDetails_type() == "OPD" || $ro->getRegistrationDetails_t
 if($chargeStatus == "UNPAID") {
 if($totalPaid >= $payables ) {
 for($x=0;$x<$countz;$x++) {
+$ro->addCollectionReport($registrationNo,$cashierPaid[$x],$shift,"OPD",$ro->getItemNo_total($cashierPaid[$x]),$orNO,"OPD",$username,date("H:i:s"),$datePaid,$paidVia);	
 //$natira = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]); 
 
 $cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
@@ -85,7 +86,7 @@ if( $paidVia == "Cash" ) {
 //check kung meron ng payment sa collectionReport table ung charges
 if($ro->selectNow("collectionReport","collectionNo","itemNo",$cashierPaid[$x]) != "") {
 $totalCashPaid = $cashPaid + $ro->selectNow("collectionReport","amountPaid","itemNo",$cashierPaid[$x]);
-$ro->paymentManager($cashierPaid[$x],"PAID",$username,$totalCashPaid,$datePaid,date("H:i:s"),"0");
+$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
 }else {
 $ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
 }
@@ -122,7 +123,9 @@ $ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"orNO",$orNO);
 }else {
 echo "";//credit card
 }
-$ro->addCollectionReport($registrationNo,$cashierPaid[$x],$shift,"OPD",$cashPaid,$orNO,"OPD",$username,date("H:i:s"),$datePaid,$paidVia);
+
+//echo $ro->getItemNo_total($cashierPaid[$x]);
+//echo $cashierPaid[$x];
 }
 }
 else {
