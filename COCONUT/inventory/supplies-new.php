@@ -71,7 +71,7 @@
 						<td>&nbsp;<? echo $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode) ?></td>
 						<td>&nbsp;<? echo $ro4->number_format($ro->selectNow("inventory","suppliesUNITCOST","inventoryCode",$inventoryCode)) ?></td>
 						<td>&nbsp;<? echo $ro4->number_format($ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode)) ?></td>
-						<td><input type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" value="Update"></td>
+						<td><input type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal<?php echo $inventoryCode ?>" value="Update"></td>
 						<td><input type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal<?php echo $inventoryCode ?>" value="Remove"></td>
 					</tr>
 				<? } ?>
@@ -105,7 +105,7 @@
 
 		<? foreach($ro4->inventory_list_inventoryCode() as $inventoryCode) { ?>
 		<!-- Modal -->
-		<div id="updateModal" class="modal fade" role="dialog">
+		<div id="updateModal<? echo $inventoryCode ?>" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 
 		    <!-- Modal content-->
