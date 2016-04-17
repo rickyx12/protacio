@@ -244,6 +244,10 @@ $("#breadcrumbs a").hover(
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/showPaid.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized</a></li> 
                     -->
 
+                    <? if($ro->selectNow("registeredUser","position","username",$username) == "encoder") { ?>
+                            <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/showPaid.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized (<font color=red>old</font>)</a></li> 
+                    <? }else { } ?>
+
                      <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/void-opd-new.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized</a></li>                    
 
 <?php //} else { ?>
@@ -265,6 +269,8 @@ $("#breadcrumbs a").hover(
  
      
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount</a></li>
+
+<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/manual-discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount test</a></li>
     
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/approximate.php?registrationNo=<?php echo $registrationNo; ?>&caserate=" target="patientX">R-Banny</a></li>
 
