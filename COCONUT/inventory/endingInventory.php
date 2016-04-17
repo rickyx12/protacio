@@ -164,13 +164,13 @@ $qtyNo = count($qty);
 
 
     							<? if($ro1->selectNow("endingInventory_deleted","deleteNo","inventoryCode",$inventoryCode[$c]) < 1) { ?>
-    							<td><input type="checkbox" id="checkBoxes<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>"></td>
+    							<td><input type="checkbox" id="checkBoxes<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>" checked="checked"></td>
     							<? }else { ?>
     							<td></td>
     							<? } ?>
 
     							<? }else { ?>
-    							<td><input type="checkbox" id="hasEnding<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>"></td>
+    							<td><input type="checkbox" id="hasEnding<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>" checked="checked"></td>
     							<? } ?>
 
 
