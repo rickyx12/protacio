@@ -73,6 +73,8 @@ echo "</script>";
                 <ul>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierShift.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>" target="departmentX" >Diagnostics</a></li>
 
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Department/selectShift.php?module=PHARMACY&username=<?php echo $username; ?>&branch=" target="departmentX" >Pharmacy</a></li>
+
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/accounting/voucher/addVoucher.php?username=<?php echo $username; ?>" target="departmentX">Expenses</a></li>
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/manualPayment.php?username=<?php echo $username; ?>&paymentType=manual_" target="departmentX">Manual Payments</a></li>
