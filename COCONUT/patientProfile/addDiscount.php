@@ -10,12 +10,7 @@ $username = $_GET['username'];
 $ro = new database();
 $ro->coconutDesign();
 $ro->getPatientProfile($registrationNo);
-$target="";
-if($ro->getRegistrationDetails_type() == "IPD") {
 $target = "addDiscount1.php";
-}else {
-$target = "rBanny_discount.php";
-}
 echo "
 <form method='get' action='$target'>
 <center>
@@ -25,16 +20,6 @@ echo "
 <table border=0 cellpadding=0 cellspacing=0>
 ";
 if($ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" ) {
-echo "
-  <tr>
-    <td>Discount (Cash)</td>
-    <td><input type=text maxlength=10 name='discount' autocomplete='off' value='".$ro->getRegistrationDetails_discount()."' class='shortField'></td>
-  </tr>
-  <tr>
-    <td>Discount(Company)</td>
-    <td><input type=text maxlength=10 name='companyDiscount' autocomplete=off value='".$ro->selectNow("registrationDetails","companyDiscount","registrationNo",$registrationNo)."' class='shortField'></td>
-  </tr>
-";
 echo "<Tr>";
 echo "<td>Discount Type</td>";
 echo "<td>";
