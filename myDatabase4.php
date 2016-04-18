@@ -676,6 +676,22 @@ public function ipd_census($date) {
 	}
 }
 
+private $ending_inventory_list_endingNo;
+
+public function ending_inventory_list_endingNo() {
+	return $this->ending_inventory_list_endingNo;
+}
+
+public function ending_inventory_list() {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->ending_inventory_list_endingNo[] = $row['endingNo'];
+	}
+}
+
+
 private $opdPayment_updater_itemNo;
 
 public function opdPayment_updater_itemNo() {
