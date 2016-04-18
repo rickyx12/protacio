@@ -1433,7 +1433,11 @@ while($row = mysql_fetch_array($result))
 $this->getPatientProfile($registrationNo);
 echo "<tr>";
 echo "<td>&nbsp;".$row['Description']."&nbsp;</td>";
+if($row['sellingPrice'] > 0) {
 $sellingPrice = $row['sellingPrice'];
+}else{
+$sellingPrice = $this->selectNow("availableCharges","OPD","chargesCode",$row['chargesCode']);
+}
 echo "<td>&nbsp;<a href='#'>".number_format(trim($sellingPrice),2)."</a>&nbsp;</td>";
 
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/balanceAmount.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$sellingPrice&discount=0&timeCharge=$serverTime&chargeBy=$username&service=$row[Service]&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&paycash=no&remarks=&stockCardNo='><font color=blue>Add</font></a>&nbsp;";
