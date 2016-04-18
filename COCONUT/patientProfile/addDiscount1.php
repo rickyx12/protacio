@@ -35,8 +35,8 @@ break;
 include("../../myDatabase.php");
 $registrationNo=$_GET['registrationNo'];
 $username=$_GET['username'];
-//$discount=$_GET['discount'];
-//$companyDiscount=$_GET['companyDiscount'];
+$discount=$_GET['discount'];
+$companyDiscount=$_GET['companyDiscount'];
 $discountType = $_GET['discountType'];
 
 $ro = new database();
