@@ -188,7 +188,7 @@ echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/inventoryMovem
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Reports/Census/selectShift_pxList.php?username='.$username.'" target="departmentX">Patient List</a></li>';
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Reports/admissionKit.php" target="departmentX">ADM.KIT Report</a></li>';
-
+echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/ending-inventory-medicine.php" target="departmentX">Ending Inventory</a></li>';
 
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.php?username='.$username.'" target="departmentX">OPD</a></li>';
