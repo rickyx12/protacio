@@ -29,6 +29,7 @@
 								html += "<td>&nbsp;"+field.stockCardNo+"</td>";
 								html += "<td>&nbsp;"+field.genericName+"</td>";
 								html += "<td>&nbsp;"+field.description+"</td>";
+								html += "<td>&nbsp;"+field.unitcost+"</td>"
 								html += "<td>&nbsp;"+field.ipdPrice+"</td>";
 								html += "<td>&nbsp;"+field.opdPrice+"</td>";
 								html += "<td>&nbsp;"+field.status+"</td>"
@@ -64,13 +65,15 @@
 								<th>Stock#</th>
 								<th>Generic Name</th>
 								<th>Brand Name</th>
-								<th>IPD Price</th>
-								<th>OPD Price</th>
+								<th>Unitcost</th>
+								<th>IPD</th>
+								<th>OPD</th>
 								<th>Deleted</th>
 							</tr>
 						</thead>
 						<tbody id="deletedInventory">
 							<tr>
+								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>

@@ -14,6 +14,7 @@ foreach($ro4->deleted_inventory_inventoryCode() as $inventoryCode) {
 		"stockCardNo" => $ro->selectNow("inventory","stockCardNo","inventoryCode",$inventoryCode),
 		"description" => $ro->selectNow("inventory","description","inventoryCode",$inventoryCode),
 		"genericName" => $ro->selectNow("inventory","genericName","inventoryCode",$inventoryCode),
+		"unitcost" => $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode),
 		"ipdPrice" => $ro->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode),
 		"opdPrice" => $ro->selectNow("inventory","opdPrice","inventoryCode",$inventoryCode),
 		"status" => $ro->selectNow("inventory","status","inventoryCode",$inventoryCode)
