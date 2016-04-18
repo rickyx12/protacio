@@ -20,6 +20,20 @@ echo "
 <table border=0 cellpadding=0 cellspacing=0>
 ";
 if($ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" ) {
+echo "<tr>";
+echo "<td>Discount Cash</td>";
+echo "<td>";
+$ro->coconutTextBox("discount","");
+echo "</td>";
+echo "</tr>";
+
+echo "<tr>";
+echo "<td>Discount Company</td>";
+echo "<td>";
+$ro->coconutTextBox("companyDiscount","");
+echo "</td>";
+echo "</tr>";
+
 echo "<Tr>";
 echo "<td>Discount Type</td>";
 echo "<td>";

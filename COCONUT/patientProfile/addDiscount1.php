@@ -41,8 +41,8 @@ $discountType = $_GET['discountType'];
 
 $ro = new database();
 
-//$ro->editNow("registrationDetails","registrationNo",$registrationNo,"discount",$discount);
-//$ro->editNow("registrationDetails","registrationNo",$registrationNo,"companyDiscount",$companyDiscount);
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"discount",$discount);
+$ro->editNow("registrationDetails","registrationNo",$registrationNo,"companyDiscount",$companyDiscount);
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"discountType",$discountType);
 
 echo "
