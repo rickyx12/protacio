@@ -20,6 +20,8 @@ echo "
 <table border=0 cellpadding=0 cellspacing=0>
 ";
 if($ro->selectNow("registeredUser","module","username",$username) == "CASHIER" || $ro->selectNow("registeredUser","module","username",$username) == "BILLING" || $ro->selectNow("registeredUser","module","username",$username) == "PHARMACY" ) {
+
+if($ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "IPD") {
 echo "<tr>";
 echo "<td>Discount Cash</td>";
 echo "<td>";
@@ -33,6 +35,12 @@ echo "<td>";
 $ro->coconutTextBox("companyDiscount","");
 echo "</td>";
 echo "</tr>";
+}else {
+$ro->coconutHidden("discount","");
+$ro->coconutHidden("companyDiscount","");
+}
+
+
 
 echo "<Tr>";
 echo "<td>Discount Type</td>";
@@ -42,6 +50,9 @@ $ro->showOption("discountType","discountType");
 $ro->coconutComboBoxStop();
 echo "</td>";
 echo "</tr>";
+
+
+
 }
 else {
 echo $ro->coconutHidden("discount","");
