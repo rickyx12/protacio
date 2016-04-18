@@ -268,7 +268,7 @@ $("#breadcrumbs a").hover(
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">View Payment</a></li> 
  
      
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount</a></li>
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount Type</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/manual-discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Manul Discount</a></li>
     
