@@ -5860,7 +5860,11 @@ if($dateRegistered1[1] == "01") {
 }
 
 $this->coconutComboBoxStart_short("monthDischarged");
-echo "<option value='".$dateRegistered1[1]."'>".$dateWord."</option>";
+if($this->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD") {
+  echo "<option value='".$dateRegistered1[1]."'>".$dateWord."</option>";
+}else {
+  echo "<option value='".date("m")."'>".date("M")."</option>";
+}
 echo "<option value='01'>Jan</option>";
 echo "<option value='02'>Feb</option>";
 echo "<option value='03'>Mar</option>";
@@ -5876,8 +5880,11 @@ echo "<option value='12'>Dec</option>";
 $this->coconutComboBoxStop();
 echo "-";
 $this->coconutComboBoxStart_short("dayDischarged");
-echo "<option>".$dateRegistered1[2]."</option>";
-echo "<option value='".date("d")."'>".date("d")."</option>";
+if($this->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD") {
+  echo "<option>".$dateRegistered1[2]."</option>";
+}else {
+  echo "<option value='".date("d")."'>".date("d")."</option>";
+}
 for($x=1;$x<32;$x++) {
 
 if($x < 10) {
@@ -5890,7 +5897,11 @@ echo "<option value='$x'>$x</option>";
 
 $this->coconutComboBoxStop();
 echo "-";
-$this->coconutTextBox_short("yearDischarged",$dateRegistered1[0]);
+if($this->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD") {
+  $this->coconutTextBox_short("yearDischarged",$dateRegistered1[0]);
+}else {
+  $this->coconutTextBox_short("yearDischarged",date("Y"));
+}
 echo "<br><br>";
 $this->coconutButton("Discharged");
 $this->coconutFormStop();
