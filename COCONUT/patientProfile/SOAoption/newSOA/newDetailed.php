@@ -46,6 +46,7 @@ $pf=0;
 $erFee=0;
 $others=0;
 $cardiacMonitor=0;
+$balance=0;
 $total=0;
 
 
@@ -68,6 +69,7 @@ $pf_pd=0;
 $erFee_pd=0;
 $others_pd=0;
 $cardiacMonitor_pd=0;
+$balance_pd=0;
 $total_pd=0;
 
 
@@ -89,6 +91,7 @@ $pf_disc=0;
 $erFee_disc=0;
 $others_disc=0;
 $cardiacMonitor_disc=0;
+$balance_disc=0;
 $total_disc=0;
 
 
@@ -110,6 +113,7 @@ $pf_unpaid=0;
 $erFee_unpaid=0;
 $others_unpaid=0;
 $cardiacMonitor_unpaid=0;
+$balance_unpaid=0;
 $total_unpaid=0;
 
 $medicine_phic=0;
@@ -130,6 +134,7 @@ $pf_phic=0;
 $erFee_phic=0;
 $others_phic=0;
 $cardiacMonitor_phic=0;
+$balance_phic=0;
 $total_phic=0;
 
 
@@ -152,6 +157,7 @@ $pf_hmo=0;
 $erFee_hmo=0;
 $others_hmo=0;
 $cardiacMonitor_hmo=0;
+$balance_hmo=0;
 $total_hmo=0;
 
 
@@ -809,6 +815,44 @@ echo "</tr>";
 }else { }
 /***************CARDIAC MONITOR*********************/
 
+
+/*******************BALANCE********************/
+
+if( $ro->checkIfTitleExist_newDetailed_opd($registrationNo,"BALANCE") ) {
+echo "<tr>";
+echo "<td>&nbsp;<font size=2><b>BALANCE</b></font></td>";
+//echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+$ro->newDetailed($registrationNo,"BALANCE");
+
+
+echo "<tr>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td><font size=2><b>Sub Total</b></font></td>";
+echo "<td><font size=1>=====></font></td>";
+$balance += $ro->newDetailed_total();
+$balance_pd += $ro->newDetailed_pd();
+$balance_disc += $ro->newDetailed_disc();
+$balance_unpaid += $ro->newDetailed_unpaid();
+$balance_phic += $ro->newDetailed_phic();
+$balance_hmo += $ro->newDetailed_hmo();
+echo "<td><font size=2><b>".number_format($balance,2)."</b></font></td>";
+echo "</tr>";
+}else { }
+/***************BALANCE*********************/
+
+
+
 /*******************OTHERS********************/
 
 if( $ro->checkIfTitleExist_newDetailed_opd($registrationNo,"OTHERS") ) {
@@ -846,18 +890,18 @@ echo "</tr>";
 
 
 
-$total = ( $medicine + $supplies + $laboratory + $ultrasound + $ctscan + $xray + $miscellaneous + $ecg + $or_dr + $pt + $ot + $st + $endoscopy + $pf + $erFee + $cardiacMonitor + $others );
+$total = ( $medicine + $supplies + $laboratory + $ultrasound + $ctscan + $xray + $miscellaneous + $ecg + $or_dr + $pt + $ot + $st + $endoscopy + $pf + $erFee + $cardiacMonitor + $balance + $others );
 
-$total_pd = ( $medicine_pd + $supplies_pd + $laboratory_pd + $ultrasound_pd + $ctscan_pd + $xray_pd + $miscellaneous_pd + $ecg_pd + $or_dr_pd + $pt_pd + $ot_pd + $st_pd + $endoscopy_pd + $pf_pd + $erFee_pd + $cardiacMonitor_pd + $others_pd );
+$total_pd = ( $medicine_pd + $supplies_pd + $laboratory_pd + $ultrasound_pd + $ctscan_pd + $xray_pd + $miscellaneous_pd + $ecg_pd + $or_dr_pd + $pt_pd + $ot_pd + $st_pd + $endoscopy_pd + $pf_pd + $erFee_pd + $cardiacMonitor_pd + $balance_pd + $others_pd );
 
 
-$total_phic = ( $medicine_phic + $supplies_phic + $laboratory_phic + $ultrasound_phic + $ctscan_phic + $xray_phic + $miscellaneous_phic + $ecg_phic + $or_dr_phic + $pt_phic + $ot_phic + $st_phic + $endoscopy_phic + $pf_phic + $erFee_phic + $cardiacMonitor_phic + $others_phic );
+$total_phic = ( $medicine_phic + $supplies_phic + $laboratory_phic + $ultrasound_phic + $ctscan_phic + $xray_phic + $miscellaneous_phic + $ecg_phic + $or_dr_phic + $pt_phic + $ot_phic + $st_phic + $endoscopy_phic + $pf_phic + $erFee_phic + $cardiacMonitor_phic + $balance_phic + $others_phic );
 
-$total_hmo = ( $medicine_hmo + $supplies_hmo + $laboratory_hmo + $ultrasound_hmo + $ctscan_hmo + $xray_hmo + $miscellaneous_hmo + $ecg_hmo + $or_dr_hmo + $pt_hmo + $ot_hmo + $st_hmo + $endoscopy_hmo + $pf_hmo + $erFee_hmo + $cardiacMonitor_hmo + $others_hmo );
+$total_hmo = ( $medicine_hmo + $supplies_hmo + $laboratory_hmo + $ultrasound_hmo + $ctscan_hmo + $xray_hmo + $miscellaneous_hmo + $ecg_hmo + $or_dr_hmo + $pt_hmo + $ot_hmo + $st_hmo + $endoscopy_hmo + $pf_hmo + $erFee_hmo + $cardiacMonitor_hmo + $balance_hmo + $others_hmo );
 
-$total_disc = ( $medicine_disc + $supplies_disc + $laboratory_disc + $ultrasound_disc + $ctscan_disc + $xray_disc + $miscellaneous_disc + $ecg_disc + $or_dr_disc + $pt_disc + $st_disc + $ot_disc + $endoscopy_disc + $pf_disc + $erFee_disc + $cardiacMonitor_disc + $others_disc );
+$total_disc = ( $medicine_disc + $supplies_disc + $laboratory_disc + $ultrasound_disc + $ctscan_disc + $xray_disc + $miscellaneous_disc + $ecg_disc + $or_dr_disc + $pt_disc + $st_disc + $ot_disc + $endoscopy_disc + $pf_disc + $erFee_disc + $cardiacMonitor_disc + $balance_disc + $others_disc );
 
-$total_unpaid = ( $medicine_unpaid + $supplies_unpaid + $laboratory_unpaid + $ultrasound_unpaid + $ctscan_unpaid + $xray_unpaid + $miscellaneous_unpaid + $ecg_unpaid + $or_dr_unpaid + $pt_unpaid + $ot_unpaid + $st_unpaid + $endoscopy_unpaid + $pf_unpaid + $erFee_unpaid + $cardiacMonitor_unpaid + $others_unpaid );
+$total_unpaid = ( $medicine_unpaid + $supplies_unpaid + $laboratory_unpaid + $ultrasound_unpaid + $ctscan_unpaid + $xray_unpaid + $miscellaneous_unpaid + $ecg_unpaid + $or_dr_unpaid + $pt_unpaid + $ot_unpaid + $st_unpaid + $endoscopy_unpaid + $pf_unpaid + $erFee_unpaid + $cardiacMonitor_unpaid + $balance_disc + $others_unpaid );
 
 echo "<tr>";
 echo "<td>&nbsp;</td>";
