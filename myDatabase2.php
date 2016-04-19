@@ -5825,10 +5825,42 @@ $this->coconutTableData($row['description']);
 $this->coconutTableRowStop();
 }
 $this->coconutTableStop();
+$dateRegistered = $this->selectNow("registrationDetails","dateRegistered","registrationNo",$registrationNo);
+$dateRegistered1 = preg_split ("/\-/", $dateRegistered); 
 echo "<br><br>";
 echo "Discharged Date ";
+$dateWord;
+
+if($dateRegistered1[1] == "01") {
+  $dateWord = "Jan";
+}else if($dateRegistered1[1] == "02") {
+  $dateWord = "Feb";
+}else if($dateRegistered1[1] == "03") {
+  $dateWord = "Mar";
+}else if($dateRegistered1[1] == "04") {
+  $dateWord = "Apr";
+}else if($dateRegistered1[1] == "05") {
+  $dateWord = "May";
+}else if($dateRegistered1[1] == "06") {
+  $dateWord = "Jun";
+}else if($dateRegistered1[1] == "07") {
+  $dateWord = "Jul";
+}else if($dateRegistered1[1] == "08") {
+  $dateWord = "Aug";
+}else if($dateRegistered1[1] == "09") {
+  $dateWord = "Sep";
+}else if($dateRegistered1[1] == "10") {
+  $dateWord = "Oct";
+}else if($dateRegistered1[1] == "11") {
+  $dateWord = "Nov";
+}else if($dateRegistered1[1] == "12") {
+  $dateWord = "Dec";
+}else {
+  $dateWord = "error";
+}
+
 $this->coconutComboBoxStart_short("monthDischarged");
-echo "<option value='".date("m")."'>".date("M")."</option>";
+echo "<option value='".$dateRegistered1[1]."'>".$dateWord."</option>";
 echo "<option value='01'>Jan</option>";
 echo "<option value='02'>Feb</option>";
 echo "<option value='03'>Mar</option>";
@@ -5844,6 +5876,7 @@ echo "<option value='12'>Dec</option>";
 $this->coconutComboBoxStop();
 echo "-";
 $this->coconutComboBoxStart_short("dayDischarged");
+echo "<option>".$dateRegistered1[2]."</option>";
 echo "<option value='".date("d")."'>".date("d")."</option>";
 for($x=1;$x<32;$x++) {
 
@@ -5857,7 +5890,7 @@ echo "<option value='$x'>$x</option>";
 
 $this->coconutComboBoxStop();
 echo "-";
-$this->coconutTextBox_short("yearDischarged",date("Y"));
+$this->coconutTextBox_short("yearDischarged",$dateRegistered1[0]);
 echo "<br><br>";
 $this->coconutButton("Discharged");
 $this->coconutFormStop();
