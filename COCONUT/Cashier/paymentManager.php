@@ -1,5 +1,6 @@
 <?php
 include("../../myDatabase3.php");
+include "../../myDatabase4.php";
 $cashierPaid = $_GET['cashierPaid'];
 $countz = count($cashierPaid);
 $registrationNo = $_GET['registrationNo'];
@@ -21,6 +22,7 @@ $year = $_GET['year']; // year paid
 $shift = $_GET['shift'];
 
 $ro = new database3();
+$ro4 = new database4();
 
 $ro->getPatientProfile($registrationNo);
 
@@ -85,21 +87,25 @@ if( $paidVia == "Cash" ) {
 
 //check kung meron ng payment sa collectionReport table ung charges
 if($ro->selectNow("collectionReport","collectionNo","itemNo",$cashierPaid[$x]) != "") {
-$totalCashPaid = $cashPaid + $ro->selectNow("collectionReport","amountPaid","itemNo",$cashierPaid[$x]);
-$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+	$totalCashPaid = $cashPaid + $ro->selectNow("collectionReport","amountPaid","itemNo",$cashierPaid[$x]);
+	$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
 }else {
-$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+	$ro->paymentManager($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
 }
 
 }else {
 
 if($ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "PROFESSIONAL FEE") {
-$payablesPF = $ro->selectNow("patientCharges","doctorsPF","itemNo",$cashierPaid[$x]);
-$totalCreditCard = ( $cashPaid + $payablesPF );
-$ro->paymentManager_creditCard_PF($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0",$payablesPF);
-$ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"doctorsPF","0");
+	$payablesPF = $ro->selectNow("patientCharges","doctorsPF","itemNo",$cashierPaid[$x]);
+	$totalCreditCard = ( $cashPaid + $payablesPF );
+	$ro->paymentManager_creditCard_PF($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0",$payablesPF);
+	$ro->editNow("patientCharges","itemNo",$cashierPaid[$x],"doctorsPF","0");
+}else if($ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "OT") {
+	$otShare = $ro->selectNow("patientCharges","otShare","itemNo",$cashierPaid[$x]);
+	$totalCreditCard = ($cashPaid + $otShare);
+	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0");
 }else {
-$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
 }
 
 }
