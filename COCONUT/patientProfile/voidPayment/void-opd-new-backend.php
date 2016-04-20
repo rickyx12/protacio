@@ -29,6 +29,12 @@ $ro->editNow("patientCharges","itemNo",$ro->selectNow("collectionReport","itemNo
 $ro->editNow("patientCharges","itemNo",$ro->selectNow("collectionReport","itemNo","collectionNo",$collectionNo),"cashUnpaid",$totalCashUnpaid);
 $ro->editNow("patientCharges","itemNo",$ro->selectNow("collectionReport","itemNo","collectionNo",$collectionNo),"status","UNPAID");
 
+if($ro->selectNow("collectionReport","paidVia","collectionNo",$collectionNo) == "Cash") {
+$ro->editNow("patientCharges","itemNo",$ro->selectNow("collectionReport","itemNo","collectionNo",$collectionNo),"cashPaid","0");
+}else {
+$ro->editNow("patientCharges","itemNo",$ro->selectNow("collectionReport","itemNo","collectionNo",$collectionNo),"amountPaidFromCreditCard","0");
+}
+
 $voidTable = array(
 	"collectionNo" => $collectionNo,
 	"registrationNo" => $ro->selectNow("collectionReport","registrationNo","collectionNo",$collectionNo),
