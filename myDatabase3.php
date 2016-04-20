@@ -2427,7 +2427,7 @@ $manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row[
 
 		if($title == "OT" || $title == "PT") {
 			echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
-			echo "<td align='right'>".$row['otShare']."</td>";
+			echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
 		}else {	
 			/*hide*/
 		}
