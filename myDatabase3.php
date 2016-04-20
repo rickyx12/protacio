@@ -2347,7 +2347,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid < 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.otShare from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid < 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
 
 while($row = mysqli_fetch_array($result))
@@ -2364,19 +2364,25 @@ $this->patientAccountOPD_total += $row['total'];
 $manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
 
 echo "<tr>";
-echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
-echo "<td>&nbsp;".$row['description']."</td>";
-echo "<td align='right'>&nbsp;".($row['discount'])."</td>";
-echo "<td align='right'>&nbsp;".($row['cashUnpaid'])."</td>";
-echo "<td align='right'>&nbsp;".($row['company'])."</td>";
-echo "<td align='right'>&nbsp;".($row['phic'])."</td>";
-echo "<td align='right'>&nbsp;".($row['cashPaid'])."</td>";
-echo "<td align='right'>&nbsp;".($row['amountPaidFromCreditCard'])."</td>";
-if($manualTotal != $row['total']) {
-echo "<td align='right'>&nbsp;".$row['registrationNo']."-<font color=red>".($row['total'])."</font></td>";
-}else {
-echo "<td align='right'>&nbsp;".($row['total'])."</td>";
-}
+	echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+	echo "<td>&nbsp;".$row['description']."</td>";
+	echo "<td align='right'>&nbsp;".($row['discount'])."</td>";
+	echo "<td align='right'>&nbsp;".($row['cashUnpaid'])."</td>";
+	echo "<td align='right'>&nbsp;".($row['company'])."</td>";
+	echo "<td align='right'>&nbsp;".($row['phic'])."</td>";
+	echo "<td align='right'>&nbsp;".($row['cashPaid'])."</td>";
+	echo "<td align='right'>&nbsp;".($row['amountPaidFromCreditCard'])."</td>";
+	if($manualTotal != $row['total']) {
+		echo "<td align='right'>&nbsp;".$row['registrationNo']."-<font color=red>".($row['total'])."</font></td>";
+	}else {
+		echo "<td align='right'>&nbsp;".($row['total'])."</td>";
+	}
+	if($title == "OT") {
+		echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
+		echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
+	}else {	
+		/*hide*/
+	}	
 echo "</tr>";
 }
 
@@ -2425,7 +2431,7 @@ $manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row[
 			echo "<td align='right'>&nbsp;".($row['sellingPrice'] * $row['quantity'])."</td>";
 		}
 
-		if($title == "OT" || $title == "PT") {
+		if($title == "OT") {
 			echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
 			echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
 		}else {	
