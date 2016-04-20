@@ -66,11 +66,13 @@ $datePaid = $year."-".$month."-".$day;
 
 $ro->getPatientProfile($registrationNo);
 
-$disc = $ro->getUnpaidPatientAmount($registrationNo) * $ro->getRegistrationDetails_discount();
+//$disc = $ro->getUnpaidPatientAmount($registrationNo) * $ro->getRegistrationDetails_discount();
 
-$grandTotal = $ro->getUnpaidPatientAmount($registrationNo) - $disc;
+//$grandTotal = $ro->getUnpaidPatientAmount($registrationNo) - $disc;
 
-$payables = ($grandTotal - $ro->sumPartialPayment($registrationNo));
+$grandTotal = $ro->getUnpaidPatientAmount($registrationNo);
+//$payables = ($grandTotal - $ro->sumPartialPayment($registrationNo));
+$payables = $grandTotal;
 
 if( $ro->getRegistrationDetails_type() == "OPD" || $ro->getRegistrationDetails_type() == "walkin" ) {
 if($chargeStatus == "UNPAID") {
