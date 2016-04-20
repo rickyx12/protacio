@@ -26,7 +26,7 @@ echo "<Table border=0 width='90%'>";
 		echo "<th>CASH</th>";
 		echo "<th>Cr.Card</th>";
 		echo "<th>Total</th>";
-		if($title == "OT" || $title == "PT") {
+		if($title == "OT") {
 			echo "<th>Hospital</th>";
 			echo "<th>PF</th>";
 		}else {	
