@@ -26,7 +26,7 @@ for($a=0;$a<count($itemNo);$a++) {
 		$chargesUnpaid = $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemNo[$a]);
 		$ro->editNow("patientCharges","itemNo",$itemNo[$a],"discount",$discountPerCharges);
 		$ro->editNow("patientCharges","itemNo",$itemNo[$a],"cashUnpaid",($chargesUnpaid-$discountPerCharges));
-		echo "<Br>Discount Successful<br>";
+		//echo "<Br>Discount Successful<br>";
 	}	
 }	
 
