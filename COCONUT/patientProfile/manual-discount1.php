@@ -12,7 +12,7 @@ for($x=0;$x<count($itemNo);$x++){
 	//echo $itemNo[$x]."<br>";
 	$countCharges += 1;
 }
-$discountPerCharges = ($discount / $countCharges);
+$discountPerCharges = number_format(($discount / $countCharges),2);
 //echo $countCharges;
 echo "Discount per Charges:&nbsp;".$discountPerCharges;
 
