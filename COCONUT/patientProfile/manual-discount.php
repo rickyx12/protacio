@@ -71,6 +71,8 @@
 					<tbody>
 						<? foreach($ro4->get_patient_charges_itemNo() as $itemNo) { ?>
 							<tr>
+
+							<? if($ro->selectNow("patientCharges","status","itemNo",$itemNo) == "UNPAID") { ?>
 								<td><? echo $ro->selectNow("patientCharges","description","itemNo",$itemNo) ?></td>
 								<td><? echo $ro->selectNow("patientCharges","sellingPrice","itemNo",$itemNo) ?></td>
 								<td><? echo $ro->selectNow("patientCharges","quantity","itemNo",$itemNo) ?></td>
@@ -79,10 +81,15 @@
 								<td><? echo $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemNo) ?></td>
 
 								<? if($ro->selectNow("patientCharges","discount","itemNo",$itemNo) < 1) { ?>
-									<td><input type="checkbox" id="itemNo<? echo $itemNo ?>" class="itemNo" name="itemNo[]" value="<? echo $itemNo ?>"></td>
-								<? }else { ?>
-									<td>&nbsp;</td>
+										
+									<? if($ro->selectNow("patientCharges","title","itemNo",$itemNo) != "PROFESSIONAL FEE") { ?>
+										<td><input type="checkbox" id="itemNo<? echo $itemNo ?>" class="itemNo" name="itemNo[]" value="<? echo $itemNo ?>"></td>
+									<? }else { } ?>
+
+								<?	}else { ?>
+										<td>&nbsp;</td>
 								<? } ?>
+							<? } else { } ?>
 							</tr>
 						<? } ?>
 					</tbody>
