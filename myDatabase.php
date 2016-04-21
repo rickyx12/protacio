@@ -1390,7 +1390,11 @@ $room[1] = $this->getReportInformation("anotherPrice");
 $this->getPatientProfile($registrationNo);
 if( $this->getRegistrationDetails_type() == "IPD" ) {
 if( $this->getRegistrationDetails_company() != "" ) {
-$room1 = "ipd_hmo";
+	if($this->getRegistrationDetails_company() == "INTELLICARE" || $this->getRegistrationDetails_company() == "AVEGA Managed Care, Inc.") {
+		$room1 = "specialRates";
+	}else {
+		$room1 = "ipd_hmo";
+	}
 }else {
 $room1 = $this->selectNow("room","type","Description",$this->selectNow("registrationDetails","room","registrationNo",$registrationNo));
 }
