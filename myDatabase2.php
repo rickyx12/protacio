@@ -1303,7 +1303,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT itemNo,description,sellingPrice FROM patientCharges WHERE registrationNo = '$registrationNo' and (title = 'LABORATORY' or title = 'MEDICINE' or title = 'XRAY' or title = 'ULTRASOUND' or title = 'ECG' or title = 'OR/DR/ER Fee' or title = 'SUPPLIES') and discount < 1 and phic < 1 and status = 'UNPAID' ");
+$result = mysql_query("SELECT itemNo,description,sellingPrice FROM patientCharges WHERE registrationNo = '$registrationNo' and title not in ('PROFESSIONAL FEE') and discount < 1 and phic < 1 and status = 'UNPAID' ");
 
 echo "<center>";
 $this->coconutTableStart();
