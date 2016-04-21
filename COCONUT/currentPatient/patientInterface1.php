@@ -197,9 +197,6 @@ $("#breadcrumbs a").hover(
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
 <li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/hospitalPackage/onPatient/showPackage_onPatient.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Hospital Package's</a></li>      
 
-
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/discount/discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount</a></li>
-
 <?php } else { } ?>
 
 <li><a href="../../BillingReports/TemporaryBillwPF.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Teporary Bill w/ PF</a></li>
@@ -267,10 +264,12 @@ $("#breadcrumbs a").hover(
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">View Payment</a></li> 
  
-     
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount Type</a></li>
+    
+<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/discount/discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Auto</a></li>
 
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/manual-discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Manul Discount</a></li>
+<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/manual-discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Manual</a></li>
+
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount Type</a></li>
     
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/approximate.php?registrationNo=<?php echo $registrationNo; ?>&caserate=" target="patientX">R-Banny</a></li>
 
