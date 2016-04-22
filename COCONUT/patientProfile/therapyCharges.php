@@ -33,7 +33,7 @@ $ro = new database();
 
 $dateCharge = $year."-".$month."-".$day;
 
-if($dateCharge == "") {
+if($dateCharge == "--") {
 $dateCharge = date("Y-m-d");
 }else {
 $dateCharge = $dateCharge;
