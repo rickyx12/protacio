@@ -102,7 +102,11 @@ echo "
 <td><font class='charges'>Quantity:</font></td>";
 $deptStatus = preg_split ("/\_/", $ro->getDepartmentStatus($itemNo)); 
 if($deptStatus[0] == "dispensedBy") {
-echo "<td><input type=text class='shortField' name='quantity' value='".$ro->patientCharges_quantity()."' readonly></td>";
+if($ro->selectNow("inventory","classification","inventoryCode",$ro->selectNow("patientCharges","chargesCode","itemNo",$itemNo)) == "noInventory") {
+	echo "<td><input type=text class='shortField' name='quantity' value='".$ro->patientCharges_quantity()."'></td>";
+}else {
+	echo "<td><input type=text class='shortField' name='quantity' value='".$ro->patientCharges_quantity()."' readonly></td>";
+}
 }else {
 echo "<td><input type=text class='shortField' name='quantity' value='".$ro->patientCharges_quantity()."'></td>";
 }
