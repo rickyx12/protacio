@@ -1,8 +1,22 @@
 <?php
 include("../../../myDatabase2.php");
-$registrationNo = $_GET['registrationNo'];
+if(isset($_GET['registrationNo'])) {
+	$registrationNo = $_GET['registrationNo'];
+}else if($_POST['registrationNo']){
+	$registrationNo = $_POST['registrationNo'];
+}else {
+	$registrationNo = "";
+}
 
-$itemNo = $_GET['itemNo'];
+if(isset($_GET['itemNo'])) {
+	$itemNo = $_GET['itemNo'];
+}else if(isset($_POST['itemNo'])) {
+	$itemNo = $_POST['itemNo'];
+}else {
+	$itemNo = "";
+}
+
+
 $count = count($itemNo);
 
 $ro = new database2();
