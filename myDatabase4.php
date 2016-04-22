@@ -403,7 +403,7 @@ public function inventory_list_dateAdded() {
 
 public function inventory_list($type) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT i.inventoryCode,i.stockCardNo,i.description,i.genericName,i.quantity,i.unitcost,i.ipdPrice,i.opdPrice,i.dateAdded from inventory i where i.status not like 'DELETED%%%%%' and i.quantity > 0 and i.inventoryType = '$type' order by i.genericName asc") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT i.inventoryCode,i.stockCardNo,i.description,i.genericName,i.quantity,i.unitcost,i.ipdPrice,i.opdPrice,i.dateAdded from inventory i where i.status not like 'DELETED%%%%%' and i.quantity > 0 and i.inventoryType = '$type' order by i.genericName,i.description asc") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->inventory_list_inventoryCode[] = $row['inventoryCode'];
