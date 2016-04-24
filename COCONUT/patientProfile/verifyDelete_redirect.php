@@ -18,7 +18,7 @@ $ro = new database();
 <?php
 echo "<br><br><br><Br><br>";
 
-if($ro->getTitle($itemNo) == "MEDICINE" || $ro->getTitle($itemNo) == "SUPPLIES" ) {
+if( ($ro->getTitle($itemNo) == "MEDICINE" || $ro->getTitle($itemNo) == "SUPPLIES") && $ro->selectNow("inventory","classification","inventoryCode",$ro->selectNow("patientCharges","chargesCode","itemNo",$itemNo)) != "noInventory" ) {
 
 echo "<center><div style='border:1px solid #ff0000; width:400px; height:120px;	'>";
 echo "<br><center><font size=2 color=red>Are you sure you want to return <br>$description?</font></center>";
