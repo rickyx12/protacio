@@ -17,7 +17,7 @@ echo "<br><br><br><font color=red>Ooopsss.. you are trying to return $quantity b
 
 }else {
 
-if(($ro->getTitle($itemNo) == "MEDICINE" || $ro->getTitle($itemNo) == "SUPPLIES") && $ro->getChargesStatusDept($itemNo)  ) {
+if(($ro->getTitle($itemNo) == "MEDICINE" || $ro->getTitle($itemNo) == "SUPPLIES") && $ro->getChargesStatusDept($itemNo) && $ro->selectNow("inventory","classification","inventoryCode",$ro->selectNow("patientCharges","chargesCode","itemNo",$itemNo)) != "noInventory" ) {
 
 if( $ro->selectNow("inventory","autoDispense","inventoryCode",$ro->selectNow("patientCharges","chargesCode","itemNo",$itemNo)) == "yes" ) {
 $currentQTY = $ro->selectNow("inventory","quantity","inventoryCode",$ro->selectNow("patientCharges","chargesCode","itemNo",$itemNo)); // current qty ng meds/sup sa inventory
