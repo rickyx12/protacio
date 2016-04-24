@@ -78,10 +78,12 @@ if( $ro->getRegistrationDetails_type() == "OPD" || $ro->getRegistrationDetails_t
 if($chargeStatus == "UNPAID") {
 if($totalPaid >= $payables ) {
 for($x=0;$x<$countz;$x++) {
+	//add to collectionReport table
 $ro->addCollectionReport($registrationNo,$cashierPaid[$x],$shift,"OPD",$ro->getItemNo_total($cashierPaid[$x]),$orNO,"OPD",$username,date("H:i:s"),$datePaid,$paidVia);	
 //$natira = $totalPaid - $ro->getItemNo_total($cashierPaid[$x]); 
 
 $cashPaid = ($ro->getItemNo_total($cashierPaid[$x]) + $ro->selectNow("patientCharges","cashPaid","itemNo",$cashierPaid[$x]));
+$cashUnpaid = $ro->getItemNo_total($cashierPaid[$x]);
 
 //$cashPaid = $totalPaid;
 
@@ -107,7 +109,7 @@ if($ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "PROFES
 	$totalCreditCard = ($cashPaid + $otShare);
 	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0");
 }else {
-	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashPaid,$datePaid,date("H:i:s"),"0");
+	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashUnpaid,$datePaid,date("H:i:s"),"0");
 }
 
 }
