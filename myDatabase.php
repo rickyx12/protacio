@@ -2221,26 +2221,12 @@ echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Doctor/doctorModul
 }else {
 echo "<td>&nbsp;<font class='data'>".$row['service']."</font>&nbsp;</td>";
 }
-
 echo "<td>&nbsp;<font class='data'>".$row['status']."</font>&nbsp;</td>";
-
-if($row['paidVia']=="Company") {
-echo "<td>&nbsp;<font class='data' color=red>".$row['paidVia']."</font>&nbsp;</td>";
-}else {
 echo "<td>&nbsp;<font class='data' color=blue>".$row['paidVia']."</font>&nbsp;</td>";
-}
-
-
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['cashUnpaid'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['phic'],2)."</font></center>&nbsp;</td>";
-
-
-if($this->checkBalanceItem($row['itemNo']) > 0 ) {
-echo "<td>&nbsp;<font class='data'>".number_format(($row['cashPaid'] + $this->getBalancePaid($row['itemNo'])),2)."</font>&nbsp;</td>";
-}else {
 echo "<td>&nbsp;<font class='data'>".$row['cashPaid']."</font>&nbsp;</td>";
-}
 echo "<td>&nbsp;<font class='data'>".$row['title']."</font>&nbsp;</td>";
 echo "</tr>";
   }
@@ -6651,44 +6637,6 @@ echo "<td>&nbsp;".$row['bal']."</td>";
 echo "</tr>";
   }
 echo "</table>";
-
-}
-
-
-//KKUHAIN UNG BNYARAN N BALANCE
-public function getBalancePaid($itemNo) {
-$con = mysql_connect($this->host,$this->username,$this->password);
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db($this->database, $con);
-
-$result = mysql_query("SELECT amountPaid from patientBalance  where itemNo = '$itemNo'   ");
-
-while($row = mysql_fetch_array($result))
-  {
-return $row['amountPaid'];
-  }
-
-}
-
-//TTGNAN KUNG MEI BALANCE UNG ITEM
-public function checkBalanceItem($itemNo) {
-$con = mysql_connect($this->host,$this->username,$this->password);
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db($this->database, $con);
-
-$result = mysql_query("SELECT count(itemNo) as itemNo from patientBalance  where itemNo = '$itemNo'  ");
-
-while($row = mysql_fetch_array($result)) {
-return $row['itemNo'];
-}
 
 }
 
@@ -14446,27 +14394,24 @@ echo "<td>&nbsp;<font class='data' color=red>".$row['status']."</font>&nbsp;</td
 else {
 echo "<td>&nbsp;<font class='data'>".$row['status']."</font>&nbsp;</td>";
 }
-if($row['paidVia']=="Company") {
-echo "<td>&nbsp;<font class='data' color=red>".$row['paidVia']."</font>&nbsp;</td>";
-}else {
+
 echo "<td>&nbsp;<font class='data' color=blue>".$row['paidVia']."</font>&nbsp;</td>";
 }
 echo "<td>&nbsp;<center><font class='data' color=black>".number_format($row['discount'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=red>".number_format($row['cashUnpaid'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=blue>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=darkgreen>".number_format($row['phic'],2)."</font></center>&nbsp;</td>";
-if($this->checkBalanceItem($row['itemNo']) > 0 ) {
-echo "<td>&nbsp;<font class='data'>".($row['cashPaid'] + $this->getBalancePaid($row['itemNo']))."</font>&nbsp;</td>";
-}else {
 echo "<td>&nbsp;<font class='data'>".$row['cashPaid']."</font>&nbsp;</td>";
-}
 echo "<td>&nbsp;<font class='data'>".$row['branch']."</font>&nbsp;</td>";
 echo "</tr>";
-  }
+echo "</table>";
+
 echo "<br><input type=submit value='Assign Payments' style='border:1px solid #ff0000; font-size:13px; background-color:transparent;'><Br><br>";
 echo "</form>";
 
 }
+
+
 
 
 
