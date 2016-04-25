@@ -691,6 +691,35 @@ public function ending_inventory_list() {
 	}
 }
 
+private $paid_balance_itemNo;
+
+public function paid_balance_itemNo() {
+	return $this->paid_balance_itemNo;
+}
+
+public function paid_balance($date,$date1) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT itemNo FROM patientCharges WHERE title = 'BALANCE' AND (datePaid BETWEEN '$date' AND '$date1') AND status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->paid_balance_itemNo[] = $row['itemNo'];
+	}
+}
+
+private $registration_details_registrationNo;
+
+public function registration_details_registrationNo() {
+	return $this->registration_details_registrationNo;
+}
+
+public function registration_details($patientNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT registrationNo FROM registrationDetails WHERE patientNo = '$patientNo' and dateRegistered not like 'DELETED%' order by registrationNo DESC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->registration_details_registrationNo[] = $row['registrationNo'];
+	}
+}
 
 private $opdPayment_updater_itemNo;
 
