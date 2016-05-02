@@ -2477,15 +2477,17 @@ echo "<tr>";
 echo "<th>Date Pd</th>";
 echo "<th>PATIENT</th>";
 echo "<th>Doctor</th>";
-echo "<th>Discount</th>";
-echo "<th>UNPAID</th>";
+echo "<th>Disc</th>";
+echo "<th>Bal</th>";
 echo "<th>HMO</th>";
 echo "<th>PHIC</th>";
-echo "<th>HOSPITAL</th>";
-echo "<th>DOCTOR</th>";
+echo "<th>Cash</th>";
 echo "<th>Cr.Card</th>";
-echo "<th>Payables</th>";
 echo "<th>TOTAL</th>";
+echo "<th style='border:0px;'>&nbsp;</th>";
+echo "<Th>Hospital</th>";
+echo "<th>Doctor</th>";
+echo "<th>Payables</td>";
 echo "</tr>";
 while($row = mysqli_fetch_array($result))
 {
@@ -2529,10 +2531,12 @@ echo "<td>&nbsp;<font size=2>".$row['cashUnpaid']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['company']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['phic']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['cashPaid']."</font></td>";
-echo "<td>&nbsp;<font size=2>".$row['doctorsPF']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['amountPaidFromCreditCard']."</font></td>";
-echo "<td>&nbsp;<font size=2>".$row['doctorsPF_payable']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['total']."</font></td>";
+echo "<td style='border:0px; width:3%;'>&nbsp;</td>";
+echo "<td>&nbsp;<font size=2>".($row['cashPaid'] + $row['amountPaidFromCreditCard'])."</font></td>";
+echo "<td>&nbsp;<font size=2>".$row['doctorsPF']."</font></td>";
+echo "<td>&nbsp;<font size=2>".$row['doctorsPF_payable']."</font></td>";
 echo "</tr>";
 }
 
@@ -2545,10 +2549,12 @@ echo "<td>".$this->patientAccountOPD_pf_unpaid."</td>";
 echo "<td>".$this->patientAccountOPD_pf_hmo."</td>";
 echo "<td>".$this->patientAccountOPD_pf_phic."</td>";
 echo "<td>".$this->patientAccountOPD_pf_hospital."</td>";
-echo "<td>".$this->patientAccountOPD_pf_doctor."</td>";
 echo "<td>".$this->patientAccountOPD_pf_creditCard."</td>";
-echo "<td>".$this->patientAccountOPD_pf_payables."</td>";
 echo "<td>".$this->patientAccountOPD_pf_total."</td>";
+echo "<td style='border:0px;'>&nbsp;</td>";
+echo "<td>&nbsp;".($this->patientAccountOPD_pf_hospital + $this->patientAccountOPD_pf_creditCard)."</td>";
+echo "<td>&nbsp;".($this->patientAccountOPD_pf_hospital)."</td>";
+echo "<td>&nbsp;".($this->patientAccountOPD_pf_payables)."</td>";
 echo "</tr>";
 
 
