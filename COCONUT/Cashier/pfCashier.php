@@ -47,7 +47,7 @@ echo "<br>";
 
 
 
-if( $ro->selectNow("patientCharges","title","itemNo",$itemNo) == "PROFESSIONAL FEE" ) {
+if( $ro->selectNow("patientCharges","title","itemNo",$itemNo) == "PROFESSIONAL FEE" || $ro->selectNow("patientCharges","title","itemNo",$itemNo) == "OT" || $ro->selectNow("patientCharges","title","itemNo",$itemNo) == "ST" ) {
 echo "<Table border=0>";
 echo "<tr>";
 echo "<td>Description</td>";
@@ -89,12 +89,24 @@ echo "<input type=text name='cashUnpaid' class='cashUnpaid' style='border: 1px s
 echo "</td>";
 echo "</tr>";
 
-echo "<tr>";
-echo "<td>Doctor</td>";
-echo "<td>";
-echo "<input type=text name='doctorsPF' id='doctorsPF' value='".$ro->selectNow("patientCharges","doctorsPF","itemNo",$itemNo)."' class='shortField' autocomplete='off'><input type='hidden' name='discount' value='0' />";
-echo "</td>";
-echo "</tr>";
+if($ro->selectNow("patientCharges","title","itemNo",$itemNo) == "PROFESSIONAL FEE") {
+  echo "<tr>";
+  echo "<td>Doctor</td>";
+  echo "<td>";
+  echo "<input type=text name='doctorsPF' id='doctorsPF' value='".$ro->selectNow("patientCharges","doctorsPF","itemNo",$itemNo)."' class='shortField' autocomplete='off'><input type='hidden' name='discount' value='0' />";
+  $ro->coconutHidden("otShare","");
+  echo "</td>";
+  echo "</tr>";
+}else {
+  echo "<tr>";
+  echo "<td>PF</td>";
+  echo "<td>";
+  echo "<input type=text name='otShare' id='doctorsPF' value='".$ro->selectNow("patientCharges","otShare","itemNo",$itemNo)."' class='shortField' autocomplete='off'><input type='hidden' name='discount' value='0' />";
+  $ro->coconutHidden("doctorsPF","");
+  echo "</td>";
+  echo "</tr>";
+}
+
 
 echo "</table>";
 }

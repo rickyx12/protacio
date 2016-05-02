@@ -6,6 +6,7 @@ $quantity = $_GET['quantity'];
 $total = $_GET['total'];
 $cashUnpaid = $_GET['cashUnpaid'];
 $doctorsPF = $_GET['doctorsPF'];
+$otShare = $_GET['otShare'];
 $discount = $_GET['discount'];
 
 $month = $_GET['month'];
@@ -25,7 +26,7 @@ $shift = $_GET['shift'];
 
 $ro = new database2();
 
-$totalz = ( $cashUnpaid + $doctorsPF + $discount );
+$totalz = ( $cashUnpaid + $doctorsPF + $otShare + $discount );
 
 if( $totalz == $total ) {
 
@@ -39,6 +40,7 @@ $ro->editNow("patientCharges","itemNo",$itemNo,"quantity",$quantity);
 $ro->editNow("patientCharges","itemNo",$itemNo,"total",$total);
 $ro->editNow("patientCharges","itemNo",$itemNo,"cashUnpaid",$cashUnpaid);
 $ro->editNow("patientCharges","itemNo",$itemNo,"doctorsPF",$doctorsPF);
+$ro->editNow("patientCharges","itemNo",$itemNo,"otShare",$otShare);
 $ro->editNow("patientCharges","itemNo",$itemNo,"discount",$discount);
 
 if($ro->selectNow("patientCharges","vat","itemNo",$itemNo) != ""){
