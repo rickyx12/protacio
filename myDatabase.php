@@ -14522,11 +14522,7 @@ echo "<td>&nbsp;<font class='data' color=blue>".$row['paidVia']."</font>&nbsp;</
 echo "<td>&nbsp;<center><font class='data' color=red>".number_format($row['cashUnpaid'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=blue>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=darkgreen>".number_format($row['phic'],2)."</font></center>&nbsp;</td>";
-if($this->checkBalanceItem($row['itemNo']) > 0 ) {
-echo "<td>&nbsp;<font class='data'>".($row['cashPaid'] + $this->getBalancePaid($row['itemNo']))."</font>&nbsp;</td>";
-}else {
 echo "<td>&nbsp;<font class='data'>".$row['cashPaid']."</font>&nbsp;</td>";
-}
 echo "<td>&nbsp;<font class='data'>".$row['branch']."</font>&nbsp;</td>";
 echo "</tr>";
   }
