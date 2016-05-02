@@ -8012,9 +8012,9 @@ mysql_select_db($this->database, $con);
 
 
 if($show == "All") {
-$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.branch='$branch' and i.status not like 'DELETED%%%%%%' and isc.status not like 'DELETED%' order by i.description asc  ");
+$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.branch='$branch' and i.status not like 'DELETED%%%%%%' and isc.status not like 'DELETED%' and i.quantity > 0 order by i.description asc  ");
 }else {
-$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.description like '$desc%' or i.genericName like '$desc%') and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.status not like 'DELETED%%%%%%%%' and isc.status not like 'DELETED%' and i.branch='$branch' order by i.description asc  ");
+$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.description like '$desc%' or i.genericName like '$desc%') and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.status not like 'DELETED%%%%%%%%' and isc.status not like 'DELETED%' and i.branch='$branch' and i.quantity > 0 order by i.description asc  ");
 }
 
 
