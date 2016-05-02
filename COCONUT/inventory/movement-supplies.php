@@ -12,11 +12,25 @@
 	<script src="../../jquery-2.1.4.min.js"></script>
 	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$("#medicineBtn").click(function(){
+				window.location = "movement-medicine.php";
+				//console.log("123");
+			});
+		});
+	</script>
+
 	</head>
 	<body>
 		<div class="container">
 			<div class="row">
 				<h3>Movement</h3>
+				<div class="btn-group">
+					<button id="medicineBtn" type="button" class="btn btn-default">Medicine</button>
+					<button id="suppliesBtn" type="button" class="btn btn-info">Supplies</button>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10">
