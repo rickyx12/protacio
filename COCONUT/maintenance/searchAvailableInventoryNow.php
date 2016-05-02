@@ -7,6 +7,6 @@ $username = $_GET['username'];
 $inventoryType = $_GET['inventoryType'];
 $ro = new database();
 
-$ro->getMasterListInventory($show,$description,$inventoryType,$username,$branch);
+$ro->getMasterListInventory($show,$description,$inventoryType,$username,"");
 
 ?>
