@@ -4191,7 +4191,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT i.stockCardNo,i.phic,i.preparation,i.inventoryCode,i.description,i.genericName,((i.unitcost * ".$this->percentage("medicine").") + i.unitcost) as sellingPrice,i.quantity,i.unitcost,i.Added,i.ipdPrice,i.opdPrice,i.locked FROM inventoryStockCard isc,inventory i WHERE isc.stockCardNo = i.stockCardNo and (i.description like '%%%%%%$searchDesc%%%%%%%' or i.genericName like '%%%%%%$searchDesc%%%%%%%' ) and i.inventoryType = 'medicine' and i.inventoryLocation = '$searchFrom' and i.status not like 'DELETED_%%%%%' and isc.status not like 'DELETED%%%%' and i.quantity > 0 order by i.".$searchBy." asc ");
+$result = mysql_query("SELECT i.stockCardNo,i.phic,i.preparation,i.inventoryCode,i.description,i.genericName,((i.unitcost * ".$this->percentage("medicine").") + i.unitcost) as sellingPrice,i.quantity,i.unitcost,i.Added,i.ipdPrice,i.opdPrice,i.locked FROM inventoryStockCard isc,inventory i WHERE isc.stockCardNo = i.stockCardNo and (i.description like '%%%%%%$searchDesc%%%%%%%' or i.genericName like '%%%%%%$searchDesc%%%%%%%' ) and i.inventoryType = 'medicine' and i.inventoryLocation = '$searchFrom' and i.status not like 'DELETED_%%%%%' and isc.status not like 'DELETED%' and i.quantity > 0 order by i.".$searchBy." asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -8009,31 +8009,15 @@ if (!$con)
   }
 
 mysql_select_db($this->database, $con);
-if($branch == "All") {
+
 
 if($show == "All") {
-$result = mysql_query("SELECT * from inventory where (inventoryType = '$inventoryType' or inventoryLocation='$inventoryType') and status not like 'DELETED_%%%%%%%%' order by description asc  ");
+$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.branch='$branch' and i.status not like 'DELETED%%%%%%' and isc.status not like 'DELETED%' order by i.description asc  ");
 }else {
-
-if( $desc == "medicine" ) {
-$result = mysql_query("SELECT * from inventory where inventoryType='medicine' && inventoryLocation = 'PHARMACY' and status not like 'DELETED_%%%%%%%' order by description asc  ");
-}else if( $desc == "supplies" ) {
-$result = mysql_query("SELECT * from inventory where inventoryType='supplies' && inventoryLocation = 'PHARMACY' and status not like 'DELETED_%%%%%%%' order by description asc  ");
-}
-else {
-$result = mysql_query("SELECT * from inventory where (description like '$desc%%%%%%%' or genericName like '$desc%%%%%%%' ) and (inventoryType = '$inventoryType' or inventoryLocation='$inventoryType') and status not like 'DELETED_%%%%%%%%%%' order by description asc  ");
-}
+$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.description like '$desc%' or i.genericName like '$desc%') and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.status not like 'DELETED%%%%%%%%' and isc.status not like 'DELETED%' and i.branch='$branch' order by i.description asc  ");
 }
 
-}else {
 
-if($show == "All") {
-$result = mysql_query("SELECT * from inventory where (inventoryType = '$inventoryType' or inventoryLocation='$inventoryType') and branch='$branch' and status not like 'DELETED%%%%%%' order by description asc  ");
-}else {
-$result = mysql_query("SELECT * from inventory where description like '$desc%%%%%' and (inventoryType = '$inventoryType' or inventoryLocation='$inventoryType') and status not like 'DELETED%%%%%%%%' and branch='$branch' order by description asc  ");
-}
-
-}
 echo "<center><table border=1 cellpadding=0 cellspacing=0 width='100%'>";
 echo "<tr>";
 echo "<th>&nbsp;</th>";
