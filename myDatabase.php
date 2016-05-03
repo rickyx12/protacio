@@ -6488,12 +6488,12 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT sum(pc.cashUnpaid) as cash,sum(pc.doctorsPF) as docPF,sum(pc.otShare) as otShare FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
+$result = mysql_query("SELECT sum(pc.cashUnpaid) as cash,sum(pc.doctorsPF) as docPF,sum(pc.doctorsPF_payable) as payable,sum(pc.otShare) as otShare FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
 
 
 while($row = mysql_fetch_array($result))
   {
-return ($row['cash'] + $row['docPF'] + $row['otShare']);
+return ($row['cash'] + $row['docPF'] + $row['otShare'] + $row['payable']);
   }
 echo "</table>";
 
