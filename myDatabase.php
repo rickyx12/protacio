@@ -3178,7 +3178,7 @@ $this->getPatientProfile($registrationNo);
 
 $disc = $this->getUnpaidPatientAmount($registrationNo) * $this->getRegistrationDetails_discount();
 
-$grandTotal = $this->getUnpaidPatientAmount($registrationNo) - $disc;
+$grandTotal = $this->getUnpaidPatientAmount_creditCard($registrationNo) - $disc;
 
 echo "
 <script src='http://".$this->getMyUrl()."/COCONUT/serverTime/serverTime.js'></script>
@@ -6469,6 +6469,31 @@ $result = mysql_query("SELECT sum(pc.cashUnpaid) as total FROM patientRecord pr,
 while($row = mysql_fetch_array($result))
   {
 return $row['total'];
+  }
+echo "</table>";
+
+}
+
+
+//KKUHAIN UNG TOTAL UNPAID AMOUNT NG PATIENT for creditCard
+public function getUnpaidPatientAmount_creditCard($registrationNo) {
+
+
+
+$con = mysql_connect($this->host,$this->username,$this->password);
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+
+mysql_select_db($this->database, $con);
+
+$result = mysql_query("SELECT sum(pc.cashUnpaid) as cash,sum(pc.doctorsPF) as docPF,sum(pc.otShare) as otShare FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
+
+
+while($row = mysql_fetch_array($result))
+  {
+return ($row['cash'] + $row['docPF'] + $row['otShare']);
   }
 echo "</table>";
 
