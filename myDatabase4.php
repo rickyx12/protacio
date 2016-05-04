@@ -650,7 +650,7 @@ public function opd_patient_census_registrationNo(){
 
 public function opd_patient_census($date,$date1) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT registrationNo FROM registrationDetails WHERE dateRegistered between '$date' and '$date1' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT registrationNo FROM registrationDetails WHERE dateRegistered between '$date' and '$date1' and pxCount > 0 ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->opd_patient_census_registrationNo[] = $row['registrationNo'];
