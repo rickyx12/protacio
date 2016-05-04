@@ -31,9 +31,10 @@ if(  $itemz[0] >= $pxPaid ) {
 $newCash = ($ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemz[1]) -  $targetAmount );
 
 if($newCash > 1) {
+$chargesTotal = ($ro->selectNow("patientCharges","total","itemNo",$itemz[1]) - $ro->selectNow("patientCharges","discount","itemNo",$itemz[1]) );
 echo $pxPaid;
 $ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid",$newCash);
-$ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid", $ro->selectNow("patientCharges","total","itemNo",$itemz[1]) - $newCash );
+$ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid", $chargesTotal - $newCash );
 
 $ro->editNow("patientCharges","itemNo",$itemz[1],"paidBy",$username);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"timePaid",date("H:i:s"));
@@ -42,7 +43,7 @@ $ro->editNow("patientCharges","itemNo",$itemz[1],"control_datePaid",$datePaid);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"orNO",$orNO);
 //$ro->editNow("patientCharges","itemNo",$itemz[1],"status","UNPAID");
 $ro->editNow("patientCharges","itemNo",$itemz[1],"reportShift",$shift);
-$ro->addCollectionReport($registrationNo,$itemz[1],$shift,"OPD",($ro->selectNow("patientCharges","total","itemNo",$itemz[1]) - $newCash),$orNO,"OPD",$username,date("H:i:s"),$datePaid,"Cash");
+$ro->addCollectionReport($registrationNo,$itemz[1],$shift,"OPD",($chargesTotal - $newCash),$orNO,"OPD",$username,date("H:i:s"),$datePaid,"Cash");
 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",date("Y-m-d")); //date discharged
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered",date("H:i:s")); //time discharged
@@ -50,12 +51,15 @@ $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","Synap
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")); //set as MGH [LOCKED ACCOUNT] 
 //$ro->editNow("registrationDetails","registrationNo",$registrationNo,"balance",$ro->getTotal("cashUnpaid","",$registrationNo)); 
 $ro->addDischargeHistory($registrationNo,"Closed",date("H:i:s"),date("Y-m-d"),$username);
+
+
 }else {
 echo "2";
+$chargesTotal = ($ro->selectNow("patientCharges","total","itemNo",$itemz[1]) - $ro->selectNow("patientCharges","discount","itemNo",$itemz[1]));
 $ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid","0");
-$ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid",$ro->selectNow("patientCharges","total","itemNo",$itemz[1]));
+$ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid",$chargesTotal);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"status","PAID");
-$ro->addCollectionReport($registrationNo,$itemz[1],$shift,"OPD",$ro->selectNow("patientCharges","total","itemNo",$itemz[1]),$orNO,"OPD",$username,date("H:i:s"),$datePaid,"Cash");
+$ro->addCollectionReport($registrationNo,$itemz[1],$shift,"OPD",$chargesTotal,$orNO,"OPD",$username,date("H:i:s"),$datePaid,"Cash");
 
 $ro->editNow("patientCharges","itemNo",$itemz[1],"paidBy",$username);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"timePaid",date("H:i:s"));
@@ -70,6 +74,8 @@ $ro->editNow("patientCharges","itemNo",$itemz[1],"reportShift",$shift);
 }else {
 
 if( $itemz[0] >= $targetAmount ) {
+
+/*
 $excessPaid = ( $itemz[0] - $targetAmount );
 $ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid",$excessPaid);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid",$targetAmount);
@@ -83,10 +89,16 @@ $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregis
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh","Synapse System"); //set as MGH [LOCKED ACCOUNT] 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"mgh_date",date("Y-m-d")); //set as MGH [LOCKED ACCOUNT] 
 //$ro->editNow("registrationDetails","registrationNo",$registrationNo,"balance",$ro->getTotal("cashUnpaid","",$registrationNo)); 
+*/
+echo "error2";
+
+
 }else {
 $excessPaid  = ( $targetAmount - $itemz[0] );
+$chargesTotal = ($ro->selectNow("patientCharges","total","itemNo",$itemz[1]) - $ro->selectNow("patientCharges","discount","itemNo",$itemz[1]));
+
 $ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid","0.00");
-$ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid",$ro->selectNow("patientCharges","total","itemNo",$itemz[1]));
+$ro->editNow("patientCharges","itemNo",$itemz[1],"cashPaid",$chargesTotal);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"status","PAID");
 $ro->editNow("patientCharges","itemNo",$itemz[1],"paidBy",$username);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"timePaid",date("H:i:s"));
@@ -94,7 +106,7 @@ $ro->editNow("patientCharges","itemNo",$itemz[1],"datePaid",$datePaid);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"control_datePaid",$datePaid);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"orNO",$orNO);
 $ro->editNow("patientCharges","itemNo",$itemz[1],"reportShift",$shift);
-$ro->addCollectionReport($registrationNo,$itemz[1],$shift,"OPD",$ro->selectNow("patientCharges","total","itemNo",$itemz[1]),$orNO,"OPD",$username,date("H:i:s"),$datePaid,"Cash");
+$ro->addCollectionReport($registrationNo,$itemz[1],$shift,"OPD",$chargesTotal,$orNO,"OPD",$username,date("H:i:s"),$datePaid,"Cash");
 
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"dateUnregistered",date("Y-m-d")); //date discharged
 $ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeUnregistered",date("H:i:s")); //time discharged
