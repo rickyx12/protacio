@@ -9318,7 +9318,7 @@ tr:hover { background-color:yellow;color:black;}
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.pxCount,rd.registrationNo,rd.timeRegistered from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$date' and rd.dateUnregistered = '' order by rd.pxCount desc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.pxCount,rd.registrationNo,rd.timeRegistered from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$date' and rd.dateUnregistered = '' and rd.pxCount > 0 order by rd.pxCount desc ") or die("Query fail: " . mysqli_error()); 
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
