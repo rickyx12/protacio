@@ -802,7 +802,7 @@ a {  border_bottom:10px; color:black; }
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.pxCount,rd.registrationNo,rd.Company,rd.mgh from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$dateRegister' and rd.type = 'OPD' order by rd.pxCount asc  ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.pxCount,rd.registrationNo,rd.Company,rd.mgh from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.dateRegistered = '$dateRegister' and rd.pxCount > 0 and rd.type = 'OPD' order by rd.pxCount asc  ") or die("Query fail: " . mysqli_error()); 
 
 
 echo "<center>";
