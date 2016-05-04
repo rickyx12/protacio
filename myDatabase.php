@@ -7970,7 +7970,7 @@ tr:hover { background-color:yellow;color:black;}
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " SELECT stockCardNo,description,genericName,encodedDetails,encodedBy,inventoryType from inventoryStockCard where description like '$description%%%%%%' and status != 'DELETED' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " SELECT stockCardNo,description,genericName,encodedDetails,encodedBy,inventoryType from inventoryStockCard where (description like '$description%' or genericName like '$description%') and status != 'DELETED' ") or die("Query fail: " . mysqli_error()); 
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
