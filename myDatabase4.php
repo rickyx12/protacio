@@ -738,6 +738,26 @@ public function opdPayment_updater_itemNo() {
 	return $this->opdPayment_updater_itemNo;
 }
 
+public function get_last_register($date) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT pxCount from registrationDetails where dateRegistered = '$date' and pxCount > 0 order by pxCount DESC limit 1 ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['pxCount'];
+	}
+}
+
+
+public function get_ipd_census($date) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT count(id) total from ipdCensus where date = '$date' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		($row['total'] > 0) ? $x = $row['total'] : $x = "";
+		return $x;
+	}
+}
+
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
