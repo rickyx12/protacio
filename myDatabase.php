@@ -18567,7 +18567,7 @@ $count="";
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " SELECT count(registrationNo) as pxCount from registrationDetails where dateRegistered = '$date' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " SELECT count(registrationNo) as pxCount from registrationDetails where dateRegistered = '$date' and pxCount > 0 ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
   {
