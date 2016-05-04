@@ -2183,13 +2183,9 @@ echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT
 echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/editCharges.php?itemNo=$row[itemNo]&username=$username&show=$show&desc=$desc'>".$row['description']."</a><br>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/uploader/radioResult.php?itemNo=$row[itemNo]&registrationNo=$row[registrationNo]&username=$username&description=$row[description]'>(<font color=red size=1>Test Done</font>)</font></a>&nbsp;</td>";
 }else if($this->checkIfSoapExist($row['itemNo']) > 0 && $row['title'] == "PROFESSIONAL FEE" ) {
 echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/editCharges.php?itemNo=$row[itemNo]&username=$username&show=$show&desc=$desc'>".$row['description']."</a><br>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Doctor/doctorModule/soapView.php?itemNo=$row[itemNo]&registrationNo=$row[registrationNo]&username=$username'>(<font color=red size=1>S.O.A.P</font>)</font></a>&nbsp;</td>";
-}
-
-//else if( $this->selectNow("registrationDetails","mgh","registrationNo",$row['registrationNo']) != "") {
-//echo "<td>&nbsp;<font class='data'><a href='#'>".$row['description']."</a></font>&nbsp;</td>";
-//}
-
-else  {
+}else if( $row['title'] == "OT" ) {
+  echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/editCharges.php?itemNo=$row[itemNo]&username=$username&show=$show&desc=$desc'>".$row['description']."</a></font>&nbsp;</td>";
+}else  {
 echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/editCharges.php?itemNo=$row[itemNo]&username=$username&show=$show&desc=$desc'>".$row['description']."</a></font>&nbsp;</td>";
 }
 
@@ -14321,7 +14317,7 @@ echo "<form method='get' action='http://".$this->getMyUrl()."/COCONUT/patientPro
 echo "<input type='hidden' name='registrationNo' value='$registrationNo'>";
 echo "<input type='hidden' name='username' value='$username'>";
 echo "<input type='hidden' name='type' value='$type'>";
-
+echo "<br><input type=submit value='Assign Payments' style='border:1px solid #ff0000; font-size:13px; background-color:transparent;'><Br><br>";
 while($row = mysql_fetch_array($result))
   {
 //$this->getMyResults($this->getResult_labNo($row['itemNo']),$username);
@@ -14401,7 +14397,7 @@ echo "<td>&nbsp;<font class='data'>".$row['status']."</font>&nbsp;</td>";
 }
 
 echo "<td>&nbsp;<font class='data' color=blue>".$row['paidVia']."</font>&nbsp;</td>";
-}
+
 echo "<td>&nbsp;<center><font class='data' color=black>".number_format($row['discount'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=red>".number_format($row['cashUnpaid'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data' color=blue>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
@@ -14409,9 +14405,8 @@ echo "<td>&nbsp;<center><font class='data' color=darkgreen>".number_format($row[
 echo "<td>&nbsp;<font class='data'>".$row['cashPaid']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['branch']."</font>&nbsp;</td>";
 echo "</tr>";
+}
 echo "</table>";
-
-echo "<br><input type=submit value='Assign Payments' style='border:1px solid #ff0000; font-size:13px; background-color:transparent;'><Br><br>";
 echo "</form>";
 
 }
