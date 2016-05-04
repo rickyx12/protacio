@@ -34,6 +34,44 @@ $stockCardNo = $ro->selectNow("inventory","stockCardNo","inventoryCode",$invento
 $inventoryType = $ro->selectNow("inventory","inventoryType","inventoryCode",$inventoryCode);
 $ro->editedInventory($stockCardNo,$inventoryCode,$description,$generic,$beforeEdit_qty,$beforeEdit_unitcost,$beforeEdit_opdPrice,$beforeEdit_ipdPrice,$inventoryType,$beforeEdit_timeAdded,$beforeEdit_dateAdded,$beforeEdit_username);
 
+
+//inventory adjustment
+$currentQTY = $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode);
+$invoiceNo = $ro->selectNow("inventory","invoiceNo","inventoryCode",$inventoryCode);
+if( $currentQTY != $quantity ) {
+$terms = $ro->selectNow("salesInvoice","terms","invoiceNo",$invoiceNo) ;
+$originalUnitCost = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode);
+$qtyDifference = ( $quantity - $currentQTY );
+$totalOfUnitCost = ( $unitcost * $qtyDifference );
+$lessVAT = ( $totalOfUnitCost / 1.12 );
+$inputVAT = ( $lessVAT * 0.12 );
+$accountPayables = ( $originalUnitCost * $qtyDifference );
+
+if( $terms != "" ) {
+	if( $terms != "CASH" || $terms != "C.O.D" || $terms != "Retail" ) {
+	$terms1 = "ACCOUNTS PAYABLE";
+	}else {
+	$terms1 = "CASH";
+	}
+}else {
+	$terms1 = "CASH";	
+}
+
+
+$ro->inventoryAdjustment($inventoryCode,$stockCardNo,"INVENTORY",$qtyDifference,$qtyDifference,"",date("Y-m-d"));
+$ro->inventoryAdjustment($inventoryCode,$stockCardNo,"INPUT VAT",round($inputVAT,2),round($inputVAT,2),"",date("Y-m-d"));
+$ro->inventoryAdjustment($inventoryCode,$stockCardNo,$terms1,round($accountPayables,2),"",round($accountPayables,2),date("Y-m-d"));
+echo $qtyDifference;
+echo "<br>";
+echo $inputVAT;
+echo "<br>";
+echo $accountPayables;
+echo "<br>";
+echo $terms1;
+}else {
+//do nothing
+}
+
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"description",$description);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"genericName",$generic);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"quantity",$quantity);
