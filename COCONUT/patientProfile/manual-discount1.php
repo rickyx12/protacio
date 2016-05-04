@@ -14,6 +14,7 @@ for($x=0;$x<count($itemNo);$x++){
 	$countCharges += 1;
 }
 $discountPerCharges = number_format(($discount / $countCharges),2);
+$discountPerCharges_noFormat = ($discount / $countCharges);
 //echo $countCharges;
 echo "Discount per Charges:&nbsp;".$discountPerCharges;
 
@@ -42,7 +43,7 @@ if($error < 1) {
 //kung wlang error then execute
  for($x=0;$x<count($itemNo);$x++) {
 	$chargesUnpaid = $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemNo[$x]);
-	$ro->editNow("patientCharges","itemNo",$itemNo[$x],"discount",$discountPerCharges);
+	$ro->editNow("patientCharges","itemNo",$itemNo[$x],"discount",$discountPerCharges_noFormat);
 	$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",($chargesUnpaid-$discountPerCharges));
  }
 }else {
