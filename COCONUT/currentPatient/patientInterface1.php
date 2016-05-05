@@ -163,12 +163,12 @@ $("#breadcrumbs a").hover(
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/editInformation.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Registration Details</a></li>
+                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/editInformation.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Registration Details</a></li>
        
 <?php }else { } ?>
 
-             <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/editVitalSign.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Vital Sign</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/editInitialDiagnosis.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Diagnosis</a></li>
+             <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/editVitalSign.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Vital Sign</a></li>
+                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/editInitialDiagnosis.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Diagnosis</a></li>
 
 <?php
 /* CASE RECORD FOR OPD CHECK-UP
@@ -178,15 +178,15 @@ $("#breadcrumbs a").hover(
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/roomList.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Room's</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/roomList.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Room's</a></li>
 
 <?php }else { } ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/ChangeSenior.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Change to Senior</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/ChangeSenior.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Change to Senior</a></li>
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/MGH/setMGH.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Locked Account</a></li>  
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/MGH/setMGH.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Locked Account</a></li>  
 
 <?php }else { ?>
 
@@ -195,23 +195,23 @@ $("#breadcrumbs a").hover(
 
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/hospitalPackage/onPatient/showPackage_onPatient.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Hospital Package's</a></li>      
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/hospitalPackage/onPatient/showPackage_onPatient.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Hospital Package's</a></li>      
 
 <?php } else { } ?>
 
-<li><a href="../../BillingReports/TemporaryBillwPF.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Teporary Bill w/ PF</a></li>
+<li><a class="hide" href="../../BillingReports/TemporaryBillwPF.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Teporary Bill w/ PF</a></li>
 
-<li><a href="../../BillingReports/TemporaryBillwoPF.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Teporary Bill w/o PF</a></li>
+<li><a class="hide" href="../../BillingReports/TemporaryBillwoPF.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Teporary Bill w/o PF</a></li>
 
 
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/returnMeds/returnMeds.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Return Meds</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/returnMeds/returnMeds.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Return Meds</a></li>
 <?php }else { } ?>
 
 
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/patientProfile_handler.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Back To Profile</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/patientProfile_handler.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Back To Profile</a></li>
                
 </ul>
 </li>
@@ -232,8 +232,8 @@ $("#breadcrumbs a").hover(
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/paymentAssigning.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>&type=All&desc=" target="patientX">Payment Assigning</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/paymentTransfer.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>&show=All&desc=" target="patientX">Payment Transfering</a></li> 
+                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/paymentAssigning.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>&type=All&desc=" target="patientX">Payment Assigning</a></li>
+                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/paymentTransfer.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>&show=All&desc=" target="patientX">Payment Transfering</a></li> 
 
 
 <?php //if($ro->getRegistrationDetails_type() == "OPD" ) {  ?>
@@ -242,56 +242,58 @@ $("#breadcrumbs a").hover(
                     -->
 
                     <? if($ro->selectNow("registeredUser","position","username",$username) == "encoder") { ?>
-                            <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/showPaid.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized (<font color=red>old</font>)</a></li> 
+                            <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/showPaid.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized (<font color=red>old</font>)</a></li> 
                     <? }else { } ?>
 
-                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/void-opd-new.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized</a></li>                    
+                     <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/void-opd-new.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized</a></li>                    
 
 <?php //} else { ?>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment</a></li>
+                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment</a></li>
 <?php //} ?>
 
 <?php }else { } ?>
 
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/addPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Add Deposit/Hospital Bill/Downpayment</a></li>  
+                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/addPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Add Deposit/Hospital Bill/Downpayment</a></li>  
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/reporting.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Reporting</a></li> 
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/reporting.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Reporting</a></li> 
 
 <?php if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) { ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/individualPayment/showMeds.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>&checkz=no&batchNo=" target="patientX">Individual Payment</a></li>
+<!--
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/individualPayment/showMeds.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>&checkz=no&batchNo=" target="patientX">Individual Payment</a></li>
+-->
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">View Payment</a></li> 
+ <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">View Payment</a></li> 
  
  <? if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD" ) { ?>
- <li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/discount/discount-new.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Auto</a></li>   
+ <li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/discount/discount-new.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Auto</a></li>   
 
 <!---
 <li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/discount/discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Auto</a></li>
 -->
-<li><a href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/manual-discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Manual</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/manual-discount.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Discount Manual</a></li>
 
 <? }else { /**/ } ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount Type</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount Type</a></li>
     
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/approximate.php?registrationNo=<?php echo $registrationNo; ?>&caserate=" target="patientX">R-Banny</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/approximate.php?registrationNo=<?php echo $registrationNo; ?>&caserate=" target="patientX">R-Banny</a></li>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/itemException.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">R-Banny Exclude</a></li> 
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/itemException.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">R-Banny Exclude</a></li> 
 
 <?php 
 
 if( $ro->selectNow("registrationDetails","Company","registrationNo",$registrationNo) != "" ) { ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/excess.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Excess</a></li> 
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/excess.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Excess</a></li> 
 
 <?php
 }else { }
 
 ?>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/updatePrice.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Update Price to <?php echo $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo); ?></a></li> 
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/updatePrice.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Update Price to <?php echo $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo); ?></a></li> 
 
 
 <?php }else { } ?>
