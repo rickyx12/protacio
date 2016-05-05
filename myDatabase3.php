@@ -2413,7 +2413,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.otShare from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid < 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.otShare,pc.title from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid < 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
 
 while($row = mysqli_fetch_array($result))
