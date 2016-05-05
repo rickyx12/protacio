@@ -144,7 +144,7 @@ echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.
 
 }else if( $module == "PHARMACY" ) {
 
-echo ' <li><a href="http://'.$ro->getMyUrl().'/Department/selectShift.php?module='.$module.'&username='.$username.'&branch='.$branch.'>" target="departmentX" >Diagnostics</a></li>';
+echo ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/Department/selectShift.php?module='.$module.'&username='.$username.'&branch='.$branch.'>" target="departmentX" >Diagnostics</a></li>';
 
 echo  ' <li>
 <form method="post" action="/COCONUT/currentPatient/patientInterface.php" target="_blank">
@@ -157,37 +157,37 @@ echo  ' <li>
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/Registration/specialRegistration/unknownPatient.php?username='.$username.'&from='.$module.'" target="_blank">Walk-in</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchInventory.php?username='.$username.'&inventoryType=PHARMACY&branch=All&show=search" target="departmentX" >Search Inventory</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchInventory.php?username='.$username.'&inventoryType=PHARMACY&branch=All&show=search" target="departmentX" >Search Inventory</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/supplier.php?username='.$username.'" target="_blank">Supplier Master List</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/supplier.php?username='.$username.'" target="_blank">Supplier Master List</a></li>';
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=medicine&branch=All&show=All" target="_blank">Medicine Master List</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/medicine-new.php" target="departmentX">Medicine</a></li>';
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/supplies-new.php" target="departmentX">Supplies</a></li>';
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/deleted-medicine.php" target="departmentX">Deleted Medicine</a></li>';
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/deleted-supplies.php" target="departmentX">Deleted Supplies</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/medicine-new.php" target="departmentX">Medicine</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/supplies-new.php" target="departmentX">Supplies</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/deleted-medicine.php" target="departmentX">Deleted Medicine</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/deleted-supplies.php" target="departmentX">Deleted Supplies</a></li>';
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=supplies&branch=All&show=All" target="_blank">Supplies Master List</a></li>';
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/Maintenance/addSupplier.php?username='.$username.'" target="_blank">Add Supplier</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/addInvoice.php?username='.$username.'" target="departmentX">Add Invoice</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/addInvoice.php?username='.$username.'" target="departmentX">Add Invoice</a></li>';
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchStockCard.php?username='.$username.'" target="departmentX">Add Inventory</a></li>';
 
 
 echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/requestition/dateRequest.php?username='.$username.'" target="departmentX" >Requesition Report</a></li>';
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?module=REGISTRATION&from='.$module.'" target="_blank">Registration</a></li>';
+echo  ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?module=REGISTRATION&from='.$module.'" target="_blank">Registration</a></li>';
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Reports/Census/selectShift_pxList.php?username='.$username.'" target="departmentX">Patient List</a></li>';
+echo  ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/Reports/Census/selectShift_pxList.php?username='.$username.'" target="departmentX">Patient List</a></li>';
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Reports/admissionKit.php" target="departmentX">ADM.KIT Report</a></li>';
+echo  ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/Reports/admissionKit.php" target="departmentX">ADM.KIT Report</a></li>';
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.php?username='.$username.'" target="departmentX">OPD</a></li>';
+echo  ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.php?username='.$username.'" target="departmentX">OPD</a></li>';
 
 }else if( $module == "LABORATORY" ) {
 
