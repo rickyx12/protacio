@@ -44,7 +44,7 @@ if($error < 1) {
  for($x=0;$x<count($itemNo);$x++) {
 	$chargesUnpaid = $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemNo[$x]);
 	$ro->editNow("patientCharges","itemNo",$itemNo[$x],"discount",$discountPerCharges_noFormat);
-	$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",($chargesUnpaid-$discountPerCharges_noFormat));
+	$ro->editNow("patientCharges","itemNo",$itemNo[$x],"cashUnpaid",round($chargesUnpaid-$discountPerCharges_noFormat,2));
  }
 }else {
 	//dont edit
