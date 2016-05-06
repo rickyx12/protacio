@@ -33,8 +33,9 @@
 					<thead>
 						<tr>
 							<th>Description</th>
-							<th>System QTY</th>
-							<th>Actual QTY</th>
+							<th>System</th>
+							<th>Actual</th>
+							<th>Gap</th>
 							<th>Quarter</th>
 						</tr>
 					</thead>
@@ -46,7 +47,10 @@
 									<td><? echo $ro->selectNow("inventory","description","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) ?></td>	
 
 									<td><? echo $ro->selectNow("inventory","quantity","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) ?></td>
-									<td><? echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo) ?></td>						
+
+									<td><? echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo) ?></td>
+
+									<td><? echo ( $ro->selectNow("inventory","quantity","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) - $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo) ) ?></td>						
 									
 									<td><? echo $ro->selectNow("endingInventory","quarter","endingNo",$endingNo) ?></td>
 
