@@ -97,6 +97,8 @@ $this->coconutTableStop();
 public $accounting_purchaseJournal_itemized_total;
 public $accounting_purchaseJournal_itemized_purchases;
 public $accounting_purchaseJournal_itemized_inputVAT;
+public $accounting_purchaseJournal_itemized_wTax;
+
 public function accounting_purchaseJournal_itemized($siNo) {
 
 echo "
@@ -120,10 +122,12 @@ $this->accounting_purchaseJournal_itemized_total += ($row['unitPrice'] * $row['q
 $lessVAT = number_format(($this->accounting_purchaseJournal_itemized_total / 1.12),2);
 $lessVAT_noFormat = ($this->accounting_purchaseJournal_itemized_total / 1.12);
 $inputVAT = ($lessVAT_noFormat * 0.12);
+$wTax = ( $lessVAT_noFormat * 0.1 );
 
 
 $this->accounting_purchaseJournal_itemized_purchases = $lessVAT_noFormat;
 $this->accounting_purchaseJournal_itemized_inputVAT = $inputVAT;
+$this->accounting_purchaseJournal_itemized_wTax = $wTax;
 
 echo "<Tr>";
 echo "<td>INVENTORY</td>";
@@ -136,6 +140,13 @@ echo "<Tr>";
 echo "<td>INPUT VAT</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_inputVAT,2)."</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+echo "<Tr>";
+echo "<td>WITHHOLDING TAX - EXPANDED PAYABLE 1%</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_wTax,2)."</td>";
 echo "<td>&nbsp;</td>";
 echo "</tr>";
 
@@ -199,16 +210,20 @@ $voucherNo1 = $this->selectNow("trackingNo","value","name","voucherNo");
 $this->accounting_purchaseJournal_accountsPayable = ( $this->accounting_purchaseJournal_itemized_purchases + $this->accounting_purchaseJournal_itemized_inputVAT );
 
 if( $this->selectNow("purchaseJournal","invoiceNo","siNo",$row['siNo']) == "" ) {
-$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"INVENTORY",round($this->accounting_purchaseJournal_itemized_purchases,2),"",$row['siNo'],$row['transactionDate']);
-$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"INPUT VAT",round($this->accounting_purchaseJournal_itemized_inputVAT,2),"",$row['siNo'],$row['transactionDate']);
+	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"INVENTORY",round($this->accounting_purchaseJournal_itemized_purchases,2),"",$row['siNo'],$row['transactionDate']);
 
-if( $row['terms'] == "CASH" || $row['terms'] == "C.O.D" || $row['terms'] == "Retail" ) {
-$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"CASH","",round($this->accounting_purchaseJournal_accountsPayable,2),$row['siNo'],$row['transactionDate']);
-}else {
-$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"ACCOUNTS-PAYABLE","",round($this->accounting_purchaseJournal_accountsPayable,2),$row['siNo'],$row['transactionDate']);
-}
-$incrementVoucherNo = ($this->selectNow("trackingNo","value","name","voucherNo"));
-$this->editNow("trackingNo","name","voucherNo","value",$incrementVoucherNo);
+	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"INPUT VAT",round($this->accounting_purchaseJournal_itemized_inputVAT,2),"",$row['siNo'],$row['transactionDate']);
+
+	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"","WITHHOLDING TAX - EXPANDED PAYABLE 1% ",round(($this->accounting_purchaseJournal_itemized_purchases * 0.1),2),$row['siNo'],$row['transactionDate']);
+
+
+	if( $row['terms'] == "CASH" || $row['terms'] == "C.O.D" || $row['terms'] == "Retail" ) {
+	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"CASH","",round($this->accounting_purchaseJournal_accountsPayable,2),$row['siNo'],$row['transactionDate']);
+	}else {
+	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"ACCOUNTS-PAYABLE","",round($this->accounting_purchaseJournal_accountsPayable,2),$row['siNo'],$row['transactionDate']);
+	}
+	$incrementVoucherNo = ($this->selectNow("trackingNo","value","name","voucherNo"));
+	$this->editNow("trackingNo","name","voucherNo","value",$incrementVoucherNo);
 }else {
 //do nothing
 }
@@ -223,6 +238,7 @@ echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_accountsPayable,2)."</td>";
 echo "</tr>";
+
 }
 
 $this->coconutTableStop();
