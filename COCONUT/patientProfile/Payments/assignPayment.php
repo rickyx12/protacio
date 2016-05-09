@@ -20,6 +20,8 @@ $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"company",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"phic",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"discount",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"doctorsPF",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"doctorsPF_payable",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"vat",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"otShare",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"total",($ro->selectNow("patientCharges","sellingPrice","itemNo",$assignPayment[0]) * $ro->selectNow("patientCharges","quantity","itemNo",$assignPayment[0])));
 }else if($assignPayment[1] == "hmo") {
@@ -28,6 +30,8 @@ $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"cashUnpaid",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"phic",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"discount",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"doctorsPF",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"doctorsPF_payable",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"vat",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"otShare",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"total",($ro->selectNow("patientCharges","sellingPrice","itemNo",$assignPayment[0]) * $ro->selectNow("patientCharges","quantity","itemNo",$assignPayment[0])));
 }else if($assignPayment[1] == "phic") {
@@ -36,6 +40,8 @@ $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"cashUnpaid",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"company",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"discount",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"doctorsPF",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"doctorsPF_payable",0);
+$ro->EditNow("patientCharges","itemNo",$assignPayment[0],"vat",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"otShare",0);
 $ro->EditNow("patientCharges","itemNo",$assignPayment[0],"total",($ro->selectNow("patientCharges","sellingPrice","itemNo",$assignPayment[0]) * $ro->selectNow("patientCharges","quantity","itemNo",$assignPayment[0])));
 }else {
