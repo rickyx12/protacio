@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-12">
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -50,8 +50,25 @@
 									<td><? echo $ro->selectNow("inventory","genericName","inventoryCode",$inventoryCode) ?></td>
 									<td><? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></td>
 									<td><? echo $ro->selectNow("inventory","beginningQTY","inventoryCode",$inventoryCode) ?></td>
-									<td><? echo $ro4->dispensed_quantity($inventoryCode) ?></td>
-									<td><? echo $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode) ?></td>
+									<td><? echo $ro4->dispensed_quantity($inventoryCode); 
+
+										$cost = ( $ro4->dispensed_quantity($inventoryCode) * $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode) );
+
+										( $cost > 0 ) ? $x = " - ".number_format($cost,2) : $x = ""; 
+
+										echo $x;
+
+									   ?></td>
+									<td><? echo $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode);
+
+										$cost = ( $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode) * $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode) );
+
+										( $cost > 0 ) ? $x = " - ".number_format($cost,2) : $x = "";
+
+										echo $x;
+
+
+									 ?></td>
 
 									<? if( ($ro4->dispensed_quantity($inventoryCode) + $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode)) == $ro->selectNow("inventory","beginningQTY","inventoryCode",$inventoryCode) ) { ?>
 										<td><i class="glyphicon glyphicon-ok"></i></td>
