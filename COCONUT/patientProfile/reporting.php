@@ -65,5 +65,8 @@ $ro->coconutButton("Proceed");
 $ro->coconutBoxStop();
 $ro->coconutFormStop();
 
+echo "<br><br><br>";
+
+echo "<a href='addToCensus.php?registrationNo=$registrationNo' style='text-decoration:none; color:red;'>Add to Census</a>";
 
 ?>
