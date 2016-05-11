@@ -758,6 +758,22 @@ public function get_ipd_census($date) {
 	}
 }
 
+private $census_list_patient_id;
+
+public function census_list_patient_id() {
+	return $this->census_list_patient_id;
+}
+
+public function census_list_patient($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT id from ipdCensus where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->census_list_patient_id[] = $row['id'];
+	}
+}
+
+
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
