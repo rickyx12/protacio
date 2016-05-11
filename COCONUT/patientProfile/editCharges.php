@@ -145,11 +145,11 @@ echo "
 
 <tr>
 <td><font class='charges'>Time Charge:</font></td>
-<td><input type=text class='shortField' name='timeCharge' value='".$ro->patientCharges_timeCharge()."'></td>
+<td><input type=text class='shortField' name='timeCharge' value='".$ro->patientCharges_timeCharge()."' readonly></td>
 </tr>
 <tr>
 <td><font class='charges'>Date Charge:</font></td>
-<td><input type=text class='shortField' name='dateCharge' value='".$ro->patientCharges_dateCharge()."'></td>
+<td><input type=text class='shortField' name='dateCharge' value='".$ro->patientCharges_dateCharge()."' readonly></td>
 </tr>
 <tr>
 <td><font class='charges'>Charge By:</font></td>
