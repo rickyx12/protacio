@@ -1777,7 +1777,7 @@ return $row['pdMethod'];
 
 }
 
-
+//as the name implies pra s paid n meron discont
 public function showAllAccountTitle_debit_paid($date1,$date2,$cols,$type,$title) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
@@ -1792,12 +1792,12 @@ return $row['pdMethod'];
 }
 
 
-
+//pra s mga ndi paid n meron discount
 public function showAllAccountTitle_debit_discount($date1,$date2,$type,$title) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select sum(pc.discount) as discount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.discount > 1 and pc.title ='$title' and cashPaid < 1 ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(pc.discount) as discount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.discount > 1 and pc.title ='$title' and pc.cashPaid < 1 and pc.datePaid = '' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -2005,17 +2005,123 @@ echo "</table>";
 
 
 
-public $_opd_discount;
-public $showAllAccountTitle_opd_unpaid;
-public $showAllAccountTitle_opd_hmo;
-public $showAllAccountTitle_opd_phic;
-public $showAllAccountTitle_opd_cash;
-public $showAllAccountTitle_opd_creditCard;
-public $showAllAccountTitle_opd_discount;
-public $_opd_totalz;
+private $_opd_discount;
+private $showAllAccountTitle_opd_unpaid;
+private $showAllAccountTitle_opd_hmo;
+private $showAllAccountTitle_opd_phic;
+private $showAllAccountTitle_opd_cash;
+private $showAllAccountTitle_opd_creditCard;
+private $showAllAccountTitle_opd_discount;
+private $_opd_totalz;
+
+private $showAllAccountTitle_opd_balancePaid;
+private $showAllAccountTitle_opd_ecg;
+private $showAllAccountTitle_opd_xray;
+private $showAllAccountTitle_opd_ultrasound;
+private $showAllAccountTitle_opd_erFee;
+private $showAllAccountTitle_opd_ctscan;
+private $showAllAccountTitle_opd_laboratory;
+private $showAllAccountTitle_opd_medicine;
+private $showAllAccountTitle_opd_supplies;
+private $showAllAccountTitle_opd_spyrometry;
+private $showAllAccountTitle_opd_derma;
+private $showAllAccountTitle_opd_others;
+private $showAllAccountTitle_opd_OR;
+private $showAllAccountTitle_opd_PT;
+private $showAllAccountTitle_opd_cardiacMonitor;
+private $showAllAccountTitle_opd_misc;
+
+public function showAllAccountTitle_opd_cash() {
+	return $this->showAllAccountTitle_opd_cash;
+}
+
+public function showAllAccountTitle_opd_creditCard() {
+	return $this->showAllAccountTitle_opd_creditCard;
+}
+
+public function showAllAccountTitle_opd_unpaid() {
+	return $this->showAllAccountTitle_opd_unpaid;
+}
+
+public function showAllAccountTitle_opd_hmo() {
+	return $this->showAllAccountTitle_opd_hmo;
+}
+
+public function showAllAccountTitle_opd_phic() {
+	return $this->showAllAccountTitle_opd_phic;
+}
+
+public function showAllAccountTitle_opd_discount() {
+	return $this->showAllAccountTitle_opd_discount;
+}
 
 public function _opd_totalz() {
 return $this->_opd_totalz;
+}
+
+
+public function showAllAccountTitle_opd_balancePaid() {
+	return $this->showAllAccountTitle_opd_balancePaid;
+}
+
+public function showAllAccountTitle_opd_ecg() {
+	return $this->showAllAccountTitle_opd_ecg;
+}
+
+public function showAllAccountTitle_opd_xray() {
+	return $this->showAllAccountTitle_opd_xray;
+}
+
+public function showAllAccountTitle_opd_ultrasound() {
+	return $this->showAllAccountTitle_opd_ultrasound;
+}
+
+public function showAllAccountTitle_opd_erFee() {
+	return $this->showAllAccountTitle_opd_erFee;
+}
+
+public function showAllAccountTitle_opd_ctscan() {
+	return $this->showAllAccountTitle_opd_ctscan;
+}
+
+public function showAllAccountTitle_opd_laboratory() {
+	return $this->showAllAccountTitle_opd_laboratory;
+}
+
+public function showAllAccountTitle_opd_medicine() {
+	return $this->showAllAccountTitle_opd_medicine;
+}
+
+public function showAllAccountTitle_opd_supplies() {
+	return $this->showAllAccountTitle_opd_supplies;
+}
+
+public function showAllAccountTitle_opd_spyrometry() {
+	return $this->showAllAccountTitle_opd_spyrometry;
+}
+
+public function showAllAccountTitle_opd_derma() {
+	return $this->showAllAccountTitle_opd_derma;
+}
+
+public function showAllAccountTitle_opd_others() {
+	return $this->showAllAccountTitle_opd_others;
+}
+
+public function showAllAccountTitle_opd_OR() {
+	return $this->showAllAccountTitle_opd_OR;
+}
+
+public function showAllAccountTitle_opd_PT() {
+	return $this->showAllAccountTitle_opd_PT;
+}
+
+public function showAllAccountTitle_opd_cardiacMonitor() {
+	return $this->showAllAccountTitle_opd_cardiacMonitor;
+}
+
+public function showAllAccountTitle_opd_misc() {
+	return $this->showAllAccountTitle_opd_misc;
 }
 
 public function showAllAccountTitle_opd($date1,$date2) {
@@ -2068,6 +2174,107 @@ $this->showAllAccountTitle_opd_cash += $paid;
 $this->showAllAccountTitle_opd_creditCard += $cr;
 $this->showAllAccountTitle_opd_discount += $disc;
 $this->_opd_totalz += $totalIndividual1;
+
+
+// start exception
+if($row['title'] == "BALANCE") {
+	$this->showAllAccountTitle_opd_balancePaid += $totalIndividual1;
+}else {
+	//do nothiing
+}
+
+if( $row['title'] == "ECG" ) {
+	$this->showAllAccountTitle_opd_ecg += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "XRAY" ) {
+	$this->showAllAccountTitle_opd_xray += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "ULTRASOUND" ) {
+	$this->showAllAccountTitle_opd_ultrasound += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "ER FEE" ) {
+	$this->showAllAccountTitle_opd_erFee += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "CTSCAN" ) {
+	$this->showAllAccountTitle_opd_ctscan += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "LABORATORY" ) {
+	$this->showAllAccountTitle_opd_laboratory += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "MEDICINE" ) {
+	$this->showAllAccountTitle_opd_medicine += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "SUPPLIES" ) {
+	$this->showAllAccountTitle_opd_supplies += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "SPIROMETRY" ) {
+	$this->showAllAccountTitle_opd_spyrometry += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "DERMA" ) {
+	$this->showAllAccountTitle_opd_derma += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "OTHERS" ) {
+	$this->showAllAccountTitle_opd_others += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "OR/DR/ER Fee" ) {
+	$this->showAllAccountTitle_opd_OR += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "PT" ) {
+	$this->showAllAccountTitle_opd_PT += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "CARDIAC MONITOR" ) {
+	$this->showAllAccountTitle_opd_cardiacMonitor += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "MISCELLANEOUS" ) {
+	$this->showAllAccountTitle_opd_misc += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+// end exception
+
 
 $_total = ( $this->_opd_discount + $this->showAllAccountTitle_opd_unpaid + $this->showAllAccountTitle_opd_hmo + $this->showAllAccountTitle_opd_phic + $this->showAllAccountTitle_opd_cash + $this->showAllAccountTitle_opd_creditCard  );
 $manualTotal = ( $disc + $unpaid + $companyHMO + $phic + $paid + $cr );
@@ -2132,7 +2339,47 @@ $this->showPFaccounts_creditCard_payables = $row['payables'];
 }
 
 
-public $showPFaccounts_total;
+private $showPFaccounts_cash;
+private $showPFaccounts_creditCards;
+private $showPFaccounts_hmo;
+private $showPFaccounts_phic;
+private $showPFaccounts_unpaid;
+private $showPFaccounts_discount;
+private $showPFaccounts_payable;
+private $showPFaccounts_pf; //doctor share
+private $showPFaccounts_total;
+
+public function showPFaccounts_cash() {
+	return $this->showPFaccounts_cash;
+}
+
+public function showPFaccounts_creditCards() {
+	return $this->showPFaccounts_creditCards;
+}
+
+public function showPFAccounts_hmo() {
+	return $this->showPFaccounts_hmo;
+}
+
+public function showPFaccounts_phic() {
+	return $this->showPFaccounts_phic;
+}
+
+public function showPFaccounts_unpaid() {
+	return $this->showPFaccounts_unpaid;
+}
+
+public function showPFaccounts_discount() {
+	return $this->showPFaccounts_discount;
+}
+
+public function showPFaccounts_payable() {
+	return $this->showPFaccounts_payable;
+}
+
+public function showPFaccounts_pf() {
+	return $this->showPFaccounts_pf;
+}
 
 public function showPFaccounts_total() {
 return $this->showPFaccounts_total;
@@ -2149,6 +2396,14 @@ while($row = mysqli_fetch_array($result))
 {
 $this->showPFaccounts_creditCard($date,$date1);
 $this->showPFaccounts_total = ($row['totalPF']);
+$this->showPFaccounts_cash = $row['cashPaid'];
+$this->showPFaccounts_creditCards = $row['creditCard'];
+$this->showPFaccounts_hmo = $row['hmo'];
+$this->showPFaccounts_phic = $row['phic'];
+$this->showPFaccounts_unpaid = $row['unpaid'];
+$this->showPFaccounts_discount = $row['disc'];
+$this->showPFaccounts_pf = $row['pf'];
+$this->showPFaccounts_payable = $row['payable'];
 
 echo "</tr>";
 echo "<td><font size=2><a href='/COCONUT/Reports/doctorReport/transactionSummary_pf.php?date=$date&date1=$date1' style='text-decoration:none; color:black;' target='_blank'>Professional Fee</a></font></td>";
@@ -2193,7 +2448,44 @@ public function showTherapyAccounts_pfCreditCard($date,$date1,$title) {
 	}
 }
 
+
+private $showTherapyAccounts_cash;
+private $showTherapyAccounts_hmo;
+private $showTherapyAccounts_phic;
+private $showTherapyAccounts_unpaid;
+private $showTherapyAccounts_creditCard;
+private $showTherapyAccounts_discount;
+private $showTherapyAccounts_pf;
 private $showTherapyAccounts_total;
+
+
+public function showTherapyAccounts_cash() {
+	return $this->showTherapyAccounts_cash;
+}
+
+public function showTherapyAccounts_hmo() {
+	return $this->showTherapyAccounts_hmo;
+}
+
+public function showTherapyAccounts_phic() {
+	return $this->showTherapyAccounts_phic;
+}
+
+public function showTherapyAccounts_unpaid() {
+	return $this->showTherapyAccounts_unpaid;
+}
+
+public function showTherapyAccounts_creditCard() {
+	return $this->showTherapyAccounts_creditCard;
+}
+
+public function showTherapyAccounts_discount() {
+	return $this->showTherapyAccounts_discount;
+}
+
+public function showTherapyAccounts_pf() {
+	return $this->showTherapyAccounts_pf;
+}
 
 public function showTherapyAccounts_total() {
 	return $this->showTherapyAccounts_total;
@@ -2239,6 +2531,13 @@ public function showTherapyAccounts($date,$date1,$title) {
 		}
 		
 		echo "</tr>";
+		$this->showTherapyAccounts_cash = $row['cashPaid'];
+		$this->showTherapyAccounts_creditCard = $row['creditCard'];
+		$this->showTherapyAccounts_unpaid = $row['unpaid'];
+		$this->showTherapyAccounts_hmo = $row['hmo'];
+		$this->showTherapyAccounts_phic = $row['phic'];
+		$this->showTherapyAccounts_discount = $row['disc'];
+		$this->showTherapyAccounts_pf = $this->showTherapyAccounts_pfCash($date,$date1,$title);
 		$this->showTherapyAccounts_total = $row['total'];
 	}
 
@@ -2444,11 +2743,11 @@ $this->patientAccountOPD_creditCard += $row['amountPaidFromCreditCard'];
 $this->patientAccountOPD_total += $row['total'];
 
 if($row['title'] == "OT") {
-		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['otShare'] );
+		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['amountPaidFromCreditCard']);
 }else if($row['title'] == "ST") {
-		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['otShare'] );
+		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['amountPaidFromCreditCard'] );
 }else {
-	$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
+	$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['amountPaidFromCreditCard'] );
 }
 
 echo "<tr>";
@@ -2503,9 +2802,9 @@ $this->patientAccountOPD_creditCard += $row['amountPaidFromCreditCard'];
 $this->patientAccountOPD_total += $row['total'];
 
 if($row['title'] == "OT") {
-		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['otShare'] );
+		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['otShare'] );
 }else if($row['title'] == "ST") {
-		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['otShare'] );
+		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['otShare'] );
 }else {
 	$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
 }
@@ -2519,8 +2818,8 @@ if($row['title'] == "OT") {
 		echo "<td align='right'>&nbsp;".($row['phic'])."</td>";
 		echo "<td align='right'>&nbsp;".($row['cashPaid'])."</td>";
 		echo "<td align='right'>&nbsp;".($row['amountPaidFromCreditCard'])."</td>";
-		if($manualTotal != ($row['sellingPrice'] * $row['quantity'])) {
-			echo "<td align='right'>&nbsp;".$row['registrationNo']."-<font color=red>".($row['sellingPrice'] * $row['quantity'])."</font></td>";
+		if($manualTotal != $row['total']) {
+			echo "<td align='right'>".$row['registrationNo']."-&nbsp;".$manualTotal."-<font color=red>".($row['total'])."</font></td>";
 		}else {
 			echo "<td align='right'>&nbsp;".($row['sellingPrice'] * $row['quantity'])."</td>";
 		}
