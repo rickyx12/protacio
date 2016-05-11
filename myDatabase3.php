@@ -2012,7 +2012,7 @@ private $showAllAccountTitle_opd_phic;
 private $showAllAccountTitle_opd_cash;
 private $showAllAccountTitle_opd_creditCard;
 private $showAllAccountTitle_opd_discount;
-private $_opd_totalz;
+public $_opd_totalz;
 
 private $showAllAccountTitle_opd_balancePaid;
 private $showAllAccountTitle_opd_ecg;
