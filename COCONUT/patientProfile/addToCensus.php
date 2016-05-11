@@ -30,7 +30,7 @@ $ro->coconutHidden("room",$ro->selectNow("registrationDetails","room","registrat
 $ro->coconutTextBox("datez",date("Y-m-d"));
 echo "<br><br>";
 
-if( $ro->selectNow("ipdCensus","id","registrationNo",$_GET['registrationNo']) != "" ) {
+if( $ro->doubleSelectNow("ipdCensus","id","registrationNo",$_GET['registrationNo'],"date",date("Y-m-d")) != "" ) {
 	echo "Patient Added to census";
 	echo "<br><br>";
 	echo "<a href='removeToCensus.php?registrationNo=$_GET[registrationNo]' style='text-decoration:none; color:red;'>Remove from Census</a>";
