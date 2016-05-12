@@ -146,8 +146,8 @@ echo "</tr>";
 echo "<Tr>";
 echo "<td>WITHHOLDING TAX - EXPANDED PAYABLE 1%</td>";
 echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_wTax,2)."</td>";
 echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_wTax,2)."</td>";
 echo "</tr>";
 
 }
@@ -209,12 +209,13 @@ $voucherNo1 = $this->selectNow("trackingNo","value","name","voucherNo");
 //insert to purchaseJournal
 $this->accounting_purchaseJournal_accountsPayable = ( $this->accounting_purchaseJournal_itemized_purchases + $this->accounting_purchaseJournal_itemized_inputVAT );
 
+//addToPurchaseJournal($vouchersCode,$invoiceNo,$accountTitle,$debit,$credit,$siNo,$date)
 if( $this->selectNow("purchaseJournal","invoiceNo","siNo",$row['siNo']) == "" ) {
 	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"INVENTORY",round($this->accounting_purchaseJournal_itemized_purchases,2),"",$row['siNo'],$row['transactionDate']);
 
 	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"INPUT VAT",round($this->accounting_purchaseJournal_itemized_inputVAT,2),"",$row['siNo'],$row['transactionDate']);
 
-	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"","WITHHOLDING TAX - EXPANDED PAYABLE 1% ",round(($this->accounting_purchaseJournal_itemized_purchases * 0.1),2),$row['siNo'],$row['transactionDate']);
+	$this->addToPurchaseJournal($voucherNo1,$this->selectNow("salesInvoice","invoiceNo","siNo",$row['siNo']),"WITHHOLDING TAX - EXPANDED PAYABLE 1% ","",round(($this->accounting_purchaseJournal_itemized_purchases * 0.1),2),$row['siNo'],$row['transactionDate']);
 
 
 	if( $row['terms'] == "CASH" || $row['terms'] == "C.O.D" || $row['terms'] == "Retail" ) {
