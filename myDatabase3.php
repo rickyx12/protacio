@@ -1762,6 +1762,7 @@ return $row['pd'];
 }
 
 
+//function pra s wlang payment thru cash or credit card
 public function showAllAccountTitle_debit($date1,$date2,$cols,$type,$title) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
@@ -1777,12 +1778,29 @@ return $row['pdMethod'];
 
 }
 
+
+//function pra sa meron payment pro meron png balance.
+public function showAllAccountTitle_debit_balance($date1,$date2,$cols,$type,$title) {
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+
+$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['pdMethod'];
+}
+
+}
+
 //as the name implies pra s paid n meron discont
 public function showAllAccountTitle_debit_paid($date1,$date2,$cols,$type,$title) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.".$cols." > 1 and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.".$cols." > 0 and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -1797,11 +1815,28 @@ public function showAllAccountTitle_debit_discount($date1,$date2,$type,$title) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select sum(pc.discount) as discount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.discount > 1 and pc.title ='$title' and pc.cashPaid < 1 and pc.datePaid = '' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(pc.discount) as discount from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.discount > 0 and pc.title ='$title' and pc.cashPaid < 1 and pc.amountPaidFromCreditCard < 1 and pc.datePaid = '' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
 return $row['discount'];
+}
+
+}
+
+
+//function pra s wlang payment thru cash or credit card
+public function showAllAccountTitle_debit_total($date1,$date2,$type,$title) {
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+
+$result = mysqli_query($connection, " select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['total'];
 }
 
 }
@@ -2157,13 +2192,13 @@ while($row = mysqli_fetch_array($result))
 {
 
 $discountz = ( $this->showAllAccountTitle_debit_paid($date1,$date2,"discount","OPD",$row['title']) + $this->showAllAccountTitle_debit_discount($date1,$date2,"OPD",$row['title']) ); //discount from paid + discount from not paid
-$disc = round($discountz,2);
-$unpaid = round($this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","OPD",$row['title']),2);
-$companyHMO = round($this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']),2);
-$phic = round($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']),2);
-$paid = round($this->showAllAccountTitle_debit_paid($date1,$date2,"cashPaid","OPD",$row['title']),2);
-$cr = round($this->showAllAccountTitle_debit_paid($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']),2);
-$totalIndividual = ($this->showAllAccountTitle_debit($date1,$date2,"total","OPD",$row['title']) + $this->showAllAccountTitle_debit_paid($date1,$date2,"cashPaid","OPD",$row['title']) + $this->showAllAccountTitle_debit_paid($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']) + $disc );
+$disc = ($discountz);
+$unpaid = ($this->showAllAccountTitle_debit_balance($date1,$date2,"cashUnpaid","OPD",$row['title']));
+$companyHMO = ($this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']));
+$phic = ($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']));
+$paid = ($this->showAllAccountTitle_debit_paid($date1,$date2,"cashPaid","OPD",$row['title']));
+$cr = ($this->showAllAccountTitle_debit_paid($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']));
+$totalIndividual = ( $this->showAllAccountTitle_debit_total($date1,$date2,"OPD",$row['title']) );
 $totalIndividual1 = round($totalIndividual,2);
 
 $this->_opd_discount += $disc;
@@ -2277,12 +2312,16 @@ if( $row['title'] == "MISCELLANEOUS" ) {
 
 
 $_total = ( $this->_opd_discount + $this->showAllAccountTitle_opd_unpaid + $this->showAllAccountTitle_opd_hmo + $this->showAllAccountTitle_opd_phic + $this->showAllAccountTitle_opd_cash + $this->showAllAccountTitle_opd_creditCard  );
-$manualTotal = ( $disc + $unpaid + $companyHMO + $phic + $paid + $cr );
+
+
+$manualTotal = ( $discountz + $unpaid + $companyHMO + $phic + $paid + $cr );
 
 
 echo "<Tr>";
-if( $manualTotal != $totalIndividual1 ) {
-echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:red;' target='_blank'>$row[title]</a></td>";
+$a = round($manualTotal,2);
+$b = round($totalIndividual1,2);
+if( $a != $b ) {
+echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:red;' target='_blank'>$row[title]</a>[$manualTotal]-[$totalIndividual1]=[".($manualTotal - $totalIndividual1)."]</td>";
 }else {
 echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:black;' target='_blank'>$row[title]</a></td>";
 }
@@ -2787,7 +2826,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.sellingPrice,pc.quantity,pc.otShare,pc.title from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid > 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%%' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.sellingPrice,pc.quantity,pc.otShare,pc.title,pc.doctorsPF from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid > 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
 
 while($row = mysqli_fetch_array($result))
@@ -2806,7 +2845,7 @@ if($row['title'] == "OT") {
 }else if($row['title'] == "ST") {
 		$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['otShare'] );
 }else {
-	$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
+	$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['doctorsPF'] );
 }
 
 	echo "<tr>";
