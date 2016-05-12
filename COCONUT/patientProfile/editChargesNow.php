@@ -40,7 +40,7 @@ $timePaid = $timePaid_hour.":".$timePaid_minutes.":".$timePaid_seconds;
 $total = $quantity * $sellingPrice;
 $grandTotal = $total - $discount;
 
-$totalCovered =  ($cashCovered + $companyCovered + $phicCovered)  ;
+$totalCovered =  ($cashCovered + $companyCovered + $phicCovered + $discount);
 
 
 
@@ -48,7 +48,7 @@ $totalCovered =  ($cashCovered + $companyCovered + $phicCovered)  ;
 
 
 //check if total covered is equal to the grand total
-if($totalCovered != $grandTotal) { //if not equal,dont edit but prompt the user that was not tally 
+if($totalCovered != $total) { //if not equal,dont edit but prompt the user that was not tally 
 
 echo "
 <script type='text/javascript'>
@@ -82,7 +82,7 @@ $ro->editCharges($itemNo,"description",$description);
 $ro->editCharges($itemNo,"sellingPrice",$sellingPrice);
 $ro->editCharges($itemNo,"quantity",$quantity);
 $ro->editCharges($itemNo,"discount",$discount);
-$ro->editCharges($itemNo,"total",$grandTotal);
+//$ro->editCharges($itemNo,"total",$grandTotal);
 $ro->editCharges($itemNo,"timeCharge",$timeCharge);
 $ro->editCharges($itemNo,"dateCharge",$dateCharge);
 $ro->editCharges($itemNo,"paidVia",$paidVia);
