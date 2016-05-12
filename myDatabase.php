@@ -1393,7 +1393,7 @@ if( $this->getRegistrationDetails_company() != "" ) {
 	if($this->getRegistrationDetails_company() == "INTELLICARE" || $this->getRegistrationDetails_company() == "AVEGA Managed Care, Inc.") {
 		$room1 = "specialRates";
 	}else {
-		$room1 = "ipd_hmo";
+		$room1 = "HMO";
 	}
 }else {
 $room1 = $this->selectNow("room","type","Description",$this->selectNow("registrationDetails","room","registrationNo",$registrationNo));
