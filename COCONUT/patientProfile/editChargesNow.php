@@ -38,7 +38,6 @@ $ro = new database3();
 $datePaid = $datePaid_month."_".$datePaid_day."_".$datePaid_year;
 $timePaid = $timePaid_hour.":".$timePaid_minutes.":".$timePaid_seconds;
 $total = $quantity * $sellingPrice;
-$grandTotal = $total - $discount;
 
 $totalCovered =  ($cashCovered + $companyCovered + $phicCovered + $discount);
 
@@ -82,7 +81,7 @@ $ro->editCharges($itemNo,"description",$description);
 $ro->editCharges($itemNo,"sellingPrice",$sellingPrice);
 $ro->editCharges($itemNo,"quantity",$quantity);
 $ro->editCharges($itemNo,"discount",$discount);
-//$ro->editCharges($itemNo,"total",$grandTotal);
+$ro->editCharges($itemNo,"total",$total);
 $ro->editCharges($itemNo,"timeCharge",$timeCharge);
 $ro->editCharges($itemNo,"dateCharge",$dateCharge);
 $ro->editCharges($itemNo,"paidVia",$paidVia);
