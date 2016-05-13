@@ -6164,7 +6164,7 @@ public function newDetailed_inventory($registrationNo,$title) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashPaid,pc.discount,pc.cashUnpaid,pc.company,pc.phic from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and pc.status IN ('UNPAID','PAID') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashPaid,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.amountPaidFromCreditCard from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and pc.status IN ('UNPAID','PAID') order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
 
 $this->newDetailed_inventory_total=0;
 $this->newDetailed_inventory_pd=0;
@@ -6177,7 +6177,7 @@ while($row = mysqli_fetch_array($result))
   {
 
 $this->newDetailed_inventory_total += $row['total'];
-$this->newDetailed_inventory_pd += $row['cashPaid'];
+$this->newDetailed_inventory_pd += $row['cashPaid'] + $row['amountPaidFromCreditCard'];
 $this->newDetailed_inventory_disc += $row['discount'];
 $this->newDetailed_inventory_unpaid += $row['cashUnpaid'];
 $this->newDetailed_inventory_phic += $row['phic'];
