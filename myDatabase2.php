@@ -207,7 +207,7 @@ $this->patientChargez_company+=$row['company'];
 $this->patientChargez_phic+=$row['phic'];
 $this->patientChargez_disc+=$row['discount'];
 $this->patientChargez_total+=$row['total'];
-$this->patientChargez_paid+=$row['cashPaid'];
+$this->patientChargez_paid+=$row['cashPaid'] + $row['amountPaidFromCreditCard'];
 
 $myDesc = $this->getPatientRecord_lastName().", ".$this->getPatientRecord_firstName()." - ".$row['description'];
 
