@@ -2939,6 +2939,7 @@ $this->patientAccountOPD_pf_creditCard += $row['amountPaidFromCreditCard'];
 $this->patientAccountOPD_pf_payables += $row['doctorsPF_payable'];
 $this->patientAccountOPD_pf_total += $row['total'];
 
+$manualTotal = ( $row['discount'] + $row['cashUnpaid'] + $row['company'] + $row['phic'] + $row['doctorsPF'] + $row['cashPaid'] + $row['amountPaidFromCreditCard'] );
 
 echo "<tr>";
 if( $row['cashPaid'] > 0 || $row['amountPaidFromCreditCard'] > 0 ) {
@@ -2970,7 +2971,12 @@ echo "<td>&nbsp;<font size=2>".$row['company']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['phic']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['cashPaid']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['amountPaidFromCreditCard']."</font></td>";
-echo "<td>&nbsp;<font size=2>".$row['total']."</font></td>";
+
+if( $manualTotal != $row['total'] ) {
+	echo "<td>&nbsp;<font size=2 color=red>".$manualTotal." - ".$row['total']."</font></td>";
+}else {
+	echo "<td>&nbsp;<font size=2>".$row['total']."</font></td>";
+}
 echo "<td style='border:0px; width:3%;'>&nbsp;</td>";
 echo "<td>&nbsp;<font size=2>".($row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['company'] + $row['phic'])."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['doctorsPF']."</font></td>";
