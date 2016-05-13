@@ -2850,7 +2850,12 @@ if($row['title'] == "OT") {
 }
 
 	echo "<tr>";
-		echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+		if( $row['dateUnregistered'] == "" ) {
+			echo "<td><font color=red>".$row['registrationNo']."-&nbsp;".$row['lastName'].", ".$row['firstName']."</font></td>";
+		}else {
+			echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+		}
+		
 		echo "<td>&nbsp;".$row['description']."</td>";
 		echo "<td align='right'>&nbsp;".($row['discount'])."</td>";
 		echo "<td align='right'>&nbsp;".($row['cashUnpaid'])."</td>";
