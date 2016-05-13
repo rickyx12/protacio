@@ -6462,7 +6462,7 @@ $this->newDetailed_hmo=0;
 while($row = mysqli_fetch_array($result))
   {
 $this->newDetailed_total += $row['total'];
-$this->newDetailed_pd += ($row['cashPaid']);
+$this->newDetailed_pd += ($row['cashPaid'] + $row['amountPaidFromCreditCard']);
 $this->newDetailed_disc += $row['discount'];
 $this->newDetailed_unpaid += $row['cashUnpaid'];
 $this->newDetailed_docPF += $row['doctorsPF'];
