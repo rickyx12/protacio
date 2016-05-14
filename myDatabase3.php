@@ -2889,15 +2889,17 @@ if($row['title'] == "OT") {
 
 
 
-public $patientAccountOPD_pf_discount;
-public $patientAccountOPD_pf_unpaid;
-public $patientAccountOPD_pf_hmo;
-public $patientAccountOPD_pf_phic;
-public $patientAccountOPD_pf_hospital;
-public $patientAccountOPD_pf_doctor;
-public $patientAccountOPD_pf_creditCard;
-public $patientAccountOPD_pf_payables;
-public $patientAccountOPD_pf_total;
+private $patientAccountOPD_pf_discount;
+private $patientAccountOPD_pf_unpaid;
+private $patientAccountOPD_pf_hmo;
+private $patientAccountOPD_pf_phic;
+private $patientAccountOPD_cash;
+private $patientAccountOPD_pf_hospital;
+private $patientAccountOPD_pf_doctor;
+private $patientAccountOPD_pf_creditCard;
+private $patientAccountOPD_pf_payables;
+private $patientAccountOPD_pf_total;
+
 
 public function patientAccountOPD_pf($date,$date1) {
 
@@ -2938,7 +2940,8 @@ $this->patientAccountOPD_pf_unpaid += $row['cashUnpaid'];
 $this->patientAccountOPD_pf_discount += $row['discount'];
 $this->patientAccountOPD_pf_hmo += $row['company'];
 $this->patientAccountOPD_pf_phic += $row['phic'];
-$this->patientAccountOPD_pf_hospital += $row['cashPaid'];
+$this->patientAccountOPD_pf_cash += $row['cashPaid'];
+//$this->patientAccountOPD_pf_hospital += $row['cashPaid'];
 $this->patientAccountOPD_pf_doctor += $row['doctorsPF'];
 $this->patientAccountOPD_pf_creditCard += $row['amountPaidFromCreditCard'];
 $this->patientAccountOPD_pf_payables += $row['doctorsPF_payable'];
@@ -2983,7 +2986,23 @@ if( $manualTotal != $row['total'] ) {
 	echo "<td>&nbsp;<font size=2>".$row['total']."</font></td>";
 }
 echo "<td style='border:0px; width:3%;'>&nbsp;</td>";
-echo "<td>&nbsp;<font size=2>".($row['cashPaid'] + $row['amountPaidFromCreditCard'] + $row['company'] + $row['phic'])."</font></td>";
+	if( $row['cashPaid'] > 0 ) {
+		echo "<td>&nbsp;<font size=2>".($row['cashPaid'])."</font></td>";
+		$this->patientAccountOPD_pf_hospital += $row['cashPaid'];
+	}else if( $row['amountPaidFromCreditCard'] > 0 ) {
+		echo "<td>&nbsp;<font size=2>".($row['amountPaidFromCreditCard'] - $row['doctorsPF_payable'])."</font></td>";
+		$this->patientAccountOPD_pf_hospital += ($row['amountPaidFromCreditCard'] - $row['doctorsPF_payable']);
+	}else if( $row['company'] > 0 ) {
+		echo "<td>&nbsp;<font size=2>".$row['company']."</font></td>";
+		$this->patientAccountOPD_pf_hospital += $row['company'];
+	}else if( $row['phic'] > 0 ) {
+		echo "<td>&nbsp;<font size=2>".$row['phic']."</font></td>";
+		$this->patientAccountOPD_pf_hospital += $row['phic'];
+	}else {
+		echo "<td>ERROR</td>";
+	}
+
+
 echo "<td>&nbsp;<font size=2>".$row['doctorsPF']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['doctorsPF_payable']."</font></td>";
 echo "</tr>";
@@ -2997,11 +3016,11 @@ echo "<td>".$this->patientAccountOPD_pf_discount."</td>";
 echo "<td>".$this->patientAccountOPD_pf_unpaid."</td>";
 echo "<td>".$this->patientAccountOPD_pf_hmo."</td>";
 echo "<td>".$this->patientAccountOPD_pf_phic."</td>";
-echo "<td>".$this->patientAccountOPD_pf_hospital."</td>";
+echo "<td>".$this->patientAccountOPD_pf_cash."</td>";
 echo "<td>".$this->patientAccountOPD_pf_creditCard."</td>";
 echo "<td>".$this->patientAccountOPD_pf_total."</td>";
 echo "<td style='border:0px;'>&nbsp;</td>";
-echo "<td>&nbsp;".($this->patientAccountOPD_pf_hospital + $this->patientAccountOPD_pf_creditCard + $this->patientAccountOPD_pf_hmo + $this->patientAccountOPD_pf_phic)."</td>";
+echo "<td>&nbsp;".$this->patientAccountOPD_pf_hospital."</td>";
 echo "<td>&nbsp;".($this->patientAccountOPD_pf_doctor)."</td>";
 echo "<td>&nbsp;".($this->patientAccountOPD_pf_payables)."</td>";
 echo "</tr>";
