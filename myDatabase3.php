@@ -2791,7 +2791,12 @@ if($row['title'] == "OT") {
 }
 
 echo "<tr>";
-	echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+	if( $row['dateUnregistered'] == "" ) {
+		echo "<td>&nbsp;<font color=red>".$row['lastName'].", ".$row['firstName']."</font></td>";
+	}else {
+		echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+	}
+
 	echo "<td>&nbsp;".$row['description']."</td>";
 	echo "<td align='right'>&nbsp;".($row['discount'])."</td>";
 	echo "<td align='right'>&nbsp;".($row['cashUnpaid'])."</td>";
@@ -2827,7 +2832,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.sellingPrice,pc.quantity,pc.otShare,pc.title,pc.doctorsPF from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid > 1 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%%' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,pc.description,pc.discount,pc.cashUnpaid,pc.company,pc.phic,pc.cashPaid,pc.amountPaidFromCreditCard,pc.total,rd.dateUnregistered,pc.datePaid,pc.sellingPrice,pc.quantity,pc.otShare,pc.title,pc.doctorsPF from patientRecord pr,registrationDetails rd,patientCharges pc where pc.cashPaid > 0 and pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and rd.type='OPD' and pc.title = '$title' and pc.status not like 'DELETED%%%%%%' ") or die("Query fail: " . mysqli_error()); 
 
 
 while($row = mysqli_fetch_array($result))
