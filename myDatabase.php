@@ -2119,9 +2119,9 @@ if (!$con)
 mysql_select_db($this->database, $con);
 
 if($show == "All") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','BALANCE') order by dateCharge,timeCharge asc ");
+$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','Discharged') order by dateCharge,timeCharge asc ");
 }else {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','BALANCE') and description like '$desc%%%%%%' order by description asc ");
+$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','Discharged') and description like '$desc%%%%%%' order by description asc ");
 }
 
 
