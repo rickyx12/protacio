@@ -11,7 +11,23 @@ $ro = new database();
 $ro->getPatientChargesToEdit($itemNo);
 ?>
 
+<script src="../js/jquery-2.1.4.min.js"></script>
+<script src="../js/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="../js/jquery-ui.css"></link>
+<link rel="stylesheet" href="../js/jquery-ui.theme.min.css"></link>
 <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/myCSS/coconutCSS.css" />
+
+		<script>
+			$(document).ready(function(){
+				$("#dateCharge").datepicker({
+					dateFormat:'yy-mm-dd',
+					onSelect:function(dateText) {
+						$("#dateCharge").val(dateText);
+					}
+				});
+			});
+		</script>
+
 
 <?php
 echo "
@@ -149,7 +165,7 @@ echo "
 </tr>
 <tr>
 <td><font class='charges'>Date Charge:</font></td>
-<td><input type=text class='shortField' name='dateCharge' value='".$ro->patientCharges_dateCharge()."' readonly></td>
+<td><input type=text class='shortField' id='dateCharge' name='dateCharge' value='".$ro->patientCharges_dateCharge()."' readonly></td>
 </tr>
 <tr>
 <td><font class='charges'>Charge By:</font></td>
