@@ -1264,13 +1264,13 @@ echo "</tr>";
 }else { }
 
 echo "<tr>";
+echo "<td>&nbsp;x</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;<font size=2><b>".number_format(trim(($ro->detailedTotalOnly_patientToPay_total() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue))),2)."</b></font></td>";
+echo "<td>&nbsp;<font size=2><b>".number_format(trim(($ro->detailedTotalOnly_patientToPay_total() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue))-$discount),2)."</b></font></td>";
 
 //echo $ro->detailedTotalOnly_patientToPay_total();
 echo "<td>&nbsp;</td>";
