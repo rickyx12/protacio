@@ -151,14 +151,17 @@ echo "
 
 
 
-
+if( $ro->selectNow("registrationDetails","type","registrationNo",$ro->selectNow("patientCharges","registrationNo","itemNo",$itemNo)) == "OPD" ){
+	echo "
+	</tr>
+	<tr>
+	<td><font class='charges'>Discount:</font></td>
+	<td><input type=text class='shortField' name='discount' value='".$ro->patientCharges_discount()."'></td>
+	</tr>";
+}else {
+	$ro->coconutHidden("discount","0");
+}
 echo "
-</tr>
-<tr>
-<td><font class='charges'>Discount:</font></td>
-<td><input type=text class='shortField' name='discount' value='".$ro->patientCharges_discount()."'></td>
-</tr>
-
 <tr>
 <td><font class='charges'>Time Charge:</font></td>
 <td><input type=text class='shortField' name='timeCharge' value='".$ro->patientCharges_timeCharge()."' readonly></td>
