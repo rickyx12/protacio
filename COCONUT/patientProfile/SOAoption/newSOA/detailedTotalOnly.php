@@ -1264,7 +1264,7 @@ echo "</tr>";
 }else { }
 
 echo "<tr>";
-echo "<td>&nbsp;x</td>";
+echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
