@@ -10892,101 +10892,111 @@ return $row['total'];
 
 }
 
-public $transactionSummaryDischarge_total;
-public $transactionSummaryDischarge_cash;
-public $transactionSummaryDischarge_phic;
-public $transactionSummaryDischarge_company;
-public $transactionSummaryDischarge_deposit;
-public $transactionSummaryDischarge_hospitalBill;
-public $transactionSummaryDischarge_balanceTotal;
+private $transactionSummaryDischarge_total;
+private $transactionSummaryDischarge_cash;
+private $transactionSummaryDischarge_phic;
+private $transactionSummaryDischarge_company;
+private $transactionSummaryDischarge_deposit;
+private $transactionSummaryDischarge_hospitalBill;
+private $transactionSummaryDischarge_balanceTotal;
 
 public function transactionSummaryDischarge($date,$date1) {
 
-echo "
-<style type='text/css'>
-tr:hover { background-color:yellow; color:black;}
-a {  border_bottom:10px; color:black; }
-</style>";
+  echo "
+  <style type='text/css'>
+  tr:hover { background-color:yellow; color:black;}
+  a {  border_bottom:10px; color:black; }
+  </style>";
 
-$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-
-
-$result = mysqli_query($connection, "select pr.lastName,pr.firstName,rd.Company,rd.registrationNo,rd.discount from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='IPD' order by rd.registrationNo asc  ") or die("Query fail: " . mysqli_error()); 
-
-echo "<br><br><br><center>";
-$this->coconutTableStart();
-$this->coconutTableRowStart();
-$this->coconutTableHeader("&nbsp;");
-$this->coconutTableHeader("Reg#");
-$this->coconutTableHeader("Patient");
-$this->coconutTableHeader("Total");
-$this->coconutTableHeader("CASH");
-$this->coconutTableHeader("PHIC");
-$this->coconutTableHeader("HMO");
-$this->coconutTableHeader("DEPOSIT");
-$this->coconutTableHeader("HB");
-$this->coconutTableHeader("DISCOUNT");
-$this->coconutTableHeader("BALANCE");
-$this->coconutTableRowStop();
-while($row = mysqli_fetch_array($result))
-{
-
-echo "<tr>";
-$totalPd = ( $this->transactionSummaryDischarge_totalPaid("HOSPITAL BILL",$row['registrationNo']) + $this->transactionSummaryDischarge_totalPaid("DEPOSIT",$row['registrationNo'] ) 
-);
-$balance = ( 
-($this->transactionSummaryDischarge_totalCharges("cashUnpaid",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("cashUnpaid",$row['registrationNo'])) - $totalPd  
-);
-
-$balance1 = ($balance - $row['discount']);
-
-//CHARGES
-$this->transactionSummaryDischarge_balanceTotal += $balance1;
-$this->transactionSummaryDischarge_total += ($this->transactionSummaryDischarge_totalCharges("total",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("total",$row['registrationNo']));
-$this->transactionSummaryDischarge_cash += ($this->transactionSummaryDischarge_totalCharges("cashUnpaid",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("cashUnpaid",$row['registrationNo']));
-$this->transactionSummaryDischarge_company += ($this->transactionSummaryDischarge_totalCharges("company",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("company",$row['registrationNo']));
-$this->transactionSummaryDischarge_phic += ($this->transactionSummaryDischarge_totalCharges("phic",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("phic",$row['registrationNo']));
-//PAYMENT
-$this->transactionSummaryDischarge_deposit += $this->transactionSummaryDischarge_totalPaid("DEPOSIT",$row['registrationNo'] );
-$this->transactionSummaryDischarge_hospitalBill += $this->transactionSummaryDischarge_totalPaid("HOSPITAL BILL",$row['registrationNo'] );
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-echo "<td><input type='checkbox' name='balanceHandler[]' value='".$row['registrationNo']."-".round($balance1,2)."' checked></td>";
-echo "<td>".$row['registrationNo']."</td>";
-echo "<td>".$row['lastName'].", ".$row['firstName']."</td>";
-echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("total",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("total",$row['registrationNo'])),2)."</td>";
+  $result = mysqli_query($connection, "select pr.lastName,pr.firstName,rd.Company,rd.registrationNo,rd.discount,rd.excessMaxBenefits from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$date' and '$date1') and rd.type='IPD' order by rd.registrationNo asc  ") or die("Query fail: " . mysqli_error()); 
 
-echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("cashUnpaid",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("cashUnpaid",$row['registrationNo'])),2)."</td>";
+  echo "<br><br><br><center>";
+  $this->coconutTableStart();
+  $this->coconutTableRowStart();
+  $this->coconutTableHeader("&nbsp;");
+  $this->coconutTableHeader("Reg#");
+  $this->coconutTableHeader("Patient");
+  $this->coconutTableHeader("Total");
+  $this->coconutTableHeader("CASH");
+  $this->coconutTableHeader("PHIC");
+  $this->coconutTableHeader("HMO");
+  $this->coconutTableHeader("HMO EXCESS");
+  $this->coconutTableHeader("DEPOSIT");
+  $this->coconutTableHeader("HB");
+  $this->coconutTableHeader("DISCOUNT");
+  $this->coconutTableHeader("BALANCE");
+  $this->coconutTableRowStop();
+  while($row = mysqli_fetch_array($result))
+  {
 
-echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("phic",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("phic",$row['registrationNo'])),2)."</td>";
+    echo "<tr>";
+      $totalPd = ( $this->transactionSummaryDischarge_totalPaid("HOSPITAL BILL",$row['registrationNo']) + $this->transactionSummaryDischarge_totalPaid("DEPOSIT",$row['registrationNo'] ) 
+      );
+      $balance = ( 
+      ($this->transactionSummaryDischarge_totalCharges("cashUnpaid",$row['registrationNo']) + $row['excessMaxBenefits'] + $this->transactionSummaryDischarge_totalInventory("cashUnpaid",$row['registrationNo'])) - $totalPd  
+      );
 
-echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("company",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("company",$row['registrationNo'])),2)."</td>";
+      $deductions = ( $row['discount'] );
+      $balance1 = ($balance - $deductions);
 
-echo "<td>".number_format($this->transactionSummaryDischarge_totalPaid("DEPOSIT",$row['registrationNo']),2)."</td>";
-echo "<td>".number_format($this->transactionSummaryDischarge_totalPaid("HOSPITAL BILL",$row['registrationNo']),2)."</td>";
-echo "<td>".$row['discount']."</td>";
-if( $balance > 0 ) {
-echo "<td>".number_format(round($balance1,2),2)."</td>";
-}else {
-echo "<td><font color=red>".number_format(round($balance1,2),2)."</font></td>";
-}
-echo "</tr>";
-}
-echo "<Tr>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_total,2)."</td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_cash,2)."</td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_phic,2)."</td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_company,2)."</td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_deposit,2)."</td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_hospitalBill,2)."</td>";
-echo "<td></td>";
-echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_balanceTotal,2)."</td>";
-echo "</tr>";
-echo "</table>";
-echo "<br><br>";
+      //CHARGES
+      $this->transactionSummaryDischarge_balanceTotal += $balance1;
+      
+      $this->transactionSummaryDischarge_total += ($this->transactionSummaryDischarge_totalCharges("total",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("total",$row['registrationNo']) + $this->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$row['registrationNo']) + $this->selectNow("registrationDetails","excessRoom","registrationNo",$row['registrationNo']) );
+      
+      $this->transactionSummaryDischarge_cash += ($this->transactionSummaryDischarge_totalCharges("cashUnpaid",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("cashUnpaid",$row['registrationNo']));
+      
+      $this->transactionSummaryDischarge_company += ($this->transactionSummaryDischarge_totalCharges("company",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("company",$row['registrationNo']));
+      
+      $this->transactionSummaryDischarge_phic += ($this->transactionSummaryDischarge_totalCharges("phic",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("phic",$row['registrationNo']));
+      
+      //PAYMENT
+      $this->transactionSummaryDischarge_deposit += $this->transactionSummaryDischarge_totalPaid("DEPOSIT",$row['registrationNo'] );
+      $this->transactionSummaryDischarge_hospitalBill += $this->transactionSummaryDischarge_totalPaid("HOSPITAL BILL",$row['registrationNo'] );
+
+
+      echo "<td><input type='checkbox' name='balanceHandler[]' value='".$row['registrationNo']."-".round($balance1,2)."' checked></td>";
+      echo "<td>".$row['registrationNo']."</td>";
+      echo "<td>".$row['lastName'].", ".$row['firstName']."</td>";
+      echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("total",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("total",$row['registrationNo']) + $this->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$row['registrationNo']) + $this->selectNow("registrationDetails","excessRoom","registrationNo",$row['registrationNo']) ),2)."</td>";
+
+      echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("cashUnpaid",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("cashUnpaid",$row['registrationNo'])),2)."</td>";
+
+      echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("phic",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("phic",$row['registrationNo'])),2)."</td>";
+
+      echo "<td>".number_format( ($this->transactionSummaryDischarge_totalCharges("company",$row['registrationNo']) + $this->transactionSummaryDischarge_totalInventory("company",$row['registrationNo'])),2)."</td>";
+
+      echo "<td>".$this->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$row['registrationNo'])."</td>";
+
+      echo "<td>".number_format($this->transactionSummaryDischarge_totalPaid("DEPOSIT",$row['registrationNo']),2)."</td>";
+      echo "<td>".number_format($this->transactionSummaryDischarge_totalPaid("HOSPITAL BILL",$row['registrationNo']),2)."</td>";
+      echo "<td>".$row['discount']."</td>";
+      if( round($balance1) < 1 ) {
+        echo "<td>".number_format(round($balance1,2),2)."</td>";
+      }else {
+        echo "<td><font color=red>".number_format(round($balance1,2),2)."</font></td>";
+      }
+    echo "</tr>";
+  }
+  echo "<Tr>";
+  echo "<td>&nbsp;</td>";
+  echo "<td>&nbsp;</td>";
+  echo "<td>&nbsp;</td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_total,2)."</td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_cash,2)."</td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_phic,2)."</td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_company,2)."</td>";
+  echo "<Td>&nbsp;</td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_deposit,2)."</td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_hospitalBill,2)."</td>";
+  echo "<td></td>";
+  echo "<td>&nbsp;".number_format($this->transactionSummaryDischarge_balanceTotal,2)."</td>";
+  echo "</tr>";
+  echo "</table>";
+  echo "<br><br>";
 }
 
 
