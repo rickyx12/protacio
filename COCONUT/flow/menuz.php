@@ -90,6 +90,10 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/tran
 echo "<input type='submit' value='Transaction Summary' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/selectShift_transactionSummary.php' target='rightFrame'>";
+echo "<input type='submit' value='Transaction Summary2' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Doctor/doctorModule/doctorPF_shift.php' target='rightFrame'>";
 	echo "<input type='submit' value='PF/Doctor' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 	$ro->coconutHidden("username","x");
