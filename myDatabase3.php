@@ -1764,6 +1764,21 @@ return $row['pd'];
 
 
 //function pra s wlang payment thru cash or credit card
+public function showAllAccountTitle_ipd_discharged($date1,$date2,$cols,$title) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " select sum(pc.".$cols.") as total from registrationDetails rd,patientCharges pc where rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and (rd.dateUnregistered between '$date1' and '$date2') and pc.title = '$title' and pc.status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['total'];
+	}
+
+}
+
+//function pra s wlang payment thru cash or credit card
 public function showAllAccountTitle_debit($date1,$date2,$cols,$type,$title) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
@@ -1833,7 +1848,7 @@ $connection = mysqli_connect($this->host,$this->username,$this->password,$this->
 
 
 
-$result = mysqli_query($connection, " select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%' and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -1882,13 +1897,20 @@ echo "<tr>";
 while($row = mysqli_fetch_array($result))
 {
 
-$this->showAllAccountTitle_cash += ($this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","IPD",$row['title']));
-$this->showAllAccountTitle_hmo += ($this->showAllAccountTitle_debit($date1,$date2,"company","IPD",$row['title']));
-$this->showAllAccountTitle_phic += ($this->showAllAccountTitle_debit($date1,$date2,"phic","IPD",$row['title']));
+//$this->showAllAccountTitle_cash += ($this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","IPD",$row['title']));
+//$this->showAllAccountTitle_hmo += ($this->showAllAccountTitle_debit($date1,$date2,"company","IPD",$row['title']));
+//$this->showAllAccountTitle_phic += ($this->showAllAccountTitle_debit($date1,$date2,"phic","IPD",$row['title']));
+
+$this->showAllAccountTitle_cash += $this->showAllAccountTitle_ipd_discharged($date1,$date2,"cashUnpaid",$row['title']);
+$this->showAllAccountTitle_hmo += $this->showAllAccountTitle_ipd_discharged($date1,$date2,"company",$row['title']);
+$this->showAllAccountTitle_phic += $this->showAllAccountTitle_ipd_discharged($date1,$date2,"phic",$row['title']);
 $this->showAllAccountTitle_total += ($this->showAllAccountTitle_amountPerTitle($date1,$date2,$row['title'],"IPD"));
 
+//$manualTotal = ( $this->showAllAccountTitle_cash + $this->showAllAccountTitle_hmo + $this->showAllAccountTitle_phic );
+
 echo "<tr>";
-echo "<td><a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=IPD&title=$row[title]' target='_blank' style='text-decoration:none;'>$row[title]</a></td>";
+	echo "<td><a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=IPD&title=$row[title]' target='_blank' style='text-decoration:none;'>$row[title]</a></td>";
+
 echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"cashUnpaid","IPD",$row['title']),2),2)."</td>";
 echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"company","IPD",$row['title']),2),2)."</td>";
 echo "<td align='right'>&nbsp;".number_format(round($this->showAllAccountTitle_debit($date1,$date2,"phic","IPD",$row['title']),2),2)."</td>";
@@ -2200,7 +2222,7 @@ $phic = ($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title
 $paid = ($this->showAllAccountTitle_debit_paid($date1,$date2,"cashPaid","OPD",$row['title']));
 $cr = ($this->showAllAccountTitle_debit_paid($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']));
 $totalIndividual = ( $this->showAllAccountTitle_debit_total($date1,$date2,"OPD",$row['title']) );
-$totalIndividual1 = round($totalIndividual,2);
+$totalIndividual1 = $totalIndividual;
 
 $this->_opd_discount += $disc;
 $this->showAllAccountTitle_opd_unpaid += $unpaid;
@@ -2319,10 +2341,10 @@ $manualTotal = ( $discountz + $unpaid + $companyHMO + $phic + $paid + $cr );
 
 
 echo "<Tr>";
-$a = round($manualTotal,2);
-$b = round($totalIndividual1,2);
-if( $a != $b ) {
-echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:red;' target='_blank'>$row[title]</a>[$manualTotal]-[$totalIndividual1]=[".($manualTotal - $totalIndividual1)."]</td>";
+$a = $manualTotal;
+$b = $totalIndividual1;
+if( round($a,2) != round($b,2) ) {
+echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:red;' target='_blank'>$row[title]</a>[$a]-[$b]=[".round($a - $b,2)."]</td>";
 }else {
 echo "<td align='left'>&nbsp;<a href='/COCONUT/billing/patientAccount.php?date=$date1&date1=$date2&type=OPD&title=$row[title]' style='text-decoration:none; color:black;' target='_blank'>$row[title]</a></td>";
 }
