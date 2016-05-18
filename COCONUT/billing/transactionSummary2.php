@@ -64,6 +64,7 @@ echo "<th>&nbsp;PAYABLES</th>";
 echo "<th>&nbsp;TOTAL</th>";
 echo "</tr>";
 $ro->showPFaccounts($date,$date1);
+
 $ro->showTherapyAccounts($date,$date1,"OT");
 $otTotal = $ro->showTherapyAccounts_total();
 $otCreditCard = $ro->showTherapyAccounts_creditCard();

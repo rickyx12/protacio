@@ -1,4 +1,7 @@
 <?
+include "../../myDatabase4.php";
+
+$ro4 = new database4();
 
 $opdCreditCard = $_POST['opdCreditCard'];
 $opdCash = $_POST['opdCash'];
@@ -27,6 +30,44 @@ $opd_cardiacMonitor = $_POST['opd_cardiacMonitor'];
 $opd_PF_payable = $_POST['opd_PF_payable'];
 $opd_misc = $_POST['opd_misc'];
 
+
+$ipd_laboratory = $_POST['ipd_laboratory'];
+$ipd_xray = $_POST['ipd_xray'];
+$ipd_ultrasound = $_POST['ipd_ultrasound'];
+$ipd_ctscan = $_POST['ipd_ctscan'];
+$ipd_ecg = $_POST['ipd_ecg'];
+$ipd_erfee = $_POST['ipd_erfee'];
+$ipd_or = $_POST['ipd_or'];
+$ipd_misc = $_POST['ipd_misc'];
+$ipd_spirometry = $_POST['ipd_spirometry'];
+$ipd_medicine = $_POST['ipd_medicine'];
+$ipd_supplies = $_POST['ipd_supplies'];
+$ipd_pf = $_POST['ipd_pf'];
+$ipd_room = $_POST['ipd_room'];
+$ipd_cardiacMonitor = $_POST['ipd_cardiacMonitor'];
+$ipd_PT = $_POST['ipd_PT'];
+$ipd_OT = $_POST['ipd_OT'];
+$ipd_ST = $_POST['ipd_ST'];
+$ipd_others = $_POST['ipd_others'];
+$ipd_hmoExcess = $_POST['ipd_hmoExcess'];
+
+$ipd_deposit_cash = $_POST['ipd_deposit_cash'];
+$ipd_deposit_creditCard = $_POST['ipd_deposit_creditCard'];
+$ipd_deposit_total = ( $ipd_deposit_cash + $ipd_deposit_creditCard );
+$ipd_discount = $_POST['ipd_discount'];
+$ipd_hmo = $_POST['ipd_hmo'];
+$ipd_phic = $_POST['ipd_phic'];
+$ipd_cash = ($_POST['ipd_cash'] + $ipd_deposit_cash);
+$ipd_creditCard = ($_POST['ipd_creditCard'] + $ipd_deposit_creditCard);
+$ipd_balance = $_POST['ipd_balance'];
+$ipd_excess = $_POST['ipd_excess'];
+
+$date1 = $_POST['date1'];
+$date2 = $_POST['date2'];
+
+$ipd_balance1 = 0;
+($ipd_balance < 0) ? $ipd_balance1 = 0 : $ipd_balance1 = $ipd_balance; 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +82,10 @@ $opd_misc = $_POST['opd_misc'];
 <body>
 	<div class="container">
 		<h3>Transaction Summary</h3>
+		<Br>
+		<h5><? echo $ro4->formatDate($date1)." - ".$ro4->formatDate($date2) ?></h5>
 		<div class="col-md-5">
+			<h4>Outpatient</h4>
 			<table class="table table-hover ">
 				<thead>
 					<tr>
@@ -217,6 +261,197 @@ $opd_misc = $_POST['opd_misc'];
 				</tbody>
 			</table>
 		</div>
+
+		<div class="col-md-2">
+			
+		</div>
+
+		<div class="col-md-5">
+			<h4>Inpatient</h4>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Account Title</th>
+						<th>Debit</th>
+						<th>Credit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Credit Card</td>
+						<td><? ($ipd_creditCard > 0) ? $x = number_format($ipd_creditCard,2) : $x = ""; echo $x; ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>Cash</td>
+						<td><? ($ipd_cash > 0) ? $x = number_format($ipd_cash,2) : $x = ""; echo $x; ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>A/R HMO</td>
+						<td><? ( $ipd_hmo > 0 ) ? $x = number_format($ipd_hmo,2) : $x = ""; echo $x; ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>A/R PHILHEALTH</td>
+						<td><? ( $ipd_phic > 0 ) ? $x = number_format($ipd_phic,2) : $x = ""; echo $x; ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>A/R-IPD(Personal)</td>
+						<td><? ($ipd_balance > 0) ? $x = number_format($ipd_balance,2) : $x = ""; echo $x; ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>Discount</td>
+						<td><? ( $ipd_discount > 0 ) ? $x = number_format($ipd_discount,2) : $x = ""; echo $x; ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>Clinic Revenue</td>
+						<td></td>
+						<td><? ($ipd_pf > 0) ? $x = number_format($ipd_pf,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>OR</td>
+						<td></td>
+						<td><? ($ipd_or > 0) ? $x = number_format($ipd_or,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Miscellaneous</td>
+						<td></td>
+						<td><? ($ipd_misc > 0) ? $x = number_format($ipd_misc,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>ER Fee</td>
+						<td></td>
+						<td><? ($ipd_erfee > 0) ? $x = number_format($ipd_erfee,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Room</td>
+						<Td></Td>
+						<td><? ($ipd_room > 0) ? $x = number_format($ipd_room,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>ECG</td>
+						<td></td>
+						<td><? ($ipd_ecg > 0) ? $x = number_format($ipd_ecg,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>PT</td>
+						<td></td>
+						<td><? ($ipd_PT > 0) ? $x = number_format($ipd_PT,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>OT</td>
+						<td></td>
+						<td><? ($ipd_OT > 0) ? $x = number_format($ipd_OT,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>ST</td>
+						<td></td>
+						<td><? ($ipd_ST > 0) ? $x = number_format($ipd_ST,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>XRAY</td>
+						<td></td>
+						<td><? ($ipd_xray > 0) ? $x = number_format($ipd_xray,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>ULTRASOUND</td>
+						<td></td>
+						<td><? ($ipd_ultrasound > 0) ? $x = number_format($ipd_ultrasound,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>CTSCAN</td>
+						<td></td>
+						<td><? ($ipd_ctscan > 0) ? $x = number_format($ipd_ctscan,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Laboratory</td>
+						<td></td>
+						<td><? ($ipd_laboratory > 0) ? $x = number_format($ipd_laboratory,2) : $x =""; echo $x ?></td>
+					</tr>
+
+					<tr>
+						<td>Medicine</td>
+						<td></td>
+						<td><? ($ipd_medicine > 0) ? $x = number_format($ipd_medicine,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Supplies</td>
+						<td></td>
+						<td><? ($ipd_supplies > 0) ? $x = number_format($ipd_supplies,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>SPYROMETRY</td>
+						<td></td>
+						<td><? ($ipd_spirometry > 0) ? $x = number_format($ipd_spirometry,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Cardiac Monitor</td>
+						<td></td>
+						<td><? ($ipd_cardiacMonitor > 0) ? $x = number_format($ipd_cardiacMonitor,2) : $x = ""; echo $x ?></td>
+					</tr>
+
+					<tr>
+						<td>Others</td>
+						<td></td>
+						<td><? ($ipd_others > 0) ? $x = number_format($ipd_others,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>HMO Benefit Excess</td>
+						<td></td>
+						<td><? ($ipd_hmoExcess > 0) ? $x = number_format($ipd_hmoExcess,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Excess Payment</td>
+						<td></td>
+						<td><? ($ipd_excess > 0) ? $x = number_format($ipd_excess,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Deposit</td>
+						<td></td>
+						<td><? ($ipd_deposit_total > 0) ? $x = number_format($ipd_deposit_total,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td></td>
+						<!--
+						<td><? echo number_format(( $ipd_cash + $ipd_creditCard + $ipd_hmo + $ipd_phic + $ipd_balance + $ipd_discount ),2); ?></td>
+						-->
+						<td><? echo number_format(( $ipd_cash + $ipd_creditCard + $ipd_hmo + $ipd_phic + $ipd_balance1 + $ipd_discount ),2); ?></td>
+						<td><? echo number_format(( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_hmoExcess + $ipd_excess + $ipd_deposit_total ),2); ?></td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+
 	</div>
 </body>
 </html>
