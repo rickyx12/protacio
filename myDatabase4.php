@@ -773,6 +773,68 @@ public function census_list_patient($registrationNo) {
 	}
 }
 
+public function inpatient_title_total($registrationNo,$cols,$title) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
+public function inpatient_paymentMode_total($registrationNo,$cols) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
+public function inpatient_payment_total($registrationNo,$paidVia) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
+
+private $inpatient_deposit_registrationNo;
+private $inpatient_deposit_dateUnregistered;
+private $inpatient_deposit_amountPaid;
+private $inpatient_deposit_paidVia;
+
+public function inpatient_deposit_registrationNo() {
+	return $this->inpatient_deposit_registrationNo;
+}
+
+public function inpatient_deposit_dateUnregistered() {
+	return $this->inpatient_deposit_dateUnregistered;
+}
+
+public function inpatient_deposit_amountPaid() {
+	return $this->inpatient_deposit_amountPaid;
+}
+
+public function inpatient_deposit_paidVia() {
+	return $this->inpatient_deposit_paidVia;
+}
+
+public function inpatient_deposit($date1,$date2,$paidVia) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT rd.registrationNo,rd.dateUnregistered,pp.amountPaid,pp.paidVia FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.dateUnregistered = '' and (pp.datePaid between '$date1' and '$date2') and pp.paidVia = '$paidVia' and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->inpatient_deposit_registrationNo[] = $row['registrationNo'];
+		$this->inpatient_deposit_dateUnregistered[] = $row['dateUnregistered'];
+		$this->inpatient_deposit_amountPaid[] = $row['amountPaid'];
+		$this->inpatient_deposit_paidVia[] = $row['paidVia'];
+	}
+}
+
+
 
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
