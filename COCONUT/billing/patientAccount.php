@@ -47,6 +47,14 @@ echo "<Table border=0 width='90%'>";
 		echo "<td align='right'>&nbsp;".($ro->patientAccountOPD_cashpaid)."</td>";
 		echo "<td align='right'>&nbsp;".($ro->patientAccountOPD_creditCard)."</td>";
 		echo "<td align='right'>&nbsp;".($ro->patientAccountOPD_total)."</td>";
+
+		if($title == "OT") {
+			echo "<td align='right'>".$ro->patientAccountOPD_paid_hospital()."</td>";
+			echo "<td align='right'>".$ro->patientAccountOPD_paid_pf()."</td>";
+		}else {
+
+		}
+
 	echo "</tr>";
 echo "</table>";
 
