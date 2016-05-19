@@ -2897,7 +2897,7 @@ if($row['title'] == "OT") {
 		}else {
 
 			if( $row['dateUnregistered'] != $row['datePaid'] ) {
-				echo "<td>&nbsp;Date paid != Date Unregistered<font color=red>".$row['lastName'].", ".$row['firstName']."</font></td>";
+				echo "<td>&nbsp;<font color='red'>$row[registrationNo]</font>-Date paid != Date Unregistered-<font color=red>".$row['lastName'].", ".$row['firstName']."</font></td>";
 			}else {
 				echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
 			}
