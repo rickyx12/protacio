@@ -1857,6 +1857,21 @@ return $row['total'];
 
 }
 
+public function patientAccountOPD_mismatch($date1,$date2,$type,$title) {
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+
+$result = mysqli_query($connection, " select rd.registrationNo,rd.dateUnregistered,pc.datePaid from registrationDetails rd,patientCharges pc where rd.registrationNo = pc.registrationNo and rd.type = '$type' and (rd.dateUnregistered between '$date1' and '$date2') and pc.cashPaid > 0 and pc.title = '$title' and rd.dateUnregistered != pc.datePaid ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+	echo $row['registrationNo']." <br>date paid = ".$row['datePaid']."<Br>date discharged=".$row['dateUnregistered']."<br>";
+}
+
+}
+
 
 public $showAllAccountTitle_cash;
 public $showAllAccountTitle_hmo;
@@ -2196,7 +2211,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select title from patientCharges where title not in ('PROFESSIONAL FEE','OT','ST') group by title order by title asc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select registrationNo,title from patientCharges where title not in ('PROFESSIONAL FEE','OT','ST') group by title order by title asc ") or die("Query fail: " . mysqli_error()); 
 
 echo "<table border=0 width='90%'>";
 echo "<Tr>";
@@ -2880,7 +2895,13 @@ if($row['title'] == "OT") {
 		if( $row['dateUnregistered'] == "" ) {
 			echo "<td><font color=red>".$row['registrationNo']."-&nbsp;".$row['lastName'].", ".$row['firstName']."</font></td>";
 		}else {
-			echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+
+			if( $row['dateUnregistered'] != $row['datePaid'] ) {
+				echo "<td>&nbsp;Date paid != Date Unregistered<font color=red>".$row['lastName'].", ".$row['firstName']."</font></td>";
+			}else {
+				echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."</td>";
+			}
+
 		}
 		
 		echo "<td>&nbsp;".$row['description']."</td>";
