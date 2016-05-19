@@ -1794,6 +1794,21 @@ return $row['pdMethod'];
 
 }
 
+public function showAllAccountTitle_debit_exception($date1,$date2,$cols,$type,$title) {
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+
+$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and pc.".$cols." > 0 and (pc.cashPaid > 0 or pc.amountPaidFromCreditCard > 0 or pc.discount > 0) and rd.registrationNo = pc.registrationNo and rd.dateUnregistered != '' and pc.datePaid != '' and (pc.datePaid between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+return $row['pdMethod'];
+}
+
+}
+
 
 //function pra sa meron payment pro meron png balance.
 public function showAllAccountTitle_debit_balance($date1,$date2,$cols,$type,$title) {
@@ -2232,8 +2247,8 @@ while($row = mysqli_fetch_array($result))
 $discountz = ( $this->showAllAccountTitle_debit_paid($date1,$date2,"discount","OPD",$row['title']) + $this->showAllAccountTitle_debit_discount($date1,$date2,"OPD",$row['title']) ); //discount from paid + discount from not paid
 $disc = ($discountz);
 $unpaid = ($this->showAllAccountTitle_debit_balance($date1,$date2,"cashUnpaid","OPD",$row['title']));
-$companyHMO = ($this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']));
-$phic = ($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']));
+$companyHMO = ($this->showAllAccountTitle_debit($date1,$date2,"company","OPD",$row['title']) + $this->showAllAccountTitle_debit_exception($date1,$date2,"company","OPD",$row['title']));
+$phic = ($this->showAllAccountTitle_debit($date1,$date2,"phic","OPD",$row['title']) + $this->showAllAccountTitle_debit_exception($date1,$date2,"phic","OPD",$row['title']) );
 $paid = ($this->showAllAccountTitle_debit_paid($date1,$date2,"cashPaid","OPD",$row['title']));
 $cr = ($this->showAllAccountTitle_debit_paid($date1,$date2,"amountPaidFromCreditCard","OPD",$row['title']));
 $totalIndividual = ( $this->showAllAccountTitle_debit_total($date1,$date2,"OPD",$row['title']) );
@@ -2858,6 +2873,17 @@ echo "</tr>";
 }
 
 
+private $patientAccountOPD_paid_hospital;
+private $patientAccountOPD_paid_pf;
+
+public function patientAccountOPD_paid_hospital() {
+	return $this->patientAccountOPD_paid_hospital;
+}
+
+public function patientAccountOPD_paid_pf() {
+	return $this->patientAccountOPD_paid_pf;
+}
+
 public function patientAccountOPD_paid($date,$date1,$title) {
 
 echo "<style>
@@ -2920,6 +2946,8 @@ if($row['title'] == "OT") {
 		if($title == "OT") {
 			echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
 			echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
+			$this->patientAccountOPD_paid_hospital += ( $row['total'] - $row['otShare'] );
+			$this->patientAccountOPD_paid_pf += $row['otShare'];
 		}else {	
 			/*hide*/
 		}
