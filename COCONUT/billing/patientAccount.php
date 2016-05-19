@@ -11,6 +11,7 @@ echo $date."<Br>";
 echo $date1."<Br>";
 echo $title."-".$type;
 echo "<br><br>";
+$ro->patientAccountOPD_mismatch($date,$date1,$type,$title);
 if($type == "IPD" ) {
 $ro->patientAccount($date,$date1,$type,$title);
 }else {
