@@ -49,8 +49,8 @@ echo "<Table border=0 width='90%'>";
 		echo "<td align='right'>&nbsp;".($ro->patientAccountOPD_total)."</td>";
 
 		if($title == "OT") {
-			echo "<td align='right'>".$ro->patientAccountOPD_paid_hospital()."</td>";
-			echo "<td align='right'>".$ro->patientAccountOPD_paid_pf()."</td>";
+			echo "<td align='right'>".($ro->patientAccountOPD_paid_hospital() + $ro->patientAccountOPD_notPaid_hospital())."</td>";
+			echo "<td align='right'>".($ro->patientAccountOPD_paid_pf() + $ro->patientAccountOPD_notPaid_pf())."</td>";
 		}else {
 
 		}

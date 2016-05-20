@@ -104,6 +104,7 @@ $otHMO = $ro3->showTherapyAccounts_hmo();
 $otPHIC = $ro3->showTherapyAccounts_phic();
 $otUnpaid = $ro3->showTherapyAccounts_unpaid();
 $otShare = $ro3->showTherapyAccounts_pf();
+$ot_hmo_Payables = $ro3->showTherapyAccounts_hmo_payable();
 $otDiscount = $ro3->showTherapyAccounts_discount();
 
 
@@ -115,6 +116,7 @@ $stHMO = $ro3->showTherapyAccounts_hmo();
 $stPHIC = $ro3->showTherapyAccounts_phic();
 $stUnpaid = $ro3->showTherapyAccounts_unpaid();
 $stShare = $ro3->showTherapyAccounts_pf();
+$st_hmo_Payables = $ro3->showTherapyAccounts_hmo_payable();
 $stDiscount = $ro3->showTherapyAccounts_discount();
 
 echo "</table>";
@@ -144,7 +146,7 @@ echo "<a href='#' id='totalLink' style='text-decoration:none; color:black'>Total
 //for original transaction summary format
 $opd_creditCard = ( $ro3->showAllAccountTitle_opd_creditCard() + $ro3->showPFAccounts_creditCard_totalCard() + $otCreditCard + $stCreditCard );
 $opd_cash = ( $ro3->showAllAccountTitle_opd_cash() + $ro3->showPFaccounts_cash() + $otCash + $stCash + $ro3->showPFaccounts_pf() + $otShare + $stShare );
-$opd_hmo = ( $ro3->showAllAccountTitle_opd_hmo() + $ro3->showPFaccounts_hmo() + $otHMO + $stHMO );
+$opd_hmo = ( $ro3->showAllAccountTitle_opd_hmo() + $ro3->showPFaccounts_hmo() + $otHMO + $stHMO);
 $opd_phic = ( $ro3->showAllAccountTitle_opd_phic() + $ro3->showPFaccounts_phic() + $otPHIC + $stPHIC );
 $opd_unpaid = ( $ro3->showAllAccountTitle_opd_unpaid() + $ro3->showPFaccounts_unpaid() + $otUnpaid + $stUnpaid );
 $opd_discount = ( $ro3->showAllAccountTitle_opd_discount() + $ro3->showPFaccounts_discount() + $otDiscount + $stDiscount );
@@ -197,6 +199,7 @@ $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 	<input type="hidden" name="opd_PT" value="<? echo $opd_PT ?>">
 	<input type="hidden" name="opd_OT" value="<? echo $opd_OT ?>">
 	<input type="hidden" name="opd_ST" value="<? echo $opd_ST ?>">
+	<input type="hidden" name="opd_therapy_payables" value="<? echo ($ot_hmo_Payables + $st_hmo_Payables) ?>">
 	<input type="hidden" name="opd_PF_payable" value="<? echo $opd_PF_payable ?>">
 	<input type="hidden" name="opd_cardiacMonitor" value="<? echo $opd_cardiacMonitor ?>">
 	<input type="hidden" name="opd_misc" value="<? echo $opd_misc ?>">
