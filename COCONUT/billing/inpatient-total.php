@@ -35,7 +35,7 @@ $opd_ST = $_GET['opd_ST'];
 $opd_cardiacMonitor = $_GET['opd_cardiacMonitor'];
 $opd_PF_payable = $_GET['opd_PF_payable'];
 $opd_misc = $_GET['opd_misc'];
-$opd_therapy_payables = $_GET['opd_therapy_payables'];
+$opd_OT_payables = $_GET['opd_OT_payables'];
 
 $ro2 = new database2();
 $ro4 = new database4();
@@ -316,7 +316,7 @@ $excess; 		$excessTotal = 0;
 			<input type="hidden" name="opd_PT" value="<? echo $opd_PT ?>">
 			<input type="hidden" name="opd_OT" value="<? echo $opd_OT ?>">
 			<input type="hidden" name="opd_ST" value="<? echo $opd_ST ?>">
-			<input type="hidden" name="opd_therapy_payables" value="<? echo $opd_therapy_payables ?>">
+			<input type="hidden" name="opd_OT_payables" value="<? echo $opd_OT_payables ?>">
 			<input type="hidden" name="opd_PF_payable" value="<? echo $opd_PF_payable ?>">
 			<input type="hidden" name="opd_cardiacMonitor" value="<? echo $opd_cardiacMonitor ?>">
 			<input type="hidden" name="opd_misc" value="<? echo $opd_misc ?>">			
