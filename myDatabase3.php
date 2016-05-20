@@ -2522,7 +2522,7 @@ echo "</tr>";
 
 public function showTherapyAccounts_pfCash($date,$date1,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and pc.title = '$title' and rd.type='OPD' and pc.status in ('PAID','UNPAID') and pc.paidVia = 'Cash' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('PAID','UNPAID') and pc.paidVia = 'Cash' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		($row['share'] > 0) ? $x = $row['share'] : $x = 0;
@@ -2532,7 +2532,17 @@ public function showTherapyAccounts_pfCash($date,$date1,$title) {
 
 public function showTherapyAccounts_pfCreditCard($date,$date1,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and ((rd.dateUnregistered between '$date' and '$date1') or (pc.datePaid between '$date' and '$date1')) and pc.title = '$title' and rd.type='OPD' and pc.status in ('PAID','UNPAID') and pc.paidVia = 'Credit Card' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('PAID','UNPAID') and pc.paidVia = 'Credit Card' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		($row['share'] > 0) ? $x = $row['share'] : $x = 0;
+		return $x;
+	}
+}
+
+public function showTherapyAccounts_pfHMO($date,$date1,$title) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('UNPAID') and pc.company > 0 ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		($row['share'] > 0) ? $x = $row['share'] : $x = 0;
@@ -2548,6 +2558,8 @@ private $showTherapyAccounts_unpaid;
 private $showTherapyAccounts_creditCard;
 private $showTherapyAccounts_discount;
 private $showTherapyAccounts_pf;
+private $showTherapyAccounts_payable;
+private $showTherapyAccounts_hmo_payable;
 private $showTherapyAccounts_total;
 
 
@@ -2577,6 +2589,14 @@ public function showTherapyAccounts_discount() {
 
 public function showTherapyAccounts_pf() {
 	return $this->showTherapyAccounts_pf;
+}
+
+public function showTherapyAccounts_payable() {
+	return $this->showTherapyAccounts_payable;
+}
+
+public function showTherapyAccounts_hmo_payable() {
+	return $this->showTherapyAccounts_hmo_payable;
 }
 
 public function showTherapyAccounts_total() {
@@ -2609,7 +2629,7 @@ public function showTherapyAccounts($date,$date1,$title) {
 
 		if( $row['creditCard'] > 0 ) {
 			echo "<td align='right'>&nbsp;".number_format(round($row['creditCard'],2),2)."</td>";
-			echo "<td align='right'>&nbsp;".number_format(round(($this->showTherapyAccounts_pfCreditCard($date,$date1,$title)),2),2)."</td>";
+			echo "<td align='right'>&nbsp;".number_format(round( ( $this->showTherapyAccounts_pfCreditCard($date,$date1,$title) + $this->showTherapyAccounts_pfHMO($date,$date1,$title) ),2),2)."</td>";
 		}else {
 			echo "<td>&nbsp;</td>";
 			echo "<td>&nbsp;</td>";
@@ -2629,7 +2649,9 @@ public function showTherapyAccounts($date,$date1,$title) {
 		$this->showTherapyAccounts_hmo = $row['hmo'];
 		$this->showTherapyAccounts_phic = $row['phic'];
 		$this->showTherapyAccounts_discount = $row['disc'];
-		$this->showTherapyAccounts_pf = $this->showTherapyAccounts_pfCash($date,$date1,$title);
+		$this->showTherapyAccounts_pf = ($this->showTherapyAccounts_pfCash($date,$date1,$title) + $this->showTherapyAccounts_pfCreditCard($date,$date1,$title));
+		$this->showTherapyAccounts_payable = $this->showTherapyAccounts_pfCreditCard($date,$date1,$title);
+		$this->showTherapyAccounts_hmo_payable = $this->showTherapyAccounts_pfHMO($date,$date1,$title);
 		$this->showTherapyAccounts_total = $row['total'];
 	}
 
@@ -2808,6 +2830,16 @@ public $patientAccountOPD_phic;
 public $patientAccountOPD_cashpaid;
 public $patientAccountOPD_creditCard;
 public $patientAccountOPD_total;
+private $patientAccountOPD_notPaid_hospital;
+private $patientAccountOPD_notPaid_pf;
+
+public function patientAccountOPD_notPaid_hospital() {
+	return $this->patientAccountOPD_notPaid_hospital;
+}
+
+public function patientAccountOPD_notPaid_pf() {
+	return $this->patientAccountOPD_notPaid_pf;
+}
 
 public function patientAccountOPD_notPaid($date,$date1,$title) {
 
@@ -2864,6 +2896,8 @@ echo "<tr>";
 	if($title == "OT") {
 		echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
 		echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
+		$this->patientAccountOPD_notPaid_hospital += ($row['total'] - $row['otShare']);
+		$this->patientAccountOPD_notPaid_pf += $row['otShare'];
 	}else {	
 		/*hide*/
 	}	
