@@ -146,8 +146,10 @@ $excess; 		$excessTotal = 0;
 											<td> <? $pf = ($ro4->inpatient_title_total($registrationNo,"total","PROFESSIONAL FEE") + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo)); echo $pf; $pfTotal += $pf; ?> </td>
 											<td> <? $room = ($ro4->inpatient_title_total($registrationNo,"total","Room and Board") + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo)); echo $room; $roomTotal += $room; ?> </td>
 											<td> <? $cardiac = $ro4->inpatient_title_total($registrationNo,"total","CARDIAC MONITOR"); echo $cardiac; $cardiacTotal += $cardiac; ?> </td>
-											<td> <? $pt = $ro4->inpatient_title_total($registrationNo,"total","PT"); echo $pt; $ptTotal += $pt; $ptTotal += $pt; ?> </td>
-											<td> <? $ot = $ro4->inpatient_title_total($registrationNo,"total","OT"); echo $ot; $otTotal += $otTotal; ?> </td>
+											<td> 
+												<? $pt = $ro4->inpatient_title_total($registrationNo,"total","PT"); echo $pt; $ptTotal += $pt;  ?> 
+											</td>
+											<td> <? $ot = $ro4->inpatient_title_total($registrationNo,"total","OT"); echo $ot; $otTotal += $ot; ?> </td>
 											<td> <? $st = $ro4->inpatient_title_total($registrationNo,"total","ST"); echo $st; $stTotal += $stTotal; ?> </td>
 											<td> <? $others = $ro4->inpatient_title_total($registrationNo,"total","OTHERS"); echo $others; $othersTotal += $others; ?> </td>
 											<td> <? $hmoExcess = $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo); echo $hmoExcess; $hmoExcessTotal += $hmoExcess; ?> </td>
@@ -162,25 +164,29 @@ $excess; 		$excessTotal = 0;
 											<td><? $unpaid = round($ro4->inpatient_paymentMode_total($registrationNo,"cashUnpaid") + $hmoExcess + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2); echo $unpaid; $unpaidTotal += $unpaid; ?></td>
 											<td><? $cash = $ro4->inpatient_payment_total($registrationNo,"CASH"); echo $cash; $cashTotal += $cash; ?></td>
 											<td><? $creditCard = $ro4->inpatient_payment_total($registrationNo,"Credit Card"); echo $creditCard; $creditCardTotal += $creditCard ?></td>
-											<td><? $bal = round(( round($unpaid,2) - round($cash + $creditCard + $disc ,2) ),2); echo $bal; 
+											<td>
+												<? $bal = round(( round($unpaid,2) - round($cash + $creditCard + $disc ,2) ),2); echo $bal; 
 
-												if( $bal > 0 ) {
-													$balTotal += $bal;
-												}else {
-													//kpg negative wag n isama sa total kc meron nman syang kabanggang account na excess payment
-												}
+													if( $bal > 0 ) {
+														$balTotal += $bal;
+													}else {
+														//kpg negative wag n isama sa total kc meron nman syang kabanggang account na excess payment
+													}
 
-											 ?></td>
+												 ?>
+											 </td>
 
-											<td><? 
+											<td>
+												<? 
 
-												if( $bal < 0 ) {
-													$excess = abs($bal); echo $excess; $excessTotal += $excess;
-												}else {
-													
-												}
+													if( $bal < 0 ) {
+														$excess = abs($bal); echo $excess; $excessTotal += $excess;
+													}else {
+														
+													}
 
-											?></td>
+												?>
+											</td>
 											<?
 
 												$paymentMode_total = round( $hmo + $phic + $unpaid,2);
