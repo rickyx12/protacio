@@ -172,7 +172,7 @@ $opd_others = $ro3->showAllAccountTitle_opd_others();
 $opd_OR = $ro3->showAllAccountTitle_opd_OR();
 $opd_PT = ($ro3->showAllAccountTitle_opd_PT());
 $opd_OT = ( $otCreditCard + $otCash + $otHMO + $otPHIC);
-$opd_ST = $stTotal;
+$opd_ST = ( $stCreditCard + $stCash + $stHMO + $stPHIC );
 $opd_cardiacMonitor = $ro3->showAllAccountTitle_opd_cardiacMonitor();
 $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 
@@ -202,6 +202,7 @@ $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 	<input type="hidden" name="opd_OT" value="<? echo $opd_OT ?>">
 	<input type="hidden" name="opd_ST" value="<? echo $opd_ST ?>">
 	<input type="hidden" name="opd_OT_payables" value="<? echo ($ot_hmo_Payables + $ot_Payables) ?>">
+	<input type="hidden" name="opd_ST_payables" value="<? echo ($st_hmo_Payables + $st_Payables) ?>">
 	<input type="hidden" name="opd_PF_payable" value="<? echo $opd_PF_payable ?>">
 	<input type="hidden" name="opd_cardiacMonitor" value="<? echo $opd_cardiacMonitor ?>">
 	<input type="hidden" name="opd_misc" value="<? echo $opd_misc ?>">

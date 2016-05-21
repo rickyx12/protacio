@@ -27,6 +27,7 @@ $opd_PT = $_POST['opd_PT'];
 $opd_OT = $_POST['opd_OT'];
 $opd_ST = $_POST['opd_ST'];
 $opd_OT_payables = $_POST['opd_OT_payables'];
+$opd_ST_payables = $_POST['opd_ST_payables'];
 $opd_cardiacMonitor = $_POST['opd_cardiacMonitor'];
 $opd_PF_payable = $_POST['opd_PF_payable'];
 $opd_misc = $_POST['opd_misc'];
@@ -232,13 +233,13 @@ $ipd_balance1 = 0;
 					<tr>
 						<td>OT</td>
 						<td></td>
-						<td><? ( $opd_OT > 0 ) ? $x = number_format(($opd_OT - $opd_OT_payables),2) : $x = ""; echo $x ?></td>
+						<td><? ( ($opd_OT - $opd_OT_payables) > 0 ) ? $x = number_format(($opd_OT - $opd_OT_payables),2) : $x = ""; echo $x ?></td>
 					</tr>
 
 					<tr>
 						<td>ST</td>
 						<td></td>
-						<td><? ( $opd_ST > 0 ) ? $x = number_format($opd_ST,2) : $x = ""; echo $x ?></td>
+						<td><? ( ($opd_ST - $opd_ST_payables) > 0 ) ? $x = number_format(($opd_ST - $opd_ST_payables),2) : $x = ""; echo $x ?></td>
 					</tr>
 
 					<tr>
@@ -250,13 +251,13 @@ $ipd_balance1 = 0;
 					<tr>
 						<td>Payable-MD</td>
 						<td></td>
-						<td><? (($opd_PF_payable + $opd_OT_payables) > 0) ? $x = number_format($opd_PF_payable + $opd_OT_payables,2) : $x = ""; echo $x ?></td>
+						<td><? (($opd_PF_payable + $opd_OT_payables + $opd_ST_payables) > 0) ? $x = number_format($opd_PF_payable + $opd_OT_payables + $opd_ST_payables,2) : $x = ""; echo $x ?></td>
 					</tr>
 
 					<tr>
 						<td></td>
 						<td><? echo number_format(( $opdCreditCard + $opdCash + $opdHMO + $opdPHIC + $opdUnpaid + $opdDiscount + $opd_PF_payable),2) ?></td>
-						<td><? echo number_format(( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_others + $opd_PT + ($opd_OT - $opd_OT_payables) + $opd_ST + $opd_cardiacMonitor + $opd_PF_payable + $opd_OT_payables ),2) ?></td>
+						<td><? echo number_format(( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_others + $opd_PT + ($opd_OT - $opd_OT_payables) + $opd_ST + $opd_cardiacMonitor + $opd_PF_payable + $opd_OT_payables + $opd_ST_payables ),2) ?></td>
 					</tr>
 
 				</tbody>
