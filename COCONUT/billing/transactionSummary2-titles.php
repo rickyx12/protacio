@@ -233,13 +233,24 @@ $ipd_balance1 = 0;
 					<tr>
 						<td>OT</td>
 						<td></td>
-						<td><? ( ($opd_OT - $opd_OT_payables) > 0 ) ? $x = number_format(($opd_OT - $opd_OT_payables),2) : $x = ""; echo $x ?></td>
+						<td>
+							<? 
+								$otTotal = ( $opd_OT - $opd_OT_payables );
+								( $otTotal > 0 ) ? $x = number_format($otTotal,2) : $x = ""; echo $x 
+
+							?>
+						</td>
 					</tr>
 
 					<tr>
 						<td>ST</td>
 						<td></td>
-						<td><? ( ($opd_ST - $opd_ST_payables) > 0 ) ? $x = number_format(($opd_ST - $opd_ST_payables),2) : $x = ""; echo $x ?></td>
+						<td>
+							<? 
+								$stTotal = ( $opd_ST - $opd_ST_payables );
+								( $stTotal > 0 ) ? $x = number_format(($stTotal),2) : $x = ""; echo $x 
+							?>
+						</td>
 					</tr>
 
 					<tr>
@@ -251,13 +262,23 @@ $ipd_balance1 = 0;
 					<tr>
 						<td>Payable-MD</td>
 						<td></td>
-						<td><? (($opd_PF_payable + $opd_OT_payables + $opd_ST_payables) > 0) ? $x = number_format($opd_PF_payable + $opd_OT_payables + $opd_ST_payables,2) : $x = ""; echo $x ?></td>
+						<td>
+							<? 
+								$payableTotal = ( $opd_PF_payable + $opd_OT_payables + $opd_ST_payables );
+								($payableTotal > 0) ? $x = number_format($payableTotal,2) : $x = ""; echo $x 
+							?>
+						</td>
 					</tr>
 
 					<tr>
 						<td></td>
 						<td><? echo number_format(( $opdCreditCard + $opdCash + $opdHMO + $opdPHIC + $opdUnpaid + $opdDiscount + $opd_PF_payable),2) ?></td>
-						<td><? echo number_format(( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_others + $opd_PT + ($opd_OT - $opd_OT_payables) + $opd_ST + $opd_cardiacMonitor + $opd_PF_payable + $opd_OT_payables + $opd_ST_payables ),2) ?></td>
+						<td>
+							<? 
+
+								echo number_format(( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal  + $payableTotal ),2) 
+							?>
+						</td>
 					</tr>
 
 				</tbody>
