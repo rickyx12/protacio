@@ -147,7 +147,7 @@ echo "<a href='#' id='totalLink' style='text-decoration:none; color:black'>Total
 
 //for original transaction summary format
 $opd_creditCard = ( $ro3->showAllAccountTitle_opd_creditCard() + $ro3->showPFAccounts_creditCard_totalCard() + $otCreditCard + $stCreditCard );
-$opd_cash = ( $ro3->showAllAccountTitle_opd_cash() + $ro3->showPFaccounts_cash() + $otCash + $stCash + $ro3->showPFaccounts_pf() );
+$opd_cash = ( $ro3->showAllAccountTitle_opd_cash() + $ro3->showPFaccounts_cash() + $otCash + $stCash );
 $opd_hmo = ( $ro3->showAllAccountTitle_opd_hmo() + $ro3->showPFaccounts_hmo() + $otHMO + $stHMO);
 $opd_phic = ( $ro3->showAllAccountTitle_opd_phic() + $ro3->showPFaccounts_phic() + $otPHIC + $stPHIC );
 $opd_unpaid = ( $ro3->showAllAccountTitle_opd_unpaid() + $ro3->showPFaccounts_unpaid() + $otUnpaid + $stUnpaid );
@@ -155,7 +155,7 @@ $opd_discount = ( $ro3->showAllAccountTitle_opd_discount() + $ro3->showPFaccount
 
 $opd_paidBalance = $ro3->showAllAccountTitle_opd_balancePaid();
 $opd_PF_total = $ro3->showPFaccounts_total();
-$opd_PF_hospitalShare = $ro3->showPFaccounts_cash();
+$opd_PF_hospitalShare = ( $ro3->showPFaccounts_unpaid() + $ro3->showPFaccounts_cash() + $ro3->showPFaccounts_creditCards() + $ro3->showPFaccounts_phic() + $ro3->showPFaccounts_hmo() );
 $opd_PF_creditCard = $ro3->showPFaccounts_creditCards();
 $opd_PF_payable = $ro3->showPFaccounts_payable();
 $opd_ecg = $ro3->showAllAccountTitle_opd_ecg();
@@ -185,7 +185,7 @@ $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 	<input type="hidden" name="opdUnpaid" value="<? echo $opd_unpaid ?>">
 	<input type="hidden" name="opdDiscount" value="<? echo $opd_discount ?>">
 	<input type="hidden" name="opdBalancePaid" value="<? echo $opd_paidBalance ?>">
-	<input type="hidden" name="opd_pf_total" value="<? echo ($opd_PF_total) ?>">
+	<input type="hidden" name="opd_pf_total" value="<? echo ($opd_PF_hospitalShare) ?>">
 	<input type="hidden" name="opd_ecg" value="<? echo $opd_ecg ?>">
 	<input type="hidden" name="opd_xray" value="<? echo $opd_xray ?>">
 	<input type="hidden" name="opd_ultrasound" value="<? echo $opd_ultrasound ?>">
