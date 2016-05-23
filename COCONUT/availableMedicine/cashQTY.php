@@ -28,7 +28,32 @@ $stockCardNo = "";
 }
 
 $ro = new database();
+$allowableRequest = ($ro->selectNow("inventory","quantity","inventoryCode",$chargesCode) - $ro->total_request($chargesCode,$title)); 
+?>
 
+<script src="../../jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
+
+<script>
+	$(document).ready(function() {
+		$(".container").hide();
+		$(document).on("keyup","#quantity",function() {
+			var qty = $("#quantity").val();
+			var allowableReq = <? echo $allowableRequest ?>;
+			if(qty > allowableReq) {
+				$("#proceed").hide();
+				$(".container").show();
+			}else {
+				$("#proceed").show();
+				$(".container").hide();
+			}
+
+		});
+
+	});
+</script>
+
+<?php
 if($ro->selectNow("inventory","quantity","inventoryCode",$chargesCode) < 1 ) {
 $ro->getBack("Sorry, Out of Stock");
 }
@@ -47,21 +72,47 @@ echo "
 
 ";
 
+
+
 //addCharges.php
-echo "<br><Br><Br>";
+if( $ro->total_request($chargesCode,$title) > 0 ) {
+	echo "<br><Br><center>Pending Request <font color=red>(".$ro->total_request($chargesCode,$title).")</font> Pcs</center>";
+}else {
+	echo "<Br><br>";
+}
+echo "<center>Maximum Allowable Request <font color=blue>(".($ro->selectNow("inventory","quantity","inventoryCode",$chargesCode) - $ro->total_request($chargesCode,$title)).")</font> Pcs</center><br>";
+?>
+
+	<div class="container">
+		<div class="col-md-3 text-center">
+			
+		</div>
+
+		<div class="col-md-6 text-center">
+			<div class="alert alert-info">
+				Ooops! hanggang <? echo $allowableRequest ?> lang ang pwede mo ilagay sa quantity  =)
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			
+		</div>
+	</div>
+
+<?php
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/availableMedicine/addCharges_cash.php'>";
 echo "<center><div style='border:1px solid #000000; width:400px; height:100px;	'>";
 echo "<br><table border=0 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<td><font size=4>Quantity:</font></td>";
-echo "<td><input type=text class='qty' name='quantity' value='1'></td>";
+echo "<td><input type=text id='quantity' class='qty' name='quantity' value='1' autocomplete='off'></td>";
 echo "</tr>";
 echo "<tr><td>&nbsp;</td></tr>";
 echo "<tr>";
 echo "<td><input type='button' class='button' value=' Back  '
 onClick='javascript: history.go(-1)' style='border:1px solid #000000; background-color:transparent;'></td>";
 echo "<td>&nbsp;&nbsp;</td>";
-echo "<td><input type=submit value='Proceed' style='border:1px solid #000000; background-color:transparent; color:red; height:20px;'></td>";
+echo "<td><input type=submit id='proceed' value='Proceed' style='border:1px solid #000000; background-color:transparent; color:red; height:20px;'></td>";
 echo "<input type=hidden name='status' value='$status'>";
 echo "<input type=hidden name='registrationNo' value='$registrationNo'>";
 echo "<input type=hidden name='chargesCode' value='$chargesCode'>";
