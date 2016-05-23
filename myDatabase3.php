@@ -3613,23 +3613,20 @@ echo "<input type='submit' value='Proceed'>";
 echo "</form>";
 }
 
-public function updateDermaPx($registrationNo) {
+private $dermaCharges_itemNo;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
-if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-
-mysql_select_db($this->database, $con);
-
-mysql_query("UPDATE patientCharges SET title = 'DERMA' where registrationNo = '$registrationNo' and description not like 'medical cer%%%%%%%%' ");
-
-mysql_close($con);
-
+public function dermaCharges_itemNo() {
+	return $this->dermaCharges_itemNo;
 }
 
+public function dermaCharges($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "select itemNo from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+	while($row = mysqli_fetch_array($result)) {
+		 $this->dermaCharges_itemNo[] = $row['itemNo'];
+	}	
 
+}
 
 
 public function getDateOfLastPayment($registrationNo) {
