@@ -542,7 +542,7 @@ public function getAdmissionKit($date,$date1) {
 
 $connection = mysqli_connect($this->dbHost,$this->dbUser,$this->dbPass,$this->dbDB);      
 
-$result = mysqli_query($connection, "select pr.lastName,pr.firstName,pc.description,pc.quantity,rd.dateRegistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.chargesCode = '348' and pc.title = 'SUPPLIES' and pc.status not like 'DELETED%' and (pc.dateCharge between '$date' and '$date1') order by rd.dateRegistered,pr.lastName asc") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, "select pr.lastName,pr.firstName,pc.description,pc.quantity,rd.dateRegistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.description like 'ADM. KIT%' and pc.title = 'SUPPLIES' and pc.status not like 'DELETED%' and (pc.dateCharge between '$date' and '$date1') order by rd.dateRegistered,pr.lastName asc") or die("Query fail: " . mysqli_error()); 
 
 
 echo "<table border=1 cellspacing=0>";
