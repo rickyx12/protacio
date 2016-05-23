@@ -36,19 +36,30 @@ $allowableRequest = ($ro->selectNow("inventory","quantity","inventoryCode",$char
 
 <script>
 	$(document).ready(function() {
-		$(".container").hide();
-		$(document).on("keyup","#quantity",function() {
-			var qty = $("#quantity").val();
-			var allowableReq = <? echo $allowableRequest ?>;
-			if(qty > allowableReq) {
-				$("#proceed").hide();
-				$(".container").show();
-			}else {
-				$("#proceed").show();
-				$(".container").hide();
-			}
+		var allowableReq1 = <? echo $allowableRequest ?>;
+		
+		$("#greaterZero").hide();
+		$("#zero").hide();
 
-		});
+		if( allowableReq1 < 1 ) {
+			$("#proceed").hide();
+			$("#zero").show();
+			
+		}else {
+			$(document).on("keyup","#quantity",function() {
+				var qty = $("#quantity").val();
+				var allowableReq = <? echo $allowableRequest ?>;				
+				
+				if(qty > allowableReq) {
+					$("#proceed").hide();
+					$("#greaterZero").show();
+				}else {
+					$("#proceed").show();
+					$("#greaterZero").hide();
+				}
+
+			});
+		}
 
 	});
 </script>
@@ -89,8 +100,13 @@ echo "<center>Maximum Allowable Request <font color=blue>(".($ro->selectNow("inv
 		</div>
 
 		<div class="col-md-6 text-center">
-			<div class="alert alert-info">
+
+			<div id="greaterZero" class="alert alert-info">
 				Ooops! hanggang <? echo $allowableRequest ?> lang ang pwede mo ilagay sa quantity  =)
+			</div>
+
+			<div id="zero" class="alert alert-info">
+				Sorry, hindi ka na pwede mag request dahil meron naka pending na request sa ibang Px
 			</div>
 		</div>
 
