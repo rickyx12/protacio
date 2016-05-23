@@ -272,11 +272,17 @@ $ipd_balance1 = 0;
 
 					<tr>
 						<td></td>
-						<td><? echo number_format(( $opdCreditCard + $opdCash + $opdHMO + $opdPHIC + $opdUnpaid + $opdDiscount + $opd_PF_payable),2) ?></td>
+						<td>
+							<? 
+								$opdDebit = ( $opdCreditCard + $opdCash + $opdHMO + $opdPHIC + $opdUnpaid + $opdDiscount + $opd_PF_payable);
+								echo number_format($opdDebit,2); 
+							?>
+						</td>
 						<td>
 							<? 
 
-								echo number_format(( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal  + $payableTotal ),2) 
+								$opdCredit = ( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal  + $payableTotal );
+								echo number_format($opdCredit,2); 
 							?>
 						</td>
 					</tr>
@@ -467,14 +473,27 @@ $ipd_balance1 = 0;
 						<!--
 						<td><? echo number_format(( $ipd_cash + $ipd_creditCard + $ipd_hmo + $ipd_phic + $ipd_balance + $ipd_discount ),2); ?></td>
 						-->
-						<td><? echo number_format(( $ipd_cash + $ipd_creditCard + $ipd_hmo + $ipd_phic + $ipd_balance1 + $ipd_discount ),2); ?></td>
-						<td><? echo number_format(( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_hmoExcess + $ipd_excess + $ipd_deposit_total ),2); ?></td>
+						<td>
+							<? 
+								$ipdDebit = ( $ipd_cash + $ipd_creditCard + $ipd_hmo + $ipd_phic + $ipd_balance1 + $ipd_discount );
+								echo number_format($ipdDebit,2);
+							?>
+						</td>
+						<td>
+							<? 
+								$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_hmoExcess + $ipd_excess + $ipd_deposit_total ); 
+								echo number_format($ipdCredit,2);
+							?>
+						</td>
 					</tr>
 
 				</tbody>
 			</table>
 		</div>
 
+		<h5>OPD:&nbsp;<? echo number_format($opdDebit,2) ?></h5>
+		<h5>IPD:&nbsp;<? echo number_format($ipdDebit,2) ?></h5>
+		<h5>Total:&nbsp;<? echo number_format($opdDebit + $ipdDebit,2) ?></h5>
 	</div>
 </body>
 </html>
