@@ -52,6 +52,8 @@ $ipd_OT = $_POST['ipd_OT'];
 $ipd_ST = $_POST['ipd_ST'];
 $ipd_others = $_POST['ipd_others'];
 $ipd_hmoExcess = $_POST['ipd_hmoExcess'];
+$ipd_phicPortion = $_POST['ipd_phicPortion'];
+$ipd_customTitle = $_POST['ipd_customTitle'];
 
 $ipd_deposit_cash = $_POST['ipd_deposit_cash'];
 $ipd_deposit_creditCard = $_POST['ipd_deposit_creditCard'];
@@ -457,6 +459,18 @@ $ipd_balance1 = 0;
 					</tr>
 
 					<tr>
+						<td>Philhealth Portion</td>
+						<td></td>
+						<td><? ($ipd_phicPortion > 0) ? $x = number_format($ipd_phicPortion,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
+						<td>Custom Title</td>
+						<td></td>
+						<td><? ($ipd_customTitle > 0) ? $x = number_format($ipd_customTitle,2) : $x = ""; echo $x; ?></td>
+					</tr>
+
+					<tr>
 						<td>Excess Payment</td>
 						<td></td>
 						<td><? ($ipd_excess > 0) ? $x = number_format($ipd_excess,2) : $x = ""; echo $x; ?></td>
@@ -481,7 +495,7 @@ $ipd_balance1 = 0;
 						</td>
 						<td>
 							<? 
-								$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_hmoExcess + $ipd_excess + $ipd_deposit_total ); 
+								$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_hmoExcess + $ipd_phicPortion + $ipd_customTitle + $ipd_excess + $ipd_deposit_total ); 
 								echo number_format($ipdCredit,2);
 							?>
 						</td>

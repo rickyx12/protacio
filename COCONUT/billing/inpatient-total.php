@@ -70,6 +70,11 @@ $bal;			$balTotal = 0;
 $cash;			$cashTotal = 0;
 $creditCard;	$creditCardTotal = 0;
 $excess; 		$excessTotal = 0;
+$phicPortion;   $phicPortionTotal = 0;
+
+$customTitle; $customTitleTotal = 0;
+
+
 ?>
 
 <doctype html>
@@ -110,6 +115,8 @@ $excess; 		$excessTotal = 0;
 									<th>ST</th>
 									<th>Others</th>
 									<th>HMO Excess</th>
+									<th>PHIC Portion</th>
+									<th>Custom Title</th>
 									<th>Total Charges</th>
 									<th>&nbsp;</th>
 									<th>&nbsp;</th>
@@ -152,18 +159,84 @@ $excess; 		$excessTotal = 0;
 											<td> <? $ot = $ro4->inpatient_title_total($registrationNo,"total","OT"); echo $ot; $otTotal += $ot; ?> </td>
 											<td> <? $st = $ro4->inpatient_title_total($registrationNo,"total","ST"); echo $st; $stTotal += $stTotal; ?> </td>
 											<td> <? $others = $ro4->inpatient_title_total($registrationNo,"total","OTHERS"); echo $others; $othersTotal += $others; ?> </td>
-											<td> <? $hmoExcess = $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo); echo $hmoExcess; $hmoExcessTotal += $hmoExcess; ?> </td>
-											<td><? $total = ( $lab + $xray + $utz + $ctscan + $ecg + $erfee + $or + $misc + $spirometry + $meds + $supp + $pf + $room + $cardiac + $pt + $ot + $st + $others + $hmoExcess ); echo $total; $grandTotal += $total; ?></td>
+											<td> 
+												<? 
+													$hmoExcess = $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo); 
+													echo $hmoExcess; 
+													$hmoExcessTotal += $hmoExcess; 
+												?> 
+											</td>
+
+											<td>
+												<?
+													$phicPortion = $ro2->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo); 
+													echo $phicPortion; 
+													$phicPortionTotal += $phicPortion;
+												?>
+											</td>
+
+											<td>
+												<?
+													$customTitle = $ro2->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo);
+													echo $customTitle;
+													$customTitleTotal += $customTitle;
+												?>
+											</td>
+
+											<td>
+												<?
+													 $total = ( $lab + $xray + $utz + $ctscan + $ecg + $erfee + $or + $misc + $spirometry + $meds + $supp + $pf + $room + $cardiac + $pt + $ot + $st + $others + $hmoExcess + $phicPortion + $customTitle ); echo $total; $grandTotal += $total; 
+												?>
+											</td>
 
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>
-											<td><? $disc = round($ro2->selectNow("registrationDetails","discount","registrationNo",$registrationNo),2); echo $disc; $discTotal += $disc; ?></td>
-											<td><? $hmo = round($ro4->inpatient_paymentMode_total($registrationNo,"company"),2); echo $hmo; $hmoTotal += $hmo; ?></td>
-											<td><? $phic = round($ro4->inpatient_paymentMode_total($registrationNo,"phic"),2); echo $phic; $phicTotal += $phic;  ?></td>
-											<td><? $unpaid = round($ro4->inpatient_paymentMode_total($registrationNo,"cashUnpaid") + $hmoExcess + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2); echo $unpaid; $unpaidTotal += $unpaid; ?></td>
-											<td><? $cash = $ro4->inpatient_payment_total($registrationNo,"CASH"); echo $cash; $cashTotal += $cash; ?></td>
-											<td><? $creditCard = $ro4->inpatient_payment_total($registrationNo,"Credit Card"); echo $creditCard; $creditCardTotal += $creditCard ?></td>
+											<td>
+												<? 
+													$disc = round($ro2->selectNow("registrationDetails","discount","registrationNo",$registrationNo),2); echo $disc; $discTotal += $disc; 
+												?>
+											</td>
+
+											<td>
+												<? 
+													$hmo = round($ro4->inpatient_paymentMode_total($registrationNo,"company"),2); echo $hmo; $hmoTotal += $hmo; 
+												?>
+											</td>
+
+											<td>
+												<? 
+													$phic = round($ro4->inpatient_paymentMode_total($registrationNo,"phic"),2); 
+													echo $phic; 
+													$phicTotal += $phic;  
+												?>
+											</td>
+
+											<td>
+												<? 
+													$unpaid = round($ro4->inpatient_paymentMode_total($registrationNo,"cashUnpaid") + $hmoExcess + $phicPortion + $customTitle + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2); 
+													echo $unpaid; 
+													$unpaidTotal += $unpaid; 
+												?>
+											</td>
+
+
+											<td>
+												<? 
+													$cash = ($ro4->inpatient_payment_total($registrationNo,"CASH")); 
+													echo $cash; 
+													$cashTotal += $cash; 
+												?>
+											</td>
+
+											<td>
+												<? 
+													$creditCard = $ro4->inpatient_payment_total($registrationNo,"Credit Card"); 
+													echo $creditCard; 
+													$creditCardTotal += $creditCard 
+												?>
+											</td>
+
 											<td>
 												<? $bal = round(( round($unpaid,2) - round($cash + $creditCard + $disc ,2) ),2); echo $bal; 
 
@@ -222,6 +295,8 @@ $excess; 		$excessTotal = 0;
 								<td><? echo $stTotal ?></td>
 								<td><? echo $othersTotal ?></td>
 								<td><? echo $hmoExcessTotal ?></td>
+								<td><? echo $phicPortionTotal ?></td>
+								<td><? echo $customTitleTotal ?></td>
 								<td><? echo $grandTotal ?></td>
 								<td></td>
 								<td></td>
@@ -289,6 +364,8 @@ $excess; 		$excessTotal = 0;
 			<input type="hidden" name="ipd_ST" value="<? echo $stTotal ?>">
 			<input type="hidden" name="ipd_others" value="<? echo $othersTotal ?>">
 			<input type="hidden" name="ipd_hmoExcess" value="<? echo $hmoExcessTotal ?>">
+			<input type="hidden" name="ipd_phicPortion" value="<? echo $phicPortionTotal ?>">
+			<input type="hidden" name="ipd_customTitle" value="<? echo $customTitleTotal ?>">
 			<input type="hidden" name="ipd_discount" value="<? echo $discTotal ?>">
 			<input type="hidden" name="ipd_hmo" value="<? echo $hmoTotal ?>">
 			<input type="hidden" name="ipd_phic" value="<? echo $phicTotal ?>">
