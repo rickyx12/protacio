@@ -1396,7 +1396,7 @@ public function dailyCashiersReport_pd_opd($registrationNo,$date,$shift,$usernam
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if($shift == "all") {
-$result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and datePaid = '$date' and reportShift in ('1','2','3') and status in ('PAID','UNPAID') and orNO != '' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and datePaid = '$date' and reportShift in ('Morning','Noon','Afternoon','Night') and status in ('PAID','UNPAID') and orNO != '' ") or die("Query fail: " . mysqli_error()); 
 }else {
 $result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and datePaid = '$date' and reportShift = '$shift' and status in ('PAID','UNPAID') and orNO != '' ") or die("Query fail: " . mysqli_error()); 
 }
