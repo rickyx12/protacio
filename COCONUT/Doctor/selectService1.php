@@ -104,17 +104,21 @@ echo "</tr>";
 echo "<tr>";
 //echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value=".$ro->cashAmount()."/".$docShare."></td>";
 
-
-if( $service == "Consultation" ) {
-if( $ro->getRegistrationDetails_company() != "" ) {
-echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='300/300'></td>";
+if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "IPD" ) {
+	echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1'></td>";
 }else {
-echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1'></td>";
-}
-}else {
-echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1'></td>";
-}
 
+	if( $service == "Consultation" ) {
+		if( $ro->getRegistrationDetails_company() != "" ) {
+			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='300/300'></td>";
+		}else {
+			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1' readonly></td>";
+		}
+		}else {
+			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1' readonly></td>";
+		}
+
+}
 
 echo "</tr>";
 if($discount == "Senior") {
