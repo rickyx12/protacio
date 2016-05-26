@@ -1879,7 +1879,7 @@ $result = mysqli_query($connection, " select rd.registrationNo,rd.dateUnregister
 
 while($row = mysqli_fetch_array($result))
 {
-	echo $row['registrationNo']." <br>date paid = ".$row['datePaid']."<Br>date discharged=".$row['dateUnregistered']."<br>";
+	echo "<font color=red>".$row['registrationNo']." <br>date paid = ".$row['datePaid']."<Br>date discharged=".$row['dateUnregistered']."</font><br>";
 }
 
 }
