@@ -10114,10 +10114,15 @@ echo "</tr>";
 
 
 
-public $detailedTotalOnly_patientToPay_total;
+private $detailedTotalOnly_patientToPay_total;
+private $detailedTotalOnly_patientToPay_cashUnpaid;
 
 public function detailedTotalOnly_patientToPay_total() {
 return $this->detailedTotalOnly_patientToPay_total;
+}
+
+public function detailedTotalOnly_patientToPay_cashUnpaid() {
+  return $this->detailedTotalOnly_patientToPay_cashUnpaid;
 }
 
 public function detailedTotalOnly_patientToPay($registrationNo) {
@@ -10130,6 +10135,7 @@ while($row = mysqli_fetch_array($result))
   {
 
 $this->detailedTotalOnly_patientToPay_total += $row['total'];
+$this->detailedTotalOnly_patientToPay_cashUnpaid += $row['cashUnpaid'];
 
 if($row['title']=="PROFESSIONAL FEE"){
 $sp=preg_split('[/]',$row['sellingPrice']);
