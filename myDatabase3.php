@@ -1449,11 +1449,8 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-if($shift == "all") {
-$result = mysqli_query($connection, " select reportShift,registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift in ('1','2','3') and status IN ('PAID','UNPAID') and orNO != '' group by paidVia,registrationNo order by reportShift asc") or die("Query fail: " . mysqli_error()); 
-}else {
-$result = mysqli_query($connection, " select registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift = '$shift' and status IN ('PAID','UNPAID') and orNO != '' group by paidVia,registrationNo order by orNO asc") or die("Query fail: " . mysqli_error()); 
-}
+$result = mysqli_query($connection, " select registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift = '$shift' and status IN ('PAID','UNPAID') and orNO != '' group by registrationNo,paidVia order by orNO asc") or die("Query fail: " . mysqli_error()); 
+
 
 while($row = mysqli_fetch_array($result))
 {
