@@ -344,7 +344,7 @@ $customTitle; $customTitleTotal = 0;
 			</div>
 		</div>
 
-		<form method="post" action="transactionSummary2-titles.php">
+		<form method="get" action="transactionSummary2-titles.php">
 			<input type="hidden" name="ipd_laboratory" value="<? echo $labTotal ?>">
 			<input type="hidden" name="ipd_xray" value="<? echo $xrayTotal ?>">
 			<input type="hidden" name="ipd_ultrasound" value="<? echo $utzTotal ?>">
