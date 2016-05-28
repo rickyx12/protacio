@@ -2517,6 +2517,16 @@ echo "</tr>";
 }
 
 
+public function showTherapyAccounts_pfUnpaid($date,$date1,$title) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('UNPAID') and pc.paidVia = 'Cash' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		($row['share'] > 0) ? $x = $row['share'] : $x = 0;
+		return $x;
+	}
+}
+
 public function showTherapyAccounts_pfCash($date,$date1,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('PAID','UNPAID') and pc.paidVia = 'Cash' ") or die("Query fail: " . mysqli_error()); 
@@ -2612,7 +2622,13 @@ public function showTherapyAccounts($date,$date1,$title) {
 		echo "</tr>";
 		echo "<td><font size=2><a href='/COCONUT/billing/patientAccount.php?date=$date&date1=$date1&type=OPD&title=$title' style='text-decoration:none; color:black;' target='_blank'>$title</a></font></td>";
 		echo "<td align='right'>&nbsp;".number_format(round($row['disc'],2),2)."</td>";
-		echo "<td align='right'>&nbsp;".number_format(round($row['unpaid'],2),2)."</td>";
+		if( $row['unpaid'] > 0 ) {
+			$totalUnpaid = ( $row['unpaid'] + $this->showTherapyAccounts_pfUnpaid($date,$date1,$title) );
+			echo "<td align='right'>&nbsp;".number_format(round($totalUnpaid,2),2)."</td>";
+		}else {
+			$totalUnpaid = ( $row['unpaid'] );
+			echo "<td align='right'>&nbsp;".number_format(round($totalUnpaid,2),2)."</td>";
+		}
 		echo "<td align='right'>&nbsp;".number_format(round($row['hmo'],2),2)."</td>";
 		echo "<td align='right'>&nbsp;".number_format(round($row['phic'],2),2)."</td>";
 
@@ -2631,7 +2647,7 @@ public function showTherapyAccounts($date,$date1,$title) {
 			echo "<td>&nbsp;</td>";
 			echo "<td>&nbsp;</td>";
 		}
-		if( ($row['disc'] + $row['unpaid'] + $row['hmo'] + $row['phic'] + $row['cashPaid'] + $this->showTherapyAccounts_pfCash($date,$date1,$title) + $row['creditCard']) == $row['total'] ) {
+		if( ($row['disc'] + $totalUnpaid + $row['hmo'] + $row['phic'] + $row['cashPaid'] + $this->showTherapyAccounts_pfCash($date,$date1,$title) + $row['creditCard']) == $row['total'] ) {
 			//ndi dpat ksma ung payables sa total
 			echo "<td align='right'>&nbsp;".($row['total'] )."</td>";
 		}else {
@@ -2642,7 +2658,7 @@ public function showTherapyAccounts($date,$date1,$title) {
 		echo "</tr>";
 		$this->showTherapyAccounts_cash = $row['cashPaid'];
 		$this->showTherapyAccounts_creditCard = $row['creditCard'];
-		$this->showTherapyAccounts_unpaid = $row['unpaid'];
+		$this->showTherapyAccounts_unpaid = ($row['unpaid'] + $this->showTherapyAccounts_pfUnpaid($date,$date1,$title));
 		$this->showTherapyAccounts_hmo = $row['hmo'];
 		$this->showTherapyAccounts_phic = $row['phic'];
 		$this->showTherapyAccounts_discount = $row['disc'];
