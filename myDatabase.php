@@ -2222,7 +2222,7 @@ echo "<td>&nbsp;<font class='data' color=blue>".$row['paidVia']."</font>&nbsp;</
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['cashUnpaid'],2)."</font></centeR>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['phic'],2)."</font></center>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['cashPaid']."</font>&nbsp;</td>";
+echo "<td>&nbsp;<a href='paidOptions.php?registrationNo=$registrationNo&itemNo=$row[itemNo]'><font class='data'>".$row['cashPaid']."</font></a>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['title']."</font>&nbsp;</td>";
 echo "</tr>";
   }
