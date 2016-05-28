@@ -299,7 +299,7 @@ echo "<td>&nbsp;<center><font class='data'>".number_format($row['cashUnpaid'],2)
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['company'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data'>".number_format($row['phic'],2)."</font></center>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".($row['cashPaid'] + $row['amountPaidFromCreditCard'])."</font><bR><font size=1 color=red>OR#:".$row['orNO']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['branch']."</font>&nbsp;</td>";
+echo "<td>&nbsp;<font class='data'>".$row['reportShift']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['title']."</font>&nbsp;</td>";
 echo "</tr>";
   }
