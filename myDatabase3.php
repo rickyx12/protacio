@@ -2519,7 +2519,7 @@ echo "</tr>";
 
 public function showTherapyAccounts_pfUnpaid($date,$date1,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('UNPAID') and pc.paidVia = 'Cash' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, " select sum(otShare) as share from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$date' and '$date1') and pc.title = '$title' and rd.type='OPD' and pc.status in ('UNPAID') and pc.paidVia = 'Cash' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		($row['share'] > 0) ? $x = $row['share'] : $x = 0;
