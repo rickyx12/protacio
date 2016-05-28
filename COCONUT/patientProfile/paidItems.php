@@ -86,7 +86,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Balance</font>&
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Company</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>PhilHealth</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Paid</font>&nbsp;</th>";
-echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Branch</font>&nbsp;</th>";
+echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Shift</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Category</font>&nbsp;</th>";
 echo "</tr>";
 
