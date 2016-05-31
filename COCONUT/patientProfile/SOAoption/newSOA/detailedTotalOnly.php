@@ -1270,7 +1270,15 @@ echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;<font size=2><b>".number_format(trim(($ro->detailedTotalOnly_patientToPay_cashUnpaid() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue))-$discount),2)."</b></font></td>";
+
+$remainingBill = ($ro->detailedTotalOnly_patientToPay_cashUnpaid() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue));
+
+
+if( $remainingBill > 0 ) { //kpg may remaining na cash bawasan ng discount
+	echo "<td>&nbsp;<font size=2><b>".number_format(trim($remainingBill - $discount),2)."</b></font></td>";
+}else { //kpg wlang cash na remaining puro HMO,PHIC lng wag n ibawas ung discount
+	echo "<td>&nbsp;<font size=2><b>".number_format(trim($remainingBill),2)."</b></font></td>";
+}
 
 //echo $ro->detailedTotalOnly_patientToPay_total();
 echo "<td>&nbsp;</td>";
