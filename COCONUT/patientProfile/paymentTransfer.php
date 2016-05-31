@@ -71,11 +71,6 @@ echo "</td>";
 
 
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&username=$username&show=cash2package&desc=cash2package'><center><font size=2 color=red>Cash</font> > <font size=2 color=black>Package</font></center></a>";
-echo "</td>";
-
-
-echo "<td id='selected'>";
 echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&username=$username&show=company2cash&desc=company2cash'><center><font size=2 color=blue>Company</font> > <font size=2 color=red>Cash</font></center></a>";
 echo "</td>";
 echo "<td id='selected'>";
