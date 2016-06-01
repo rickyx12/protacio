@@ -53,12 +53,18 @@ $dateCharge = $dateCharge;
 			<div class="col-md-5">
 				<div class="form-group">
 					<label>Hospital</label>
-					<input type='text' name="hospital" class="form-control" value="<?php echo $ro->selectNow('therapyCharges','hospital','chargesCode',$chargesCode) ?>">
+					<input type='text' autocomplete="off" name="hospital" class="form-control" value="<?php echo $ro->selectNow('therapyCharges','hospital','chargesCode',$chargesCode) ?>">
 				</div>
 				<div class="form-group">
 					<label>PF</label>
-					<input type='text' name="pf" class="form-control" value="<?php echo $ro->selectNow('therapyCharges','pf','chargesCode',$chargesCode) ?>">
+					<input type='text' autocomplete="off" name="pf" class="form-control" value="<?php echo $ro->selectNow('therapyCharges','pf','chargesCode',$chargesCode) ?>">
 				</div>
+			
+				<div class="form-group">
+					<label>Discount</label>
+					<input type="text" autocomplete="off" name="discount" class="form-control" value="0">
+				</div>
+
 				<div class="form-group">
 					<label>Therapist</label>
 					<select id="therapist" name="therapist" class="form-control">
@@ -74,7 +80,6 @@ $dateCharge = $dateCharge;
 				<input type="hidden" name="chargesCode" value="<?php echo $chargesCode ?>">
 				<input type="hidden" name="description" value="<?php echo $description ?>">
 				<input type="hidden" name="sellingPrice" value="<?php echo $sellingPrice ?>">
-				<input type="hidden" name="discount" value="<?php echo $discount ?>">
 				<input type="hidden" name="timeCharge" value="<?php echo $timeCharge ?>">
 				<input type="hidden" name="chargeBy" value="<?php echo $chargeBy ?>">
 				<input type="hidden" name="service" value="<?php echo $service ?>">
