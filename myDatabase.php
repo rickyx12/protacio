@@ -4250,11 +4250,14 @@ echo "</td>";
 
 
 
+if( $this->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD" ) {
 //if($acount>0){
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/cashQTY.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$inventoryCode&description=$description&sellingPrice=".$this->med_sp."&timeCharge=$serverTime&chargeBy=$username&service=Medication&title=MEDICINE&paidVia=Cash&cashPaid=0&batchNo=$batchNo&username=$username&inventoryFrom=$searchFrom&discount=0&room=$room&paycash=no&remarks=VAT&stockCardNo=$row[stockCardNo]'><font color=green size='3'>[VAT]</font></a>&nbsp;";
 echo "</td>";
 //}
+}else {
 
+}
 
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/cashQTY_date.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$inventoryCode&description=$description&sellingPrice=".$this->med_sp."&timeCharge=$serverTime&chargeBy=$username&service=Medication&title=MEDICINE&paidVia=Cash&cashPaid=0&batchNo=$batchNo&username=$username&inventoryFrom=$searchFrom&discount=0&room=$room&paycash=no&remarks=&stockCardNo=$row[stockCardNo]'><font color=brown size='2'>[Add w/ Date]</font></a>&nbsp;";
 echo "</td>";
@@ -8000,7 +8003,10 @@ $this->coconutTableData("&nbsp;".$row['inventoryType']);
 $this->coconutTableData("&nbsp;".$row['encodedDetails']);
 $this->coconutTableData("&nbsp;".$row['encodedBy']);
 if( $row['inventoryType'] == "medicine" ) {
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
+//$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
+
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addMedicine.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
+
 }else {
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
 }
