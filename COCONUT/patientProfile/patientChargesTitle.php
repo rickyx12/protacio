@@ -34,7 +34,12 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>User</font>&nbs
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Service</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Status</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Payment</font>&nbsp;</th>";
-echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Balance</font>&nbsp;</th>";
+
+if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD" ) {
+	echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Balance</font>&nbsp;</th>";
+}else {
+	echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Cash</font>&nbsp;</th>";
+}
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Company</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>PhilHealth</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Paid</font>&nbsp;</th>";
