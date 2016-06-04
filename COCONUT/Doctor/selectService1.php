@@ -112,10 +112,10 @@ if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo
 		if( $ro->getRegistrationDetails_company() != "" ) {
 			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='300/300'></td>";
 		}else {
-			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1' readonly></td>";
+			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1'></td>";
 		}
 		}else {
-			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1' readonly></td>";
+			echo "<td><font class='labelz'>Rate / PF Share</font></td><td><input type=text name='sellingPrice' class='txtBox' value='1/1'></td>";
 		}
 
 }
