@@ -10041,31 +10041,59 @@ return $this->detailedTotalOnly_deposit_total;
 
 public function detailedTotalOnly_deposit($registrationNo) {
 
-$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select datePaid,paymentFor,orNo,amountPaid from patientPayment where registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
+  $result = mysqli_query($connection, " select datePaid,paymentFor,orNo,amountPaid from patientPayment where registrationNo = '$registrationNo' and paymentFor not in ('REFUND') ") or die("Query fail: " . mysqli_error()); 
 
-while($row = mysqli_fetch_array($result))
-  {
+  while($row = mysqli_fetch_array($result))
+    {
 
-$this->detailedTotalOnly_deposit_total += $row['amountPaid'];
+    $this->detailedTotalOnly_deposit_total += $row['amountPaid'];
 
-echo "<tr>";
-echo "<td>&nbsp;<font size=2>".$this->formatDate($row['datePaid'])."</font></td>";
-echo "<td>&nbsp;<font size=2>".$row['paymentFor']."</font></td>";
-echo "<td>&nbsp;<font size=2>OR#:".$row['orNo']."</font></td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;<font size=2>".number_format($row['amountPaid'],2)."</font></td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "</tr>";
+    echo "<tr>";
+    echo "<td>&nbsp;<font size=2>".$this->formatDate($row['datePaid'])."</font></td>";
+    echo "<td>&nbsp;<font size=2>".$row['paymentFor']."</font></td>";
+    echo "<td>&nbsp;<font size=2>OR#:".$row['orNo']."</font></td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;<font size=2>".number_format($row['amountPaid'],2)."</font></td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;</td>";
+    echo "</tr>";
+  }
 }
 
+private $detailedTotalOnly_refund_total;
 
+public function detailedTotalOnly_refund_total() {
+  return $this->detailedTotalOnly_refund_total;
 }
 
+public function detailedTotalOnly_refund($registrationNo) {
+
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+  $result = mysqli_query($connection, " select datePaid,paymentFor,orNo,amountPaid from patientPayment where registrationNo = '$registrationNo' and paymentFor in ('REFUND') ") or die("Query fail: " . mysqli_error()); 
+
+  while($row = mysqli_fetch_array($result))
+    {
+
+    $this->detailedTotalOnly_refund_total += $row['amountPaid'];
+
+    echo "<tr>";
+    echo "<td>&nbsp;<font size=2>".$this->formatDate($row['datePaid'])."</font></td>";
+    echo "<td>&nbsp;<font size=2>".$row['paymentFor']."</font></td>";
+    echo "<td>&nbsp;<font size=2>OR#:".$row['orNo']."</font></td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;<font size=2>".number_format($row['amountPaid'],2)."</font></td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;</td>";
+    echo "<td>&nbsp;</td>";
+    echo "</tr>";
+  }
+}
 
 
 public $getTakeHomeMeds_total;
