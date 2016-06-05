@@ -1016,6 +1016,33 @@ echo "</tr>";
 
 
 
+echo "<tr>";
+echo "<td>&nbsp;<font size=2><b>REFUND</b></font></td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+$ro->detailedTotalOnly_refund($registrationNo);
+
+echo "<tr>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;<font size=2>".number_format($ro->detailedTotalOnly_refund_total(),2)."</font></td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+
 //take home meds
 echo "<tr>";
 echo "<td>&nbsp;<font size=2><b>TAKE HOME MEDS</b></font></td>";
@@ -1057,7 +1084,7 @@ $hmoManualExcessValue = $ro->selectNow("registrationDetails","hmoManualExcessVal
 $excessTotal = ($excessPF + $excessRoom + $excessMaxBenefits + $hmoManualExcessValue);
 
 if( $ro->selectNow("registrationDetails","Company","registrationNo",$registrationNo) == "" ) {
-$outStandingBill = (( ($total - $totalCaseRate) - $ro->detailedTotalOnly_deposit_total()) + $ro->getTakeHomeMeds_total());
+$outStandingBill = (( ($total - $totalCaseRate) - ($ro->detailedTotalOnly_deposit_total() - $ro->detailedTotalOnly_refund_total()) ) + $ro->getTakeHomeMeds_total());
 }else {
 $outStandingBill = (( ($total - $totalCaseRate) ) + $ro->getTakeHomeMeds_total() );
 }
@@ -1271,7 +1298,7 @@ echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 
-$remainingBill = ($ro->detailedTotalOnly_patientToPay_cashUnpaid() - $ro->detailedTotalOnly_deposit_total() + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue));
+$remainingBill = ($ro->detailedTotalOnly_patientToPay_cashUnpaid() - ($ro->detailedTotalOnly_deposit_total() - $ro->detailedTotalOnly_refund_total()) + $incrementalCost + ($excessMaxBenefits+$excessPF+$excessRoom+$PHICportion+$hmoManualExcessValue));
 
 
 if( $remainingBill > 0 ) { //kpg may remaining na cash bawasan ng discount
