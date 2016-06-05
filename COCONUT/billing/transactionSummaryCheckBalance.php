@@ -35,7 +35,7 @@ $deposit_creditCard = 0;
 	<? for( $a = 0, $b = 0 , $c = 0 , $d = 0;$a < count($ro4->inpatient_deposit_registrationNo()) , $b < count($ro4->inpatient_deposit_dateUnregistered()) , $c < count($ro4->inpatient_deposit_amountPaid()) , $d < count($ro4->inpatient_deposit_paidVia()) ; $a++ , $b++ , $c++ , $d++ ) { ?>
 		<tr>
 			<? if( $ro4->inpatient_deposit_paidVia()[$d] == "Cash" ) { ?>
-				<td><? echo $ro4->inpatient_deposit_registrationNo()[$a] ?></td>
+				<td><? echo $ro4->inpatient_deposit_registrationNo()[$a] ?> - <? echo $ro3->selectNow("patientRecord","lastName","patientNo",$ro3->selectNow("registrationDetails","patientNo","registrationNo",$ro4->inpatient_deposit_registrationNo()[$a])).", ".$ro3->selectNow("patientRecord","firstName","patientNo",$ro3->selectNow("registrationDetails","patientNo","registrationNo",$ro4->inpatient_deposit_registrationNo()[$a])) ?></td>
 				<td><? echo $ro4->inpatient_deposit_dateUnregistered()[$b] ?></td>
 				<td><? echo $ro4->inpatient_deposit_amountPaid()[$c] ?></td>
 				<td>&nbsp;</td>
