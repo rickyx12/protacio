@@ -6726,6 +6726,7 @@ public function detailedTotalOnly_inventory($registrationNo,$title,$chargesCode,
   $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
   $result = mysqli_query($connection, " SELECT pc.status,pc.dateCharge,pc.itemNo,pc.chargesCode,pc.description,pc.quantity,pc.sellingPrice,pc.total,pc.cashUnpaid,pc.phic,pc.company,pc.departmentStatus,pc.title from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.title = '$title' and departmentStatus != '' and (pc.status = 'UNPAID') and remarks = '' order by pc.dateCharge asc   ") or die("Query fail: " . mysqli_error()); 
+  
 
   $this->detailedTotalOnly_inventory_totalCharges=0;
   $this->detailedTotalOnly_inventory_company=0;
@@ -10129,7 +10130,7 @@ public function detailedTotalOnly_patientToPay($registrationNo) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select dateCharge,description,quantity,sellingPrice,total,cashUnpaid,title from patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status = 'UNPAID' order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select dateCharge,description,quantity,sellingPrice,total,cashUnpaid,title from patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status IN ('UNPAID','Discharged') order by dateCharge asc ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
   {

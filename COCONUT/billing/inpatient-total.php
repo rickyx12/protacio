@@ -114,9 +114,6 @@ $customTitle; $customTitleTotal = 0;
 									<th>OT</th>
 									<th>ST</th>
 									<th>Others</th>
-									<th>HMO Excess</th>
-									<th>PHIC Portion</th>
-									<th>Custom Title</th>
 									<th>Total Charges</th>
 									<th>&nbsp;</th>
 									<th>&nbsp;</th>
@@ -124,7 +121,7 @@ $customTitle; $customTitleTotal = 0;
 									<th>Disc</th>
 									<th>HMO</th>
 									<th>PHIC</th>
-									<th>UNPD</th>
+									<th>Px to Pay</th>
 									<th>Cash</th>
 									<th>C.Card</th>
 									<th>BAL</th>
@@ -148,10 +145,10 @@ $customTitle; $customTitleTotal = 0;
 											<td> <? $or = $ro4->inpatient_title_total($registrationNo,"total","OR/DR/ER Fee"); echo $or; $orTotal += $or ?> </td>
 											<td> <? $misc = $ro4->inpatient_title_total($registrationNo,"total","MISCELLANEOUS"); echo $misc; $miscTotal += $misc; ?> </td>
 											<td> <? $spirometry = $ro4->inpatient_title_total($registrationNo,"total","SPIROMETRY"); echo $spirometry; $spirometryTotal += $spirometry; ?> </td>
-											<td> <? $meds = round($ro4->inpatient_title_total($registrationNo,"total","MEDICINE"),2); echo $meds; $medsTotal += $meds; ?> </td>
-											<td> <? $supp = $ro4->inpatient_title_total($registrationNo,"total","SUPPLIES"); echo $supp; $suppTotal += $supp; ?> </td>
-											<td> <? $pf = ($ro4->inpatient_title_total($registrationNo,"total","PROFESSIONAL FEE") + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo)); echo $pf; $pfTotal += $pf; ?> </td>
-											<td> <? $room = ($ro4->inpatient_title_total($registrationNo,"total","Room and Board") + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo)); echo $room; $roomTotal += $room; ?> </td>
+											<td> <? $meds = round( $ro4->inpatient_title_total_inventory($registrationNo,"total","MEDICINE") + $ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"total"),2); echo $meds; $medsTotal += $meds; ?> </td>
+											<td> <? $supp = $ro4->inpatient_title_total_inventory($registrationNo,"total","SUPPLIES"); echo $supp; $suppTotal += $supp; ?> </td>
+											<td> <? $pf = ($ro4->inpatient_title_total($registrationNo,"total","PROFESSIONAL FEE")); echo $pf; $pfTotal += $pf; ?> </td>
+											<td> <? $room = ($ro4->inpatient_title_total($registrationNo,"total","Room and Board")); echo $room; $roomTotal += $room; ?> </td>
 											<td> <? $cardiac = $ro4->inpatient_title_total($registrationNo,"total","CARDIAC MONITOR"); echo $cardiac; $cardiacTotal += $cardiac; ?> </td>
 											<td> 
 												<? $pt = $ro4->inpatient_title_total($registrationNo,"total","PT"); echo $pt; $ptTotal += $pt;  ?> 
@@ -159,33 +156,11 @@ $customTitle; $customTitleTotal = 0;
 											<td> <? $ot = $ro4->inpatient_title_total($registrationNo,"total","OT"); echo $ot; $otTotal += $ot; ?> </td>
 											<td> <? $st = $ro4->inpatient_title_total($registrationNo,"total","ST"); echo $st; $stTotal += $stTotal; ?> </td>
 											<td> <? $others = $ro4->inpatient_title_total($registrationNo,"total","OTHERS"); echo $others; $othersTotal += $others; ?> </td>
-											<td> 
-												<? 
-													$hmoExcess = $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo); 
-													echo $hmoExcess; 
-													$hmoExcessTotal += $hmoExcess; 
-												?> 
-											</td>
+
 
 											<td>
 												<?
-													$phicPortion = $ro2->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo); 
-													echo $phicPortion; 
-													$phicPortionTotal += $phicPortion;
-												?>
-											</td>
-
-											<td>
-												<?
-													$customTitle = $ro2->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo);
-													echo $customTitle;
-													$customTitleTotal += $customTitle;
-												?>
-											</td>
-
-											<td>
-												<?
-													 $total = ( $lab + $xray + $utz + $ctscan + $ecg + $erfee + $or + $misc + $spirometry + $meds + $supp + $pf + $room + $cardiac + $pt + $ot + $st + $others + $hmoExcess + $phicPortion + $customTitle ); echo $total; $grandTotal += $total; 
+													 $total = ( $lab + $xray + $utz + $ctscan + $ecg + $erfee + $or + $misc + $spirometry + $meds + $supp + $pf + $room + $cardiac + $pt + $ot + $st + $others ); echo $total; $grandTotal += $total; 
 												?>
 											</td>
 
@@ -200,13 +175,17 @@ $customTitle; $customTitleTotal = 0;
 
 											<td>
 												<? 
-													$hmo = round($ro4->inpatient_paymentMode_total($registrationNo,"company"),2); echo $hmo; $hmoTotal += $hmo; 
+													$excessDeduction = ( $ro2->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo)
+
+														);
+
+													$hmo = round( ($ro4->inpatient_paymentMode_total_charges($registrationNo,"company") + $ro4->inpatient_paymentMode_total_inventory($registrationNo,"company") - $excessDeduction) ,2); echo $hmo; $hmoTotal += $hmo; 
 												?>
 											</td>
 
 											<td>
 												<? 
-													$phic = round($ro4->inpatient_paymentMode_total($registrationNo,"phic"),2); 
+													$phic = round( ($ro4->inpatient_paymentMode_total_charges($registrationNo,"phic") + $ro4->inpatient_paymentMode_total_inventory($registrationNo,"phic")) ,2); 
 													echo $phic; 
 													$phicTotal += $phic;  
 												?>
@@ -214,7 +193,9 @@ $customTitle; $customTitleTotal = 0;
 
 											<td>
 												<? 
-													$unpaid = round($ro4->inpatient_paymentMode_total($registrationNo,"cashUnpaid") + $hmoExcess + $phicPortion + $customTitle + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2); 
+													$unpaid = round( $ro4->inpatient_paymentMode_total_charges($registrationNo,"cashUnpaid") + $ro4->inpatient_paymentMode_total_inventory($registrationNo,"cashUnpaid") + $ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"cashUnpaid") + $ro2->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2 ); 
+													
+
 													echo $unpaid; 
 													$unpaidTotal += $unpaid; 
 												?>
@@ -238,7 +219,9 @@ $customTitle; $customTitleTotal = 0;
 											</td>
 
 											<td>
-												<? $bal = round(( round($unpaid,2) - round($cash + $creditCard + $disc ,2) ),2); echo $bal; 
+												<? //$bal = round(( round($unpaid,2) - round($cash + $creditCard + $disc ,2) ),2); echo "x".$bal; 
+
+													$bal = round(( round($unpaid,2) - round($cash + $creditCard + $disc ,2) ),2); echo $bal;
 
 													if( $bal > 0 ) {
 														$balTotal += $bal;
@@ -263,7 +246,7 @@ $customTitle; $customTitleTotal = 0;
 											<?
 
 												$paymentMode_total = round( $hmo + $phic + $unpaid,2);
-												$total1 = round($total,2);
+												$total1 = round( ($total) ,2);
 												if( $total1 != $paymentMode_total ) {
 											?>
 												<td><a href="../patientProfile/SOAoption/newSOA/detailedTotalOnly_update.php?registrationNo=<? echo $registrationNo ?>&username=1212&show=try&chargesCode=off&showdate=1" target="_blank"><i class="glyphicon glyphicon-remove"></i></a></td>
@@ -294,9 +277,6 @@ $customTitle; $customTitleTotal = 0;
 								<td><? echo $otTotal ?></td>
 								<td><? echo $stTotal ?></td>
 								<td><? echo $othersTotal ?></td>
-								<td><? echo $hmoExcessTotal ?></td>
-								<td><? echo $phicPortionTotal ?></td>
-								<td><? echo $customTitleTotal ?></td>
 								<td><? echo $grandTotal ?></td>
 								<td></td>
 								<td></td>

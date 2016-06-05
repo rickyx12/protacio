@@ -51,9 +51,6 @@ $ipd_PT = $_GET['ipd_PT'];
 $ipd_OT = $_GET['ipd_OT'];
 $ipd_ST = $_GET['ipd_ST'];
 $ipd_others = $_GET['ipd_others'];
-$ipd_hmoExcess = $_GET['ipd_hmoExcess'];
-$ipd_phicPortion = $_GET['ipd_phicPortion'];
-$ipd_customTitle = $_GET['ipd_customTitle'];
 
 $ipd_deposit_cash = $_GET['ipd_deposit_cash'];
 $ipd_deposit_creditCard = $_GET['ipd_deposit_creditCard'];
@@ -598,32 +595,6 @@ $ipd_balance1 = 0;
 						<? } ?>
 
 
-						<? if( $ipd_hmoExcess > 0 ) { ?>
-							<tr>
-								<td>HMO Benefit Excess</td>
-								<td></td>
-								<td><? ($ipd_hmoExcess > 0) ? $x = number_format($ipd_hmoExcess,2) : $x = ""; echo $x; ?></td>
-							</tr>
-						<? } ?>
-
-
-						<? if( $ipd_phicPortion > 0 ) { ?>
-							<tr>
-								<td>Philhealth Portion</td>
-								<td></td>
-								<td><? ($ipd_phicPortion > 0) ? $x = number_format($ipd_phicPortion,2) : $x = ""; echo $x; ?></td>
-							</tr>
-						<? } ?>
-
-
-						<? if( $ipd_customTitle > 0 ) { ?>
-							<tr>
-								<td>Custom Title</td>
-								<td></td>
-								<td><? ($ipd_customTitle > 0) ? $x = number_format($ipd_customTitle,2) : $x = ""; echo $x; ?></td>
-							</tr>
-						<? } ?>
-
 
 						<? if( $ipd_excess > 0 ) { ?>
 							<tr>
@@ -655,7 +626,7 @@ $ipd_balance1 = 0;
 							</td>
 							<td>
 								<? 
-									$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_hmoExcess + $ipd_phicPortion + $ipd_customTitle + $ipd_excess + $ipd_deposit_total ); 
+									$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_excess + $ipd_deposit_total ); 
 									echo number_format($ipdCredit,2);
 								?>
 							</td>

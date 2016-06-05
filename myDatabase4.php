@@ -782,9 +782,36 @@ public function inpatient_title_total($registrationNo,$cols,$title) {
 	}
 }
 
-public function inpatient_paymentMode_total($registrationNo,$cols) {
+public function inpatient_title_total_inventory($registrationNo,$cols,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and title = '$title' and status in ('UNPAID','Discharged') and remarks = '' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
+public function inpatient_paymentMode_total_charges($registrationNo,$cols) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') and title not in ('MEDICINE','SUPPLIES') ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
+public function inpatient_paymentMode_total_inventory($registrationNo,$cols) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') and title in ('MEDICINE','SUPPLIES') and remarks = '' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
+public function inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,$cols) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum($cols) as total from patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') and title in ('MEDICINE','SUPPLIES') and remarks = 'takeHomeMeds' ") or die("Query fail: " . mysqli_alerror()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['total'];
