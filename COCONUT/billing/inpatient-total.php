@@ -70,9 +70,10 @@ $bal;			$balTotal = 0;
 $cash;			$cashTotal = 0;
 $creditCard;	$creditCardTotal = 0;
 $excess; 		$excessTotal = 0;
-$phicPortion;   $phicPortionTotal = 0;
+$refund;		$refundTotal = 0;
+$grandBal;		$grandBalTotal = 0;
+$grandCash;		$grandCashTotal = 0;
 
-$customTitle; $customTitleTotal = 0;
 
 
 ?>
@@ -125,6 +126,9 @@ $customTitle; $customTitleTotal = 0;
 									<th>Cash</th>
 									<th>C.Card</th>
 									<th>BAL</th>
+									<th>Refund</th>
+									<th>Gr. Bal</th>
+									<th>Gr.Cash</th>
 									<th>Excess</th>
 								</tr>
 							</thead>
@@ -233,16 +237,42 @@ $customTitle; $customTitleTotal = 0;
 											 </td>
 
 											<td>
-												<? 
+												<?
+													$refund = ($ro4->inpatient_refund_total($registrationNo,"CASH")); 
+													echo $refund; 
+													$refundTotal += $refund; 
+												?>
+											</td>
 
-													if( $bal < 0 ) {
-														$excess = abs($bal); echo $excess; $excessTotal += $excess;
+
+											<td>
+												<?
+													$grandBal = ( $bal + $refund );
+													echo $grandBal;
+													$grandBalTotal += $grandBal;
+												?>
+											</td>
+
+											<td>
+												<? 
+													$grandCash = ($ro4->inpatient_payment_total($registrationNo,"CASH") - $ro4->inpatient_refund_total($registrationNo,"CASH")); 
+													echo $grandCash; 
+													$grandCashTotal += $grandCash; 
+												?>
+											</td>
+
+
+											<td>
+												<? 
+													if( $grandBal < 0 ) {
+														$excess = abs( $grandBal ); echo $excess; $excessTotal += $excess;
 													}else {
-														
+														$excess = 0;
 													}
 
 												?>
 											</td>
+
 											<?
 
 												$paymentMode_total = round( $hmo + $phic + $unpaid,2);
@@ -288,8 +318,10 @@ $customTitle; $customTitleTotal = 0;
 								<td><? echo $cashTotal ?></td>
 								<td><? echo $creditCardTotal ?></td>
 								<td><? echo $balTotal ?></td>
+								<td><? echo $refundTotal ?></td>
+								<td><? echo $grandBalTotal ?></td>
+								<td><? echo $grandCashTotal ?></td>								
 								<td><? echo $excessTotal ?></td>
-
 								<?
 
 								$paymentMode_total1 = round( $hmoTotal + $phicTotal + $unpaidTotal );
@@ -350,8 +382,10 @@ $customTitle; $customTitleTotal = 0;
 			<input type="hidden" name="ipd_hmo" value="<? echo $hmoTotal ?>">
 			<input type="hidden" name="ipd_phic" value="<? echo $phicTotal ?>">
 			<input type="hidden" name="ipd_cash" value="<? echo $cashTotal ?>">
+			<input type="hidden" name="ipd_grandCash" value="<? echo $grandCashTotal ?>">
 			<input type="hidden" name="ipd_creditCard" value="<? echo $creditCardTotal ?>">
 			<input type="hidden" name="ipd_balance" value="<? echo $balTotal ?>">
+			<input type="hidden" name="ipd_refund" value="<? echo $refundTotal ?>">
 			<input type="hidden" name="ipd_deposit_cash" value="<? echo $deposit_cash ?>">
 			<input type="hidden" name="ipd_deposit_creditCard" value="<? echo $deposit_creditCard ?>">
 			<input type="hidden" name="ipd_excess" value="<? echo $excessTotal ?>">

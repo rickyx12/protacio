@@ -820,13 +820,21 @@ public function inpatient_paymentMode_total_inventory_takeHomeMeds($registration
 
 public function inpatient_payment_total($registrationNo,$paidVia) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' and paymentFor not in ('REFUND') ") or die("Query fail: " . mysqli_alerror()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['total'];
 	}
 }
 
+public function inpatient_refund_total($registrationNo,$paidVia) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' and paymentFor in ('REFUND') ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
 
 private $inpatient_deposit_registrationNo;
 private $inpatient_deposit_dateUnregistered;
