@@ -820,7 +820,7 @@ public function inpatient_paymentMode_total_inventory_takeHomeMeds($registration
 
 public function inpatient_payment_total($registrationNo,$paidVia) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' and paymentFor not in ('REFUND') ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' and paymentFor not in ('REFUND','BALANCE PAID') ") or die("Query fail: " . mysqli_alerror()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['total'];
@@ -833,6 +833,21 @@ public function inpatient_refund_total($registrationNo,$paidVia) {
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['total'];
+	}
+}
+
+private $inpatient_balance_paid_paymentNo;
+
+public function inpatient_balance_paid_paymentNo() {
+	return $this->inpatient_balance_paid_paymentNo;
+}
+
+public function inpatient_balance_paid($datePaid,$datePaid1) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT paymentNo from patientPayment where paymentFor = 'BALANCE PAID' and (datePaid between '$datePaid' and '$datePaid1')  ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->inpatient_balance_paid_paymentNo[] = $row['paymentNo'];
 	}
 }
 

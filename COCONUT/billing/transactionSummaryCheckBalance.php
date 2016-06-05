@@ -24,7 +24,7 @@ $ro4->inpatient_deposit($date,$date1,"Credit Card");
 $deposit_cash = 0;
 $deposit_creditCard = 0;
 ?>
-
+DEPOSIT
 <table border=1 cellspacing="0">
 	<tr>
 		<th>Reg#</th>
@@ -57,6 +57,38 @@ $deposit_creditCard = 0;
 		</tr>
 </table>
 
+<Br>
+
+Balance Paid
+<? $ro4->inpatient_balance_paid($date,$date1) ?>
+<? $balancePaid_cash = 0 ?>
+<? $balancePaid_creditCard = 0 ?>
+<table cellspacing="0" border="1">
+	<tr>
+		<th>Reg#</th>
+		<th>Cash</th>
+		<th>Cr.Card</th>
+		<th>Date</th>
+	</tr>
+	
+	<? foreach($ro4->inpatient_balance_paid_paymentNo() as $paymentNo) { ?>
+		<tr>
+			<td><? echo $ro3->selectNow("patientPayment","registrationNo","paymentNo",$paymentNo) ?></td>
+			<? if( $ro3->selectNow("patientPayment","paidVia","paymentNo",$paymentNo) == "Cash" ) { ?>
+				<td><? echo $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?></td>
+				<td></td>
+				<? $balancePaid_cash += $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?>
+			<? }else { ?>
+				<td></td>
+				<td><? echo $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?></td>
+				<? $balancePaid_creditCard += $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?>				
+			<? } ?>
+			<td></td>
+		</tr>
+	<? } ?>
+
+</table>
+
 <br><hr><br>
 
 <?
@@ -79,7 +111,7 @@ $stUnpaid;
 $stShare;
 $stDiscount;
 
-$ro3->showAllAccountTitle_opd($date,$date1);
+//$ro3->showAllAccountTitle_opd($date,$date1);
 echo "<br>";
 echo "<table border=0 width='80%'>";
 echo "<tr>";
@@ -94,9 +126,9 @@ echo "<th>&nbsp;Cr.CARD</th>";
 echo "<th>&nbsp;PAYABLES</th>";
 echo "<th>&nbsp;TOTAL</th>";
 echo "</tr>";
-$ro3->showPFaccounts($date,$date1);
+//$ro3->showPFaccounts($date,$date1);
 
-
+/*
 $ro3->showTherapyAccounts($date,$date1,"OT");
 $otTotal = $ro3->showTherapyAccounts_total();
 $otCreditCard = $ro3->showTherapyAccounts_creditCard();
@@ -121,7 +153,7 @@ $stShare = $ro3->showTherapyAccounts_pf();
 $st_Payables = $ro3->showTherapyAccounts_payable();
 $st_hmo_Payables = $ro3->showTherapyAccounts_hmo_payable();
 $stDiscount = $ro3->showTherapyAccounts_discount();
-
+*/
 echo "</table>";
 
 ?>
@@ -136,6 +168,8 @@ $ro3->coconutHidden("day1",$day1);
 $ro3->coconutHidden("year1",$year1);
 $ro3->coconutHidden("deposit_cash",$deposit_cash);
 $ro3->coconutHidden("deposit_creditCard",$deposit_creditCard);
+$ro3->coconutHidden("balancePaid_cash",$balancePaid_cash);
+$ro3->coconutHidden("balancePaid_creditCard",$balancePaid_creditCard);
 
 echo "<br><br><br>";
 

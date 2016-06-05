@@ -55,12 +55,15 @@ $ipd_others = $_GET['ipd_others'];
 $ipd_deposit_cash = $_GET['ipd_deposit_cash'];
 $ipd_deposit_creditCard = $_GET['ipd_deposit_creditCard'];
 $ipd_deposit_total = ( $ipd_deposit_cash + $ipd_deposit_creditCard );
+$ipd_balancePaid_cash = $_GET['ipd_balancePaid_cash'];
+$ipd_balancePaid_creditCard = $_GET['ipd_balancePaid_creditCard'];
+$ipd_balancePaid_total = ( $ipd_balancePaid_cash + $ipd_balancePaid_creditCard );
 $ipd_discount = $_GET['ipd_discount'];
 $ipd_hmo = $_GET['ipd_hmo'];
 $ipd_phic = $_GET['ipd_phic'];
 $ipd_cash = ($_GET['ipd_cash'] + $ipd_deposit_cash);
-$ipd_grandCash = ($_GET['ipd_grandCash'] + $ipd_deposit_cash);
-$ipd_creditCard = ($_GET['ipd_creditCard'] + $ipd_deposit_creditCard);
+$ipd_grandCash = ($_GET['ipd_grandCash'] + $ipd_deposit_cash + $ipd_balancePaid_cash);
+$ipd_creditCard = ($_GET['ipd_creditCard'] + $ipd_deposit_creditCard + $ipd_balancePaid_creditCard);
 $ipd_balance = $_GET['ipd_balance'];
 $ipd_refund = $_GET['ipd_refund'];
 $ipd_excess = $_GET['ipd_excess'];
@@ -442,6 +445,14 @@ $ipd_balance1 = 0;
 							</tr>
 						<? } ?>
 						
+						<? if( $ipd_balancePaid_total > 0 ) { ?>
+							<tr>
+								<td>A/R-OPD (Paid)</td>
+								<td></td>
+								<td><? ( $ipd_balancePaid_total > 0 ) ? $x = number_format($ipd_balancePaid_total,2) : $x = ""; echo $x ?></td>
+							</tr>
+						<? } ?>						
+
 						<? if( $ipd_pf > 0 ) { ?>
 							<tr>
 								<td>Clinic Revenue</td>
@@ -643,7 +654,7 @@ $ipd_balance1 = 0;
 							</td>
 							<td>
 								<? 
-									$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_excess + $ipd_deposit_total + $ipd_refund ); 
+									$ipdCredit = ( $ipd_pf + $ipd_or + $ipd_misc + $ipd_erfee + $ipd_room + $ipd_ecg + $ipd_PT + $ipd_OT + $ipd_ST + $ipd_xray + $ipd_ultrasound + $ipd_ctscan + $ipd_laboratory + $ipd_medicine + $ipd_supplies + $ipd_spirometry + $ipd_cardiacMonitor + $ipd_others + $ipd_excess + $ipd_deposit_total + $ipd_refund + $ipd_balancePaid_total ); 
 									echo number_format($ipdCredit,2);
 								?>
 							</td>

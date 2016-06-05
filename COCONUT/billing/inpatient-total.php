@@ -2,8 +2,12 @@
 include "../../myDatabase2.php";
 include "../../myDatabase4.php";
 $balanceHandler = $_GET['balanceHandler']; //format: registrationNo-balance
+
 $deposit_cash = $_GET['deposit_cash'];
 $deposit_creditCard = $_GET['deposit_creditCard'];
+
+$balancePaid_cash = $_GET['balancePaid_cash'];
+$balancePaid_creditCard = $_GET['balancePaid_creditCard'];
 
 $date1 = $_GET['date1'];
 $date2 = $_GET['date2'];
@@ -73,7 +77,6 @@ $excess; 		$excessTotal = 0;
 $refund;		$refundTotal = 0;
 $grandBal;		$grandBalTotal = 0;
 $grandCash;		$grandCashTotal = 0;
-
 
 
 ?>
@@ -354,6 +357,22 @@ $grandCash;		$grandCashTotal = 0;
 					</table>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<table class="table table-hover">
+						<thead>
+							<th>Cash - Balance Pd.</th>
+							<th>Credit Card - Balance Pd.</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td><? echo $balancePaid_cash ?></td>
+								<td><? echo $balancePaid_creditCard ?></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>			
 		</div>
 
 		<form method="get" action="transactionSummary2-titles.php">
@@ -388,6 +407,8 @@ $grandCash;		$grandCashTotal = 0;
 			<input type="hidden" name="ipd_refund" value="<? echo $refundTotal ?>">
 			<input type="hidden" name="ipd_deposit_cash" value="<? echo $deposit_cash ?>">
 			<input type="hidden" name="ipd_deposit_creditCard" value="<? echo $deposit_creditCard ?>">
+			<input type="hidden" name="ipd_balancePaid_cash" value="<? echo $balancePaid_cash ?>">
+			<input type="hidden" name="ipd_balancePaid_creditCard" value="<? echo $balancePaid_creditCard ?>">
 			<input type="hidden" name="ipd_excess" value="<? echo $excessTotal ?>">
 
 
