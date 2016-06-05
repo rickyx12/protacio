@@ -71,20 +71,22 @@ Balance Paid
 		<th>Date</th>
 	</tr>
 	
-	<? foreach($ro4->inpatient_balance_paid_paymentNo() as $paymentNo) { ?>
-		<tr>
-			<td><? echo $ro3->selectNow("patientPayment","registrationNo","paymentNo",$paymentNo) ?></td>
-			<? if( $ro3->selectNow("patientPayment","paidVia","paymentNo",$paymentNo) == "Cash" ) { ?>
-				<td><? echo $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?></td>
+	<? if( $ro4->inpatient_balance_paid_paymentNo() != "" ) { ?>
+		<? foreach($ro4->inpatient_balance_paid_paymentNo() as $paymentNo) { ?>
+			<tr>
+				<td><? echo $ro3->selectNow("patientPayment","registrationNo","paymentNo",$paymentNo) ?></td>
+				<? if( $ro3->selectNow("patientPayment","paidVia","paymentNo",$paymentNo) == "Cash" ) { ?>
+					<td><? echo $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?></td>
+					<td></td>
+					<? $balancePaid_cash += $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?>
+				<? }else { ?>
+					<td></td>
+					<td><? echo $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?></td>
+					<? $balancePaid_creditCard += $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?>				
+				<? } ?>
 				<td></td>
-				<? $balancePaid_cash += $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?>
-			<? }else { ?>
-				<td></td>
-				<td><? echo $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?></td>
-				<? $balancePaid_creditCard += $ro3->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo) ?>				
-			<? } ?>
-			<td></td>
-		</tr>
+			</tr>
+		<? } ?>
 	<? } ?>
 
 </table>
