@@ -4192,7 +4192,7 @@ while($row = mysqli_fetch_array($result))
 {
 	echo "<tr>";
 		$this->getPaidBalances_total += $row['amountPaid'];
-		echo "<td><font size=2>".$row['datePaid']."</font></td>";
+		echo "<td>&nbsp;<font size=2>".$row['datePaid']."</font></td>";
 		echo "<td><font size=2>Balance Payment</font></td>";
 		echo "<td><font size=2>1</font></td>";
 		echo "<td><font size=2>".$row['amountPaid']."</font></td>";
