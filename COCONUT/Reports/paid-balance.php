@@ -86,7 +86,12 @@ if(isset($_POST['toDate'])) {
 								<form method="post" action="paid-balance1.php" target="_blank">
 									<input type="hidden" name="itemNo" value="<? echo $itemNo ?>">
 									<input type="hidden" name="paid" value="<? echo $paid ?>">
-									<td><input id="balanceBtn<? echo $itemNo ?>" type="submit" class="btn btn-success" value="Balance History"></td>
+
+									<? if( $ro->selectNow("paidBalance","balanceNo","registrationNo_paid",$ro->selectNow("patientCharges","registrationNo","itemNo",$itemNo)) == "" ) { ?>
+										<td><input id="balanceBtn<? echo $itemNo ?>" type="submit" class="btn btn-success" value="Balance History"></td>
+									<? }else { ?>
+										<td><span class="label label-success"><a href="../patientProfile/SOAoption/newSOA/newDetailed.php?registrationNo=<? echo $ro->selectNow('paidBalance','registrationNo_balance','registrationNo_paid',$ro->selectNow('patientCharges','registrationNo','itemNo',$itemNo)) ?>&show=try&username=guest" style="color:#ffffff;" target="_blank">Payment Connected to reg# <? echo $ro->selectNow("paidBalance","registrationNo_balance","registrationNo_paid",$ro->selectNow("patientCharges","registrationNo","itemNo",$itemNo)) ?></a></span></td>
+									<? } ?>
 								</form>
 							</tr>
 						<? } ?>
