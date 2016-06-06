@@ -149,6 +149,9 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/in
 echo "<input type='submit' value='Ending Inv Comparison' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/paid-balance.php' target='rightFrame'>";
+echo "<input type='submit' value='Paid Balance' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
 
 
 ?>
