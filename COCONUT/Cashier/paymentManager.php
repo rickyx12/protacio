@@ -108,7 +108,12 @@ if($ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "PROFES
 	$otShare = $ro->selectNow("patientCharges","otShare","itemNo",$cashierPaid[$x]);
 	$totalCreditCard = ($cashPaid + $otShare);
 	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0");
-}else {
+}else if( $ro->selectNow("patientCharges","title","itemNo",$cashierPaid[$x]) == "ST" ) {
+	$stShare = $ro->selectNow("patientCharges","otShare","itemNo",$cashierPaid[$x]);
+	$totalCreditCard = ($cashPaid + $stShare);
+	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$totalCreditCard,$datePaid,date("H:i:s"),"0");	
+}
+else {
 	$ro->paymentManager_creditCard($cashierPaid[$x],"PAID",$username,$cashUnpaid,$datePaid,date("H:i:s"),"0");
 }
 
