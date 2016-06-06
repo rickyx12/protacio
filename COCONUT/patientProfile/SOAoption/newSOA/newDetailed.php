@@ -1,10 +1,10 @@
 <?php
-include("../../../../myDatabase2.php");
+include("../../../../myDatabase3.php");
 $registrationNo = $_GET['registrationNo'];
 $username = $_GET['username'];
 $show = $_GET['show'];
 
-$ro = new database2();
+$ro = new database3();
 $ro->getPatientProfile($registrationNo);
 //$ro->soap_setter($registrationNo);
 ?>
@@ -160,6 +160,7 @@ $cardiacMonitor_hmo=0;
 $balance_hmo=0;
 $total_hmo=0;
 
+$balancePaid_total = 0;
 
 
 echo "<style type='text/css'>
@@ -888,7 +889,25 @@ echo "</tr>";
 }else { }
 /***************OTHERS*********************/
 
+if( $ro->selectNow("paidBalance","balanceNo","registrationNo_balance",$registrationNo) != "" ) {
 
+	echo "<tr>";
+	echo "<td>&nbsp;<font size=2><b>Paid Balance</b></font></td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "<td>&nbsp;</td>";
+	echo "</tr>";
+
+	$ro->getPaidBalances($registrationNo);
+	$balancePaid_total  = $ro->getPaidBalances_total();
+}else {
+	$balancePaid_total = 0;
+}
 
 $total = ( $medicine + $supplies + $laboratory + $ultrasound + $ctscan + $xray + $miscellaneous + $ecg + $or_dr + $pt + $ot + $st + $endoscopy + $pf + $erFee + $cardiacMonitor + $balance + $others );
 
@@ -940,7 +959,7 @@ echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td><font size=2><b>Payment</b></font></td>";
 echo "<td><font size=1>=====></font></td>";
-echo "<td><font size=2><b>".number_format($total_pd,2)."</b></font></td>";
+echo "<td><font size=2><b>".number_format( ($total_pd + $balancePaid_total),2)."</b></font></td>";
 echo "</tr>";
 
 
@@ -962,7 +981,7 @@ echo "<td>&nbsp;</td>";
 echo "<td>&nbsp;</td>";
 echo "<td><font size=2><b>BALANCE</b></font></td>";
 echo "<td><font size=1>=====></font></td>";
-echo "<td><font size=2><b>".number_format($total_unpaid,2)."</b></font></td>";
+echo "<td><font size=2><b>".number_format( ($total_unpaid - $balancePaid_total),2)."</b></font></td>";
 echo "</tr>";
 
 

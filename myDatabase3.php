@@ -4175,6 +4175,33 @@ return 0;
 }
 }
 
+private $getPaidBalances_total;
+
+public function getPaidBalances_total() {
+	return $this->getPaidBalances_total;
+}
+
+public function getPaidBalances($registrationNo) {
+
+
+$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+$result = mysqli_query($connection, "select datePaid,amountPaid from paidBalance where registrationNo_balance = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
+
+while($row = mysqli_fetch_array($result))
+{
+	echo "<tr>";
+		$this->getPaidBalances_total += $row['amountPaid'];
+		echo "<td><font size=2>".$row['datePaid']."</font></td>";
+		echo "<td><font size=2>Balance Payment</font></td>";
+		echo "<td><font size=2>1</font></td>";
+		echo "<td><font size=2>".$row['amountPaid']."</font></td>";
+		echo "<td><font size=2>".$row['amountPaid']."</font></td>";
+	echo "</tr>";
+}
+
+}
+
 
 
 }
