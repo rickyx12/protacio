@@ -73,7 +73,12 @@
 									<? if( ($ro4->dispensed_quantity($inventoryCode) + $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode)) == $ro->selectNow("inventory","beginningQTY","inventoryCode",$inventoryCode) ) { ?>
 										<td><i class="glyphicon glyphicon-ok"></i></td>
 									<? }else { ?>
-										<td><i class="glyphicon glyphicon-remove"></i></td>
+
+										<? if( $ro->selectNow("editedInventory","editNo","inventoryCode",$inventoryCode) ) { ?>
+											<td><i class="glyphicon glyphicon-wrench"></i></td>
+										<? }else { ?>
+											<td><i class="glyphicon glyphicon-remove"></i></td>
+										<? } ?>
 									<? } ?>
 								</tr>
 							<? } ?>
