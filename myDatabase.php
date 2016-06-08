@@ -8005,7 +8005,7 @@ $this->coconutTableData("&nbsp;".$row['encodedBy']);
 if( $row['inventoryType'] == "medicine" ) {
 //$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
 
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addMedicine.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
 
 }else {
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
