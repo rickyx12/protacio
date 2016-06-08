@@ -11,7 +11,9 @@ for($x=0;$x<count($_POST['registrationNo']);$x++) {
 	$myData = array(
 		"registrationNo" => $_POST['registrationNo'][$x],
 		"room" => $ro->selectNow("registrationDetails","room","registrationNo",$_POST['registrationNo'][$x]),
-		"date" => date("Y-m-d")
+		"date" => date("Y-m-d"),
+		"time" => date("H:i:s"),
+		"username" => $_POST['username']
 		);
 	$ro4->insertNow("ipdCensus",$myData);	
 	}else{ /**/ }
