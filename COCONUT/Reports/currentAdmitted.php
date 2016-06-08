@@ -1,10 +1,11 @@
 <?php
 include("../../myDatabase2.php");
-
+$username = $_GET['username'];
 $ro = new database2();
 
 echo "<center><br>";
 $ro->coconutFormStart("post","create_ipd_census.php");
+$ro->coconutHidden("username",$username);
 $ro->coconutTableStart();
 $ro->coconutTableRowStart();
 $ro->coconutTableHeader("Room");
