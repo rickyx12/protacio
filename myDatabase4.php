@@ -885,6 +885,21 @@ public function inpatient_deposit($date1,$date2,$paidVia) {
 }
 
 
+private $unitcost_list_inventoryCode;
+
+public function unitcost_list_inventoryCode() {
+	return $this->unitcost_list_inventoryCode;
+}
+
+public function unitcost_list($stockCardNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT inventoryCode from inventory where stockCardNo = '$stockCardNo' order by dateAdded desc limit 0,3  ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->unitcost_list_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
 
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
