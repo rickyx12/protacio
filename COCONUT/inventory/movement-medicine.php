@@ -10,14 +10,39 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="../../jquery-2.1.4.min.js"></script>
+	<script src="../js/jquery.tooltipster.min.js"></script>
 	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../myCSS/tooltipster.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster-noir.css"></link>
 
 	<script>
 		$(document).ready(function() {
 			$("#suppliesBtn").click(function(){
 				window.location = "movement-supplies.php";
 			});
+			<? foreach($ro4->inventory_list_inventoryCode() as $inventoryCode) { ?>
+				$("#edited<? echo $inventoryCode ?>").tooltipster({
+					theme: 'tooltipster-noir',
+					content: $('<span><strong>This text is in bold case !</strong></span>'),
+					position:'left',
+					contentAsHTML:true,
+					functionBefore:function(origin,continueTooltip) {
+						continueTooltip();
+						if( origin.data('ajax') !== 'cached' ){ 
+							$.ajax({
+								type:'POST',
+								url:'movement-edited.php',
+								data:{'inventoryCode':'<? echo $inventoryCode ?>'},
+								success:function(data) {
+									origin.tooltipster('content',data).data('ajax','cached');
+								}
+							});
+						}
+					}
+				});
+			<? } ?>
+
 		});
 	</script>
 
@@ -75,7 +100,7 @@
 									<? }else { ?>
 
 										<? if( $ro->selectNow("editedInventory","editNo","inventoryCode",$inventoryCode) ) { ?>
-											<td><i class="glyphicon glyphicon-wrench"></i></td>
+											<td><i id="edited<? echo $inventoryCode ?>" class="glyphicon glyphicon-wrench"></i></td>
 										<? }else { ?>
 											<td><i class="glyphicon glyphicon-remove"></i></td>
 										<? } ?>
