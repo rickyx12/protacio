@@ -418,6 +418,20 @@ public function inventory_list($type) {
 	}
 }
 
+private $edited_inventory_editNo;
+
+public function edited_inventory_editNo() {
+	return $this->edited_inventory_editNo;
+}
+
+public function edited_inventory($inventoryCode) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "select editNo from editedInventory where inventoryCode = '$inventoryCode'  ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->edited_inventory_editNo[] = $row['editNo'];
+	}
+}
 
 public function dispensed_quantity($inventoryCode) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
