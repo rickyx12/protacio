@@ -7992,6 +7992,7 @@ $this->coconutTableHeader("Encoded");
 $this->coconutTableHeader("User");
 $this->coconutTableHeader("");
 $this->coconutTableHeader("");
+$this->coconutTableHeader("");
 $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
@@ -8011,6 +8012,7 @@ $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
 }
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/stockCard.php?stockCardNo=$row[stockCardNo]&inventoryType=$row[inventoryType]&show=all' style='color:blue; text-decoration:none;'>View</a>");
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addEndingInventory_manual.php?stockCardNo=$row[stockCardNo]' style='text-decoration:none; color:black;'>Ending</a>");
 $this->coconutTableRowStop();
 }
 $this->coconutTableStop();
