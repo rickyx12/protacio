@@ -105,7 +105,7 @@ $ipd_balance1 = 0;
 
 						<? if( $opdCreditCard > 0 ) { ?>
 							<tr>
-								<td>Credit Card</td>
+								<td><a href="transactionSummary_creditCard.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">Credit Card</a></td>
 								<td><? ($opdCreditCard > 0) ? $x = number_format($opdCreditCard,2) : $x = ""; echo $x ?></td>
 								<td></td>
 							</tr>
@@ -114,7 +114,7 @@ $ipd_balance1 = 0;
 
 						<? if( $opdCash > 0 ) { ?>
 							<tr>
-								<td>Cash</td>
+								<td><a href="transactionSummary_cash.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">Cash</td>
 								<td><? ($opdCash > 0) ? $x = number_format($opdCash,2) : $x = ""; echo $x ?></td>
 								<td></td>
 							</tr>
@@ -122,7 +122,7 @@ $ipd_balance1 = 0;
 
 						<? if( $opdHMO > 0 ) { ?>
 							<tr>
-								<td>A/R HMO</td>
+								<td><a href="transactionSummary_hmo.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">A/R HMO</a></td>
 								<td><? ( $opdHMO > 0 ) ? $x = number_format($opdHMO,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -130,7 +130,7 @@ $ipd_balance1 = 0;
 
 						<? if( $opdPHIC > 0 ) { ?>
 							<tr>
-								<td>A/R PHILHEALTH</td>
+								<td><a href="transactionSummary_phic.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">A/R PHILHEALTH</a></td>
 								<td><? ( $opdPHIC > 0 ) ? $x = number_format($opdPHIC,2) : $x = ""; echo $x ?></td>
 								<td></td>
 							</tr>
@@ -138,7 +138,7 @@ $ipd_balance1 = 0;
 
 						<? if( $opdUnpaid > 0 ) { ?>
 							<tr>
-								<td>A/R-OPD (Personal)</td>
+								<td><a href="transactionSummary_personalBalance.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">A/R-OPD (Personal)</a></td>
 								<td><? ($opdUnpaid > 0) ? $x = number_format($opdUnpaid,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -146,7 +146,7 @@ $ipd_balance1 = 0;
 
 						<? if( $opdDiscount > 0 ) { ?>
 							<tr>
-								<td>Discount</td>
+								<td><a href="transactionSummary_disc.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">Discount</a></td>
 								<td><? ($opdDiscount > 0) ? $x = number_format($opdDiscount,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
