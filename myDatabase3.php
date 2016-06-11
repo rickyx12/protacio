@@ -418,45 +418,242 @@ $this->coconutTableStop();
 }
 
 
-public $creditCardPatient_total;
+private $creditCardPatient_registrationNo;
+private $creditCardPatient_totalCr;
 
-public function creditCardPatient($title,$date1,$date2) {
-
-echo "
-<style type='text/css'>
-tr:hover { background-color:yellow; color:black;}
-a {  border_bottom:10px; color:black; }
-</style>";
-
-
-$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-
-
-$result = mysqli_query($connection, " select pr.lastName,pr.firstName,pc.description,pc.amountPaidFromCreditCard from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date1' and '$date2') and pc.paidVia = 'Credit Card' and pc.title = '$title' order by pr.lastName asc ") or die("Query fail: " . mysqli_error()); 
-
-
-echo "<br><br><center>";
-echo "<table border=1 cellspacing=0>";
-echo "<tr>";
-echo "<th>Name</th>";
-echo "<th>Description</th>";
-echo "<th>Discount</th>";
-echo "</tr>";
-while($row = mysqli_fetch_array($result))
-{
-$this->creditCardPatient_total += $row['amountPaidFromCreditCard'];
-echo "<tr>";
-echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['description']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['amountPaidFromCreditCard']."&nbsp;</td>";
-echo "</tr>";
+public function creditCardPatient_registrationNo() {
+	return $this->creditCardPatient_registrationNo;
 }
-echo "<tr>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->creditCardPatient_total,2)."</td>";
-echo "</tr>";
-$this->coconutTableStop();
+
+
+public function creditCardPatient($date1,$date2) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.paidVia = 'Credit Card' and (pc.datePaid between '$date1' and '$date2') and pc.status not like 'DELETED%' group by rd.registrationNo") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		$this->creditCardPatient_registrationNo[] = $row['registrationNo'];
+	}
+
+}
+
+
+public function creditCardPatient_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(amountPaidFromCreditCard) as totalCr FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalCr'];
+	}
+
+}
+
+
+private $cashPaidPatient_registrationNo;
+
+public function cashPaidPatient_registrationNo() {
+	return $this->cashPaidPatient_registrationNo;
+}
+
+public function cashPaidPatient($date1,$date2) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.paidVia = 'Cash' and (pc.datePaid between '$date1' and '$date2') and pc.status not like 'DELETED%' group by rd.registrationNo") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		$this->cashPaidPatient_registrationNo[] = $row['registrationNo'];
+	}
+
+}
+
+public function cashPaidPatient_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(cashPaid) as totalCash FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalCash'];
+	}
+
+}
+
+
+private $phicPatient_registrationNo;
+
+public function phicPatient_registrationNo() {
+	return $this->phicPatient_registrationNo;
+}
+
+public function phicPatient($date1,$date2) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.phic > 0 and pc.status not like 'DELETED%' and (rd.dateUnregistered between '$date1' and '$date2') group by rd.registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		$this->phicPatient_registrationNo[] = $row['registrationNo'];
+	}
+
+}
+
+public function phicPatient_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(phic) as totalPHIC FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalPHIC'];
+	}
+
+}
+
+private $hmoPatient_registrationNo;
+
+public function hmoPatient_registrationNo() {
+	return $this->hmoPatient_registrationNo;
+}
+
+public function hmoPatient($date1,$date2) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.company > 0 and pc.status not like 'DELETED%' and (rd.dateUnregistered between '$date1' and '$date2') group by rd.registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		$this->hmoPatient_registrationNo[] = $row['registrationNo'];
+	}
+
+}
+
+public function hmoPatient_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(company) as totalHMO FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalHMO'];
+	}
+
+}
+
+private $discountedPatient_registrationNo;
+
+public function discountedPatient_registrationNo() {
+	return $this->discountedPatient_registrationNo;
+}
+
+public function discountedPatient($date1,$date2) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.discount > 0 and pc.status not like 'DELETED%' and (rd.dateUnregistered between '$date1' and '$date2') group by rd.registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		$this->discountedPatient_registrationNo[] = $row['registrationNo'];
+	}
+
+}
+
+
+public function discountedPatient_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(discount) as totalDisc FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalDisc'];
+	}
+
+}
+
+
+private $personalBalancePatient_registrationNo;
+
+public function personalBalancePatient_registrationNo() {
+	return $this->personalBalancePatient_registrationNo;
+}
+
+public function personalBalancePatient($date1,$date2) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.cashUnpaid > 0 and pc.status not like 'DELETED%' and (rd.dateUnregistered between '$date1' and '$date2') group by rd.registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		$this->personalBalancePatient_registrationNo[] = $row['registrationNo'];
+	}
+
+}
+
+
+public function personalBalancePatient_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(cashUnpaid) as totalBal FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalBal'];
+	}
+
+}
+
+public function personalBalancePatient_therapy_total($registrationNo) {
+
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+
+
+	$result = mysqli_query($connection, " SELECT sum(otShare) as totalBal FROM patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' and title in ('OT','ST','PT') ") or die("Query fail: " . mysqli_error()); 
+
+
+	while($row = mysqli_fetch_array($result))
+	{
+		return $row['totalBal'];
+	}
 
 }
 
