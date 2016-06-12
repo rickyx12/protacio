@@ -153,7 +153,7 @@ $genericName = $_GET['genericName'];
 							<div class="form-group">
 								<label class="form-label col-sm-2">Unitcost</label>
 								<div class="col-sm-5">
-									<input type="text" name="unitcost" id="unitcost" tabindex="-1" class="form-control col-sm-5" autocomplete="off">
+									<input type="text" name="unitcost" id="unitcost" tabindex="-1" class="form-control col-sm-5" placeholder="unitcost per pcs" autocomplete="off">
 								</div>
 							</div>
 
@@ -232,9 +232,9 @@ $genericName = $_GET['genericName'];
 							<div class="form-group">
 								<label class="form-label col-sm-2">Lock</label>
 								<div class="col-sm-5">
-									<input type="checkbox" name="lock" value="yes">Yes
+									<input type="radio" name="lock" value="yes">Yes
 									&nbsp;&nbsp;
-									<input type="checkbox" name="lock" value="no" checked>No
+									<input type="radio" name="lock" value="no" checked>No
 								</div>
 							</div>
 
