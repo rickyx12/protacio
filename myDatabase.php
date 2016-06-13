@@ -8009,7 +8009,10 @@ if( $row['inventoryType'] == "medicine" ) {
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addMedicine.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
 
 }else {
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
+//$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
+
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addSupplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
+
 }
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/stockCard.php?stockCardNo=$row[stockCardNo]&inventoryType=$row[inventoryType]&show=all' style='color:blue; text-decoration:none;'>View</a>");
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addEndingInventory_manual.php?stockCardNo=$row[stockCardNo]' style='text-decoration:none; color:black;'>Ending</a>");
