@@ -200,9 +200,14 @@ $grandCash;		$grandCashTotal = 0;
 
 											<td>
 												<? 
-													$unpaid = round( $ro4->inpatient_paymentMode_total_charges($registrationNo,"cashUnpaid") + $ro4->inpatient_paymentMode_total_inventory($registrationNo,"cashUnpaid") + $ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"cashUnpaid") + $ro2->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2 ); 
-													
-
+													$unpaid = round( 
+														$ro4->inpatient_paymentMode_total_charges($registrationNo,"cashUnpaid") + 
+														$ro4->inpatient_paymentMode_total_inventory($registrationNo,"cashUnpaid") + 
+														$ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"cashUnpaid") + $ro2->selectNow("registrationDetails","hmoManualExcessValue","registrationNo",$registrationNo) + 
+														$ro2->selectNow("registrationDetails","PHICportion","registrationNo",$registrationNo) + $ro2->selectNow("registrationDetails","excessMaxBenefits","registrationNo",$registrationNo) + 
+														$ro2->selectNow("registrationDetails","excessRoom","registrationNo",$registrationNo) + 
+														$ro2->selectNow("registrationDetails","excessPF","registrationNo",$registrationNo),2 
+														); 													
 													echo $unpaid; 
 													$unpaidTotal += $unpaid; 
 												?>
