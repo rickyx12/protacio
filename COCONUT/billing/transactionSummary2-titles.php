@@ -387,7 +387,7 @@ $ipd_balance1 = 0;
 
 						<? if( $ipd_creditCard > 0 ) { ?>
 							<tr>
-								<td>Credit Card</td>
+								<td><a href="transactionSummary_ipdPayments.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>&payment=Credit Card" style="color:black" target="_blank">Credit Card</a></td>
 								<td><? ($ipd_creditCard > 0) ? $x = number_format($ipd_creditCard,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -396,7 +396,7 @@ $ipd_balance1 = 0;
 
 						<? if( $ipd_cash > 0 ) { ?>
 							<tr>
-								<td>Cash</td>
+								<td><a href="transactionSummary_ipdPayments.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>&payment=Cash" style="color:black" target="_blank">Cash</a></td>
 								<td><? ($ipd_grandCash > 0) ? $x = number_format($ipd_grandCash,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -405,7 +405,7 @@ $ipd_balance1 = 0;
 
 						<? if( $ipd_hmo > 0 ) { ?>
 							<tr>
-								<td>A/R HMO</td>
+								<td><a href="transactionSummary_ipdHMO.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">A/R HMO</a></td>
 								<td><? ( $ipd_hmo > 0 ) ? $x = number_format($ipd_hmo,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -414,7 +414,7 @@ $ipd_balance1 = 0;
 
 						<? if( $ipd_phic > 0 ) { ?>
 							<tr>
-								<td>A/R PHILHEALTH</td>
+								<td><a href="transactionSummary_ipdPHIC.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">A/R PHILHEALTH</a></td>
 								<td><? ( $ipd_phic > 0 ) ? $x = number_format($ipd_phic,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -422,7 +422,7 @@ $ipd_balance1 = 0;
 
 						<? if( $ipd_balance > 0 ) { ?>
 							<tr>
-								<td>A/R-IPD(Personal)</td>
+								<td><a href="transactionSummary_ipdBalance.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">A/R-IPD(Personal)</a></td>
 								<td><? ($ipd_balance > 0) ? $x = number_format($ipd_balance,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
@@ -431,7 +431,7 @@ $ipd_balance1 = 0;
 
 						<? if( $ipd_discount > 0 ) { ?>
 						<tr>
-							<td>Discount</td>
+							<td><a href="transactionSummary_ipdDiscount.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">Discount</a></td>
 							<td><? ( $ipd_discount > 0 ) ? $x = number_format($ipd_discount,2) : $x = ""; echo $x; ?></td>
 							<td></td>
 						</tr>
@@ -439,7 +439,7 @@ $ipd_balance1 = 0;
 						
 						<? if( $ipd_refund > 0 ) { ?>
 							<tr>
-								<td>Refund</td>
+								<td><a href="transactionSummary_ipdRefund.php?date1=<? echo $date1 ?>&date2=<? echo $date2 ?>" style="color:black" target="_blank">Refund</a></td>
 								<td><? ( $ipd_refund > 0 ) ? $x = number_format($ipd_refund,2) : $x = ""; echo $x; ?></td>
 								<td></td>
 							</tr>
