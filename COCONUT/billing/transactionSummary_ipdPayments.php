@@ -91,35 +91,37 @@
 							<? } ?>
 						<? } ?>
 
-						<? foreach( $ro4->inpatient_deposit_paymentNo() as $paymentNo ) { ?>
-							<? $registrationNo = $ro->selectNow("patientPayment","registrationNo","paymentNo",$paymentNo) ?>
+						<? if( $ro4->inpatient_deposit_paymentNo() != "" ) { ?>
+							<? foreach( $ro4->inpatient_deposit_paymentNo() as $paymentNo ) { ?>
+								<? $registrationNo = $ro->selectNow("patientPayment","registrationNo","paymentNo",$paymentNo) ?>
 
-							<tr>
-								<td>
-									<?
-										$datePaid = $ro->selectNow("patientPayment","datePaid","paymentNo",$paymentNo);
-										echo $datePaid;
-									?>
-								</td>
+								<tr>
+									<td>
+										<?
+											$datePaid = $ro->selectNow("patientPayment","datePaid","paymentNo",$paymentNo);
+											echo $datePaid;
+										?>
+									</td>
 
-								<td>
-									<?
-										$patientNo = $ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
-										$lastName = $ro->selectNow("patientRecord","lastName","patientNo",$patientNo);
-										$firstName = $ro->selectNow("patientRecord","firstName","patientNo",$patientNo);
-										echo $lastName.", ".$firstName;
-									?>
-								</td>
+									<td>
+										<?
+											$patientNo = $ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
+											$lastName = $ro->selectNow("patientRecord","lastName","patientNo",$patientNo);
+											$firstName = $ro->selectNow("patientRecord","firstName","patientNo",$patientNo);
+											echo $lastName.", ".$firstName;
+										?>
+									</td>
 
-								<td>
-									<?
-										$amountPaid = $ro->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo);
-										$paymentTotal += $amountPaid;
-										echo number_format($amountPaid,2);
-									?>
-								</td>
+									<td>
+										<?
+											$amountPaid = $ro->selectNow("patientPayment","amountPaid","paymentNo",$paymentNo);
+											$paymentTotal += $amountPaid;
+											echo number_format($amountPaid,2);
+										?>
+									</td>
 
-							</tr>
+								</tr>
+							<? } ?>
 						<? } ?>
 
 					</tbody>
