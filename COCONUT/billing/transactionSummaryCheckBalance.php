@@ -113,7 +113,7 @@ $stUnpaid;
 $stShare;
 $stDiscount;
 
-//$ro3->showAllAccountTitle_opd($date,$date1);
+$ro3->showAllAccountTitle_opd($date,$date1);
 echo "<br>";
 echo "<table border=0 width='80%'>";
 echo "<tr>";
@@ -128,9 +128,9 @@ echo "<th>&nbsp;Cr.CARD</th>";
 echo "<th>&nbsp;PAYABLES</th>";
 echo "<th>&nbsp;TOTAL</th>";
 echo "</tr>";
-//$ro3->showPFaccounts($date,$date1);
+$ro3->showPFaccounts($date,$date1);
 
-/*
+
 $ro3->showTherapyAccounts($date,$date1,"OT");
 $otTotal = $ro3->showTherapyAccounts_total();
 $otCreditCard = $ro3->showTherapyAccounts_creditCard();
@@ -155,7 +155,7 @@ $stShare = $ro3->showTherapyAccounts_pf();
 $st_Payables = $ro3->showTherapyAccounts_payable();
 $st_hmo_Payables = $ro3->showTherapyAccounts_hmo_payable();
 $stDiscount = $ro3->showTherapyAccounts_discount();
-*/
+
 echo "</table>";
 
 ?>
