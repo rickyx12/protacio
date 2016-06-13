@@ -865,10 +865,15 @@ public function inpatient_balance_paid($datePaid,$datePaid1) {
 	}
 }
 
+private $inpatient_deposit_paymentNo;
 private $inpatient_deposit_registrationNo;
 private $inpatient_deposit_dateUnregistered;
 private $inpatient_deposit_amountPaid;
 private $inpatient_deposit_paidVia;
+
+public function inpatient_deposit_paymentNo() {
+	return $this->inpatient_deposit_paymentNo;
+}
 
 public function inpatient_deposit_registrationNo() {
 	return $this->inpatient_deposit_registrationNo;
@@ -888,9 +893,10 @@ public function inpatient_deposit_paidVia() {
 
 public function inpatient_deposit($date1,$date2,$paidVia) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT rd.registrationNo,rd.dateUnregistered,pp.amountPaid,pp.paidVia FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.dateUnregistered = '' and (pp.datePaid between '$date1' and '$date2') and pp.paidVia = '$paidVia' and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT rd.registrationNo,rd.dateUnregistered,pp.amountPaid,pp.paidVia,pp.paymentNo FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.dateUnregistered = '' and (pp.datePaid between '$date1' and '$date2') and pp.paidVia = '$paidVia' and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
+		$this->inpatient_deposit_paymentNo[] = $row['paymentNo'];
 		$this->inpatient_deposit_registrationNo[] = $row['registrationNo'];
 		$this->inpatient_deposit_dateUnregistered[] = $row['dateUnregistered'];
 		$this->inpatient_deposit_amountPaid[] = $row['amountPaid'];
@@ -914,6 +920,57 @@ public function unitcost_list($stockCardNo) {
 	}
 }
 
+private $inpatient_discharged_registrationNo;
+
+public function inpatient_discharged_registrationNo() {
+	return $this->inpatient_discharged_registrationNo;
+}
+
+public function inpatient_discharged($date1,$date2) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT registrationNo FROM registrationDetails WHERE type = 'IPD' and (dateUnregistered between '$date1' and '$date2') order by dateUnregistered asc ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->inpatient_discharged_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+/*
+public function inpatient_payment_summary_total($registrationNo,$paidVia) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(amountPaid) as pd FROM patientPayment WHERE registrationNo = '$registrationNo' and paidVia = '$paidVia' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['pd'];
+	}
+}
+*/
+public function inpatient_hmo_total($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(company) as hmo FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['hmo'];
+	}
+}
+
+public function inpatient_hmoExcess($registrationNo,$cols) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(".$cols.") as excess FROM registrationDetails WHERE registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['excess'];
+	}
+}
+
+public function inpatient_phic_total($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(phic) as phic FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['phic'];
+	}
+}
 
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
