@@ -11,10 +11,10 @@ public $password;
 public $database;
 
 public function __construct() {
-$this->host = $_SERVER['DB_HOST'];
-$this->username = $_SERVER['DB_USER'];
-$this->password = $_SERVER['DB_PASS'];
-$this->database = $_SERVER['DB_DB'];
+  $this->host = $_SERVER['DB_HOST'];
+  $this->username = $_SERVER['DB_USER'];
+  $this->password = $_SERVER['DB_PASS'];
+  $this->database = $_SERVER['DB_DB'];
 }
 
 public function myHost(){
@@ -8020,7 +8020,9 @@ $this->coconutTableRowStop();
 }
 $this->coconutTableStop();
 
-echo "<br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=new&stockCardNo=&description=&genericName=' style='color:red; text-decoration:none;'>New Medicine & Stock Card</a><br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=new&stockCardNo=&description=' style='color:blue; text-decoration:none;'>New Supplies & Stock Card</a>";
+//echo "<br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=new&stockCardNo=&description=&genericName=' style='color:red; text-decoration:none;'>New Medicine & Stock Card</a><br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=new&stockCardNo=&description=' style='color:blue; text-decoration:none;'>New Supplies & Stock Card</a>";
+
+echo "<br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addNewMedicine.php?username=$username' style='color:red; text-decoration:none;'>New Medicine & Stock Card</a><br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addNewSupplies.php?username=$username' style='color:blue; text-decoration:none;'>New Supplies & Stock Card</a>";
 
 }
 
