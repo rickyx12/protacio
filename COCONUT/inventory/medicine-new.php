@@ -102,7 +102,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Header</h4>
+						<h4 class="modal-title">Remove Medicine</h4>
 					</div>
 					<div class="modal-body">
 						<p>DELETE <b><?php echo $ro1->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></b>?</p>
@@ -122,7 +122,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"><?php echo $ro1->selectNow('inventory','description','inventoryCode',$inventoryCode) ?></h4>
+						<h4 class="modal-title">Update Medicine</h4>
 					</div>
 					<div class="modal-body">
 						<div class="container">

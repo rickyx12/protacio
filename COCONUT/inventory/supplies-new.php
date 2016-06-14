@@ -76,6 +76,16 @@
 					</tr>
 				<? } ?>
 			</tbody>
+			<tfoot>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tfoot>
 		</table>
 
 		<? foreach($ro4->inventory_list_inventoryCode() as $inventoryCode) { ?>
@@ -87,7 +97,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">Modal Header</h4>
+		        <h4 class="modal-title">Remove Supplies</h4>
 		      </div>
 		      <div class="modal-body">
 		        <p>Delete <b><? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></b>?</p>
@@ -112,7 +122,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">Modal Header</h4>
+		        <h4 class="modal-title">Update Supplies</h4>
 		      </div>
 		      <div class="modal-body">
 		        <div class="container">
