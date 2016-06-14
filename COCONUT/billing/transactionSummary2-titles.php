@@ -84,6 +84,15 @@ $ipd_balance1 = 0;
 	<script src="../../jquery-2.1.4.min.js"></script>
 	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>
+
+	<style>
+		@media print {
+		  a[href]:after {
+		    content: "";
+		  }
+		}		
+	</style>
+
 </head>
 <body>
 	<div class="container">
