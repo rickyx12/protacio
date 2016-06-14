@@ -3208,7 +3208,7 @@ private $patientAccountOPD_pf_discount;
 private $patientAccountOPD_pf_unpaid;
 private $patientAccountOPD_pf_hmo;
 private $patientAccountOPD_pf_phic;
-private $patientAccountOPD_cash;
+private $patientAccountOPD_pf_cash;
 private $patientAccountOPD_pf_hospital;
 private $patientAccountOPD_pf_doctor;
 private $patientAccountOPD_pf_creditCard;
