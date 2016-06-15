@@ -62,7 +62,10 @@
 						<? foreach( $ro3->cashPaidPatient_registrationNo() as $registrationNo ) { ?>
 							<tr>
 								<td>
-									<? echo $ro4->formatDate($ro3->selectNow("registrationDetails","dateUnregistered","registrationNo",$registrationNo)) ?>
+									<? if( $ro3->selectNow("registrationDetails","dateUnregistered","registrationNo",$registrationNo) != "" ) { ?>
+										<? echo $ro4->formatDate($ro3->selectNow("registrationDetails","dateUnregistered","registrationNo",$registrationNo)) 
+										?>
+									<? } ?>
 								</td>
 								<td>
 									<?
