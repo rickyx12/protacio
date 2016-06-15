@@ -980,7 +980,7 @@ public function stock_card_list_stockCardNo() {
 
 public function stock_card_list($inventoryType) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT stockCardNo FROM inventoryStockCard WHERE status not like 'DELETED%' and inventoryType = '$inventoryType' order by genericName asc ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT stockCardNo FROM inventoryStockCard WHERE status not like 'DELETED%' and inventoryType = '$inventoryType' order by genericName,description asc ") or die("Query fail: " . mysqli_alerror()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->stock_card_list_stockCardNo[] = $row['stockCardNo'];
