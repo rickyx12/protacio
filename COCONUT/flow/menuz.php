@@ -153,5 +153,14 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/paid
 echo "<input type='submit' value='Paid Balance' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/stockCardList.php' target='rightFrame'>";
+echo "<input type='hidden' name='inventoryType' value='medicine'>";
+echo "<input type='submit' value='Stock Card Medicine' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/stockCardList.php?inventoryType=supplies' target='rightFrame'>";
+echo "<input type='hidden' name='inventoryType' value='supplies'>";
+echo "<input type='submit' value='Stock Card Supplies' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
 
 ?>
