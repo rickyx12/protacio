@@ -27,7 +27,7 @@ echo "<Table border=0 width='90%'>";
 		echo "<th>CASH</th>";
 		echo "<th>Cr.Card</th>";
 		echo "<th>Total</th>";
-		if($title == "OT") {
+		if($title == "OT" || $title == "ST") {
 			echo "<th>Hospital</th>";
 			echo "<th>PF</th>";
 		}else {	
@@ -51,7 +51,11 @@ echo "<Table border=0 width='90%'>";
 		if($title == "OT") {
 			echo "<td align='right'>".($ro->patientAccountOPD_paid_hospital() + $ro->patientAccountOPD_notPaid_hospital())."</td>";
 			echo "<td align='right'>".($ro->patientAccountOPD_paid_pf() + $ro->patientAccountOPD_notPaid_pf())."</td>";
-		}else {
+		}else if( $title == "ST" ) {
+			echo "<td align='right'>".($ro->patientAccountOPD_paid_hospital() + $ro->patientAccountOPD_notPaid_hospital())."</td>";
+			echo "<td align='right'>".($ro->patientAccountOPD_paid_pf() + $ro->patientAccountOPD_notPaid_pf())."</td>";			
+		}
+		else {
 
 		}
 
