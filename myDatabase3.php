@@ -1549,9 +1549,9 @@ a {  border_bottom:10px; color:black; }
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 if($shift == "all") {
-$result = mysqli_query($connection, " select shift,registrationNo,orNo,amountPaid,paidVia from patientPayment where datePaid = '$date' and shift in ('1','2','3') group by paidVia,registrationNo order by shift,orNo asc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select shift,registrationNo,orNo,amountPaid,paidVia,paymentFor from patientPayment where datePaid = '$date' and shift in ('1','2','3') group by paidVia,registrationNo order by shift,orNo asc ") or die("Query fail: " . mysqli_error()); 
 }else {
-$result = mysqli_query($connection, " select registrationNo,orNo,amountPaid,paidVia from patientPayment where datePaid = '$date' and shift = '$shift' group by paidVia,registrationNo order by orNo asc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select registrationNo,orNo,amountPaid,paidVia,paymentFor from patientPayment where datePaid = '$date' and shift = '$shift' group by paidVia,registrationNo order by orNo asc ") or die("Query fail: " . mysqli_error()); 
 }
 
 while($row = mysqli_fetch_array($result))
@@ -1579,7 +1579,12 @@ echo "<td>&nbsp;<font size=2>".$row['paidVia']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['orNo']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$this->getPatientRecord_lastName().", ".$this->getPatientRecord_firstName()."</font></td>";
 echo "<td>&nbsp;<font size=2>".number_format($this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,$shift,$username,$row['paidVia']),2)."</font></td>";
-echo "<td>&nbsp;<font size=2>IPD</font></td>";
+
+	if( $row['paymentFor'] == "DEPOSIT" ) {
+		echo "<td>&nbsp;<font size=2>DEPOSIT</font></td>";
+	}else {
+		echo "<td>&nbsp;<font size=2>IPD</font></td>";
+	}
 echo "</tr>";
 }
 
