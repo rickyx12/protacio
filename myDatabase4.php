@@ -987,6 +987,30 @@ public function stock_card_list($inventoryType) {
 	}
 }
 
+private $daily_hmo_patient_registrationNo;
+
+public function daily_hmo_patient_registrationNo() {
+	return $this->daily_hmo_patient_registrationNo;
+}
+
+public function daily_hmo_patient($date,$shift) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.Company != '' AND rd.type = 'OPD' and rd.dateUnregistered = '$date' and pc.reportShift = '$shift' group by rd.registrationNo ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->daily_hmo_patient_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+public function outpatient_hmo_total($registrationNo,$shift) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(company) as hmo FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') and reportShift = '$shift' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['hmo'];
+	}
+}
+
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
