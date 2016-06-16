@@ -208,8 +208,8 @@ $opd_derma = $ro3->showAllAccountTitle_opd_derma();
 $opd_others = $ro3->showAllAccountTitle_opd_others();
 $opd_OR = $ro3->showAllAccountTitle_opd_OR();
 $opd_PT = ($ro3->showAllAccountTitle_opd_PT());
-$opd_OT = ( $otCreditCard + $otCash + $otHMO + $otPHIC + $otUnpaid );
-$opd_ST = ( $stCreditCard + $stCash + $stHMO + $stPHIC + $stUnpaid );
+$opd_OT = ( $otCreditCard + $otCash + $otHMO + $otPHIC + $otUnpaid + $otDiscount );
+$opd_ST = ( $stCreditCard + $stCash + $stHMO + $stPHIC + $stUnpaid + $stDiscount );
 $opd_cardiacMonitor = $ro3->showAllAccountTitle_opd_cardiacMonitor();
 $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 
