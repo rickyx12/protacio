@@ -358,6 +358,7 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/BillingReports/BillAccountingSD.php?username=<?php echo $username; ?>" target="departmentX">Transaction Summary</a></li>
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift_registered.php?&username=<?php echo $username; ?>&switch=2" target="_blank">Registration Census</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/hmoSOA_type.php" target="_blank">HMO SOA</a></li>
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Company/daily-hmo-control.php" target="_blank">Daily HMO</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/dischargedDate.php?username=<?php echo $username; ?>" target="departmentX">Discharged</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/doctorReport/selectShift_ADMIN.php?username=x" target="departmentX">OPD PF (Summary)</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=x&switch=x" target="departmentX">Statistics of Procedure</a></li>
