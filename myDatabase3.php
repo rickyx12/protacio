@@ -3108,7 +3108,7 @@ echo "<tr>";
 	}else {
 		echo "<td align='right'>&nbsp;".($row['total'])."</td>";
 	}
-	if($title == "OT") {
+	if($title == "OT" || $title == "ST") {
 		echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
 		echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
 		$this->patientAccountOPD_notPaid_hospital += ($row['total'] - $row['otShare']);
@@ -3192,7 +3192,7 @@ if($row['title'] == "OT") {
 			echo "<td align='right'>&nbsp;".($row['sellingPrice'] * $row['quantity'])."</td>";
 		}
 
-		if($title == "OT") {
+		if($title == "OT" || $title == "ST") {
 			echo "<td align='right'>&nbsp;".($row['total'] - $row['otShare'])."</td>";
 			echo "<td align='right'>&nbsp;".$row['otShare']."</td>";
 			$this->patientAccountOPD_paid_hospital += ( $row['total'] - $row['otShare'] );
