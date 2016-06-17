@@ -34,6 +34,7 @@
 						<tr>
 							<th>Description</th>
 							<th>Ending QTY</th>
+							<th>Amount</th>
 							<th>Quarter</th>
 						</tr>
 					</thead>
@@ -43,7 +44,15 @@
 								<? if( $ro->selectNow("inventory","inventoryType","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) == "supplies" ) { ?>
 
 									<td><? echo $ro->selectNow("inventory","description","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) ?></td>	
-									<td><? echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo) ?></td>						
+									<td><? echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo) ?></td>		
+									<td>
+										<?
+											$inventoryCode = $ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo);
+											$endingQTY = $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo);
+											$unitcost = $ro->selectNow("inventory","suppliesUNITCOST","inventoryCode",$inventoryCode);
+											echo number_format($endingQTY * $unitcost,2);
+										?>
+									</td>				
 									<td><? echo $ro->selectNow("endingInventory","quarter","endingNo",$endingNo) ?></td>
 
 								<? } ?>
