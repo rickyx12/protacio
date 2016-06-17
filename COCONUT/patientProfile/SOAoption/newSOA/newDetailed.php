@@ -920,7 +920,7 @@ $total_hmo = ( $medicine_hmo + $supplies_hmo + $laboratory_hmo + $ultrasound_hmo
 
 $total_disc = ( $medicine_disc + $supplies_disc + $laboratory_disc + $ultrasound_disc + $ctscan_disc + $xray_disc + $miscellaneous_disc + $ecg_disc + $or_dr_disc + $pt_disc + $st_disc + $ot_disc + $endoscopy_disc + $pf_disc + $erFee_disc + $cardiacMonitor_disc + $balance_disc + $others_disc );
 
-$total_unpaid = ( $medicine_unpaid + $supplies_unpaid + $laboratory_unpaid + $ultrasound_unpaid + $ctscan_unpaid + $xray_unpaid + $miscellaneous_unpaid + $ecg_unpaid + $or_dr_unpaid + $pt_unpaid + $ot_unpaid + $st_unpaid + $endoscopy_unpaid + $pf_unpaid + $erFee_unpaid + $cardiacMonitor_unpaid + $balance_disc + $others_unpaid );
+$total_unpaid = ( $medicine_unpaid + $supplies_unpaid + $laboratory_unpaid + $ultrasound_unpaid + $ctscan_unpaid + $xray_unpaid + $miscellaneous_unpaid + $ecg_unpaid + $or_dr_unpaid + $pt_unpaid + $ot_unpaid + $st_unpaid + $endoscopy_unpaid + $pf_unpaid + $erFee_unpaid + $cardiacMonitor_unpaid + $balance_unpaid + $others_unpaid );
 
 echo "<tr>";
 echo "<td>&nbsp;</td>";
