@@ -2,6 +2,7 @@
 <? include "../../myDatabase4.php" ?>
 <? $ro = new database() ?>
 <? $ro4 = new database4() ?>
+<? $grandTotal = 0 ?>
 <? $ro4->ending_inventory_list() ?>
 <!doctype html>
 <html>
@@ -51,6 +52,8 @@
 											$endingQTY = $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo);
 											$unitcost = $ro->selectNow("inventory","suppliesUNITCOST","inventoryCode",$inventoryCode);
 											echo number_format($endingQTY * $unitcost,2);
+											$grandTotal += ($endingQTY * $unitcost);
+										
 										?>
 									</td>				
 									<td><? echo $ro->selectNow("endingInventory","quarter","endingNo",$endingNo) ?></td>
@@ -61,6 +64,14 @@
 							</tr>
 						<? } ?>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td></td>
+							<td><? echo number_format($grandTotal,2) ?></td>
+							<td></td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</div>
