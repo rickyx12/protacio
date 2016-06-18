@@ -314,9 +314,7 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/movement-supplies.php" target="departmentX">Movement Supplies</a></li>
 
-<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/ending-inventory-medicine.php" target="departmentX">Ending Inventory Medicine</a></li>
-
-<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/ending-inventory-supplies.php" target="departmentX">Ending Inventory Supplies</a></li>
+<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/endingInventory_quarter.php" target="departmentX">Ending Inventory</a></li>
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/MGH/date_MGH.php?username=<?php echo $username; ?>" target="departmentX">Unlock</a></li>
 
