@@ -707,9 +707,9 @@ public function ending_inventory_list_endingNo() {
 	return $this->ending_inventory_list_endingNo;
 }
 
-public function ending_inventory_list() {
+public function ending_inventory_list($quarter) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory WHERE quarter = '$quarter' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->ending_inventory_list_endingNo[] = $row['endingNo'];
