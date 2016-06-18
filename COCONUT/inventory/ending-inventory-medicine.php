@@ -1,9 +1,12 @@
 <? include "../../myDatabase.php"; ?>
 <? include "../../myDatabase4.php" ?>
+
+<? $quarter = $_GET['quarter'] ?>
+
 <? $ro = new database() ?>
 <? $ro4 = new database4() ?>
 <? $grandTotal = 0 ?>
-<? $ro4->ending_inventory_list() ?>
+<? $ro4->ending_inventory_list($quarter) ?>
 <!doctype html>
 <html>
 	<head>
@@ -13,23 +16,10 @@
 		<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 		<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>	
 
-		<script>
-			$(document).ready(function(){
-				$("#suppliesBtn").click(function(){
-					window.location = "ending-inventory-supplies.php";
-				});
-			});
-		</script>
-
-
 	</head>
 	<body>
 		<div class="container">
 			<h3>Ending Inventory Medicine</h3>
-			<div class="btn-group">
-				<button type="button" class="btn btn-info">Medicine</button>
-				<button id="suppliesBtn" type="button" class="btn btn-default">Supplies</button>
-			</div>
 			<div class="col-md-12">
 				<table class="table table-hover">
 					<thead>
@@ -44,9 +34,22 @@
 					<tbody>
 						<? foreach($ro4->ending_inventory_list_endingNo() as $endingNo) { ?>
 							<tr>
-								<? if( $ro->selectNow("inventory","inventoryType","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) == "medicine" ) { ?>
+								<? if( $ro->selectNow("inventoryStockCard","inventoryType","stockCardNo",$ro->selectNow("endingInventory","stockCardNo","endingNo",$endingNo)) == "medicine" ) { ?>
 
-									<td><? echo $ro->selectNow("inventory","description","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) ?></td>
+									<td>
+										<? 
+											$inventoryBrand = $ro->selectNow("inventory","description","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo));
+											$stockCardBrand = $ro->selectNow("inventoryStockCard","description","stockCardNo",$ro->selectNow("endingInventory","stockCardNo","endingNo",$endingNo));
+
+											if( $inventoryBrand != "" ) {
+												echo $inventoryBrand;
+											}else {
+												echo $stockCardBrand;
+											}
+
+
+										?>
+									</td>
 									<td><? echo $ro->selectNow("inventory","genericName","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo)) ?></td>		
 									<td><? echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo) ?></td>
 									<td>
