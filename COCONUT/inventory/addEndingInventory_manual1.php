@@ -4,6 +4,7 @@
 <? $genericName = $_POST['genericName'] ?>
 <? $currentQTY = $_POST['currentQTY'] ?>
 <? $endingQTY = $_POST['endingQTY'] ?>
+<? $unitcost = $_POST['unitcost'] ?>
 <? $dateAdded = $_POST['dateAdded'] ?>
 <? $quarter = $_POST['quarter'] ?>
 <? $ro4 = new database4(); ?>
@@ -13,6 +14,7 @@
 		"stockCardNo" => $stockCardNo,
 		"currentQTY" => $currentQTY,
 		"endingQTY" => $endingQTY,
+		"unitcost" => $unitcost,
 		"date" => $dateAdded." ".date("H:i:s"),
 		"quarter" => $quarter
 	);

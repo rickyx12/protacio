@@ -58,7 +58,14 @@
 							<div class="col-sm-3">
 								<input type="text" name="endingQTY" class="form-control col-sm-3" autocomplete="off">
 							</div>
-						</div>						
+						</div>	
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Unitcost</label>
+							<div class="col-sm-5">
+								<input type="text" name="unitcost" class="form-control col-sm-5" autocomplete="off" placeholder="unitcost per pcs">
+							</div>
+						</div>					
 
 						<div class="form-group">
 							<label class="control-label col-sm-2">Date</label>
