@@ -144,15 +144,15 @@ echo "<input type='hidden' name='inventoryType' value='medicine'>";
 echo "<input type='submit' value='Ending Inv' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
-echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/ending-inventory-medicine.php' target='rightFrame'>";
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/endingInventory_quarter.php' target='rightFrame'>";
 echo "<input type='hidden' name='inventoryType' value='medicine'>";
 echo "<input type='submit' value='Ending Inv List' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
-
+/*
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/inventory-ending-comparison-medicine.php' target='rightFrame'>";
 echo "<input type='submit' value='Ending Inv Comparison' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
-
+*/
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/paid-balance.php' target='rightFrame'>";
 echo "<input type='submit' value='Paid Balance' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
