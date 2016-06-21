@@ -202,6 +202,7 @@ $opd_xray = $ro3->showAllAccountTitle_opd_xray();
 $opd_ultrasound = $ro3->showAllAccountTitle_opd_ultrasound();
 $opd_erFee = $ro3->showAllAccountTitle_opd_erFee();
 $opd_nursery = $ro3->showAllAccountTitle_opd_nursery();
+$opd_rehab = $ro3->showAllAccountTitle_opd_rehab();
 $opd_ctscan = $ro3->showAllAccountTitle_opd_ctscan();
 $opd_laboratory = $ro3->showAllAccountTitle_opd_laboratory();
 $opd_medicine = $ro3->showAllAccountTitle_opd_medicine();
@@ -231,6 +232,7 @@ $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 	<input type="hidden" name="opd_ultrasound" value="<? echo $opd_ultrasound ?>">
 	<input type="hidden" name="opd_erFee" value="<? echo $opd_erFee ?>">
 	<input type="hidden" name="opd_nursery" value="<? echo $opd_nursery ?>">
+	<input type="hidden" name="opd_rehab" value="<? echo $opd_rehab ?>">
 	<input type="hidden" name="opd_ctscan" value="<? echo $opd_ctscan ?>">
 	<input type="hidden" name="opd_laboratory" value="<? echo $opd_laboratory ?>" >
 	<input type="hidden" name="opd_medicine" value="<? echo $opd_medicine ?>">
