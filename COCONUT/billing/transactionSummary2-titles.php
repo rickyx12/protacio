@@ -15,6 +15,7 @@ $opd_ecg = $_GET['opd_ecg'];
 $opd_xray = $_GET['opd_xray'];
 $opd_ultrasound = $_GET['opd_ultrasound'];
 $opd_erFee = $_GET['opd_erFee'];
+$opd_nursery = $_GET['opd_nursery'];
 $opd_ctscan = $_GET['opd_ctscan'];
 $opd_laboratory = $_GET['opd_laboratory'];
 $opd_medicine = $_GET['opd_medicine'];
@@ -196,6 +197,14 @@ $ipd_balance1 = 0;
 							</tr>
 						<? } ?>
 
+						<? if( $opd_nursery > 0 ) { ?>
+							<tr>
+								<td>Nursery</td>
+								<td></td>
+								<td><? ( $opd_nursery > 0 ) ? $x = number_format($opd_nursery,2) : $x = ""; echo $x ?></td>
+							</tr>
+						<? } ?>
+
 
 						<? if( $opd_ecg > 0 ) { ?>
 							<tr>
@@ -368,7 +377,7 @@ $ipd_balance1 = 0;
 							<td>
 								<? 
 
-									$opdCredit = ( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal  + $payableTotal );
+									$opdCredit = ( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_nursery + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal  + $payableTotal );
 									echo number_format($opdCredit,2); 
 								?>
 							</td>

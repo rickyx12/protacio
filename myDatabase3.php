@@ -2306,6 +2306,7 @@ private $showAllAccountTitle_opd_ecg;
 private $showAllAccountTitle_opd_xray;
 private $showAllAccountTitle_opd_ultrasound;
 private $showAllAccountTitle_opd_erFee;
+private $showAllAccountTitle_opd_nursery;
 private $showAllAccountTitle_opd_ctscan;
 private $showAllAccountTitle_opd_laboratory;
 private $showAllAccountTitle_opd_medicine;
@@ -2365,6 +2366,10 @@ public function showAllAccountTitle_opd_ultrasound() {
 
 public function showAllAccountTitle_opd_erFee() {
 	return $this->showAllAccountTitle_opd_erFee;
+}
+
+public function showAllAccountTitle_opd_nursery() {
+	return $this->showAllAccountTitle_opd_nursery;
 }
 
 public function showAllAccountTitle_opd_ctscan() {
@@ -2490,6 +2495,12 @@ if( $row['title'] == "ULTRASOUND" ) {
 
 if( $row['title'] == "ER FEE" ) {
 	$this->showAllAccountTitle_opd_erFee += $totalIndividual1;
+}else {
+	//do nothing
+}
+
+if( $row['title'] == "NURSERY" ) {
+	$this->showAllAccountTitle_opd_nursery += $totalIndividual1;
 }else {
 	//do nothing
 }

@@ -25,6 +25,7 @@ $opd_ecg = $_GET['opd_ecg'];
 $opd_xray = $_GET['opd_xray'];
 $opd_ultrasound = $_GET['opd_ultrasound'];
 $opd_erFee = $_GET['opd_erFee'];
+$opd_nursery = $_GET['opd_nursery'];
 $opd_ctscan = $_GET['opd_ctscan'];
 $opd_laboratory = $_GET['opd_laboratory'];
 $opd_medicine = $_GET['opd_medicine'];
@@ -429,6 +430,7 @@ $grandCash;		$grandCashTotal = 0;
 			<input type="hidden" name="opd_xray" value="<? echo $opd_xray ?>">
 			<input type="hidden" name="opd_ultrasound" value="<? echo $opd_ultrasound ?>">
 			<input type="hidden" name="opd_erFee" value="<? echo $opd_erFee ?>">
+			<input type="hidden" name="opd_nursery" value="<? echo $opd_nursery ?>">
 			<input type="hidden" name="opd_ctscan" value="<? echo $opd_ctscan ?>">
 			<input type="hidden" name="opd_laboratory" value="<? echo $opd_laboratory ?>" >
 			<input type="hidden" name="opd_medicine" value="<? echo $opd_medicine ?>">
