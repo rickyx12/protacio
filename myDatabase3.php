@@ -3300,7 +3300,7 @@ echo "<td>&nbsp;</td>";
 
 if($row['cashPaid'] > 0) {
 if($row['orNO'] == "") {
-echo "<td>&nbsp;<font size=2 color=red>".$row['lastName'].", ".$row['firstName']."</font></td>";
+echo "<td>&nbsp;<font size=2 color=red>".$row['lastName'].", ".$row['firstName']." - OR# is missing</font></td>";
 }else if($row['datePaid'] != $row['dateUnregistered']) {
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Reports/doctorReport/fixPF.php?date=$date&date1=$date1&registrationNo=$row[registrationNo]&datePaid=$row[datePaid]' style='text-decoration:none;'><font size=2 color=red>".$row['lastName'].", ".$row['firstName']."</font></a>
 <br>
