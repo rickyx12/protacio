@@ -5090,7 +5090,12 @@ echo "<td><form method='post' action='patientInterface1.php' ><input id='namez' 
 <input type='hidden' name='registrationNo' value='".$row['registrationNo']."'><input type='hidden' name='username' value='".$username."'></form></td>";
 
 echo "<td class='myData'>&nbsp;".$this->formatDate($row['dateRegistered'])."&nbsp;</td>";
-echo "<td class='myData'>&nbsp;".$this->formatDate($row['dateUnregistered'])."&nbsp;</td>";
+
+if( $row['dateUnregistered'] != "" ) {
+  echo "<td class='myData'>&nbsp;".$this->formatDate($row['dateUnregistered'])."&nbsp;</td>";
+}else {
+  echo "<td>&nbsp;</td>";
+}
 echo "<td class='myData'><center>".$row['type']."</center></td>";
 echo "</tr>";
   }
