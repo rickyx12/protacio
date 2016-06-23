@@ -82,7 +82,7 @@ echo "</script>";
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/manualPayment.php?username=<?php echo $username; ?>&paymentType=derma_" target="departmentX">Derma Payments</a></li>
 
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/searchBalance.php?username=<?php echo $username; ?>" target="departmentX">Balance</a></li>
+                    <li><a href="ipdBalance.php" target="departmentX">IPD Balance</a></li>
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/walkinButton.php?username=<?php echo $username ?>&module=<?php echo 'Cashier'; ?>&from=Cashier" target="departmentX">Walk-in</a></li>
 
