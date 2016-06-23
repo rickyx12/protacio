@@ -5020,6 +5020,23 @@ echo $row['lastName']."\n";
 
 }
 
+private function formatDate($date) {
+  $date1 = preg_split ("/\-/", $date); 
+  $month = [
+      '01'=>'Jan',
+      '02'=>'Feb',
+      '03'=>'Mar',
+      '04'=>'Apr',
+      '05'=>'May',
+      '06'=>'Jun',
+      '07'=>'Jul',
+      '08'=>'Aug',
+      '09'=>'Sep',
+      '10'=>'Oct',
+      '11'=>'Nov',
+      '12'=>'Dec'];
+  return $month[$date1[1]]." ".$date1[2].", ".$date1[0];
+}
 
 public function showPatientHistory($completeName,$username,$start,$end) {
 
@@ -5028,7 +5045,7 @@ echo "
 tr:hover { background-color:yellow;color:black;}
 
 a { text-decoration:none; color:black; }
-.myData { font-size:17px; }
+.myData { font-size:13px; }
 .myHeader { font-size:18px; }
 
 
@@ -5053,7 +5070,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$result = mysql_query("SELECT rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.dateRegistered NOT LIKE '%DELETED%' and pr.completeName = '$completeName' order by rd.control_dateRegistered desc limit $start,$end ");
+$result = mysql_query("SELECT rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.dateUnregistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.dateRegistered NOT LIKE '%DELETED%' and pr.completeName = '$completeName' order by rd.control_dateRegistered desc limit $start,$end ");
 
 
 while($row = mysql_fetch_array($result))
@@ -5072,9 +5089,9 @@ echo "<td class='myData'><center>".$row['registrationNo']."</center></td>";
 echo "<td><form method='post' action='patientInterface1.php' ><input id='namez' type='submit' value='".$row['completeName']."'>
 <input type='hidden' name='registrationNo' value='".$row['registrationNo']."'><input type='hidden' name='username' value='".$username."'></form></td>";
 
-echo "<td class='myData'><center>".$row['dateRegistered']."</center></td>";
+echo "<td class='myData'>&nbsp;".$this->formatDate($row['dateRegistered'])."&nbsp;</td>";
+echo "<td class='myData'>&nbsp;".$this->formatDate($row['dateUnregistered'])."&nbsp;</td>";
 echo "<td class='myData'><center>".$row['type']."</center></td>";
-echo "<td class='myData'><center>".$row['branch']."</center></td>";
 echo "</tr>";
   }
 mysql_close($con);
