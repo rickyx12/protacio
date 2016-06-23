@@ -1,11 +1,13 @@
 <?php
 include("../../myDatabase.php");
+include "../../myDatabase4.php";
+
 //require_once('../authentication.php');
 $username = $_POST['username'];
 $module = $_POST['module'];
 //$_SESSION['username'] = $username;
 $ro = new database();
-
+$ro4 = new database4();
 /*
 if ( (!isset($username) && !isset($module)) ) {
 header("Location:http://".$ro->getMyUrl()."/LOGINPAGE/module.php ");
@@ -157,9 +159,9 @@ $ro->coconutTableRowStart();
 $ro->coconutTableHeader("Status");
 $ro->coconutTableHeader("Reg#");
 $ro->coconutTableHeader("Name");
-$ro->coconutTableHeader("Registration Date");
+$ro->coconutTableHeader("In");
+$ro->coconutTableHeader("Out");
 $ro->coconutTableHeader("Type");
-$ro->coconutTableHeader("Branch");
 $ro->coconutTableRowStop();
 $ro->showPatientHistory($_POST['patientSearch'],$_POST['username'],"0","10");
 echo "</div>";
@@ -178,9 +180,9 @@ echo "
 <Td><font color='white'>&nbsp;Status&nbsp;</font></tD>
 <Td><font color='white'>&nbsp;Reg#&nbsp;</font></tD>
 <Td><font color='white'>&nbsp;Name&nbsp;</font></tD>
-<Td><font color='white'>&nbsp;&nbsp;&nbsp;&nbsp;Registration Date&nbsp;</font></tD>
+<Td><font color='white'>&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;</font></tD>
+<Td><font color='white'>&nbsp;&nbsp;&nbsp;&nbsp;Out&nbsp;</font></tD>
 <Td><font color='white'>&nbsp;Type&nbsp;</font></tD>
-<Td><font color='white'>&nbsp;Branch&nbsp;</font></tD>
 </tr>
 ";
 $ro->coconutTableRowStart();
