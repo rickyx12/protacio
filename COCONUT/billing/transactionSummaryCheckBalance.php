@@ -15,7 +15,7 @@ $ro4 = new database4();
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
 
-$ro3->coconutFormStart("get","http://".$ro3->getMyUrl()."/COCONUT/billing/inpatient-total.php");
+echo "<form method='post' action='inpatient-total.php' target='_blank'>";
 $ro3->transactionSummaryDischarge($date,$date1);
 echo "<Br><br>";
 

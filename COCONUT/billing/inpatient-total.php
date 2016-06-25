@@ -1,48 +1,48 @@
 <?php
 include "../../myDatabase2.php";
 include "../../myDatabase4.php";
-$balanceHandler = $_GET['balanceHandler']; //format: registrationNo-balance
+$balanceHandler = $_POST['balanceHandler']; //format: registrationNo-balance
 
-$deposit_cash = $_GET['deposit_cash'];
-$deposit_creditCard = $_GET['deposit_creditCard'];
+$deposit_cash = $_POST['deposit_cash'];
+$deposit_creditCard = $_POST['deposit_creditCard'];
 
-$balancePaid_cash = $_GET['balancePaid_cash'];
-$balancePaid_creditCard = $_GET['balancePaid_creditCard'];
+$balancePaid_cash = $_POST['balancePaid_cash'];
+$balancePaid_creditCard = $_POST['balancePaid_creditCard'];
 
-$date1 = $_GET['date1'];
-$date2 = $_GET['date2'];
+$date1 = $_POST['date1'];
+$date2 = $_POST['date2'];
 
 //OPD VARIABLES
-$opdCreditCard = $_GET['opdCreditCard'];
-$opdCash = $_GET['opdCash'];
-$opdHMO = $_GET['opdHMO'];
-$opdPHIC = $_GET['opdPHIC'];
-$opdUnpaid = $_GET['opdUnpaid'];
-$opdDiscount = $_GET['opdDiscount'];
-$opdBalancePaid = $_GET['opdBalancePaid'];
-$opd_pf_total = $_GET['opd_pf_total'];
-$opd_ecg = $_GET['opd_ecg'];
-$opd_xray = $_GET['opd_xray'];
-$opd_ultrasound = $_GET['opd_ultrasound'];
-$opd_erFee = $_GET['opd_erFee'];
-$opd_nursery = $_GET['opd_nursery'];
-$opd_rehab = $_GET['opd_rehab'];
-$opd_ctscan = $_GET['opd_ctscan'];
-$opd_laboratory = $_GET['opd_laboratory'];
-$opd_medicine = $_GET['opd_medicine'];
-$opd_supplies = $_GET['opd_supplies'];
-$opd_spyrometry = $_GET['opd_spyrometry'];
-$opd_derma = $_GET['opd_derma'];
-$opd_others = $_GET['opd_others'];
-$opd_OR = $_GET['opd_OR'];
-$opd_PT = $_GET['opd_PT'];
-$opd_OT = $_GET['opd_OT'];
-$opd_ST = $_GET['opd_ST'];
-$opd_cardiacMonitor = $_GET['opd_cardiacMonitor'];
-$opd_PF_payable = $_GET['opd_PF_payable'];
-$opd_misc = $_GET['opd_misc'];
-$opd_OT_payables = $_GET['opd_OT_payables'];
-$opd_ST_payables = $_GET['opd_ST_payables'];
+$opdCreditCard = $_POST['opdCreditCard'];
+$opdCash = $_POST['opdCash'];
+$opdHMO = $_POST['opdHMO'];
+$opdPHIC = $_POST['opdPHIC'];
+$opdUnpaid = $_POST['opdUnpaid'];
+$opdDiscount = $_POST['opdDiscount'];
+$opdBalancePaid = $_POST['opdBalancePaid'];
+$opd_pf_total = $_POST['opd_pf_total'];
+$opd_ecg = $_POST['opd_ecg'];
+$opd_xray = $_POST['opd_xray'];
+$opd_ultrasound = $_POST['opd_ultrasound'];
+$opd_erFee = $_POST['opd_erFee'];
+$opd_nursery = $_POST['opd_nursery'];
+$opd_rehab = $_POST['opd_rehab'];
+$opd_ctscan = $_POST['opd_ctscan'];
+$opd_laboratory = $_POST['opd_laboratory'];
+$opd_medicine = $_POST['opd_medicine'];
+$opd_supplies = $_POST['opd_supplies'];
+$opd_spyrometry = $_POST['opd_spyrometry'];
+$opd_derma = $_POST['opd_derma'];
+$opd_others = $_POST['opd_others'];
+$opd_OR = $_POST['opd_OR'];
+$opd_PT = $_POST['opd_PT'];
+$opd_OT = $_POST['opd_OT'];
+$opd_ST = $_POST['opd_ST'];
+$opd_cardiacMonitor = $_POST['opd_cardiacMonitor'];
+$opd_PF_payable = $_POST['opd_PF_payable'];
+$opd_misc = $_POST['opd_misc'];
+$opd_OT_payables = $_POST['opd_OT_payables'];
+$opd_ST_payables = $_POST['opd_ST_payables'];
 
 $ro2 = new database2();
 $ro4 = new database4();
