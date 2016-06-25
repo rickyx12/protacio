@@ -41,7 +41,12 @@
 								<? $totalItems += 1 ?>
 								<tr>
 									<td>
-										<input type="checkbox" name="inventoryCode[]" value="<? echo $inventoryCode ?>">
+										<? if( $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode) == 0 ) { ?>
+											<input type="checkbox" name="inventoryCode[]" value="<? echo $inventoryCode ?>" checked>
+										<? }else { ?>
+											<input type="checkbox" name="inventoryCode[]" value="<? echo $inventoryCode ?>">
+										<? } ?>
+
 									</td>
 									<td>
 										<?
