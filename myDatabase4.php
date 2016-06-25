@@ -1020,6 +1020,21 @@ public function outpatient_hmo_total($registrationNo,$shift) {
 	}
 }
 
+private $non_invoice_inventory_inventoryCode;
+
+public function non_invoice_inventory_inventoryCode() {
+	return $this->non_invoice_inventory_inventoryCode;
+}
+
+public function non_invoice_inventory($inventoryType) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT inventoryCode FROM inventory WHERE inventoryType = '$inventoryType' and invoiceNo = '' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->non_invoice_inventory_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
 
 /*temporary function lng e2*/
 public function opdPayment_updater($date,$date1) {
