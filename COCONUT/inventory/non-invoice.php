@@ -80,15 +80,15 @@
 									</td>
 
 									<td>
-										<div class="col-md-8">
+										
 											<input type="text" class="form-control" placeholder="QTY">
-										</div>
+										
 									</td>
 
 									<td>
-										<div class="col-md-8">
+										
 											<input type="button" class="btn btn-default" value="Save">
-										</div>
+										
 									</td>
 
 								</tr>
