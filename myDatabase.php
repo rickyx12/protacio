@@ -14494,7 +14494,7 @@ else {
 $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and description like '$desc%%%%%%' and status = 'UNPAID' and remarks != 'takeHomeMeds' order by description asc ");
 }
 
-echo "<form method='get' action='http://".$this->getMyUrl()."/COCONUT/patientProfile/Payments/transferPayment.php'>";
+echo "<form method='post' action='http://".$this->getMyUrl()."/COCONUT/patientProfile/Payments/transferPayment.php'>";
 echo "<input type='hidden' name='registrationNo' value='$registrationNo'>";
 echo "<input type='hidden' name='username' value='$username'>";
 echo "<input type='hidden' name='show' value='$show'>";

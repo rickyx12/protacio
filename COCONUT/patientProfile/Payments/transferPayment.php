@@ -1,10 +1,10 @@
 <?php
 include("../../../myDatabase.php");
-$registrationNo = $_GET['registrationNo'];
-$username = $_GET['username'];
-$show = $_GET['show'];
-$desc = $_GET['desc'];
-$transfer = $_GET['transfer'];
+$registrationNo = $_POST['registrationNo'];
+$username = $_POST['username'];
+$show = $_POST['show'];
+$desc = $_POST['desc'];
+$transfer = $_POST['transfer'];
 $countz = count($transfer);
 
 
