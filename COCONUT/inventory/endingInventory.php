@@ -5,6 +5,8 @@ include "../../myDatabase.php";
 $ro = new database4();
 $ro1 = new database();
 
+$items = 0;
+
 $inventoryType = $_GET['inventoryType'];
 
 $ro->inventory_list($inventoryType);
@@ -29,12 +31,44 @@ $qtyNo = count($qty);
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="../../jquery1.11.1.js"></script>
+  <script src="../js/jquery.tooltipster.min.js"></script>
   <link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../myCSS/tooltipster.css">
+  <link ref="stylesheet" href="../myCSS/tooltipster-noir.css">
   <script src="../../bootstrap-3.3.6/js/bootstrap.min.js"></script>
 
-  	<? for($a=0;$a<$genericNameNo;$a++) { ?>
+  	<? for($a=0,$b=0;$a<$genericNameNo,$b<$inventoryCodeNo;$a++,$b++) { ?>
   	<script>
 		$(document).ready(function(){
+
+			$(".description<? echo $a ?>").tooltipster({
+				content: $('<span>Loading....</span>'),
+				contentAsHTML:true,
+				functionBefore:function(origin,continueTooltip) {
+					continueTooltip();
+					if( origin.data('ajax') !== 'cached' ){ 
+						$.ajax({
+							type:'POST',
+							url:'endingInventory_details.php',
+							data:{'inventoryCode':'<? echo $inventoryCode[$b] ?>'},
+							success:function(data) {
+								origin.tooltipster('content',data).data('ajax','cached');
+							}
+						});
+					}
+				}				
+			});			
+
+
+			if( !$('input[name=quarter]:checked').val() ) {
+				$("#save<? echo $a ?>").hide();
+			}
+
+			$(".quarterRadio").click(function(){
+				$("#save<? echo $a ?>").show();	
+			});
+
+
 			$("#save<? echo $a ?>").click(function(){
 
 				var inventoryCode = $("#inventoryCode<? echo $a ?>").val();
@@ -42,7 +76,10 @@ $qtyNo = count($qty);
 				var genericName = $("#genericName<? echo $a ?>").val();
 				var currentQTY = $("#qty<? echo $a ?>").val();
 				var endingQTY = $("#endingQTY<? echo $a ?>").val();
-				var data = 'inventoryCode='+inventoryCode+'&stockCardNo='+stockCardNo+'&currentQTY='+currentQTY+'&endingQTY='+endingQTY;
+				var quarter = $('input[name=quarter]:checked').val();
+
+				var data = 'inventoryCode='+inventoryCode+'&stockCardNo='+stockCardNo+'&currentQTY='+currentQTY+'&endingQTY='+endingQTY+'&quarter='+quarter;
+
 				$("#modalMessage").text("Ending Inventory Added for "+genericName);
 
 				if($("#endingQTY<? echo $a ?>").val() == "" || $("#endingQTY<? echo $a ?>") < 1) {
@@ -70,6 +107,7 @@ $qtyNo = count($qty);
 				window.location.href='endingInventory.php?inventoryType=medicine';
 			});
 
+
 			$("#endingInventory").hide();
 			$("#checkBoxes<? echo $a ?>").hide();
 			$("#deleteButton").hide();
@@ -85,6 +123,8 @@ $qtyNo = count($qty);
 				$("#save<? echo $a ?>").hide();
 				$("#deleteButton").show();
 				$("#beginningButton").hide();
+				$(".quarterRadio").prop("checked",false);
+				$("#quarter").hide();
 				$("#formControl").attr("action","delete_noEndingInventory.php");
 				$("#ending").attr("class","btn btn-default btn-sm");
 				$("#deleting").attr("class","btn btn-info btn-sm");
@@ -93,11 +133,12 @@ $qtyNo = count($qty);
 
 			$("#ending").click(function() {
 				$("#checkBoxes<? echo $a ?>").hide();
+				$("#save<? echo $a ?>").hide();
 				$("#endingInventory").hide();
 				$("#deleteButton").hide();
 				$("#beginningButton").hide();
+				$("#quarter").show();
 				$("#inventory").show();
-				$("#save<? echo $a ?>").show();
 				$("#ending").attr("class","btn btn-info btn-sm");
 				$("#deleting").attr("class","btn btn-default btn-sm");
 				$("#beginning").attr("class","btn btn-default btn-sm");
@@ -107,6 +148,8 @@ $qtyNo = count($qty);
 				$("#ending").attr("class","btn btn-default btn-sm");
 				$("#deleting").attr("class","btn btn-default btn-sm");
 				$("#beginning").attr("class","btn btn-info btn-sm")
+				$(".quarterRadio").prop("checked",false);
+				$("#quarter").hide();
 				$("#hasEnding<? echo $a ?>").show();
 				$("#checkBoxes<? echo $a ?>").hide();
 				$("#save<? echo $a ?>").hide();
@@ -130,14 +173,39 @@ $qtyNo = count($qty);
   					<button type="button" id="beginning" class="btn btn-default btn-sm">Beginning Inventory</button>
   				</div>
   				<br><br>
-  				<div class="btn-group" role="group">
-  				<? if($inventoryType == "medicine") { ?>
-  					 <button type="button" id="medicineButton" class="btn btn-info">Medicine</button>
-  					 <button type="button" id="suppliesButton" class="btn btn-default">Supplies</button>
-  				<? }else { ?>
-  					 <button type="button" id="medicineButton" class="btn btn-default">Medicine</button>
-  					 <button type="button" id="suppliesButton" class="btn btn-info">Supplies</button>
-  				<? } ?>
+
+  				<div class="col-sm-5">
+	  				<div class="btn-group" role="group">
+	  				<? if($inventoryType == "medicine") { ?>
+	  					 <button type="button" id="medicineButton" class="btn btn-info">Medicine</button>
+	  					 <button type="button" id="suppliesButton" class="btn btn-default">Supplies</button>
+	  				<? }else { ?>
+	  					 <button type="button" id="medicineButton" class="btn btn-default">Medicine</button>
+	  					 <button type="button" id="suppliesButton" class="btn btn-info">Supplies</button>
+	  				<? } ?>
+	  				</div>
+  				</div>
+
+  				<div id="quarter" class="col-sm-7">
+  					<div class="col-sm-2">
+  						<label class="form-label">Quarter</label>
+  					</div>
+  					<div class="col-sm-2">
+  						<input type="radio" class="quarterRadio" name="quarter" value="1st">&nbsp;1st
+  					</div>
+
+  					<div class="col-sm-2">
+  						<input type="radio" class="quarterRadio" name="quarter" value="2nd">&nbsp;2nd
+  					</div>
+
+  					<div class="col-sm-2">
+  						<input type="radio" class="quarterRadio" name="quarter" value="3rd">&nbsp;3rd
+  					</div>
+
+  					<div class="col-sm-2">
+  						<input type="radio" class="quarterRadio" name="quarter" value="4th">&nbsp;4th
+  					</div>
+
   				</div>
 
   				<table class="table table-hover" id="inventoryTable">
@@ -154,6 +222,9 @@ $qtyNo = count($qty);
     				</thead>
     				<tbody>
     					<? for($a=0,$b=0,$c=0,$d=0,$e=0;$a<$genericNameNo,$b<$brandNo,$c<$inventoryCodeNo,$d<$countStockCard,$e<$qtyNo;$a++,$b++,$c++,$d++,$e++) { ?>	
+    						<? if( $ro1->selectNow("inventory","invoiceNo","inventoryCode",$inventoryCode[$c]) != "" && $ro1->selectNow("inventory","addedBy","inventoryCode",$inventoryCode[$c]) != "system" ) { ?>
+    						<? $items++; ?>
+
     						<tr>
     							<input type="hidden" id="genericName<? echo $a ?>" value="<? echo $generic[$a] ?>">
     							<input type="hidden" id="inventoryCode<? echo $a ?>" value="<? echo $inventoryCode[$c] ?>">
@@ -173,10 +244,9 @@ $qtyNo = count($qty);
     							<td><input type="checkbox" id="hasEnding<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>"></td>
     							<? } ?>
 
-
     							<td><? echo $inventoryCode[$c] ?></td>
-    							<td><? echo $generic[$a] ?></td>
-    							<td><? echo $brand[$b] ?></td>
+    							<td><span class="description<? echo $a ?>"><? echo $generic[$a] ?></span></td>
+    							<td><span class="description<? echo $a ?>"><? echo $brand[$b] ?></span></td>
     							<td><? echo $qty[$e] ?></td>
     							<td><div class="col-xs-7"><input class="form-control" type="text" id="endingQTY<? echo $a ?>" value="<? echo $ro1->selectNow("endingInventory","endingQTY","inventoryCode",$inventoryCode[$c]) ?>"></div></td>
     						
@@ -187,8 +257,19 @@ $qtyNo = count($qty);
     							<? } ?>
      						
      						</tr>
+     						<? } ?>
      					<? } ?>
     				</tbody>
+    				<tfoot>
+    					<tr>
+    						<td></td>
+    						<td></td>
+    						<td><? echo $items." Items" ?></td>
+    						<td></td>
+    						<td></td>
+    						<td></td>
+    					</tr>
+    				</tfoot>
   					</table>
 	</div>
 	<br>
