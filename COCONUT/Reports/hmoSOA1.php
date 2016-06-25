@@ -37,7 +37,7 @@ $ro->getHmoSOA("OPD",$company,$fromMonth,$fromDay,$fromYear,$toMonth,$toDay,$toY
 
 echo "<table width='100%'>";
 echo "<tr>";
-echo "<td ALIGN='RIGHT'>CERTIFIED TRUE AND CORRECT<BR><br><br><br><br>ANA MARIE DAVID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>ACCOUNTING STAFF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+echo "<td ALIGN='RIGHT'>CERTIFIED TRUE AND CORRECT<BR><br><br><br><br>HYLENE MANALO AGULLANO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>ACCOUNTING STAFF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
 echo "</tr>";
 echo "</table>";
 ?>
