@@ -2,8 +2,9 @@
 <? include "../../myDatabase4.php" ?>
 <? $ro = new database() ?>
 <? $ro4 = new database4() ?>
+<? $inventoryType = $_GET['inventoryType'] ?>
 <? $totalItems = 0 ?>
-<? $ro4->non_invoice_inventory("medicine") ?>
+<? $ro4->non_invoice_inventory($inventoryType) ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,11 +17,36 @@
 		<link rel="stylesheet" href="../myCSS/tooltipster.css">
 		<link ref="stylesheet" href="../myCSS/tooltipster-noir.css">
 		<script src="../../bootstrap-3.3.6/js/bootstrap.min.js"></script>
+
+		<script>
+			$(document).ready(function(){
+
+				$("#medicineBtn").click(function(){
+					window.location = "non-invoice.php?inventoryType=medicine";
+				});
+
+				$("#suppliesBtn").click(function(){
+					window.location = "non-invoice.php?inventoryType=supplies";
+				});
+			});
+		</script>
+
 	</head>
 	<body>
 		<div class="container">
 			<h3>Non Invoice Inventory</h3>
+			<div class="btn-group" role="group">
+				<? if( $inventoryType == "medicine" ) { ?>
+					<input type="button" id="medicineBtn" class="btn btn-info" value="medicine">			
+					<input type="button" id="suppliesBtn" class="btn btn-default" value="supplies">
+				<? }else { ?>
+					<input type="button" id="medicineBtn" class="btn btn-default" value="medicine">			
+					<input type="button" id="suppliesBtn" class="btn btn-info" value="supplies">
+				<? } ?>
+
+			</div>
 			<form method="post" action="non-invoice-delete.php">
+				<input type="hidden" name="inventoryType" value="<? echo $inventoryType ?>">
 				<div class="row">
 					<table class="table table-hover">
 						<thead>
@@ -32,7 +58,6 @@
 								<th>Generic</th>
 								<th>Details</th>
 								<th>QTY</th>
-								<th>End QTY</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -83,19 +108,6 @@
 											echo $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode)
 										?>
 									</td>
-
-									<td>
-										
-											<input type="text" class="form-control" placeholder="QTY">
-										
-									</td>
-
-									<td>
-										
-											<input type="button" class="btn btn-default" value="Save">
-										
-									</td>
-
 								</tr>
 							<? } ?>
 						</tbody>
