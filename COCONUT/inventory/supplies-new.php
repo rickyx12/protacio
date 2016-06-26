@@ -138,7 +138,7 @@
 			        	<div class="col-md-2">
 			        		<div class="form-group">
 			        			<label>Quantity</label>
-			        			<input type="text" id="quantity<? echo $inventoryCode ?>" class="form-control" value="<? echo $ro->selectNow('inventory','quantity','inventoryCode',$inventoryCode) ?>">
+			        			<input type="text" id="quantity<? echo $inventoryCode ?>" class="form-control" value="<? echo $ro->selectNow('inventory','quantity','inventoryCode',$inventoryCode) ?>" readonly>
 			        		</div>
 			        		<div class="form-group">
 			        			<label>Unitcost</label>
