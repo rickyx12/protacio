@@ -1855,7 +1855,7 @@ public function totalPaidForReporting($registrationNo) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(cashPaid) as pd from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' and cashPaid > 0 ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -1869,7 +1869,7 @@ public function totalPaidForReporting_creditCard($registrationNo) {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select sum(amountPaidFromCreditCard) as pd from patientCharges where registrationNo = '$registrationNo' and status = 'PAID' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(amountPaidFromCreditCard) as pd from patientCharges where registrationNo = '$registrationNo' and status not like 'DELETED%' and amountPaidFromCreditCard > 0 ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
