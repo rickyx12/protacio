@@ -1,17 +1,36 @@
-<?php
-$array = array(
-array("1","one"),
-array("2","two"),
-array("3","three"),
-array("4","four"),
-array("5","five")
-);
- 
-$array_values = array_values($array);
- 
-for($x=0;$x<count($array);$x++){
-echo $array_values[$x][0];
-echo $array_values[$x][1];
-}
- 
+<?
+include "myDatabase.php";
+include "myDatabase4.php";
 
+$ro = new database();
+$ro4 = new database4();
+
+$ro4->endingInventory_updater();
+?>
+
+<table border=1>
+	<tr>
+		<th></th>
+		<th>Description</th>
+	</tr>
+		<form method="get" action="test1.php">
+		<? foreach( $ro4->endingInventory_updater_endingNo() as $endingNo ) { ?>
+			<? $inventoryCode = $ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo) ?>
+			<? if( $ro->selectNow("inventory","inventoryType","inventoryCode",$inventoryCode) == "medicine" ) { ?>
+				<tr>
+					<? if( $ro->selectNow("endingInventory","unitcost","inventoryCode",$inventoryCode) < 1 ) { ?>
+						<td><input type="checkbox" name="endingNo[]" value="<? echo $endingNo ?>" checked></td>
+					<? }else {?>
+						<td></td>
+					<? } ?>
+					<td>
+						<? 
+							echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode); 
+						?>
+					</td>
+				</tr>
+			<? } ?>
+		<? } ?>
+		<input type="submit">
+		</form>
+</table>
