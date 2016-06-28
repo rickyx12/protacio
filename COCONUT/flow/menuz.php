@@ -172,4 +172,9 @@ echo "<input type='hidden' name='inventoryType' value='supplies'>";
 echo "<input type='submit' value='Stock Card Supplies' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/inventory/inventory-list-stockcard.php' target='_blank'>";
+echo "<input type='hidden' name='inventoryType' value='medicine'>";
+echo "<input type='submit' value='Purchases' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 ?>
