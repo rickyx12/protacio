@@ -1028,7 +1028,7 @@ public function non_invoice_inventory_inventoryCode() {
 
 public function non_invoice_inventory($inventoryType) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT inventoryCode FROM inventory WHERE inventoryType = '$inventoryType' and invoiceNo = '' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT inventoryCode FROM inventory WHERE inventoryType = '$inventoryType' and invoiceNo = '' and status not like 'DELETED%' and classification != 'noInventory' ") or die("Query fail: " . mysqli_alerror()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->non_invoice_inventory_inventoryCode[] = $row['inventoryCode'];
@@ -1036,13 +1036,71 @@ public function non_invoice_inventory($inventoryType) {
 }
 
 
-/*temporary function lng e2*/
-public function opdPayment_updater($date,$date1) {
+public function count_inventory_via_stockCard($stockCardNo) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT itemNo from patientCharges where (datePaid between '$date' and '$date1') ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT sum(quantity) as qty FROM inventory WHERE stockCardNo = '$stockCardNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_alerror()); 
 
 	while($row = mysqli_fetch_array($result)) {
-		$this->opdPayment_updater_itemNo[] = $row['itemNo'];
+	 	return $row['qty'];
+	}
+}
+
+public function stockCard_purchases($stockCardNo,$fromDate,$toDate,$inventoryType) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(beginningCapital) as purchases  FROM inventory WHERE stockCardNo = '$stockCardNo' and invoiceNo != '' and dateAdded between '$fromDate' and '$toDate' and from_inventoryCode = '' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['purchases'];
+	}
+}
+
+private $get_purchases_via_stockcard_inventoryCode;
+
+public function get_purchases_via_stockcard_inventoryCode() {
+	return $this->get_purchases_via_stockcard_inventoryCode;
+}
+
+public function get_purchases_via_stockcard($stockCardNo,$fromDate,$toDate) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT inventoryCode  FROM inventory WHERE stockCardNo = '$stockCardNo' and invoiceNo != '' and dateAdded between '$fromDate' and '$toDate' and from_inventoryCode = '' order by inventoryCode asc ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_purchases_via_stockcard_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
+
+public function sum_unitcost_endingInventory($stockCardNo,$quarter) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT SUM(unitcost) as unitcost  FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['unitcost'];
+	}
+}
+
+public function sum_quantity_endingInventory($stockCardNo,$quarter) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT SUM(endingQTY) as qty  FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter ='$quarter' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['qty'];
+	}
+}
+
+/*temporary function lng e2*/
+
+private $endingInventory_updater_endingNo;
+
+public function endingInventory_updater_endingNo() {
+	return $this->endingInventory_updater_endingNo;
+}
+
+public function endingInventory_updater() {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT endingNo from endingInventory WHERE quarter = '1st' ") or die("Query fail: " . mysqli_error()); 
+	while($row = mysqli_fetch_array($result)) {
+		$this->endingInventory_updater_endingNo[] = $row['endingNo'];
 	}
 }
 
