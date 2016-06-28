@@ -61,31 +61,31 @@ function SetMsg (txt,active) {
 echo "<Table width='100%' border=1 rules=all cellpadding=0 cellspacing=0>";
 echo "<Tr>";
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&show=cash2company&desc=cash2company'><Center><font size=2 color=red>Cash</font> > <font size=2 color=blue>Company</font></a></center>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=cash2company&desc=cash2company'><Center><font size=2 color=red>Cash</font> > <font size=2 color=blue>Company</font></a></center>";
 echo "</td>";
 
 
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&show=cash2phic&desc=cash2phic'><center><font size=2 color=red>Cash</font> > <font size=2 color=green>P.H.I.C</font></center></a>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=cash2phic&desc=cash2phic'><center><font size=2 color=red>Cash</font> > <font size=2 color=green>P.H.I.C</font></center></a>";
 echo "</td>";
 
 
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&show=company2cash&desc=company2cash'><center><font size=2 color=blue>Company</font> > <font size=2 color=red>Cash</font></center></a>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=company2cash&desc=company2cash'><center><font size=2 color=blue>Company</font> > <font size=2 color=red>Cash</font></center></a>";
 echo "</td>";
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&show=company2phic&desc=company2phic'><center><font size=2 color=blue>Company</font> > <font size=2 color=green>P.H.I.C</font></center></a>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=company2phic&desc=company2phic'><center><font size=2 color=blue>Company</font> > <font size=2 color=green>P.H.I.C</font></center></a>";
 echo "</td>";
 
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&show=phic2cash&desc=phic2cash'><center><font size=2 color=darkgreen>P.H.I.C</font> > <font size=2 color=red>Cash</font></center></a>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=phic2cash&desc=phic2cash'><center><font size=2 color=darkgreen>P.H.I.C</font> > <font size=2 color=red>Cash</font></center></a>";
 echo "</td>";
 
 echo "<td id='selected'>";
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer.php?registrationNo=$registrationNo&show=phic2company&desc=phic2company'><center><font size=2 color=darkgreen>P.H.I.C</font> > <font size=2 color=blue>Company</font></center></a>";
+echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=phic2company&desc=phic2company'><center><font size=2 color=darkgreen>P.H.I.C</font> > <font size=2 color=blue>Company</font></center></a>";
 echo "</td>";
 
-echo "<td id='selected'><a href='paymentTransfer_takeHomeMeds.php?registrationNo=$registrationNo&show=$show&desc='><center><font size=2 color=red>Take Home Meds</font></center></a></td>";
+echo "<td id='selected'><a href='paymentTransfer.php?registrationNo=$registrationNo&show=$show&desc='><center><font size=2 color=green>Charges</font></center></a></td>";
 
 echo "</tr>";
 echo "</table>";
@@ -136,7 +136,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Paid</font>&nbs
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white class='head'>Branch</font>&nbsp;</th>";
 echo "</tr>";
 
-$ro->paymentTransfer($registrationNo,"",$show,$desc,"!=");
+$ro->paymentTransfer($registrationNo,"",$show,$desc,"=");
 
 echo "</table>";
 ?>

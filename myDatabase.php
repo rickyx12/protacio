@@ -3855,7 +3855,7 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 
 }
 
-/*
+
 public function who_occupied_d_room($roomNo) {
 
 
@@ -3876,7 +3876,8 @@ return $row['registrationNo'];
 
 
 }
-*/
+
+
 
 public function getPatient_in_the_room($room) {
 
@@ -3897,6 +3898,8 @@ return "&nbsp;<font size=1 color=black>$row[registrationNo]-".$row['lastName']."
   }
 
 }
+
+
 
 public function showVacantRoom($branch) {
 
@@ -14457,7 +14460,7 @@ echo "</form>";
 
 
 
-public function paymentTransfer($registrationNo,$username,$show,$desc) {
+public function paymentTransfer($registrationNo,$username,$show,$desc,$condition) {
 
 
 echo "
@@ -14479,24 +14482,25 @@ if (!$con)
 mysql_select_db($this->database, $con);
 
 if($show == "All") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and remarks != 'takeHomeMeds' order by description asc ");
+  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }else if($show == "cash2company" || $show == "cash2phic" || $show == "cash2package") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status = 'UNPAID' and remarks != 'takeHomeMeds' order by description asc ");
+$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }
 
 else if($show == "company2cash" || $show == "company2phic") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and company > 0 and status = 'UNPAID' and remarks != 'takeHomeMeds' order by description asc ");
+
+  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and company > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
+
 }else if($show == "phic2cash" || $show == "phic2company") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and phic > 0 and status = 'UNPAID' and remarks != 'takeHomeMeds' order by description asc ");
+  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and phic > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }
 
 else {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and description like '$desc%%%%%%' and status = 'UNPAID' and remarks != 'takeHomeMeds' order by description asc ");
+  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and description like '$desc%%%%%%' and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }
 
-echo "<form method='post' action='http://".$this->getMyUrl()."/COCONUT/patientProfile/Payments/transferPayment.php'>";
+echo "<form method='get' action='http://".$this->getMyUrl()."/COCONUT/patientProfile/Payments/transferPayment.php'>";
 echo "<input type='hidden' name='registrationNo' value='$registrationNo'>";
-echo "<input type='hidden' name='username' value='$username'>";
 echo "<input type='hidden' name='show' value='$show'>";
 echo "<input type='hidden' name='desc' value='$desc'>";
 
