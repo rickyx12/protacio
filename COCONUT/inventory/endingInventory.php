@@ -62,10 +62,12 @@ $qtyNo = count($qty);
 
 			if( !$('input[name=quarter]:checked').val() ) {
 				$("#save<? echo $a ?>").hide();
+				$("#update<? echo $a ?>").hide();
 			}
 
 			$(".quarterRadio").click(function(){
 				$("#save<? echo $a ?>").show();	
+				$("#update<? echo $a ?>").show();
 			});
 
 
@@ -97,6 +99,22 @@ $qtyNo = count($qty);
 					});
 					return false;
 				}
+			});
+
+			$("#update<? echo $a ?>").click(function(){
+				var endingNo = $("#endingNo<? echo $b ?>").val();
+				var newQTY = $("#endingQTY<? echo $a ?>").val();
+				
+				var data = {
+					"endingNo":endingNo,
+					"newQTY":newQTY
+				}
+
+				$.post("endingInventory_edit.php",data,function(result){
+					console.log(result);
+				});
+				
+
 			});
 
 			$("#suppliesButton").click(function(){
@@ -235,9 +253,13 @@ $qtyNo = count($qty);
 
 
     							<? if($ro1->selectNow("endingInventory_deleted","deleteNo","inventoryCode",$inventoryCode[$c]) < 1) { ?>
-    							<td><input type="checkbox" id="checkBoxes<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>"></td>
+    							<td>
+    								<input type="checkbox" id="checkBoxes<? echo $a ?>" name="inventoryCode[]" value="<? echo $inventoryCode[$c] ?>">
+    							</td>
     							<? }else { ?>
-    							<td></td>
+    							<td>
+    								
+    							</td>
     							<? } ?>
 
     							<? }else { ?>
@@ -251,9 +273,14 @@ $qtyNo = count($qty);
     							<td><div class="col-xs-7"><input class="form-control" type="text" id="endingQTY<? echo $a ?>" value="<? echo $ro1->selectNow("endingInventory","endingQTY","inventoryCode",$inventoryCode[$c]) ?>"></div></td>
     						
     							<? if($ro1->selectNow("endingInventory","endingQTY","inventoryCode",$inventoryCode[$c]) < 1) { ?>
-    							<td><button type="button" id="save<? echo $a ?>" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Save</button></td>
+    							<td>
+    								<button type="button" id="save<? echo $a ?>" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Save</button>
+    							</td>
     							<? }else { ?>
-    							<td></td>
+    							<td>
+    								<input type="hidden" id="endingNo<? echo $c  ?>" value="<? echo $ro1->selectNow('endingInventory','endingNo','inventoryCode',$inventoryCode[$c]) ?>">
+    								<button type="button" id="update<? echo $a ?>" class="btn btn-default btn-sm">Update</button>
+    							</td>
     							<? } ?>
      						
      						</tr>
