@@ -1389,27 +1389,29 @@ $room[1] = $this->getReportInformation("anotherPrice");
 
 $this->getPatientProfile($registrationNo);
 if( $this->getRegistrationDetails_type() == "IPD" ) {
-if( $this->getRegistrationDetails_company() != "" ) {
-	if($this->getRegistrationDetails_company() == "INTELLICARE" || $this->getRegistrationDetails_company() == "AVEGA Managed Care, Inc.") {
-		$room1 = "specialRates";
-	}else {
-		$room1 = "HMO";
-	}
-}else {
-$room1 = $this->selectNow("room","type","Description",$this->selectNow("registrationDetails","room","registrationNo",$registrationNo));
-}
+  if( $this->getRegistrationDetails_company() != "" ) {
+  	if($this->getRegistrationDetails_company() == "INTELLICARE" || $this->getRegistrationDetails_company() == "AVEGA Managed Care, Inc.") {
+  		$room1 = "specialRates";
+  	}else {
+  		$room1 = "HMO";
+  	}
+  }else {
+    $room1 = $this->selectNow("room","type","Description",$this->selectNow("registrationDetails","room","registrationNo",$registrationNo));
+  }
 
 }else {
 
-if( $this->getRegistrationDetails_company() != "" ) {
-if( $this->getRegistrationDetails_company() == "INTELLICARE" || $this->getRegistrationDetails_company() == "AVEGA Managed Care, Inc." ) {
-$room1 = "specialRates";
-}else {
-$room1 = "HMO";
-}
-}else {
-$room1 = "OPD";
-}
+  if( $this->getRegistrationDetails_company() != "" ) {
+    if( $this->getRegistrationDetails_company() == "INTELLICARE" || $this->getRegistrationDetails_company() == "AVEGA Managed Care, Inc." ) {
+     $room1 = "specialRates";
+    }else if( $this->selectNow("Company","type","companyName",$this->getRegistrationDetails_company()) == "company" ) {
+      $room1 = "OPD";
+    }else {
+      $room1 = "HMO";
+    }
+  }else {
+   $room1 = "OPD";
+  }
 
 }
 if( $charges == "all" || $charges == "All" ) {
