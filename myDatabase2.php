@@ -4851,7 +4851,7 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-mysql_query("UPDATE patientCharges SET cashUnpaid = '$total',company = 0,phic = 0
+mysql_query("UPDATE patientCharges SET cashUnpaid = '$total',company = 0,phic = 0,discount = 0
 WHERE itemNo = '$itemNo' and registrationNo = '$registrationNo' and title != 'PROFESSIONAL FEE' ");
 
 mysql_close($con);

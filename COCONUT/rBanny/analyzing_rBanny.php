@@ -9,7 +9,7 @@ $ro = new database2();
 
 //echo ( $cash - $targetAmount );
 echo "<center><br>";
-$itemz = preg_split ("/\_/", $ro->getMaximumTotal_rBanny($registrationNo) );
+$itemz = preg_split ("/\_/", $ro->getMaximumTotal_rBanny($registrationNo) ); //format cashUnpaid_itemNo
 echo "<Br>";
 echo "Item#:&nbsp;".$itemz[1]; 
 echo "<br>Price:&nbsp;".$itemz[0];
@@ -20,25 +20,25 @@ $pxPHIC = ( $ro->getCurrentPHIC_check_rBanny($registrationNo) - $targetAmount );
 
 //check kung mas mataas pa ung total ng item kaysa sa natitirang sa targetAmount
 if(  $itemz[0] >= $pxPHIC ) { 
-$newCash = $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemz[1]) - ( $targetAmount - $ro->getTotal("phic","",$registrationNo) );
+	$newCash = $ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemz[1]) - ( $targetAmount - $ro->getTotal("phic","",$registrationNo) );
 
-if($newCash > 1) {
-$ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid",$newCash);
-$ro->editNow("patientCharges","itemNo",$itemz[1],"phic",  $targetAmount - $ro->getTotal("phic","",$registrationNo) );
+	if($newCash > 1) {
+		$ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid",$newCash);
+		$ro->editNow("patientCharges","itemNo",$itemz[1],"phic",  $targetAmount - $ro->getTotal("phic","",$registrationNo) );
+	}else {
+		$ro->editNow("patientCharges","itemNo",$itemz[1],"phic",$ro->selectNow("patientCharges","cashUnpaid","itemNo",$itemz[1]));
+		$ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid","0");
+	}
+
+
+
 }else {
-$ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid","0");
-$ro->editNow("patientCharges","itemNo",$itemz[1],"phic",$ro->selectNow("patientCharges","total","itemNo",$itemz[1]));
-}
 
+	$excessPHIC = ( $itemz[0] - $targetAmount );
+	$exactPHIC = ( $itemz[0] - $excessPHIC );
 
-
-}else {
-
-$excessPHIC = ( $itemz[0] - $targetAmount );
-$exactPHIC = ( $itemz[0] - $excessPHIC );
-
-$ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid",$excessPHIC);
-$ro->editNow("patientCharges","itemNo",$itemz[1],"phic",$exactPHIC);
+	$ro->editNow("patientCharges","itemNo",$itemz[1],"cashUnpaid",$excessPHIC);
+	$ro->editNow("patientCharges","itemNo",$itemz[1],"phic",$exactPHIC);
 
 }
 
