@@ -218,7 +218,7 @@ public function addSupplier($supplierName,$address,$contactPerson,$contactNo,$de
 
 
 //$con = mysqli_connect($this->host,$this->username,$this->password);
-$con = mysql_connect('localhost','root','Pr0taci001');
+$con = mysql_connect($this->host,$this->username,$this->password);
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
@@ -226,9 +226,9 @@ if (!$con)
 
 mysql_select_db($this->database, $con);
 
-$sql="INSERT INTO supplier (supplierName,address,description,contactPerson,contactNo)
+$sql="INSERT INTO supplier (supplierName,address,description,contactPerson,contactNo,status)
 VALUES
-('".mysql_real_escape_string($supplierName)."','".mysql_real_escape_string($address)."','".mysql_real_escape_string($contactPerson)."','".mysql_real_escape_string($contactNo)."','".mysql_real_escape_string($description)."')";
+('".mysql_real_escape_string($supplierName)."','".mysql_real_escape_string($address)."','".mysql_real_escape_string($contactPerson)."','".mysql_real_escape_string($contactNo)."','".mysql_real_escape_string($description)."','Active')";
 
 if (!mysql_query($sql,$con))
   {
