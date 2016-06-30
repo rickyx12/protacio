@@ -35,17 +35,17 @@ return $this->database;
 
 public function getMyUrl() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ipaddress FROM ipaddress ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ipaddress FROM ipaddress ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['ipaddress'];
   }
@@ -80,17 +80,17 @@ function ENCRYPT_DECRYPT($Str_Message) {
 
 public function getSynapseModule() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM module where status = 'on' order by name asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM module where status = 'on' order by name asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 if($row['name'] == "REGISTRATION") {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/opdRegistration.php?module=$row[name]'>".$row['name']."</a></li>";
@@ -124,21 +124,21 @@ return $this->UserModule;
 
 public function LogIn($username,$password,$module) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($module == "DOCTOR") {
-$result = mysql_query("SELECT username,password,module FROM Doctors where username = '$username' and password='$password' and module = '$module' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT username,password,module FROM Doctors where username = '$username' and password='$password' and module = '$module' ");
 }else {
-$result = mysql_query("SELECT username,password,module FROM registeredUser where username = '$username' and password='$password' and module = '$module' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT username,password,module FROM registeredUser where username = '$username' and password='$password' and module = '$module' ");
 }
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->UserName = $row['username'];
 $this->UserPassword = $row['password'];
@@ -161,18 +161,18 @@ return $this->deletePass_password;
 
 public function deletePass($username,$password) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT username,password FROM registeredUser where username = '$username' and password='$password' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT username,password FROM registeredUser where username = '$username' and password='$password' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->deletePass_username = $row['username'];
 $this->deletePass_password = $row['password'];
@@ -484,19 +484,19 @@ echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n
 /********************************************************/
 public function getDoctorName($username,$module) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT Name FROM Doctors where username = '$username' and module = '$module' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Name FROM Doctors where username = '$username' and module = '$module' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['Name'];
 
@@ -508,17 +508,17 @@ return $row['Name'];
 
 public function categoryService($category) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Service FROM Services where Category = '$category' order by Service asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Service FROM Services where Category = '$category' order by Service asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['Service']."'>".$row['Service']."</option>";
   }
@@ -528,17 +528,17 @@ echo "<option value='".$row['Service']."'>".$row['Service']."</option>";
 
 public function getReportOfUser($module) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT username FROM registeredUser where module='$module' order by username asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT username FROM registeredUser where module='$module' order by username asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['username']."'>".$row['username']."</option>";
   }
@@ -550,17 +550,17 @@ echo "<option value='".$row['username']."'>".$row['username']."</option>";
 //OPTION FOR BRANCH
 public function getBranch() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch FROM branch order by branch asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch FROM branch order by branch asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['branch']."'>".$row['branch']."</option>";
   }
@@ -570,17 +570,17 @@ echo "<option value='".$row['branch']."'>".$row['branch']."</option>";
 
 public function getCategory() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Category FROM Category order by Category asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Category FROM Category order by Category asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['Category']."'>".$row['Category']."</option>";
   }
@@ -590,21 +590,21 @@ echo "<option value='".$row['Category']."'>".$row['Category']."</option>";
 
 public function addNewCharges($description,$examination,$category,$opd,$ward,$soloward,$semiprivate,$private,$username,$subCategory,$hmo,$senior,$specialRates) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO availableCharges (Description,Service,Category,OPD,WARD,SOLOWARD,SEMIPRIVATE,PRIVATE,subCategory,HMO,senior,specialRates,ipd_hmo)
 VALUES
 ('$description','$examination','$category','$opd','$ward','$soloward','$semiprivate','$private','$subCategory','$hmo','$senior','$specialRates','$ward')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -614,31 +614,31 @@ echo "</script>";
 
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function requestNow($inventoryCode,$stockCardNo,$description,$quantity,$requestTo_department,$requestTo_branch,$requestingDepartment,$requestingBranch,$requestingUser,$dateRequested,$timeRequested,$status,$batchNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO inventoryManager (inventoryCode,stockCardNo,description,quantity,requestTo_department,requestTo_branch,requestingDepartment,requestingBranch,requestingUser,dateRequested,timeRequested,status,batchNo)
 VALUES
 ('$inventoryCode','$stockCardNo','$description','$quantity','$requestTo_department','$requestTo_branch','$requestingDepartment','$requestingBranch','$requestingUser','$dateRequested','$timeRequested','$status','$batchNo')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 $this->gotoPage("http://".$this->getMyUrl()."/COCONUT/availableMedicine/medicineRequest.php?branch=$requestTo_branch&inventoryType=".$this->selectNow("inventory","inventoryType","inventoryCode",$inventoryCode)."&username=$requestingUser&requestingDepartment=$requestingDepartment&requestNo=$batchNo");
 
@@ -647,28 +647,28 @@ $this->gotoPage("http://".$this->getMyUrl()."/COCONUT/availableMedicine/medicine
 
 public function addNewService($service,$category,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO Services (Service,Category)
 VALUES
 ('$service','$category')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
 echo "alert('$service was Successfully Added to the List of Service in $category');";
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php?username=$username'";
 echo "</script>";
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -678,20 +678,20 @@ mysql_close($con);
 
 public function addNewPatientRecord($patientNo,$manual_patientID,$lastName,$firstName,$middleName,$completeName,$age,$patientContact,$birthDate,$gender,$senior,$address,$phic,$civilStatus,$religion,$email) {
 
-  $con = mysql_connect($this->host,$this->username,$this->password);
+  $con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
   if (!$con) {
-    die('Could not connect: ' . mysql_error());
+    die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-  mysql_select_db($this->database, $con);
+  ((bool)mysqli_query( $con, "USE " . $this->database));
 
   $sql="INSERT INTO patientRecord (patientNo,manual_patientNo,lastName,firstName,middleName,completeName,Birthdate,Age,Gender,Senior,Address,contactNo,PHIC,religion,civilStatus,email)
   VALUES
   ('$patientNo','$manual_patientID','$lastName','$firstName','$middleName','$completeName','$birthDate','$age','$gender','$senior','$address','$patientContact','$phic','$religion','$civilStatus','$email')";
 
-  if (!mysql_query($sql,$con))
+  if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
   /*
   echo "<script type='text/javascript' >";
@@ -699,28 +699,28 @@ public function addNewPatientRecord($patientNo,$manual_patientID,$lastName,$firs
   echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
   echo "</script>";
   */
-  mysql_close($con);
+  ((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
 
 
 //ITO UNG MAG IINSERT SA DATABASE FOR EVERY REGISTRATION EVENT OCCUR
 public function addNewRegistration($patientNo,$registrationNo,$manual_patientID,$manual_caseno,$bloodPressure,$temperature,$height,$weight,$company,$initialDiagnosis,$dateRegistered,$timeRegistered,$branch,$type,$room,$username,$casetype,$limit,$control_dateRegistered,$diet,$pulse,$respiratory,$from,$pxCount) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO registrationDetails (patientNo,registrationNo,manual_patientNo,manual_registrationNo,bloodPressure,temperature,height,weight,Company,initialDiagnosis,dateRegistered,timeRegistered,branch,type,room,PIN,registeredBy,privateORhouse_case,LimitCASH,control_dateRegistered,diet,pulseRate,respiratoryRate,registeredFrom,pxCount)
 VALUES
-('$patientNo','$registrationNo','$manual_patientID','$manual_caseno','".mysql_real_escape_string($bloodPressure)."','".mysql_real_escape_string($temperature)."','".mysql_real_escape_string($height)."','".mysql_real_escape_string($weight)."','$company','".mysql_real_escape_string($initialDiagnosis)."','$dateRegistered','$timeRegistered','$branch','$type','$room','00-000000000-0','$username','$casetype','$limit','$control_dateRegistered','$diet','$pulse','$respiratory','$from','$pxCount')";
+('$patientNo','$registrationNo','$manual_patientID','$manual_caseno','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $bloodPressure) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $temperature) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $height) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $weight) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$company','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $initialDiagnosis) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$dateRegistered','$timeRegistered','$branch','$type','$room','00-000000000-0','$username','$casetype','$limit','$control_dateRegistered','$diet','$pulse','$respiratory','$from','$pxCount')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -728,7 +728,7 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -736,21 +736,21 @@ mysql_close($con);
 
 public function addCompany($companyName,$address,$rate1,$rate2,$rate3,$rate4) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO Company (companyName,companyAddress,rate1,rate2,rate3,rate4)
 VALUES
 ('$companyName','$address','$rate1','$rate2','$rate3','$rate4')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -758,7 +758,7 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -767,21 +767,21 @@ mysql_close($con);
 
 public function addICD($icdCode,$rvsCode,$diagnosis,$group,$caserate,$pf,$hospital,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO availableICD (icdCode,rvsCode,diagnosis,groupz,caserate,pf,hospital)
 VALUES
 ('$icdCode','$rvsCode','$diagnosis','$group','$caserate','$pf','$hospital')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -789,7 +789,7 @@ echo "alert('$icdCode was Successfully Added to the List of ICD Code wtih a Diag
 echo  "window.location='http://".$this->getMyUrl()."/COCONUT/philhealth/icdCode/addICD.php?username=$username ';";
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -797,21 +797,21 @@ mysql_close($con);
 
 public function addICD2patient($icdCode,$rvsCode,$diagnosis,$username,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientICD (registrationNo,icdCode,rvsCode,diagnosis)
 VALUES
 ('$registrationNo','$icdCode','$rvsCode','$diagnosis')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -819,7 +819,7 @@ echo "alert('$icdCode was Successfully Added to the Patient ');";
 echo  "window.location='http://".$this->getMyUrl()."/COCONUT/maintenance/searchICDcode.php?username=$username&registrationNo=$registrationNo&protoType=patient&show=search ';";
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -827,17 +827,17 @@ mysql_close($con);
 
 public function showAllSpecialization() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Specialization FROM DoctorSpecialization order by Specialization asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Specialization FROM DoctorSpecialization order by Specialization asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['Specialization']."'>".$row['Specialization']."</option>";
   }
@@ -847,17 +847,17 @@ echo "<option value='".$row['Specialization']."'>".$row['Specialization']."</opt
 
 public function getServices($Category) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Service FROM Services WHERE Category = '$Category' order by Service asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Service FROM Services WHERE Category = '$Category' order by Service asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['Service']."'>".$row['Service']."</option>";
   }
@@ -867,17 +867,17 @@ echo "<option value='".$row['Service']."'>".$row['Service']."</option>";
 
 public function getDoctorServices() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT serviceName FROM DoctorService group by serviceName order by serviceName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT serviceName FROM DoctorService group by serviceName order by serviceName asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['serviceName']."'>".$row['serviceName']."</option>";
   }
@@ -888,17 +888,17 @@ echo "<option value='".$row['serviceName']."'>".$row['serviceName']."</option>";
 
 public function getAllCompany() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT companyName FROM Company order by companyName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT companyName FROM Company order by companyName asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['companyName']."'>".$row['companyName']."</option>";
   }
@@ -1066,17 +1066,17 @@ return $this->userEmployeeID;
 
 public function getAuthorizedRegistrar($password) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT employeeID,username,module FROM registeredUser where password='$password' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT employeeID,username,module FROM registeredUser where password='$password' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->userRegistrar = $row['module'];
 $this->userRegistered = $row['username'];
@@ -1088,21 +1088,21 @@ $this->userEmployeeID = $row['employeeID'];
 
 public function setVerificationNo($verificationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO verificationCode (verificationNo)
 VALUES
 ('$verificationNo')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -1110,7 +1110,7 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1301,17 +1301,17 @@ return $this->patientRecord_civilStatus;
 
 public function getPatientProfile($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.religion,rd.package,rd.IxDx,rd.discount,rd.registeredBy,rd.PIN,rd.dateUnregistered,rd.timeUnregistered,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.patientNo,rd.registrationNo,rd.bloodPressure,rd.temperature,rd.height,rd.weight,rd.Company,rd.initialDiagnosis,rd.finalDiagnosis,rd.dateRegistered,rd.timeRegistered,upper(pr.completeName) as completeName,pr.Birthdate,pr.Age,pr.Gender,upper(pr.senior) as senior,pr.Address,pr.contactNo,upper(pr.PHIC) as PHIC,pr.civilStatus,rd.branch,rd.room,rd.type,rd.casetype,rd.LimitCASH,rd.LimitHMO,rd.pulseRate,rd.respiratoryRate FROM registrationDetails rd,patientRecord pr where rd.patientNo = pr.patientNo and rd.registrationNo='$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.religion,rd.package,rd.IxDx,rd.discount,rd.registeredBy,rd.PIN,rd.dateUnregistered,rd.timeUnregistered,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.patientNo,rd.registrationNo,rd.bloodPressure,rd.temperature,rd.height,rd.weight,rd.Company,rd.initialDiagnosis,rd.finalDiagnosis,rd.dateRegistered,rd.timeRegistered,upper(pr.completeName) as completeName,pr.Birthdate,pr.Age,pr.Gender,upper(pr.senior) as senior,pr.Address,pr.contactNo,upper(pr.PHIC) as PHIC,pr.civilStatus,rd.branch,rd.room,rd.type,rd.casetype,rd.LimitCASH,rd.LimitHMO,rd.pulseRate,rd.respiratoryRate FROM registrationDetails rd,patientRecord pr where rd.patientNo = pr.patientNo and rd.registrationNo='$registrationNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->registrationDetails_patientNo = $row['patientNo'];
 $this->registrationDetails_registrationNo = $row['registrationNo'];
@@ -1372,13 +1372,13 @@ a { text-decoration:none; color:black; }
 
 $this->getPatientProfile($registrationNo);
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 /*
 $room = preg_split ("/\_/", $room); 
@@ -1415,16 +1415,16 @@ if( $this->getRegistrationDetails_type() == "IPD" ) {
 
 }
 if( $charges == "all" || $charges == "All" ) {
-$result = mysql_query("SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 order by description asc ");
 }else if( $charges == "laboratory" || $charges == "lab"  ) {
-$result = mysql_query("SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 and Category = 'LABORATORY' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 and Category = 'LABORATORY' order by description asc ");
 }else if( $charges == "radiology" || $charges == "xray"  ) {
-$result = mysql_query("SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 and Category = 'XRAY' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 and Category = 'XRAY' order by description asc ");
 }else if( $charges == "radiology" || $charges == "utz"  ) {
-$result = mysql_query("SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 and Category = 'ULTRASOUND' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where 1=1 and Category = 'ULTRASOUND' order by description asc ");
 }
 else {
-$result = mysql_query("SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where Description like '".mysql_real_escape_string($charges)."%%%%%%%' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Category,chargesCode,upper(Description) as Description,(".$room1.") as sellingPrice,Service,Category FROM availableCharges where Description like '".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $charges) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."%%%%%%%' ");
 }
 
 echo "&nbsp;  <table border=1 cellpadding=0 cellspacing=0 rules=all>";
@@ -1434,7 +1434,7 @@ echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white><b>Price</font></b>&nbsp;</
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white><b>Paid Via</font></b>&nbsp;</th>";
 echo "</tr>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->getPatientProfile($registrationNo);
 echo "<tr>";
@@ -1503,15 +1503,15 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT doctorCode,Name FROM Doctors where Name like '$name%%%%%' group by Name ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT doctorCode,Name FROM Doctors where Name like '$name%%%%%' group by Name ");
 
 echo "&nbsp;  <table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -1519,7 +1519,7 @@ echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white><b>Doctor</b></font>&nbsp;<
 echo  "<th bgcolor='#3b5998'>&nbsp;</th>";
 echo "</tr>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['Name']."&nbsp;</td>";
@@ -1552,33 +1552,33 @@ echo "<td></td>";
 
 public function deletePatientCharges($registrationNo,$itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("DELETE FROM patientCharges WHERE registrationNo='$registrationNo' and itemNo='$itemNo'");
+mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM patientCharges WHERE registrationNo='$registrationNo' and itemNo='$itemNo'");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 public function deletePatientCharges_batch($registrationNo,$batchNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("DELETE FROM patientCharges WHERE registrationNo='$registrationNo' and batchNo='$batchNo'");
+mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM patientCharges WHERE registrationNo='$registrationNo' and batchNo='$batchNo'");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1586,33 +1586,33 @@ mysql_close($con);
 
 public function deleteNow($table,$identifier,$data) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("DELETE FROM $table WHERE $identifier='$data' ");
+mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM $table WHERE $identifier='$data' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 public function deleteRoom($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("DELETE FROM patientCharges WHERE title ='Room And Board' and registrationNo='$registrationNo' ");
+mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM patientCharges WHERE title ='Room And Board' and registrationNo='$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1643,13 +1643,13 @@ $sql->close();
 
 public function addCharges_cash_noInventory($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCharges (status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,control_dateCharge,control_datePaid,departmentStatus)
@@ -1657,9 +1657,9 @@ VALUES
 ('$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','".strip_tags($title)."','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','".date("Y-m-d")."','','dispensedBy_".$chargeBy."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -1699,7 +1699,7 @@ window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/searchDoctor.php?re
 else {
 echo "";
 }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1709,13 +1709,13 @@ mysql_close($con);
 //Start Add Syringe For Injectables
 public function addCharges_cash_injectables($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room,$remarks,$docSpecialization) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($remarks=='VAT'){$vatable=((($sellingPrice*$quantity)/1.12)*0.12);}else{$vatable='';}
 
@@ -1725,14 +1725,14 @@ VALUES
 ('$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','".strip_tags($title)."','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','".date("Y-m-d")."','','$remarks','$docSpecialization','$vatable')";
 
-if (!mysql_query($sql,$con)){die('Error: ' . mysql_error());}
+if (!mysqli_query($con, $sql)){die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));}
 
 echo "
 <script type='text/javascript'>
 window.location='http://".$this->getMyUrl()."/COCONUT/availableCharges/searchCharges.php?registrationNo=$registrationNo&username=$chargeBy&batchNo=$batchNo';
 </script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 //End Add Syringe For Injectables
@@ -1743,13 +1743,13 @@ mysql_close($con);
 
 public function addCharges_cash($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room,$remarks,$docSpecialization,$Capital,$stockCardNo,$dispenseFlag,$dispenseQTY) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($remarks=='VAT'){$vatable=((($sellingPrice*$quantity)/1.12)*0.12);}else{$vatable='';}
 
@@ -1786,9 +1786,9 @@ fclose($myfile);
 chmod("../../GeneratedTextFiles/$itemNo.txt",0777);
 }
 */
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -1839,7 +1839,7 @@ window.location='http://".$this->getMyUrl()."/COCONUT/dermaCharges/?registration
 else {
 echo "";
 }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1848,13 +1848,13 @@ mysql_close($con);
 
 public function addCharges_return($stockCardNo,$status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$remarks,$dispensedBy,$itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCharges (stockCardNo,status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,control_dateCharge,control_datePaid,departmentStatus,remarks,returnFlag,from_itemNo)
@@ -1862,12 +1862,12 @@ VALUES
 ('$stockCardNo','$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','".strip_tags($title)."','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','".date("Y-m-d")."','','$dispensedBy','$remarks','return','$itemNo')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1939,13 +1939,13 @@ $sql->close();
 
 public function addCharges_cash_registration($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCharges (status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,control_dateCharge,control_datePaid)
@@ -1953,11 +1953,11 @@ VALUES
 ('$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','$title','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','".date("Y-m-d")."','')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -1967,13 +1967,13 @@ mysql_close($con);
 //End Add Syringe for Injectable-Auto Dispense
 public function addCharges_cash_autoDispense_injectables($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room,$deptStatus,$deptStatus_time,$status2,$qty2,$registrationNo2,$chargesCode2,$description2,$sellingPrice2,$month2,$day2,$year2,$timeCharge2,$chargeBy2,$service2,$title2,$paidVia2,$cashPaid2,$batchNo2,$username2,$discount2,$inventoryFrom2,$room2,$paycash2,$remarks2) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCharges (status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,departmentStatus,departmentStatus_time,control_dateCharge)
@@ -1981,9 +1981,9 @@ VALUES
 ('$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','$title','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','$deptStatus','$deptStatus_time','".date("Y-m-d")."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -1992,7 +1992,7 @@ echo "
 window.location='http://".$this->getMyUrl()."/COCONUT/availableMedicine/addCharges_cash.php?status=$status2&quantity=$qty2&registrationNo=$registrationNo2&chargesCode=$chargesCode2&description=$description2&sellingPrice=$sellingPrice2&month=$month2&day=$day2&year=$year2&timeCharge=$timeCharge2&chargeBy=$chargeBy2&service=$service2&title=$title2&paidVia=$paidVia2&cashPaid=$cashPaid2&batchNo=$batchNo2&username=$username2&discount=$discount2&inventoryFrom=$inventoryFrom2&room=$room2&paycash=$paycash2&remarks=$remarks2';
 </script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 //End Add Syringe for Injectable-Auto Dispense
@@ -2003,13 +2003,13 @@ mysql_close($con);
 
 public function addCharges_cash_autoDispense($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room,$deptStatus,$deptStatus_time,$stockCardNo,$dispenseFlag,$dispenseQTY) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCharges (status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,departmentStatus,departmentStatus_time,control_dateCharge,stockCardNo,dispenseFlag,dispenseQTY)
@@ -2017,9 +2017,9 @@ VALUES
 ('$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','$title','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','$deptStatus','$deptStatus_time','".date("Y-m-d")."','$stockCardNo','$dispenseFlag','$dispenseQTY')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -2055,7 +2055,7 @@ window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/searchDoctor.php?re
 else {
 echo "";
 }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -2063,13 +2063,13 @@ mysql_close($con);
 
 public function addCharges_magicPackage($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCharges (status,registrationNo,chargesCode,description,sellingPrice,discount,total,cashUnpaid,phic,company,timeCharge,dateCharge,chargeBy,
 service,title,paidVia,cashPaid,batchNo,quantity,inventoryFrom,branch,control_dateCharge)
@@ -2077,14 +2077,14 @@ VALUES
 ('$status','$registrationNo','$chargesCode','$description','$sellingPrice','$discount','$total','$cashUnpaid','$phic','$company',
 '$timeCharge','$dateCharge','$chargeBy','$service','$title','$paidVia','$cashPaid','$batchNo','$quantity','$inventoryFrom','$branch','".date("Y-m-d")."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<font color=red size=5>Operation Completed..!!!!</font>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -2112,22 +2112,22 @@ font-size:12px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','Discharged') order by dateCharge,timeCharge asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','Discharged') order by dateCharge,timeCharge asc ");
 }else {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','Discharged') and description like '$desc%%%%%%' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status in ('UNPAID','Return','Discharged') and description like '$desc%%%%%%' order by description asc ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 //$this->getMyResults($this->getResult_labNo($row['itemNo']),$username);
 //$price = preg_split ("/\//", $row['sellingPrice']); 
@@ -2278,22 +2278,22 @@ echo "</tr>";
 
 public function getSubCategory($chargesCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT subCategory FROM availableCharges where chargesCode = '$chargesCode' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT subCategory FROM availableCharges where chargesCode = '$chargesCode' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['subCategory'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -2321,17 +2321,17 @@ font-size:12px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged' or status = 'Return') order by dateCharge,timeCharge asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged' or status = 'Return') order by dateCharge,timeCharge asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 //$this->getMyResults($this->getResult_labNo($row['itemNo']),$username);
 //$price = preg_split ("/\//", $row['sellingPrice']); 
@@ -2503,17 +2503,17 @@ echo "</tr>";
 
 public function getGeneric($chargesCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT genericName,description from inventory where inventoryCode = '$chargesCode'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT genericName,description from inventory where inventoryCode = '$chargesCode'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['description']." - ".$row['genericName'];
   }
@@ -2546,40 +2546,40 @@ font-size:13px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if($module == "PHARMACY" || $module=="CSR") {
 
 if( $nod == "" ) {
-$result = mysql_query("SELECT pc.*,rd.type,rd.dateUnregistered FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.inventoryFrom='$title' and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'dispensedBy%%%%%' and pc.status not like 'DELETED_%%%%%%%' and (pc.title = 'MEDICINE' or pc.title = 'SUPPLIES') order by pc.description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.type,rd.dateUnregistered FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.inventoryFrom='$title' and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'dispensedBy%%%%%' and pc.status not like 'DELETED_%%%%%%%' and (pc.title = 'MEDICINE' or pc.title = 'SUPPLIES') order by pc.description asc ");
 }else {
-$result = mysql_query("SELECT pc.*,rd.type,rd.dateUnregistered FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.inventoryFrom='$title' and pc.dateCharge='$selectedDate' and pc.paidVia ='Cash' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'dispensedBy%%%%%' and pc.status not like 'DELETED_%%%%%%%' and pc.chargeBy = '$nod'  order by pc.description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.type,rd.dateUnregistered FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.inventoryFrom='$title' and pc.dateCharge='$selectedDate' and pc.paidVia ='Cash' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'dispensedBy%%%%%' and pc.status not like 'DELETED_%%%%%%%' and pc.chargeBy = '$nod'  order by pc.description asc ");
 }
 
 
 
 }else if( $module =="LABORATORY" || $module == "BLOODBANK" ) {
-$result = mysql_query("SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (pc.title='LABORATORY' or pc.title = 'BLOODBANK') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (pc.title='LABORATORY' or pc.title = 'BLOODBANK') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
 }else if($module =="RADIOLOGY") {
-$result = mysql_query("SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (pc.title='ULTRASOUND' or pc.title = 'XRAY') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (pc.title='ULTRASOUND' or pc.title = 'XRAY') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
 }
 
 else {
-$result = mysql_query("SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.title='$title' and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and status not like 'DELETED_%%%%%%%' group by pc.itemNo order by pc.description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.title='$title' and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and status not like 'DELETED_%%%%%%%' group by pc.itemNo order by pc.description asc ");
 }
 
 
 echo "<form method='get' action='http://".$this->getMyUrl()."/Department/updateDepartmentStatus.php'>";
 echo "<input type=hidden name='username' value='$username'>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<input type=hidden name='batchNo' value='".$row['batchNo']."'>";
 $deptStatus = preg_split ("/\_/", $row['departmentStatus']); 
@@ -2825,18 +2825,18 @@ font-size:14px;
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $patno=$this->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
 echo strtoupper($this->selectNow("patientRecord","lastName","patientNo",$patno)).", ".strtoupper($this->selectNow("patientRecord","firstName","patientNo",$patno));
 
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') group by itemNo order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') group by itemNo order by description asc ");
 
 echo "<body onload='DisplayTime();'>";
 echo "<form method='get' action='dischargedCompany.php'>";
@@ -2906,7 +2906,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -2996,20 +2996,20 @@ font-size:14px;
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $patno=$this->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
 echo strtoupper($this->selectNow("patientRecord","lastName","patientNo",$patno)).", ".strtoupper($this->selectNow("patientRecord","firstName","patientNo",$patno));
 
 
 
-$result = mysql_query("SELECT *,sum(discount) as disc FROM patientCharges where registrationNo = '$registrationNo' and status = '$statusType' and cashUnpaid > 0 group by itemNo order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT *,sum(discount) as disc FROM patientCharges where registrationNo = '$registrationNo' and status = '$statusType' and cashUnpaid > 0 group by itemNo order by description asc ");
 
 
 
@@ -3098,7 +3098,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -3203,15 +3203,15 @@ font-size:14px;
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') and cashUnpaid > 0 group by itemNo order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'BALANCE') and cashUnpaid > 0 group by itemNo order by description asc ");
 
 echo "<body onload='DisplayTime();'>";
 echo "<form method='get' action='paymentManager.php'>";
@@ -3284,7 +3284,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -3365,16 +3365,16 @@ font-size:14px;
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and paidVia ='Cash' and status not like 'DELETED%%%%%%' group by itemNo order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and paidVia ='Cash' and status not like 'DELETED%%%%%%' group by itemNo order by description asc ");
 
 echo "<body onload='DisplayTime();'>";
 echo "<form method='get' action='paymentManager.php'>";
@@ -3428,7 +3428,7 @@ $this->coconutHidden("cardType","");
 $this->coconutHidden("creditCardNo","");
 $this->coconutHidden("paidVia","Cash");
 $this->coconutHidden("chargeStatus","UNPAID");
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td><input type=checkbox name='cashierPaid[]' value='$row[itemNo]' checked></td>";
@@ -3516,17 +3516,17 @@ return $this->patientRecordz_phicType;
 
 public function setPatientRecord($patientNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientRecord where patientNo='$patientNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientRecord where patientNo='$patientNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->patientRecordz_lastName = $row['lastName'];
 $this->patientRecordz_firstName = $row['firstName'];
@@ -3555,15 +3555,15 @@ tr:hover{ background-color:yellow; color:black; }
 </style>
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.manual_patientNo FROM patientRecord pr where (pr.completeName like '$name%%%%%%%' or pr.manual_patientNo = '$name') and statusz not like 'DELETED%%%%%%%%' group by pr.patientNo order by pr.lastName,pr.firstName,pr.middleName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.manual_patientNo FROM patientRecord pr where (pr.completeName like '$name%%%%%%%' or pr.manual_patientNo = '$name') and statusz not like 'DELETED%%%%%%%%' group by pr.patientNo order by pr.lastName,pr.firstName,pr.middleName asc ");
 
 echo "<br>&nbsp;  <table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -3571,7 +3571,7 @@ echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>PIN#</font>&nbsp;</th>";
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>Patient's Name</font>&nbsp;</th>";
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>BirthDate</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<a href='/Registration/deleteRecord.php?patientNo=$row[patientNo]&from=$from' style='text-decoration:none;'>".$row['manual_patientNo']."&nbsp;</td>";
@@ -3595,15 +3595,15 @@ tr:hover{ background-color:yellow; color:black; }
 </style>
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registrationNo,rd.registeredBy,rd.dateRegistered,pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.Gender,pr.Senior,pr.PHIC,pr.civilStatus,pr.Address,pr.religion FROM patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and pr.completeName like '$name%%%%%%%' group by pr.patientNo ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.registeredBy,rd.dateRegistered,pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.Gender,pr.Senior,pr.PHIC,pr.civilStatus,pr.Address,pr.religion FROM patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and pr.completeName like '$name%%%%%%%' group by pr.patientNo ");
 
 echo "<br>&nbsp;  <table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -3614,7 +3614,7 @@ echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>Register</font>&nbsp;</th>"
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>Register By</font>&nbsp;</th>";
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white></font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['completeName']."</td>";
@@ -3642,15 +3642,15 @@ tr:hover{ background-color:yellow; color:black; }
 </style>
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.Gender,pr.Senior,pr.PHIC,pr.civilStatus,pr.Address,pr.phicType FROM patientRecord pr where pr.completeName like '$name%%%%%%%' and statusz not like 'DELETED%%%%%%' group by pr.patientNo ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.patientNo,(pr.completeName) as completeName,pr.Birthdate,pr.Gender,pr.lastName,pr.firstName,pr.middleName,pr.contactNo,pr.Birthdate,pr.Gender,pr.Senior,pr.PHIC,pr.civilStatus,pr.Address,pr.phicType FROM patientRecord pr where pr.completeName like '$name%%%%%%%' and statusz not like 'DELETED%%%%%%' group by pr.patientNo ");
 
 echo "<br>&nbsp;  <table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -3658,7 +3658,7 @@ echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>Patient's Name</font>&nbsp;
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>BirthDate</font>&nbsp;</th>";
 echo  "<th bgcolor='#3b5998'>&nbsp;<font color=white>Gender</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<a href='/Registration/specialRegistration/shortRegistration_again.php?patientNo=$row[patientNo]'>".$row['completeName']."</a>&nbsp;</td>";
@@ -3675,17 +3675,17 @@ echo "</table>";
 
 public function showInventoryLocation() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT inventoryLocation FROM inventoryLocation order by orderzz asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryLocation FROM inventoryLocation order by orderzz asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['inventoryLocation']."'>".$row['inventoryLocation']."</option>";
   }
@@ -3698,17 +3698,17 @@ echo "<option value='".$row['inventoryLocation']."'>".$row['inventoryLocation'].
 //UNIVERSAL OPTION PRA SA COMOBOX
 public function showOption($table,$cols) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols FROM $table order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols FROM $table order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
   }
@@ -3717,17 +3717,17 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 
 public function showOption_with_value($table,$cols,$value) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols,($value) as value FROM $table order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols,($value) as value FROM $table order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['value']."'>".$row['cols']."</option>";
   }
@@ -3737,17 +3737,17 @@ echo "<option value='".$row['value']."'>".$row['cols']."</option>";
 
 public function showOption_group($table,$cols) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols FROM $table group by cols order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols FROM $table group by cols order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
   }
@@ -3758,17 +3758,17 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 
 public function showOption_radio() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT category,title FROM radioReportList order by category asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT category,title FROM radioReportList order by category asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['title']."'>".$row['category']." - ".$row['title']."</option>";
   }
@@ -3777,17 +3777,17 @@ echo "<option value='".$row['title']."'>".$row['category']." - ".$row['title']."
 
 public function showOptionRoom($table,$cols,$cols1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols,($cols1) as cols1 FROM $table WHERE status = 'Vacant' order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols,($cols1) as cols1 FROM $table WHERE status = 'Vacant' order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['cols']."'>".$row['cols']." - ".$row['cols1']."</option>";
   }
@@ -3798,17 +3798,17 @@ echo "<option value='".$row['cols']."'>".$row['cols']." - ".$row['cols1']."</opt
 //UNIVERSAL OPTION PRA SA COMOBOX NA MEI KXAMANG WHERE CLAUSE
 public function showOption_where($table,$cols,$identifier,$identifierData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols FROM $table WHERE $identifier = '$identifierData' order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols FROM $table WHERE $identifier = '$identifierData' order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
   }
@@ -3819,17 +3819,17 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 //UNIVERSAL OPTION PRA SA COMOBOX NA MEI KXAMANG WHERE CLAUSE
 public function showOption_doubleWhere($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols FROM $table WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols FROM $table WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
   }
@@ -3840,17 +3840,17 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 //UNIVERSAL OPTION PRA SA COMOBOX NA MEI KXAMANG WHERE CLAUSE
 public function showOption_doubleWhere_group($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1,$group) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) cols FROM $table WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' order by cols asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) cols FROM $table WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' order by cols asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
   }
@@ -3861,17 +3861,17 @@ echo "<option value='".$row['cols']."'>".$row['cols']."</option>";
 public function who_occupied_d_room($roomNo) {
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT registrationNo,room from registrationDetails WHERE room like '$roomNo%%%' and dateUnregistered = ''  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo,room from registrationDetails WHERE room like '$roomNo%%%' and dateUnregistered = ''  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['registrationNo'];
   }
@@ -3883,18 +3883,18 @@ return $row['registrationNo'];
 
 public function getPatient_in_the_room($room) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.lastName,pr.firstName,rd.dateRegistered,rd.registrationNo from patientRecord pr,registrationDetails rd WHERE rd.room = '$room' and rd.dateUnregistered = '' and pr.patientNo = rd.patientNo and rd.dateRegistered not like 'DELETED%%%%%%%%' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,rd.dateRegistered,rd.registrationNo from patientRecord pr,registrationDetails rd WHERE rd.room = '$room' and rd.dateUnregistered = '' and pr.patientNo = rd.patientNo and rd.dateRegistered not like 'DELETED%%%%%%%%' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return "&nbsp;<font size=1 color=black>$row[registrationNo]-".$row['lastName'].", ".$row['firstName']." </font>";
   }
@@ -3905,17 +3905,17 @@ return "&nbsp;<font size=1 color=black>$row[registrationNo]-".$row['lastName']."
 
 public function showVacantRoom($branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Description FROM room order by Description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Description FROM room order by Description asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
     $patient = $this->getPatient_in_the_room($row['Description']);
     if($patient == "") {
@@ -3929,17 +3929,17 @@ while($row = mysql_fetch_array($result))
 
 public function showExam() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Description,chargesCode FROM availableCharges order by Description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Description,chargesCode FROM availableCharges order by Description asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['chargesCode']."'>".$row['Description']."</option>";
   }
@@ -3949,17 +3949,17 @@ echo "<option value='".$row['chargesCode']."'>".$row['Description']."</option>";
 
 public function showCivilStatus() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT civilStatus FROM civilStatus order by civilStatus asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT civilStatus FROM civilStatus order by civilStatus asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<option value='".$row['civilStatus']."'>".$row['civilStatus']."</option>";
   }
@@ -3995,33 +3995,33 @@ $sql->close();
 //For Purchasing-Mark
 public function addNewMedicinepurch($stockCardNo,$description,$generic,$unitcost,$quantity,$expiration,$addedBy,$dateAdded,$timeAdded,$inventoryLocation,$inventoryType,$branch,$transition,$remarks,$preparation,$phic,$added,$criticalLevel,$supplier,$begCapital,$begQTY,$suppliesUNITCOST,$autoDispense,$status,$classification,$description1,$genericName1,$ipdPrice,$opdPrice,$username,$sino,$page,$invoiceNo,$freegoods,$trueunitcost,$encodedQTY) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO inventory (stockCardNo,description,genericName,unitcost,quantity,expiration,addedBy,dateAdded,timeAdded,inventoryLocation,inventoryType,branch,transition,remarks,preparation,phic,Added,criticalLevel,supplier,beginningCapital,beginningQTY,suppliesUNITCOST,autoDispense,classification,ipdPrice,opdPrice,invoiceNo,fgQuantity,encodedQTY)
 VALUES
 ('$stockCardNo','$description','$generic','$unitcost','$quantity','$expiration','$addedBy','$dateAdded','$timeAdded','$inventoryLocation','$inventoryType','$branch','$transition','$remarks','$preparation','$phic','$added','$criticalLevel','$supplier','$begCapital','$begQTY','$suppliesUNITCOST','$autoDispense','$classification','$ipdPrice','$opdPrice','$invoiceNo','$freegoods','$encodedQTY')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 $pdate=date("Ymd");
-$cdatesql=mysql_query("SELECT counterdate FROM counters WHERE counterdate='$pdate'");
-$cdatecount=mysql_num_rows($cdatesql);
+$cdatesql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counterdate FROM counters WHERE counterdate='$pdate'");
+$cdatecount=mysqli_num_rows($cdatesql);
 
 if($cdatecount==0){
-mysql_query("UPDATE counters SET counterdate='$pdate', counter02='0'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counterdate='$pdate', counter02='0'");
 }
 
-$c02sql=mysql_query("SELECT counter02 FROM counters");
-while($c02fetch=mysql_fetch_array($c02sql)){$c02=$c02fetch['counter02'];}
+$c02sql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counter02 FROM counters");
+while($c02fetch=mysqli_fetch_array($c02sql)){$c02=$c02fetch['counter02'];}
 
 if($c02<10){$refNo=$pdate."000".$c02;}
 else if(($c02<100)&&($c02>9)){$refNo=$pdate."00".$c02;}
@@ -4032,19 +4032,19 @@ $c02plus=$c02+1;
 
 $dateEncoded=date("YmdHi");
 
-$asql=mysql_query("SELECT inventoryCode FROM inventory ORDER BY CAST(inventoryCode AS UNSIGNED), inventoryCode");
-while($afetch=mysql_fetch_array($asql)){$inventoryCode=$afetch['inventoryCode'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode FROM inventory ORDER BY CAST(inventoryCode AS UNSIGNED), inventoryCode");
+while($afetch=mysqli_fetch_array($asql)){$inventoryCode=$afetch['inventoryCode'];}
 
 $qty=$quantity-$freegoods;
 
 if($inventoryType=='medicine'){
-mysql_query("INSERT INTO salesInvoiceItems VALUES('$refNo', '$sino', '$inventoryCode', '$description', '$preparation', '$trueunitcost', '$qty', '$freegoods', '$inventoryType', 'Active', '$username', '$dateEncoded')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO salesInvoiceItems VALUES('$refNo', '$sino', '$inventoryCode', '$description', '$preparation', '$trueunitcost', '$qty', '$freegoods', '$inventoryType', 'Active', '$username', '$dateEncoded')");
 }
 else{
-mysql_query("INSERT INTO salesInvoiceItems VALUES('$refNo', '$sino', '$inventoryCode', '$description', '$preparation', '$trueunitcost', '$qty', '$freegoods', '$inventoryType', 'Active', '$username', '$dateEncoded')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO salesInvoiceItems VALUES('$refNo', '$sino', '$inventoryCode', '$description', '$preparation', '$trueunitcost', '$qty', '$freegoods', '$inventoryType', 'Active', '$username', '$dateEncoded')");
 }
 
-mysql_query("UPDATE counters SET counter02='$c02plus'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counter02='$c02plus'");
 
 echo "<script type='text/javascript' >";
 echo "alert('$description was Successfully Added to the List of $inventoryType');";
@@ -4057,28 +4057,28 @@ echo  "window.location='http://".$this->getMyUrl()."/Purchasing/CreatedReceiving
 
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 //End For Purchasing-Mark
 
 public function addNewMedicine($stockCardNo,$description,$generic,$unitcost,$quantity,$expiration,$addedBy,$dateAdded,$timeAdded,$inventoryLocation,$inventoryType,$branch,$transition,$remarks,$preparation,$phic,$added,$criticalLevel,$supplier,$begCapital,$begQTY,$suppliesUNITCOST,$autoDispense,$status,$classification,$description1,$genericName1,$ipdPrice,$opdPrice,$unitOfMeasure,$biQTY,$biInventoryCode,$encodedQTY,$invoiceNo,$lock) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO inventory (stockCardNo,description,genericName,unitcost,quantity,expiration,addedBy,dateAdded,timeAdded,inventoryLocation,inventoryType,branch,transition,remarks,preparation,phic,Added,criticalLevel,supplier,beginningCapital,beginningQTY,suppliesUNITCOST,autoDispense,classification,ipdPrice,opdPrice,unitOfMeasure,lastEnd_QTY,lastEnd_inventoryCode,encodedQTY,invoiceNo,locked)
 VALUES
 ('$stockCardNo','$description','$generic','$unitcost','$quantity','$expiration','$addedBy','$dateAdded','$timeAdded','$inventoryLocation','$inventoryType','$branch','$transition','$remarks','$preparation','$phic','$added','$criticalLevel','$supplier','$begCapital','$begQTY','$suppliesUNITCOST','$autoDispense','$classification','$ipdPrice','$opdPrice','$unitOfMeasure','$biQTY','$biInventoryCode','$encodedQTY','$invoiceNo','$lock')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -4092,7 +4092,7 @@ echo  "window.location='http://".$this->getMyUrl()."/COCONUT/inventory/addInvent
 
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4103,13 +4103,13 @@ mysql_close($con);
 //pra sa receiving of request
 public function addNewMedicine1($stockCardNo,$description,$generic,$preparation,$unitcost,$quantity,$expiration,$addedBy,$dateAdded,$timeAdded,$inventoryLocation,$inventoryType,$branch,$transition,$remarks,$price,$inventoryCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if( $inventoryType == "medicine" ) {
 $sql="INSERT INTO inventory (stockCardNo,description,genericName,preparation,unitcost,quantity,expiration,addedBy,dateAdded,timeAdded,inventoryLocation,inventoryType,branch,transition,remarks,Added,autoDispense,from_inventoryCode,beginningQTY)
@@ -4122,9 +4122,9 @@ VALUES
 }
 
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -4136,7 +4136,7 @@ window.location='http://".$this->getMyUrl()."/COCONUT/availableMedicine/receivin
 
 ";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4146,17 +4146,17 @@ mysql_close($con);
 
 public function percentage($percentageType) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT percentageAmount FROM percentage WHERE percentageType = '$percentageType' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT percentageAmount FROM percentage WHERE percentageType = '$percentageType' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['percentageAmount'];
   }
@@ -4191,15 +4191,15 @@ font-size:15px;
 </style>
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT i.stockCardNo,i.phic,i.preparation,i.inventoryCode,i.description,i.genericName,((i.unitcost * ".$this->percentage("medicine").") + i.unitcost) as sellingPrice,i.quantity,i.unitcost,i.Added,i.ipdPrice,i.opdPrice,i.locked FROM inventoryStockCard isc,inventory i WHERE isc.stockCardNo = i.stockCardNo and (i.description like '%%%%%%$searchDesc%%%%%%%' or i.genericName like '%$searchDesc%' ) and i.inventoryType = 'medicine' and i.inventoryLocation = '$searchFrom' and i.status not like 'DELETED_%%%%%' and isc.status not like 'DELETED%' and i.quantity > 0 order by i.".$searchBy." asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT i.stockCardNo,i.phic,i.preparation,i.inventoryCode,i.description,i.genericName,((i.unitcost * ".$this->percentage("medicine").") + i.unitcost) as sellingPrice,i.quantity,i.unitcost,i.Added,i.ipdPrice,i.opdPrice,i.locked FROM inventoryStockCard isc,inventory i WHERE isc.stockCardNo = i.stockCardNo and (i.description like '%%%%%%$searchDesc%%%%%%%' or i.genericName like '%$searchDesc%' ) and i.inventoryType = 'medicine' and i.inventoryLocation = '$searchFrom' and i.status not like 'DELETED_%%%%%' and isc.status not like 'DELETED%' and i.quantity > 0 order by i.".$searchBy." asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -4212,7 +4212,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font color=white>&nbsp;</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white>&nbsp;</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white>&nbsp;</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $inventoryCode = $row['inventoryCode'];
@@ -4302,15 +4302,15 @@ tr:hover { background-color:yellow;color:black;}
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT inventoryCode,stockCardNo,description,unitcost,quantity,classification,classification FROM inventory WHERE $searchBy like '%%%%%%%%$searchDesc%%%%%%%' and inventoryType = 'supplies' and inventoryLocation = '$searchFrom' and quantity > 0 and status not like 'DELETED_%%%%%%' group by description order by $searchBy asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode,stockCardNo,description,unitcost,quantity,classification,classification FROM inventory WHERE $searchBy like '%%%%%%%%$searchDesc%%%%%%%' and inventoryType = 'supplies' and inventoryLocation = '$searchFrom' and quantity > 0 and status not like 'DELETED_%%%%%%' group by description order by $searchBy asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -4324,7 +4324,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font color=white>&nbsp;</font>&nbsp;</th>";
 }
 echo "<th bgcolor='#3b5998'>&nbsp;<font color=white>&nbsp;</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $senior = $row['unitcost'] * $this->percentage("senior");
@@ -4481,17 +4481,17 @@ return $this->patientCharges_remarks;
 
 public function getPatientChargesToEdit($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientCharges WHERE itemNo = '$itemNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges WHERE itemNo = '$itemNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->patientCharges_itemNo = $row['itemNo'];
 $this->patientCharges_status = $row['status'];
@@ -4531,18 +4531,18 @@ $this->patientCharges_remarks = $row['remarks'];
 
 public function editCharges($itemNo,$columns,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET $columns = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET $columns = '$newData'
 WHERE itemNo = '$itemNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4550,18 +4550,18 @@ mysql_close($con);
 
 public function editNow($table,$identifier,$identifierData,$columns,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE $table SET $columns = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE $table SET $columns = '$newData'
 WHERE $identifier = '$identifierData' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4569,18 +4569,18 @@ mysql_close($con);
 
 public function doubleEditNow($table,$identifier,$identifierData,$identifier1,$identifierData1,$columns,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE $table SET $columns = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE $table SET $columns = '$newData'
 WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4588,99 +4588,99 @@ mysql_close($con);
 
 public function phicFuller($table,$identifier,$identifierData,$identifier1,$identifierData1,$columns,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE $table SET $columns = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE $table SET $columns = '$newData'
 WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 public function addUser($username,$password,$module,$branch,$completeName) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO registeredUser (username,password,module,branch,completeName)
 VALUES
-('$username','$password','$module','$branch','".mysql_real_escape_string($completeName)."')";
+('$username','$password','$module','$branch','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $completeName) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addUser.php?username=$addedBy '";
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editCompleteName($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET completeName = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET completeName = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editLastName($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET lastName = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET lastName = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editFirstName($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET firstName = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET firstName = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4688,18 +4688,18 @@ mysql_close($con);
 
 public function editMiddleName($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET middleName = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET middleName = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4707,18 +4707,18 @@ mysql_close($con);
 
 public function editAge($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET age = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET age = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4726,18 +4726,18 @@ mysql_close($con);
 
 public function editCivilStatus($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET civilStatus = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET civilStatus = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4745,72 +4745,72 @@ mysql_close($con);
 
 public function editBirthDate($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET Birthdate = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET Birthdate = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editContactNo($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET contactNo = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET contactNo = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editSenior($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET Senior = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET Senior = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editPHIC($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET PHIC = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET PHIC = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4818,54 +4818,54 @@ mysql_close($con);
 
 public function editCompany($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET Company = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET Company = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editTimeRegistered($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET timeRegistered = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET timeRegistered = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editDateRegistered($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET dateRegistered = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET dateRegistered = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4873,36 +4873,36 @@ mysql_close($con);
 
 public function editAddress($patientNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientRecord SET Address = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientRecord SET Address = '$newData'
 WHERE patientNo = '$patientNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function editHeight($registrationNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET height = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET height = '$newData'
 WHERE registrationNo = '$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4910,18 +4910,18 @@ mysql_close($con);
 
 public function editWeight($registrationNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET weight = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET weight = '$newData'
 WHERE registrationNo = '$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4929,18 +4929,18 @@ mysql_close($con);
 
 public function editBloodPressure($registrationNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET bloodPressure = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET bloodPressure = '$newData'
 WHERE registrationNo = '$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4948,18 +4948,18 @@ mysql_close($con);
 
 public function editTemperature($registrationNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET temperature = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET temperature = '$newData'
 WHERE registrationNo = '$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -4967,18 +4967,18 @@ mysql_close($con);
 
 public function editInitialDiagnosis($registrationNo,$newData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE registrationDetails SET initialDiagnosis = '$newData'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE registrationDetails SET initialDiagnosis = '$newData'
 WHERE registrationNo = '$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5008,17 +5008,17 @@ $mysqli -> close();
 
 public function showPatient_walkIn($completeName) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registrationNo,pr.lastName,rd.dateRegistered,upper(pr.completeName) as completeName FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pr.lastName like '$completeName%%%%%' and pr.firstName = 'N/A' and pr.middleName = 'N/A' group by completeName ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pr.lastName,rd.dateRegistered,upper(pr.completeName) as completeName FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pr.lastName like '$completeName%%%%%' and pr.firstName = 'N/A' and pr.middleName = 'N/A' group by completeName ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo $row['lastName']."\n";
   }
@@ -5067,18 +5067,18 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.dateUnregistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.dateRegistered NOT LIKE '%DELETED%' and pr.completeName = '$completeName' order by rd.control_dateRegistered desc limit $start,$end ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.dateUnregistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.dateRegistered NOT LIKE '%DELETED%' and pr.completeName = '$completeName' order by rd.control_dateRegistered desc limit $start,$end ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -5104,26 +5104,26 @@ if( $row['dateUnregistered'] != "" ) {
 echo "<td class='myData'><center>".$row['type']."</center></td>";
 echo "</tr>";
   }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
 
 
 
 public function showPatientHistory_count($completeName,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pr.completeName = '$completeName' order by rd.control_dateRegistered desc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pr.completeName = '$completeName' order by rd.control_dateRegistered desc ");
 
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
 
 
@@ -5141,15 +5141,15 @@ a { text-decoration:none; color:black; }
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.lastName,rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pr.lastName = '$completeName' order by rd.dateUnregistered,rd.registrationNo asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,rd.dateUnregistered,rd.patientNo,pr.completeName,rd.registrationNo,rd.dateRegistered,rd.branch,rd.type FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pr.lastName = '$completeName' order by rd.dateUnregistered,rd.registrationNo asc  ");
 
 echo "<br><center>";
 $this->coconutTableStart();
@@ -5161,7 +5161,7 @@ $this->coconutTableHeader("Registration Date");
 $this->coconutTableHeader("Type");
 $this->coconutTableHeader("Branch");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -5185,21 +5185,21 @@ $this->coconutTableStop();
 
 public function addNewDoctorService($serviceName,$specialization,$cashAmount,$companyRate,$doctorShare,$discount,$username,$phic) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO DoctorService (serviceName,specialization,cashAmount,companyRate,doctorShare,discount,phic)
 VALUES
 ('$serviceName','$specialization','$cashAmount','$companyRate','$doctorShare','$discount','$phic')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -5208,7 +5208,7 @@ echo  "window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/addNewDoctor
 echo "</script>";
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5217,21 +5217,21 @@ mysql_close($con);
 
 public function addNewDoctor($doctorName,$specialization1,$specialization2,$specialization3,$specialization4,$specialization5,$accreditationNo,$username,$usernameDoctor,$password,$module,$contactNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO Doctors (Name,Specialization1,Specialization2,Specialization3,Specialization4,Specialization5,PhilHealth_AccreditationNo,username,password,module,contact)
 VALUES
 ('$doctorName','$specialization1','$specialization2','$specialization3','$specialization4','$specialization5','$accreditationNo','$usernameDoctor','$password','$module','$contactNo')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -5240,7 +5240,7 @@ echo  "window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/addNewDoctor
 echo "</script>";
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5248,21 +5248,21 @@ mysql_close($con);
 
 public function addNewRoom($description,$type,$rate,$branch,$floor) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO room (Description,type,rate,branch,floor,status)
 VALUES
 ('$description','$type','$rate','$branch','$floor','Vacant')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -5271,35 +5271,35 @@ echo  "window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/addNewDoctor
 echo "</script>";
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function addNewCredit($registrationNo,$limitTo,$limitVia,$amountLimit,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientCreditLimit (registrationNo,limitTo,limitVia,amountLimit,username)
 VALUES
 ('$registrationNo','$limitTo','$limitVia','$amountLimit','$username')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
 echo  "window.location='http://".$this->getMyUrl()."/COCONUT/patientProfile/creditLimit/viewCreditLimit.php?username=$username&registrationNo=$registrationNo '";
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5307,21 +5307,21 @@ mysql_close($con);
 
 public function addPayment($registrationNo,$amountPaid,$datePaid,$timePaid,$paidBy,$paymentFor,$orNo,$paidVia) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientPayment (registrationNo,amountPaid,datePaid,timePaid,paidBy,paymentFor,orNo,paidVia)
 VALUES
 ('$registrationNo','$amountPaid','$datePaid','$timePaid','$paidBy','$paymentFor','$orNo','$paidVia')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 /*
@@ -5348,7 +5348,7 @@ echo "<script type='text/javascript' >";
 echo  "window.location='http://".$this->getMyUrl()."/COCONUT/patientProfile/patientProfile_handler.php?username=$paidBy&registrationNo=$registrationNo '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5374,17 +5374,17 @@ return $this->companyRate;
 
 public function doctorServiceRate($specialization,$service) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM DoctorService WHERE serviceName = '$service' and specialization='$specialization' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM DoctorService WHERE serviceName = '$service' and specialization='$specialization' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->cashAmount = $row['cashAmount'];
 $this->companyRate = $row['companyRate'];
@@ -5419,17 +5419,17 @@ return $this->specialization5;
 
 public function getDoctorSpecialization($doctorCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Specialization1,Specialization2,Specialization3,Specialization4,Specialization5 FROM Doctors WHERE doctorCode = '$doctorCode' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Specialization1,Specialization2,Specialization3,Specialization4,Specialization5 FROM Doctors WHERE doctorCode = '$doctorCode' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->specialization1 = $row['Specialization1'];
 $this->specialization2 = $row['Specialization2'];
@@ -5445,17 +5445,17 @@ $this->specialization5 = $row['Specialization5'];
 //ITO UNG KKUHA NG RATE NG COMPANY KPAG NAG CHARGE NG DOCTOR AT ANG PATIENT AY MAY COMPANY
 public function getCompanyRate($companyName,$rate) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($rate) as rate FROM Company WHERE companyName = '$companyName' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($rate) as rate FROM Company WHERE companyName = '$companyName' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['rate'];
   }
@@ -5464,17 +5464,17 @@ return $row['rate'];
 
 public function getReportInformation($reportName) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT information FROM reportHeading WHERE reportName = '$reportName' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT information FROM reportHeading WHERE reportName = '$reportName' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['information'];
   }
@@ -5484,17 +5484,17 @@ return $row['information'];
 
 public function getDiagnosticTimer() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT time FROM diagnosticTimer ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT time FROM diagnosticTimer ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['time'];
   }
@@ -5517,25 +5517,25 @@ $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 $dateSelected = $y."-".$m."-".$d;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($module=="PHARMACY" || $module =="CSR") {
-$result = mysql_query("SELECT rd.pxCount,rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.inventoryFrom='$module' and (pc.title='MEDICINE' or pc.title='SUPPLIES') and pc.departmentStatus not like 'dispensedBy%%%%' and (pc.status not like 'DELETED_%%%%%%') group by rd.registrationNo order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.pxCount,rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.inventoryFrom='$module' and (pc.title='MEDICINE' or pc.title='SUPPLIES') and pc.departmentStatus not like 'dispensedBy%%%%' and (pc.status not like 'DELETED_%%%%%%') group by rd.registrationNo order by pr.lastName asc ");
 
 }else if( $module == "LABORATORY" ) {
-$result = mysql_query("SELECT rd.pxCount,rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.total) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and (pc.title='$module' or pc.title='BLOODBANK') and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%') group by rd.registrationNo order by pc.itemNo desc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.pxCount,rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.total) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and (pc.title='$module' or pc.title='BLOODBANK') and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%') group by rd.registrationNo order by pc.itemNo desc ");
 }else {
-$result = mysql_query("SELECT rd.pxCount,rd.room,pc.description,pc.itemNo,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.total) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.title='$module' and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%' and pc.status = 'UNPAID') group by rd.registrationNo order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.pxCount,rd.room,pc.description,pc.itemNo,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.total) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.title='$module' and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%' and pc.status = 'UNPAID') group by rd.registrationNo order by pr.lastName asc ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 echo "<tr>";
@@ -5561,7 +5561,7 @@ echo "</tr>";
 
 }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
 
 
@@ -5579,17 +5579,17 @@ $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 $dateSelected = $y."-".$m."-".$d;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateReturn = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.inventoryFrom='$module' and pc.departmentStatus not like 'dispensedBy%%%%' and pc.status not like 'DELETED_%%%%%%' group by rd.registrationNo order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateReturn = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.inventoryFrom='$module' and pc.departmentStatus not like 'dispensedBy%%%%' and pc.status not like 'DELETED_%%%%%%' group by rd.registrationNo order by pr.lastName asc ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 echo "<tr>";
@@ -5603,7 +5603,7 @@ echo "</tr>";
 
 }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5613,36 +5613,36 @@ mysql_close($con);
 //ITO UNG MAG UUPDATE SA COLUMN NA "departmentStatus" SA TABLE NA "patientCharges"
 public function remitNow($itemNo,$status) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET departmentStatus = '$status'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET departmentStatus = '$status'
 WHERE itemNo = '$itemNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 //ITO UNG MAG MAG-UUPDATE NG TIMER SA MGA DIAGNOSTIC
 public function updateDiagnosticTimer($timer) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE diagnosticTimer SET time = '$timer'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE diagnosticTimer SET time = '$timer'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -5682,16 +5682,16 @@ $dateSelected = $year."-".$month."-".$day;
 $dateSelected1 = $year1."-".$month1."-".$day1;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy,pc.phic,pc.company,rd.Company,rd.dateUnregistered FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$dateSelected' and '$dateSelected1') and rd.type='$type' and title='$module' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy,pc.phic,pc.company,rd.Company,rd.dateUnregistered FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$dateSelected' and '$dateSelected1') and rd.type='$type' and title='$module' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by completeName asc ");
 
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
@@ -5711,7 +5711,7 @@ echo "</tr>";
 $this->sales_total=0;
 $this->sales_unpaid=0;
 $this->sales_paid=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['completeName']."&nbsp;</td>";
@@ -5822,20 +5822,20 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($module == "PHARMACY" || $module == "CSR") {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.departmentStatus_time between '$fromTimez' and '$toTimez') and inventoryFrom='$module' and departmentStatus='dispensedBy_$username' group by pc.itemNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.departmentStatus_time between '$fromTimez' and '$toTimez') and inventoryFrom='$module' and departmentStatus='dispensedBy_$username' group by pc.itemNo order by completeName asc ");
 }else if( $module == "RADIOLOGY" ) {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.departmentStatus_time between '$fromTimez' and '$toTimez') and (title='ULTRASOUND' or title='XRAY') and departmentStatus='remittedBy_$username' group by pc.itemNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.departmentStatus_time between '$fromTimez' and '$toTimez') and (title='ULTRASOUND' or title='XRAY') and departmentStatus='remittedBy_$username' group by pc.itemNo order by completeName asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.departmentStatus_time between '$fromTimez' and '$toTimez') and title='$module' and departmentStatus='remittedBy_$username' group by pc.itemNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.quantity,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.departmentStatus_time between '$fromTimez' and '$toTimez') and title='$module' and departmentStatus='remittedBy_$username' group by pc.itemNo order by completeName asc ");
 }
 
 
@@ -5854,7 +5854,7 @@ echo "</tr>";
 $this->sales_total=0;
 $this->sales_unpaid=0;
 $this->sales_paid=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['completeName']."&nbsp;</td>";
@@ -5930,25 +5930,25 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $this->selectNow("registeredUser","module","username",$username) == "ADMIN" ) {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNO,pc.discount,pc.doctorsPF,pc.amountPaidFromCreditCard,pc.total,pc.cashUnpaid,pc.cashPaid,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid = '$dateSelected' or pc.datePaidFromBalance = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and (pc.status='PAID' or pc.status = 'BALANCE') group by pc.itemNo order by pr.completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNO,pc.discount,pc.doctorsPF,pc.amountPaidFromCreditCard,pc.total,pc.cashUnpaid,pc.cashPaid,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid = '$dateSelected' or pc.datePaidFromBalance = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and (pc.status='PAID' or pc.status = 'BALANCE') group by pc.itemNo order by pr.completeName asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNO,pc.discount,pc.doctorsPF,pc.amountPaidFromCreditCard,pc.total,pc.cashUnpaid,pc.cashPaid,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and pc.paidBy = '$username' and pc.cashPaid > 0 group by pc.itemNo order by pr.completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNO,pc.discount,pc.doctorsPF,pc.amountPaidFromCreditCard,pc.total,pc.cashUnpaid,pc.cashPaid,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and pc.paidBy = '$username' and pc.cashPaid > 0 group by pc.itemNo order by pr.completeName asc ");
 }
 
 $this->collection_salesTotal=0;
 $this->collection_salesUnpaid=0;
 $this->collection_salesPaid=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -6046,25 +6046,25 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $this->selectNow("registeredUser","module","username",$username) == "ADMIN" ) {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNOFromBalance,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaidFromBalance,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid = '$dateSelected' or pc.datePaidFromBalance = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and (pc.status='PAID' or pc.status = 'BALANCE') group by pc.itemNo order by pc.title,completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNOFromBalance,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaidFromBalance,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid = '$dateSelected' or pc.datePaidFromBalance = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and (pc.status='PAID' or pc.status = 'BALANCE') group by pc.itemNo order by pc.title,completeName asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNOFromBalance,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaidFromBalance = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and pc.paidBy = '$username' and (pc.status='PAID' or pc.status = 'BALANCE') group by pc.itemNo order by pc.title,completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.completeName) as completeName,pc.description,pc.sellingPrice,pc.datePaid,pc.quantity,pc.title,pc.orNOFromBalance,pc.discount,pc.total,pc.cashUnpaid,pc.cashPaid,pc.paidBy,pc.paidVia,pc.cashPaidFromBalance,pc.datePaid,pc.orNOFromBalance,pc.itemNo FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaidFromBalance = '$dateSelected') and (pc.reportShift = '$shift' or pc.reportShiftFromBalance = '$shift') and pc.paidBy = '$username' and (pc.status='PAID' or pc.status = 'BALANCE') group by pc.itemNo order by pc.title,completeName asc ");
 }
 
 $this->balance_salesTotal=0;
 $this->balance_salesUnpaid=0;
 $this->balance_salesPaid=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -6102,21 +6102,21 @@ echo "<td>&nbsp;<font size=2>".$this->selectNow("patientCharges","cashUnpaid","i
 
 public function hospitalBill_pf($registrationNo,$title) { //mga patient n bill pru may bbyran p rin sa cashier 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if( $title == "PROFESSIONAL FEE" ) {
-$result = mysql_query("SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' ");
 }else {
-$result = mysql_query("SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','MEDICINE','SUPPLIES','REHAB','NBS','ECG','Room And Board','MISCELLANEOUS','OR/DR/ER Fee','OXYGEN','NURSING-CHARGES','CARDIAC','OVERTIME','BLOODBANK','GENERATOR_CHARGE') and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','MEDICINE','SUPPLIES','REHAB','NBS','ECG','Room And Board','MISCELLANEOUS','OR/DR/ER Fee','OXYGEN','NURSING-CHARGES','CARDIAC','OVERTIME','BLOODBANK','GENERATOR_CHARGE') and status = 'UNPAID' ");
 }
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
 }
@@ -6166,30 +6166,30 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $cutoff == "yes" ) {
 
 if( $this->selectNow("registeredUser","module","username",$username) == "ADMIN" ) {
-$result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and pp.paymentFor != 'REFUND' and pp.shift='$shift' group by paymentNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and pp.paymentFor != 'REFUND' and pp.shift='$shift' group by paymentNo order by completeName asc ");
 }else {
-$result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and pp.paidBy='$username' and pp.paymentFor != 'REFUND' and pp.paidBy = '$username' and pp.shift='$shift' group by paymentNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and pp.paidBy='$username' and pp.paymentFor != 'REFUND' and pp.paidBy = '$username' and pp.shift='$shift' group by paymentNo order by completeName asc ");
 }
 
 
 
 }else {
 if( $this->selectNow("registeredUser","module","username",$username) == "ADMIN" ) {
-$result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType,pp.paymentNo FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and paymentFor not in ('REFUND') and pp.shift='$shift' group by paymentNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType,pp.paymentNo FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and paymentFor not in ('REFUND') and pp.shift='$shift' group by paymentNo order by completeName asc ");
 }else {
-$result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType,pp.paymentNo FROM patientPayment pp,patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and pp.paymentFor not in ('REFUND') and pp.shift='$shift' and pp.paidBy='$username' group by paymentNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid,pp.pf,pp.admitting,pp.receiptType,pp.paymentNo FROM patientPayment pp,patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and pp.datePaid = '$dateSelected' and (pp.timePaid between '$fromTimez' and '$toTimez') and pp.paymentFor not in ('REFUND') and pp.shift='$shift' and pp.paidBy='$username' group by paymentNo order by completeName asc ");
 }
 
 }
@@ -6197,7 +6197,7 @@ $result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName
 //$this->collection_salesTotal=0;
 //$this->collection_salesUnpaid=0;
 //$this->collection_salesPaid=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->partial+=$row['amountPaid'];
 $this->getPartialReport_hb += $row['amountPaid'];
@@ -6263,19 +6263,19 @@ a { text-decoration:none; color:black; }
 $dateSelected = $year."-".$month."-".$day;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $this->selectNow("registeredUser","module","username",$username) == "ADMIN" ) {
-$result = mysql_query("SELECT * FROM patientPayment pp WHERE pp.datePaid = '$dateSelected' and registrationNo like 'manual_%%%%%%' group by paymentNo order by registrationNo asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientPayment pp WHERE pp.datePaid = '$dateSelected' and registrationNo like 'manual_%%%%%%' group by paymentNo order by registrationNo asc ");
 }else {
-$result = mysql_query("SELECT * FROM patientPayment pp WHERE pp.datePaid = '$dateSelected' and pp.paidBy='$username' and registrationNo like 'manual_%%%%%%' group by paymentNo order by registrationNo asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientPayment pp WHERE pp.datePaid = '$dateSelected' and pp.paidBy='$username' and registrationNo like 'manual_%%%%%%' group by paymentNo order by registrationNo asc ");
 }
 
 
@@ -6283,7 +6283,7 @@ $result = mysql_query("SELECT * FROM patientPayment pp WHERE pp.datePaid = '$dat
 //$this->collection_salesTotal=0;
 //$this->collection_salesUnpaid=0;
 //$this->collection_salesPaid=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->othersPartial+=$row['amountPaid'];
 $px = preg_split ("/\_/", $row['registrationNo']); 
@@ -6360,15 +6360,15 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.company) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.company > 0 and (rd.dateRegistered = '$dateSelected') and (pc.status = 'UNPAID' or pc.status = 'BALANCE') and rd.type='$type' group by rd.registrationNo order by pr.lastName asc   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.company) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.company > 0 and (rd.dateRegistered = '$dateSelected') and (pc.status = 'UNPAID' or pc.status = 'BALANCE') and rd.type='$type' group by rd.registrationNo order by pr.lastName asc   ");
 
 echo "<br /><br />";
 echo "$type w/ HMO/Company";
@@ -6380,7 +6380,7 @@ if( $type == "OPD" ) {
 echo "<th><font class='Unpaid'>Amount</font></th>";
 }else { }
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->getPaymentHistory_showUp_returnPaid_setter($row['registrationNo']);
@@ -6431,19 +6431,19 @@ $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if( $type == "OPD" ) {
-$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and pc.status = 'UNPAID' and rd.type in ('OPD','walkin') group by rd.registrationNo order by pr.lastName asc   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and pc.status = 'UNPAID' and rd.type in ('OPD','walkin') group by rd.registrationNo order by pr.lastName asc   ");
 
 }else {
-$result = mysql_query("SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and pc.status = 'UNPAID' and rd.type='$type' group by rd.registrationNo order by pr.lastName asc   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registeredBy,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.dateUnregistered = '' and pc.cashUnpaid > 0 and (rd.dateRegistered = '$dateSelected') and pc.status = 'UNPAID' and rd.type='$type' group by rd.registrationNo order by pr.lastName asc   ");
 }
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
@@ -6453,7 +6453,7 @@ if( $type == "OPD" ) {
 echo "<th><font class='Unpaid'>Amount</font></th>";
 }else { }
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->getPatientProfile($row['registrationNo']);
@@ -6488,18 +6488,18 @@ public function getUnpaidPatientAmount($registrationNo) {
 
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashUnpaid) as total FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
   }
@@ -6513,18 +6513,18 @@ public function getUnpaidPatientAmount_creditCard($registrationNo) {
 
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.cashUnpaid) as cash,sum(pc.doctorsPF) as docPF,sum(pc.doctorsPF_payable) as payable,sum(pc.otShare) as otShare FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashUnpaid) as cash,sum(pc.doctorsPF) as docPF,sum(pc.doctorsPF_payable) as payable,sum(pc.otShare) as otShare FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (status = 'UNPAID' or status = 'BALANCE') and rd.registrationNo='$registrationNo' group by rd.registrationNo order by pr.lastName asc  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return ($row['cash'] + $row['docPF'] + $row['otShare'] + $row['payable']);
   }
@@ -6536,70 +6536,70 @@ echo "</table>";
 
 public function paymentManager($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',cashPaid='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET status = '$status',paidBy='$paidBy',cashPaid='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 public function paymentManager_creditCard($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 public function paymentManager_creditCard_PF($itemNo,$status,$paidBy,$amountPaid,$datePaid,$timePaid,$cashUnpaid,$pf) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',doctorsPF_payable='$pf',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET status = '$status',paidBy='$paidBy',amountPaidFromCreditCard='$amountPaid',doctorsPF_payable='$pf',datePaid='$datePaid',timePaid='$timePaid',cashUnpaid='$cashUnpaid' WHERE itemNo = '$itemNo'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 //KKUNIN UNG TOTAL NG BAWAT CHARGES NG PATIENT 
 public function getItemNo_total($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT cashUnpaid from patientCharges where itemNo = '$itemNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT cashUnpaid from patientCharges where itemNo = '$itemNo'  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cashUnpaid'];
   }
@@ -6610,18 +6610,18 @@ return $row['cashUnpaid'];
 //CHECK WHERE INVENTORY WILL GET THE MEDS OR SUPPLIES
 public function checkInventory($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT inventoryFrom from patientCharges where itemNo = '$itemNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryFrom from patientCharges where itemNo = '$itemNo' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['inventoryFrom'];
   }
@@ -6632,18 +6632,18 @@ return $row['inventoryFrom'];
 
 public function getTotalBalance($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and status='BALANCE' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(cashUnpaid) as total from patientCharges where registrationNo = '$registrationNo' and status='BALANCE' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
   }
@@ -6664,15 +6664,15 @@ font-size:13px;
 </style>";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.lastName,pr.firstName,rd.registrationNo,rd.registrationNo,rd.dateUnregistered,sum(pc.cashUnpaid) as bal from patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pr.completeName like '$completeName%%%%%%%' and pc.status not like 'DELETED%%%%%%%' and pc.cashUnpaid > 0 group by rd.registrationNo ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,rd.registrationNo,rd.registrationNo,rd.dateUnregistered,sum(pc.cashUnpaid) as bal from patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pr.completeName like '$completeName%%%%%%%' and pc.status not like 'DELETED%%%%%%%' and pc.cashUnpaid > 0 group by rd.registrationNo ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -6681,7 +6681,7 @@ echo "<th>&nbsp;Patient&nbsp;</th>";
 echo "<Th>Date</th>";
 echo "<Th>BALANCE</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['registrationNo']."</td>";
@@ -6697,21 +6697,21 @@ echo "</table>";
 
 public function payBalance($itemNo,$datePaid,$timePaid,$paidBy,$amountPaid) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientBalance (itemNo,datePaid,timePaid,paidBy,amountPaid)
 VALUES
 ('$itemNo','$datePaid','$timePaid','$paidBy','$amountPaid')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 /*
@@ -6721,28 +6721,28 @@ echo  "window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/addNewDoctor
 echo "</script>";
 */
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function addBranch($branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO branch (branch)
 VALUES
 ('$branch')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 /*
@@ -6752,7 +6752,7 @@ echo  "window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/addNewDoctor
 echo "</script>";
 */
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -6760,18 +6760,18 @@ mysql_close($con);
 
 public function updateStatus($itemNo,$status) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET status = '$status' WHERE itemNo='$itemNo'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET status = '$status' WHERE itemNo='$itemNo'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -6784,21 +6784,21 @@ $dateSelected = $month."_".$day."_".$year;
 $fromTimez = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTimez = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT upper(pc.lastName) as lastName,upper(pr.firstName) as firstName from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.registrationNo and rd.registrationNo=pc.registrationNo and pc.inventoryFrom='inventoryFrom' and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') group by rd.registrationNo order by lastName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pc.lastName) as lastName,upper(pr.firstName) as firstName from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.registrationNo and rd.registrationNo=pc.registrationNo and pc.inventoryFrom='inventoryFrom' and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') group by rd.registrationNo order by lastName asc  ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<td>&nbsp;Name&nbsp;</td>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['lastName']." ".$row['firstName']."&nbsp;</td>";
@@ -6812,17 +6812,17 @@ echo "</table>";
 
 public function getChargesCode($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT chargesCode from patientCharges  where itemNo = '$itemNo'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT chargesCode from patientCharges  where itemNo = '$itemNo'   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['chargesCode'];
   }
@@ -6833,17 +6833,17 @@ return $row['chargesCode'];
 
 public function getCurrentQTY($inventoryCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT quantity from inventory  where inventoryCode = '$inventoryCode'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT quantity from inventory  where inventoryCode = '$inventoryCode'   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['quantity'];
   }
@@ -6854,17 +6854,17 @@ return $row['quantity'];
 //UNIVERSAL SELECT
 public function selectNow($table,$cols,$identifier,$identifierData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) as cols from $table  where $identifier = '".mysql_real_escape_string($identifierData)."'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols from $table  where $identifier = '".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $identifierData) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
@@ -6874,17 +6874,17 @@ return $row['cols'];
 
 public function selectNowLast($table,$cols,$identifier,$identifierData) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) as cols from $table  where $identifier = '".mysql_real_escape_string($identifierData)."' order by requestNo desc limit 1  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols from $table  where $identifier = '".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $identifierData) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."' order by requestNo desc limit 1  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
@@ -6894,17 +6894,17 @@ return $row['cols'];
 
 public function doubleSelectNow($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) as cols from $table  where $identifier = '$identifierData' and $identifier1 = '$identifierData1' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols from $table  where $identifier = '$identifierData' and $identifier1 = '$identifierData1' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
@@ -6915,17 +6915,17 @@ return $row['cols'];
 
 public function doubleSelectNow_notDeleted($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) as cols from $table  where $identifier = '$identifierData' and $identifier1 = '$identifierData1' and status not like 'DELETED_%%%%%%%' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols from $table  where $identifier = '$identifierData' and $identifier1 = '$identifierData1' and status not like 'DELETED_%%%%%%%' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
@@ -6941,17 +6941,17 @@ return $row['cols'];
 
 public function getQTY_room($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT quantity from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT quantity from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['quantity'];
   }
@@ -6962,18 +6962,18 @@ return $row['quantity'];
 
 public function getPatientDoc($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,total,company,company1,phic,cashPaid,cashUnpaid,registrationNo from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,total,company,company1,phic,cashPaid,cashUnpaid,registrationNo from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID'  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -6993,18 +6993,18 @@ echo "</tr>";
 
 public function getPatientDoc_company1($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,total,company,company1,phic,cashPaid,cashUnpaid,registrationNo from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,total,company,company1,phic,cashPaid,cashUnpaid,registrationNo from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID'  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -7027,18 +7027,18 @@ echo "</tr>";
 //ito ung function na maglalabas ng lahat ng mysql result kahit nka return/variable
 public function getPatientDoc_soa2pdf($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,total,company,phic,cashPaid,cashUnpaid from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,total,company,phic,cashPaid,cashUnpaid from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE'  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $result_array[] = "<tr>
@@ -7089,18 +7089,18 @@ return $this->getPatient_cashUnpaid;
 
 public function getPatientDoc_setter($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,total,company,phic,cashPaid,cashUnpaid,company1 from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,total,company,phic,cashPaid,cashUnpaid,company1 from patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->getPatient_total += $row['total'];
@@ -7122,18 +7122,18 @@ $this->getPatient_cashUnpaid += $row['cashUnpaid'];
 
 public function getRoomPHIC_total($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(total) as total from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board' and status in ('UNPAID','Discharged')  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(total) as total from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board' and status in ('UNPAID','Discharged')  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
 
@@ -7147,18 +7147,18 @@ return $row['total'];
 
 public function getRoomPHIC_cover($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(phic) as phic from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(phic) as phic from patientCharges where registrationNo = '$registrationNo' and title = 'Room And Board'  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['phic'];
 
@@ -7174,17 +7174,17 @@ return $row['phic'];
 //SINGLE 
 public function getTitle($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT title from patientCharges  where itemNo = '$itemNo'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT title from patientCharges  where itemNo = '$itemNo'   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['title'];
   }
@@ -7201,17 +7201,17 @@ return $this->department_title;
 //MULTIPLE ITO ANG CALLER
 public function getInventoryFrom($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT inventoryFrom from patientCharges  where itemNo = '$itemNo'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryFrom from patientCharges  where itemNo = '$itemNo'   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->department_title = $row['inventoryFrom'];
   }
@@ -7222,18 +7222,18 @@ $this->department_title = $row['inventoryFrom'];
 
 public function changeQTY($chargesCode,$newQTY) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE inventory SET quantity = '$newQTY' WHERE inventoryCode='$chargesCode'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE inventory SET quantity = '$newQTY' WHERE inventoryCode='$chargesCode'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -7241,35 +7241,35 @@ mysql_close($con);
 
 public function changeTotal($itemNo,$newTotal) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET total = '$newTotal' WHERE itemNo='$itemNo'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET total = '$newTotal' WHERE itemNo='$itemNo'
  ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function  checkBalance($patientNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.cashUnpaid) as cashUnpaid from patientCharges pc,patientRecord pr,registrationDetails rd  where rd.patientNo='$patientNo' and rd.registrationNo = pc.registrationNo and pc.status = 'BALANCE' group by pc.status   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashUnpaid) as cashUnpaid from patientCharges pc,patientRecord pr,registrationDetails rd  where rd.patientNo='$patientNo' and rd.registrationNo = pc.registrationNo and pc.status = 'BALANCE' group by pc.status   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cashUnpaid'];
   }
@@ -7280,17 +7280,17 @@ return $row['cashUnpaid'];
 //BASED ON PASSWORD
 public function getUserBranch($password) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from registeredUser where password='$password'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from registeredUser where password='$password'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['branch'];
   }
@@ -7301,17 +7301,17 @@ return $row['branch'];
 //BASED ON USERNAME AND MODULE
 public function getUserBranch_username($username,$module) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from registeredUser where username='$username' and module = '$module'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from registeredUser where username='$username' and module = '$module'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['branch'];
   }
@@ -7320,17 +7320,17 @@ return $row['branch'];
 
 public function getUserBranch_dept($username,$module) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from registeredUser where username='$username' and module='$module'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from registeredUser where username='$username' and module='$module'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['branch'];
   }
@@ -7340,17 +7340,17 @@ return $row['branch'];
 
 public function checkBranch($branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch where branch='$branch'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch where branch='$branch'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['branch'];
   }
@@ -7362,17 +7362,17 @@ return $row['branch'];
 //PRA LUMABAS LHAT NG BRANCH N NKA DROPDOWN MENU SA ADMIN (MEDICINE)
 public function getAdminBranchMeds($username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/ADMIN/inventoryBranch.php?username=$username&branch=$row[branch]&inventoryType=medicine&show=All' target='departmentX'>Medicine in ".$row['branch']."</a></li>";
   }
@@ -7383,17 +7383,17 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/ADMIN/inventoryBranch.ph
 //PRA LUMABAS LHAT NG BRANCH N NKA DROPDOWN MENU SA ADMIN (SUPPLIES)
 public function getAdminBranchSupplies($username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/ADMIN/inventoryBranch.php?username=$username&branch=$row[branch]&inventoryType=supplies&show=All' target='departmentX'>Supplies in ".$row['branch']."</a></li>";
   }
@@ -7403,17 +7403,17 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/ADMIN/inventoryBranch.ph
 //PRA LUMABAS LHAT NG BRANCH N NKA DROPDOWN MENU SA MAINTENANCE
 public function getMaintenanceBranch($username,$target,$inventoryType) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 if($inventoryType == "CSR" || $inventoryType == "PHARMACY") {
@@ -7429,17 +7429,17 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/masterfile/inventory.php
 //PRA LUMABAS LHAT NG BRANCH N NKA DROPDOWN MENU SA ADMIN
 public function getDepartmentBranch($target,$inventoryType,$username,$requestingDepartment) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/medicineRequest.php?branch=$row[branch]&inventoryType=$inventoryType&username=$username&requestingDepartment=$requestingDepartment' target='$target'>Request $inventoryType to the CSR of ".$row['branch']."</a></li>";
   }
@@ -7452,17 +7452,17 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/medici
 //RECEIVE REQUESTITION
 public function receiveRequest($target,$inventoryType,$username,$requestingDepartment) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/medicineRequest.php?branch=$row[branch]&inventoryType=$inventoryType&username=$username&requestingDepartment=$requestingDepartment' target='$target'>Request $inventoryType to the CSR of ".$row['branch']."</a></li>";
   }
@@ -7473,18 +7473,18 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/medici
 //KKUNIN LHAT NG NAG REQUEST SA DEPARTMENT AT BRANCH N CSR
 public function getCSRBranch($target,$username,$myDepartment,$myBranch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT requestingBranch,requestingDepartment,requestTo_department,requestTo_branch,requestingUser from inventoryManager WHERE requestTo_department='$myDepartment' and status='requesting' group by requestingUser ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT requestingBranch,requestingDepartment,requestTo_department,requestTo_branch,requestingUser from inventoryManager WHERE requestTo_department='$myDepartment' and status='requesting' group by requestingUser ");
 
-if(mysql_num_rows($result) > 0) {
-while($row = mysql_fetch_array($result))
+if(mysqli_num_rows($result) > 0) {
+while($row = mysqli_fetch_array($result))
   {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/showRequestList.php?username=$username&requestingDepartment=$row[requestingDepartment]&requestTo_department=$myDepartment&checkz=yes&requestingUser=$row[requestingUser]' target='$target'>From ".$row['requestingDepartment']." of $row[requestingUser]</a></li>";
 
@@ -7506,17 +7506,17 @@ return $this->allRequest;
 //BBLANGIN LHAT NG REQUEST AS IN SUMMARY
 public function getTotalRequest($target,$username,$myDepartment) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT requestingBranch,requestingDepartment,requestTo_department,requestTo_branch from inventoryManager WHERE requestTo_department='$myDepartment' and status = 'requesting' group by requestingUser  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT requestingBranch,requestingDepartment,requestTo_department,requestTo_branch from inventoryManager WHERE requestTo_department='$myDepartment' and status = 'requesting' group by requestingUser  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->allRequest+=$this->getRequest($row['requestTo_department'],$row['requestTo_branch'],$row['requestingDepartment'],$row['requestingBranch']);
 
@@ -7529,17 +7529,17 @@ $this->allRequest+=$this->getRequest($row['requestTo_department'],$row['requestT
 //PRA SA REPORT NG ALL BRANCHES LLBAS ANG MGA BRANCH AS TABLE HEADER SA REPORT
 public function getHeaderBranch() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<th>&nbsp;".$row['branch']."&nbsp;</th>";
   }
@@ -7550,17 +7550,17 @@ echo "<th>&nbsp;".$row['branch']."&nbsp;</th>";
 //KKUNIN ANG DEPARTMENT STATUS
 public function getDepartmentStatus($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientCharges where itemNo = '$itemNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges where itemNo = '$itemNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['departmentStatus'];
   }
@@ -7572,17 +7572,17 @@ return $row['departmentStatus'];
 //KKUNIN ANG STATUS
 public function getChargesStatus($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientCharges where itemNo = '$itemNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges where itemNo = '$itemNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['status'];
   }
@@ -7593,17 +7593,17 @@ return $row['status'];
 //KKUNIN ANG STATUS
 public function getChargesStatusDept($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT departmentStatus from patientCharges where itemNo = '$itemNo' and departmentStatus like 'dispensedBy%%%%'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT departmentStatus from patientCharges where itemNo = '$itemNo' and departmentStatus like 'dispensedBy%%%%'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['departmentStatus'];
   }
@@ -7613,17 +7613,17 @@ return $row['departmentStatus'];
 //KKUNIN ANG QTY NG CHARGES
 public function getPatientChargesQTY($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientCharges where itemNo = '$itemNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges where itemNo = '$itemNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['quantity'];
   }
@@ -7638,20 +7638,20 @@ public function getTotalEachBranch_module($type,$branch,$module,$m,$d,$y,$m1,$d1
 $fromDate = $y."-".$m."-".$d;
 $toDate = $y1."-".$m1."-".$d1;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($module == "PHARMACY" || $module == "CSR") {
-$result = mysql_query("SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved') and rd.type='$type' and pc.branch = '$branch' and pc.inventoryFrom = '$module' and (pc.datePaid between '$fromDate' and '$toDate')  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved') and rd.type='$type' and pc.branch = '$branch' and pc.inventoryFrom = '$module' and (pc.datePaid between '$fromDate' and '$toDate')  ");
 }else {
-$result = mysql_query("SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID') and pc.branch = '$branch' and pc.title = '$module' and (pc.datePaid between '$fromDate' and '$toDate')   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID') and pc.branch = '$branch' and pc.title = '$module' and (pc.datePaid between '$fromDate' and '$toDate')   ");
 }
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cashPaid'];
   }
@@ -7665,20 +7665,20 @@ public function getTotalEachBranch_module_balance($type,$branch,$module,$m,$d,$y
 $fromDate = $m."_".$d."_".$y;
 $toDate = $m1."_".$d1."_".$y1;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($module == "PHARMACY" || $module == "CSR") {
-$result = mysql_query("SELECT sum(pb.amountPaid) as amountPaid from patientCharges pc,registrationDetails rd,patientBalance pb where pb.itemNo = pc.itemNo and pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved')  and pc.branch = '$branch' and rd.type='$type' and pc.inventoryFrom = '$module' and (pc.datePaid between '$fromDate' and '$toDate')  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pb.amountPaid) as amountPaid from patientCharges pc,registrationDetails rd,patientBalance pb where pb.itemNo = pc.itemNo and pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved')  and pc.branch = '$branch' and rd.type='$type' and pc.inventoryFrom = '$module' and (pc.datePaid between '$fromDate' and '$toDate')  ");
 }else {
-$result = mysql_query("SELECT sum(pb.amountPaid) as amountPaid from patientCharges pc,registrationDetails rd,patientBalance pb where pb.itemNo = pc.itemNo and pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved')  and pc.branch = '$branch' and rd.type='$type' and pc.title = '$module' and (pc.datePaid between '$fromDate' and '$toDate')   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pb.amountPaid) as amountPaid from patientCharges pc,registrationDetails rd,patientBalance pb where pb.itemNo = pc.itemNo and pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved')  and pc.branch = '$branch' and rd.type='$type' and pc.title = '$module' and (pc.datePaid between '$fromDate' and '$toDate')   ");
 }
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['amountPaid'];
   }
@@ -7694,20 +7694,20 @@ public function getTotalEachBranch_All($branch,$title,$m,$d,$y,$m1,$d1,$y1) {
 $fromDate = $m."_".$d."_".$y;
 $toDate = $m1."_".$d1."_".$y1;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 //if($module == "PHARMACY" || $module == "CSR") {
 //$result = mysql_query("SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID' or pc.status='Approved')  and pc.branch = '$branch' and (pc.datePaid between '$fromDate' and '$toDate')  ");
 //}else {
-$result = mysql_query("SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID')  and pc.branch = '$branch' and (pc.datePaid between '$fromDate' and '$toDate') and pc.title = '$title'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashPaid) as cashPaid from patientCharges pc,registrationDetails rd where pc.registrationNo = rd.registrationNo and (pc.status = 'PAID')  and pc.branch = '$branch' and (pc.datePaid between '$fromDate' and '$toDate') and pc.title = '$title'  ");
 //}
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cashPaid'];
   }
@@ -7720,17 +7720,17 @@ public function getPaidBalance_allBranch($branch,$module,$m,$d,$y,$m1,$d1,$y1) {
 $fromDate = $m."_".$d."_".$y;
 $toDate = $m1."_".$d1."_".$y1;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pb.amountPaid) as amountPaid from patientCharges pc,registrationDetails rd,patientBalance pb where pc.registrationNo = rd.registrationNo and pc.itemNo = pb.itemNo and (pc.status = 'PAID' )  and pc.branch = '$branch' and (pc.datePaid between '$fromDate' and '$toDate')   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pb.amountPaid) as amountPaid from patientCharges pc,registrationDetails rd,patientBalance pb where pc.registrationNo = rd.registrationNo and pc.itemNo = pb.itemNo and (pc.status = 'PAID' )  and pc.branch = '$branch' and (pc.datePaid between '$fromDate' and '$toDate')   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['amountPaid'];
   }
@@ -7747,18 +7747,18 @@ public $accttitle_total;
 //ITO UNG MGGING ROW SA REPORT N ANG LAMAN IS UNG TOTAL NG BWAT DEPT
 public function reportRowBranch($type,$module,$m,$d,$y,$m1,$d1,$y1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
 $this->accttitle_total=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<td>&nbsp;".number_format($this->getTotalEachBranch_module($type,$row['branch'],$module,$m,$d,$y,$m1,$d1,$y1) + $this->getTotalEachBranch_module_balance($type,$row['branch'],$module,$m,$d,$y,$m1,$d1,$y1),2)."&nbsp;</td>";
 //COMPUTE TOTAL
@@ -7771,17 +7771,17 @@ echo "<Td>&nbsp;<b>".number_format($this->accttitle_total,2)."</b>&nbsp;</td>";
 //KKUHAIN ANG TOTAL NG BWAT BRANCH
 public function getRowTotal($module,$m,$d,$y,$m1,$d1,$y1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<td>&nbsp;".number_format($this->getTotalEachBranch_All($row['branch'],$module,$m,$d,$y,$m1,$d1,$y1) + $this->getPaidBalance_allBranch($row['branch'],$module,$m,$d,$y,$m1,$d1,$y1),2)."&nbsp;</td>";
   }
@@ -7798,19 +7798,19 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if($show == "All") { // iLLbas Lhat ng charges
-$result = mysql_query("SELECT * from availableCharges where Category = '$title' order by Description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from availableCharges where Category = '$title' order by Description asc  ");
 }else { // iLLbas kung anu Lng ung cnsearch
-$result = mysql_query("SELECT * from availableCharges where Category = '$title' and description like '$desc%%%%%%%' order by Description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from availableCharges where Category = '$title' and description like '$desc%%%%%%%' order by Description asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -7825,7 +7825,7 @@ $this->coconutTableHeader("Special Rates");
 $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<font class='data'>".$row['chargesCode']."</font>&nbsp;</td>";
@@ -7855,19 +7855,19 @@ font-size:14px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if($show == "All") { // iLLbas Lhat ng charges
-$result = mysql_query("SELECT * from availableICD order by icdCode asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from availableICD order by icdCode asc  ");
 }else { // iLLbas kung anu Lng ung cnsearch
-$result = mysql_query("SELECT * from availableICD where (diagnosis like '%%%%%%%%$desc%%%%%%%%%' or icdCode like '$desc%%%%%%' or rvsCode like '$desc%%%%%%%%') order by icdCode asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from availableICD where (diagnosis like '%%%%%%%%$desc%%%%%%%%%' or icdCode like '$desc%%%%%%' or rvsCode like '$desc%%%%%%%%') order by icdCode asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -7881,7 +7881,7 @@ $this->coconutTableHeader("Hospital");
 $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<font class='data'>".$row['icdCode']."</font>&nbsp;</td>";
@@ -8070,19 +8070,19 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if($show == "All") {
-$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.branch='$branch' and i.status not like 'DELETED%%%%%%' and isc.status not like 'DELETED%' and i.quantity > 0 order by i.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.branch='$branch' and i.status not like 'DELETED%%%%%%' and isc.status not like 'DELETED%' and i.quantity > 0 order by i.description asc  ");
 }else {
-$result = mysql_query("SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.description like '$desc%' or i.genericName like '$desc%') and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.status not like 'DELETED%%%%%%%%' and isc.status not like 'DELETED%' and i.branch='$branch' and i.quantity > 0 order by i.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT i.* from inventory i,inventoryStockCard isc where i.stockCardNo = isc.stockCardNo and (i.description like '$desc%' or i.genericName like '$desc%') and (i.inventoryType = '$inventoryType' or i.inventoryLocation='$inventoryType') and i.status not like 'DELETED%%%%%%%%' and isc.status not like 'DELETED%' and i.branch='$branch' and i.quantity > 0 order by i.description asc  ");
 }
 
 
@@ -8103,7 +8103,7 @@ echo "<th>&nbsp;<font class='data'>Unitcost</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>OPD PRICE</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>IPD PRICE</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -8180,18 +8180,18 @@ tr:hover{ background-color:yellow; color:black; }
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from Doctors order by Name asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Doctors order by Name asc  ");
 }else {
-$result = mysql_query("SELECT * from Doctors WHERE Name like '$desc%%%%%%' order by Name asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Doctors WHERE Name like '$desc%%%%%%' order by Name asc  ");
 }
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
@@ -8210,7 +8210,7 @@ echo "<th>&nbsp;<font class='data'>Password</font>&nbsp;</th>";
 echo "<th></th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<font class='data'>".$row['doctorCode']."</font>&nbsp;</td>";
@@ -8247,18 +8247,18 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from DoctorService order by serviceName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from DoctorService order by serviceName asc  ");
 }else {
-$result = mysql_query("SELECT * from DoctorService WHERE serviceName like '$desc%%%%' order by serviceName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from DoctorService WHERE serviceName like '$desc%%%%' order by serviceName asc  ");
 }
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
@@ -8272,7 +8272,7 @@ echo "<th>&nbsp;Senior Discount&nbsp;</th>";
 echo "<th>&nbsp;PHIC&nbsp;</th>";
 echo "<th>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['serviceName']."&nbsp;</td>";
@@ -8304,25 +8304,25 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from Services order by Service asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Services order by Service asc  ");
 }else {
-$result = mysql_query("SELECT * from Services WHERE Service like '$desc%%%%%' order by Service asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Services WHERE Service like '$desc%%%%%' order by Service asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<th>&nbsp;Service&nbsp;</th>";
 echo "<th>&nbsp;Category&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['Service']."&nbsp;</td>";
@@ -8349,18 +8349,18 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from Company where companyName != '' order by companyName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Company where companyName != '' order by companyName asc  ");
 }else {
-$result = mysql_query("SELECT * from Company where companyName like '$desc%%%%' order by companyName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Company where companyName like '$desc%%%%' order by companyName asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -8374,7 +8374,7 @@ echo "<th>&nbsp;Type&nbsp;</th>";
 echo "<th></th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['companyName']."&nbsp;</td>";
@@ -8407,18 +8407,18 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from registeredUser order by username asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from registeredUser order by username asc  ");
 }else {
-$result = mysql_query("SELECT * from registeredUser WHERE username like '$desc%%%%%%' order by username asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from registeredUser WHERE username like '$desc%%%%%%' order by username asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -8430,7 +8430,7 @@ echo "<th>&nbsp;Name&nbsp;</th>";
 echo "<th></th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['username']."&nbsp;</td>";
@@ -8462,18 +8462,18 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from branch order by branch asc  ");
 }else {
-$result = mysql_query("SELECT * from branch WHERE branch like '$desc%%%%' order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from branch WHERE branch like '$desc%%%%' order by branch asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -8481,7 +8481,7 @@ echo "<th>&nbsp;Branch&nbsp;</th>";
 echo "<th></th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['branch']."&nbsp;</td>";
@@ -8509,15 +8509,15 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from percentage order by percentageType asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from percentage order by percentageType asc  ");
 echo "<center>";
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -8526,7 +8526,7 @@ echo "<th>&nbsp;percentageType&nbsp;</th>";
 echo "<th>&nbsp;Amount&nbsp;</th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['description']."&nbsp;</td>";
@@ -8557,17 +8557,17 @@ a{ text-decoration:none; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 if($show == "All") {
-$result = mysql_query("SELECT * from room order by Description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from room order by Description asc  ");
 }else {
-$result = mysql_query("SELECT * from room WHERE Description like '$desc%%%%%%%' order by Description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from room WHERE Description like '$desc%%%%%%%' order by Description asc  ");
 }
 echo "<center>";
 echo "<table border=1 cellpadding=0 cellspacing=0>";
@@ -8581,7 +8581,7 @@ echo "<th>&nbsp;Branch&nbsp;</th>";
 echo "<th>&nbsp;Patient&nbsp;</th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $myRoom = preg_split ("/\_/", $row['Description']); 
@@ -8619,17 +8619,17 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 if($show == "All") {
-$result = mysql_query("SELECT * from floor order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from floor order by description asc  ");
 }else {
-$result = mysql_query("SELECT * from floor WHERE description like '$desc%%%%%%%' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from floor WHERE description like '$desc%%%%%%%' order by description asc  ");
 }
 echo "<center>";
 $this->coconutTableStart();
@@ -8639,7 +8639,7 @@ $this->coconutTableHeader("Branch");
 $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->coconutTableData($row['description']);
@@ -8669,15 +8669,15 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from phicLimit order by casetype asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from phicLimit order by casetype asc  ");
 echo "<center>";
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -8690,7 +8690,7 @@ echo "<th>&nbsp;Supplies Only&nbsp;</th>";
 echo "<th></th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['casetype']."&nbsp;</td>";
@@ -8722,18 +8722,18 @@ background-color:yellow;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * FROM patientRecord order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientRecord order by completeName asc ");
 }else {
-$result = mysql_query("SELECT * FROM patientRecord where completeName like '$desc%%%%%' order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientRecord where completeName like '$desc%%%%%' order by completeName asc ");
 }
 
 echo "<table width='230%' rules=all border=1>";
@@ -8760,7 +8760,7 @@ $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
 $x=1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='rowz'>";
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/editPatientRecord.php?patientNo=$row[patientNo]&username=$username&lastName=$row[lastName]&firstName=$row[firstName]&middleName=$row[middleName]&completeName=$row[completeName]&Birthdate=$row[Birthdate]&Age=$row[Age]&Gender=$row[Gender]&Senior=$row[Senior]&Address=$row[Address]&contactNo=$row[contactNo]&PHIC=$row[PHIC]&civilStatus=$row[civilStatus]&username=$username&show=$show&desc=$desc'>".$this->coconutImages_return("pencil.jpeg")."</a>");
@@ -8801,17 +8801,17 @@ a { text-decoration:none; color:red; }
 </style>
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT count(patientNo) as totalReg from registrationDetails WHERE patientNo = '$patientNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT count(patientNo) as totalReg from registrationDetails WHERE patientNo = '$patientNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return "<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/registrationDetails.php?patientNo=$patientNo&username=$username'>".$row['totalReg']."</a>";
   }
@@ -8836,15 +8836,15 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from package order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from package order by description asc  ");
 echo "<center>";
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -8853,7 +8853,7 @@ echo "<th>&nbsp;Price&nbsp;</th>";
 echo "<th>&nbsp;PF&nbsp;</th>";
 echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['description']."&nbsp;</td>";
@@ -8882,15 +8882,15 @@ a{ text-decoration:none; color:000; }
 </style>
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.*,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName from registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.patientNo = '$patientNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.*,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName from registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.patientNo = '$patientNo'  ");
 
 echo "<br><center>";
 $this->coconutTableStart();
@@ -8901,7 +8901,7 @@ $this->coconutTableHeader("Registration Date");
 $this->coconutTableHeader("Branch");
 $this->coconutTableHeader("Registered By");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->coconutTableData($row['registrationNo']);
@@ -8927,18 +8927,18 @@ public $viewCreditLimit_allowable;
 public function viewCreditLimit($registrationNo,$type,$username) {
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($type == "PATIENT") {
-$result = mysql_query("SELECT * from patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo = 'PATIENT' and limitVia = 'cashUnpaid' order by limitTo");	
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo = 'PATIENT' and limitVia = 'cashUnpaid' order by limitTo");	
 }else {
-$result = mysql_query("SELECT * from patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo != 'PATIENT' order by limitTo	 asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo != 'PATIENT' order by limitTo	 asc  ");
 }
 
 
@@ -8969,7 +8969,7 @@ echo "<th bgcolor='#3b5998'></th>";
 echo "<th bgcolor='#3b5998'></th>";
 echo "</tr>";
 }
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -9069,17 +9069,17 @@ return $this->viewCreditLimit_setter_amountLimit;
 
 public function viewCreditLimit_setter($registrationNo,$limitTo,$limitVia,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo = '$limitTo' and limitVia = '$limitVia' order by limitTo asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo = '$limitTo' and limitVia = '$limitVia' order by limitTo asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->viewCreditLimit_setter_limitNo = $row['limitNo'];
 $this->viewCreditLimit_setter_registrationNo = $row['registrationNo'];
@@ -9142,15 +9142,15 @@ font-size:11.5px;
 
 $fromDate = $fromYear."-".$fromMonth."-".$fromDay;
 $toDate = $toYear."-".$toMonth."-".$toDay;
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.branch,rd.registrationNo,upper(pr.lastname) as lastname,upper(pr.firstname) as firstname,pc.description,pc.company,pc.quantity,pc.dateCharge,pc.title,pc.service,pc.chargesCode from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.Company = '$company' and rd.type='$type' and (rd.dateRegistered between '$fromDate' and '$toDate') and pc.company != 0 and status = 'UNPAID' order by rd.dateRegistered,pr.lastName,rd.timeRegistered asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.branch,rd.registrationNo,upper(pr.lastname) as lastname,upper(pr.firstname) as firstname,pc.description,pc.company,pc.quantity,pc.dateCharge,pc.title,pc.service,pc.chargesCode from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.Company = '$company' and rd.type='$type' and (rd.dateRegistered between '$fromDate' and '$toDate') and pc.company != 0 and status = 'UNPAID' order by rd.dateRegistered,pr.lastName,rd.timeRegistered asc  ");
 
 
 
@@ -9166,7 +9166,7 @@ $this->hmoAmount=0;
 $this->getHmoSOA_no=0;
 $counter="";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $date = preg_split ("/\-/", $row['dateCharge']); 
@@ -9259,17 +9259,17 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 if($branch == "All") {
-$result = mysql_query("SELECT * from inventory where inventoryType = '$inventoryType' and inventoryLocation='$inventoryLocation' and description like '$description%%%%%%' and quantity > 0 and status not like 'DELETED_%%%%%%' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where inventoryType = '$inventoryType' and inventoryLocation='$inventoryLocation' and description like '$description%%%%%%' and quantity > 0 and status not like 'DELETED_%%%%%%' order by description asc  ");
 }else {
-$result = mysql_query("SELECT * from inventory where inventoryType = '$inventoryType' and inventoryLocation='$inventoryLocation' and description like '$description%%%%%%%' and quantity > 0 and status not like 'DELETED_%%%%%%' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where inventoryType = '$inventoryType' and inventoryLocation='$inventoryLocation' and description like '$description%%%%%%%' and quantity > 0 and status not like 'DELETED_%%%%%%' order by description asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -9286,7 +9286,7 @@ echo "<th>&nbsp;<font class='data'>Inventory Location</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Inventory Type</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Branch</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<font class='data'>".$row['inventoryCode']."</font>&nbsp;</td>";
@@ -9321,17 +9321,17 @@ return $this->request;
 
 public function getRequest($requestTo_department,$requestTo_branch,$requestingDepartment,$requestingBranch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT count(verificationNo) as request FROM inventoryManager WHERE requestTo_department = '$requestTo_department' and requestingDepartment='$requestingDepartment' and status='requesting' group by requestingUser,requestingDepartment  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT count(verificationNo) as request FROM inventoryManager WHERE requestTo_department = '$requestTo_department' and requestingDepartment='$requestingDepartment' and status='requesting' group by requestingUser,requestingDepartment  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['request'];
   }
@@ -9341,17 +9341,17 @@ return $row['request'];
 
 public function getRequest_verificationNo($requestTo_department,$requestTo_branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT verificationNo FROM inventoryManager WHERE requestTo_department = '$requestTo_department' and requestTo_branch = '$requestTo_branch'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT verificationNo FROM inventoryManager WHERE requestTo_department = '$requestTo_department' and requestTo_branch = '$requestTo_branch'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['verificationNo'];
   }
@@ -9362,17 +9362,17 @@ return $row['verificationNo'];
 
 public function getReceivingRequest($requestingDepartment,$requestingBranch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT count(verificationNo) as verificationNo FROM inventoryManager WHERE requestingDepartment = '$requestingDepartment' and requestingBranch = '$requestingBranch' and status = 'forReceiving'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT count(verificationNo) as verificationNo FROM inventoryManager WHERE requestingDepartment = '$requestingDepartment' and requestingBranch = '$requestingBranch' and status = 'forReceiving'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['verificationNo'];
   }
@@ -9384,19 +9384,19 @@ return $row['verificationNo'];
 //check kung mei laboratory result n?
 public function checkIfLabResultExist($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT itemNo from core2_laboratoryResultChecker where itemNo='$itemNo' and status not like 'DELETED_%%%%%%%%'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo from core2_laboratoryResultChecker where itemNo='$itemNo' and status not like 'DELETED_%%%%%%%%'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -9405,38 +9405,38 @@ return mysql_num_rows($result);
 //check kung mei radiology result n?
 public function checkIfRadResultExist($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT fileNo from uploadedFiles where itemNo='$itemNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT fileNo from uploadedFiles where itemNo='$itemNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
 
 public function checkDicom($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT itemNo from uploadedFiles where itemNo='$itemNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo from uploadedFiles where itemNo='$itemNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -9445,19 +9445,19 @@ return mysql_num_rows($result);
 //check kung mei S.O.A.P n?
 public function checkIfSoapExist($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT itemNo from SOAP where itemNo='$itemNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo from SOAP where itemNo='$itemNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -9466,19 +9466,19 @@ return mysql_num_rows($result);
 
 public function checkIfPackageExist($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT itemNo from patientCharges where title='PACKAGE' and registrationNo='$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo from patientCharges where title='PACKAGE' and registrationNo='$registrationNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -9507,17 +9507,17 @@ return $this->getPackageNow_total;
 
 public function getPackageNow($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,cashUnpaid,phic,company,total from patientCharges where title='PACKAGE' and registrationNo='$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,cashUnpaid,phic,company,total from patientCharges where title='PACKAGE' and registrationNo='$registrationNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->getPackageNow_cash = $row['cashUnpaid'];
 $this->getPackageNow_phic = $row['phic'];
@@ -9531,17 +9531,17 @@ $this->getPackageNow_total = $row['total'];
 
 public function sumPackageNow($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(charity) as totalPack from patientCharges where charity > 0 and registrationNo='$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(charity) as totalPack from patientCharges where charity > 0 and registrationNo='$registrationNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalPack'];
   }
@@ -9560,15 +9560,15 @@ font-size:13px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,quantity,requestingUser,dateRequested,timeRequested,requestingDepartment,requestingBranch,verificationNo,inventoryCode,stockCardNo FROM inventoryManager WHERE requestingDepartment like '$requestingDepartment%%%' and requestTo_department like '$requestTo_department%%%' and status='requesting' and requestingUser = '$requestingUser' order by verificationNo asc   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,quantity,requestingUser,dateRequested,timeRequested,requestingDepartment,requestingBranch,verificationNo,inventoryCode,stockCardNo FROM inventoryManager WHERE requestingDepartment like '$requestingDepartment%%%' and requestTo_department like '$requestTo_department%%%' and status='requesting' and requestingUser = '$requestingUser' order by verificationNo asc   ");
 
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/inventory/requestDisp.php");
@@ -9586,7 +9586,7 @@ echo "<th>&nbsp;<font class='data'>Requested By</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Request From</font>&nbsp;</th>";
 echo "<th>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutHidden("username",$username);
 echo "<tr id='data'>";
@@ -9646,15 +9646,15 @@ font-size:13px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description,quantity,requestingUser,dateRequested,timeRequested,requestingDepartment,requestingBranch,verificationNo,inventoryCode FROM inventoryManager WHERE requestingDepartment like '$requestingDepartment%%%' and requestingBranch like '$requestingBranch%%%' and requestTo_department like '$requestTo_department%%%' and requestTo_branch like '$requestTo_branch%%%' and status='requesting' order by verificationNo asc   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,quantity,requestingUser,dateRequested,timeRequested,requestingDepartment,requestingBranch,verificationNo,inventoryCode FROM inventoryManager WHERE requestingDepartment like '$requestingDepartment%%%' and requestingBranch like '$requestingBranch%%%' and requestTo_department like '$requestTo_department%%%' and requestTo_branch like '$requestTo_branch%%%' and status='requesting' order by verificationNo asc   ");
 
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/inventory/requestDisp.php");
@@ -9671,7 +9671,7 @@ echo "<th>&nbsp;<font class='data'>Requested By</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Request From</font>&nbsp;</th>";
 echo "<th>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutHidden("username",$username);
 echo "<tr id='data'>";
@@ -9734,15 +9734,15 @@ a { text-decoration:none; color:black; }
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from inventoryManager where requestingDepartment like '%$module%' and requestingBranch like '%$branch%' and status = 'forReceiving' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventoryManager where requestingDepartment like '%$module%' and requestingBranch like '%$branch%' and status = 'forReceiving' ");
 
 echo "<center>";
 echo "<table border= cellpadding=0 cellspacing=0>";
@@ -9752,7 +9752,7 @@ echo "<th>&nbsp;<font class='data'>Requested QTY</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Issued QTY</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Issued By</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='row'>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableMedicine/receivingRequestDetails.php?description=$row[description]&requestedQTY=$row[quantity]&issuedQTY=$row[quantityIssued]&requestTo_department=$row[requestTo_department]&requestTo_branch=$row[requestTo_branch]&issuedBy=$row[issuedBy]&requestingUser=$row[requestingUser]&requestingDepartment=$row[requestingDepartment]&requestingBranch=$row[requestingBranch]&timeRequested=$row[timeRequested]&dateRequested=$row[dateRequested]&dateIssued=$row[dateIssued]&timeIssued=$row[timeIssued]&verificationNo=$row[verificationNo]&inventoryCode=$row[inventoryCode]&username=$username'><font class='data'>".$row['description']."</font></a>&nbsp;</td>";
@@ -9782,19 +9782,19 @@ tr:hover{ background-color:yellow; color:black; }
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 $myDate = $year."-".$month."-".$day;
 $fromTime = $fromTime_hour.":".$fromTime_minutes.":00";
 $toTime = $toTime_hour.":".$toTime_minutes.":00";
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 $date = date("M_d_Y");
-$result = mysql_query("SELECT *,pr.completeName from inventory i,patientCharges pc,registrationDetails rd,patientRecord pr where i.inventoryLocation='$module' and pc.branch='$branch' and i.inventoryCode = pc.chargesCode and pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and (pc.title = 'MEDICINE' or pc.title='SUPPLIES') and pc.departmentStatus like 'dispensedBy%%%%%' and (pc.departmentStatus_time between '$fromTime' and '$toTime') and pc.dateCharge = '$myDate' order by pc.departmentStatus_time asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT *,pr.completeName from inventory i,patientCharges pc,registrationDetails rd,patientRecord pr where i.inventoryLocation='$module' and pc.branch='$branch' and i.inventoryCode = pc.chargesCode and pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and (pc.title = 'MEDICINE' or pc.title='SUPPLIES') and pc.departmentStatus like 'dispensedBy%%%%%' and (pc.departmentStatus_time between '$fromTime' and '$toTime') and pc.dateCharge = '$myDate' order by pc.departmentStatus_time asc  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -9806,7 +9806,7 @@ echo "<th>&nbsp;<font class='data'>QTY</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Charge By</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Dispensed By</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $deptStatus = preg_split ("/\_/", $row['departmentStatus']); 
 echo "<tr>";
@@ -9930,15 +9930,15 @@ a { text-decoration:none; color:red; }
 
 echo "<link rel='stylesheet' type='text/css' href='http://".$this->getMyUrl()."/COCONUT/myCSS/coconutCSS.css' />";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT lrv.*,lr.*,pc.description from laboratoryResultsValue lrv,laboratoryResults lr,patientCharges pc where lrv.labNo = lr.labNo and lr.labNo='$labNo' and pc.itemNo = lr.itemNo  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT lrv.*,lr.*,pc.description from laboratoryResultsValue lrv,laboratoryResults lr,patientCharges pc where lrv.labNo = lr.labNo and lr.labNo='$labNo' and pc.itemNo = lr.itemNo  ");
 echo "<form method='get' action='editResultRemarks.php'>";
 echo "<center><br><div style='border:1px solid #000000; width:650px; height:auto; border-color:black black black black;'>";
 echo "<br>";
@@ -9951,7 +9951,7 @@ echo "<th>Result</th>";
 echo "<th>Flag</th>";
 echo "<th>Normal Values</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='data'>";
 $this->labResult_remarks = $row['remarks'];
@@ -10051,13 +10051,13 @@ a { text-decoration:none; color:black; }
 
 echo "<link rel='stylesheet' type='text/css' href='http://".$this->getMyUrl()."/COCONUT/myCSS/coconutCSS.css' />";
 $this->getMyResults($labNo,$username);
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><div style='border:1px solid #000000; width:500px; height:auto; border-color:black black black black;'>";
 echo "<Center><font size=2><b>".$this->getReportInformation("hmoSOA_name").".<br><font size=2>(".$this->getResultBranch()." Branch)</font><br>&nbsp;".$this->getReportInformation("hmoSOA_address")."</b></font>";
@@ -10097,9 +10097,9 @@ echo "<th>&nbsp;<font size=2>Flag</font>&nbsp;</th>";
 echo "<th>&nbsp;<font size=2>Normal Values</font>&nbsp;</th>";
 
 echo "</tr>";
-$result = mysql_query("SELECT * from laboratoryResultsValue where labNo='$labNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from laboratoryResultsValue where labNo='$labNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 //switch pra mLaman kung keLan iLLbas ung Legends ng Flag
@@ -10176,15 +10176,15 @@ a { text-decoration:none; color:black; }
 
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.description,lr.labNo,lr.pathologist,lr.dateReceived,lr.dateReleased,lr.medTech,lr.Branch,lr.itemNo from laboratoryResults lr,patientCharges pc where pc.registrationNo = '$registrationNo' and pc.itemNo = lr.itemNo and pc.title='$title'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.description,lr.labNo,lr.pathologist,lr.dateReceived,lr.dateReleased,lr.medTech,lr.Branch,lr.itemNo from laboratoryResults lr,patientCharges pc where pc.registrationNo = '$registrationNo' and pc.itemNo = lr.itemNo and pc.title='$title'  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "</tr>";
@@ -10203,7 +10203,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>&nbsp;Med Tech&nbsp;</font>
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>&nbsp;Date Received&nbsp;</font></th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>&nbsp;Date Released&nbsp;</font></th>";
 echo "</th>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/Results/laboratoryResult.php?registrationNo=$registrationNo&username=$username&labNo=$row[labNo]&pathologist=$row[pathologist]&medTech=$row[medTech]&dateReceived=$row[dateReceived]&dateReleased=$row[dateReleased]&description=$row[description]'>&nbsp;<font color='red' size='3'>View</font>&nbsp;</a></td>";
@@ -10234,21 +10234,21 @@ echo "</tr>";
 
 public function insert_laboratoryResult($labNo,$itemNo,$registrationNo,$dateReceived,$dateReleased,$pathologist,$medTech,$remarks,$branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO laboratoryResults (labNo,itemNo,registrationNo,dateReceived,dateReleased,pathologist,medTech,remarks,branch)
 VALUES
 ('$labNo','$itemNo','$registrationNo','$dateReceived','$dateReleased','$pathologist','$medTech','$remarks','$branch')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -10256,7 +10256,7 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -10264,21 +10264,21 @@ mysql_close($con);
 
 public function insert_laboratoryResultValue($labNo,$examName,$examResult,$examFlag,$examValue,$remarks) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO laboratoryResultsValue (labNo,examName,examResult,examFlag,examValue,remarks)
 VALUES
 ('$labNo','$examName','$examResult','$examFlag','$examValue','$remarks')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -10286,7 +10286,7 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -10294,21 +10294,21 @@ mysql_close($con);
 
 public function insert_soap($itemNo,$registrationNo,$subjective,$objective,$assessment,$plan) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO SOAP (itemNo,registrationNo,subjective,objective,assessment,plan)
 VALUES
-('$itemNo','$registrationNo','".mysql_real_escape_string($subjective)."','".mysql_real_escape_string($objective)."','".mysql_real_escape_string($assessment)."','".mysql_real_escape_string($plan)."')";
+('$itemNo','$registrationNo','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $subjective) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $objective) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $assessment) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $plan) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -10316,28 +10316,28 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function insert_ptNotes($patientNo,$registrationNo,$subjective,$objective,$assessment,$plan,$date,$time,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO ptNotes (patientNo,registrationNo,subjective,objective,assessment,plan,date,time,username)
 VALUES
-('$patientNo','$registrationNo','".mysql_real_escape_string($subjective)."','".mysql_real_escape_string($objective)."','".mysql_real_escape_string($assessment)."','".mysql_real_escape_string($plan)."','$date','$time','$username')";
+('$patientNo','$registrationNo','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $subjective) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $objective) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $assessment) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $plan) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$date','$time','$username')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -10345,28 +10345,28 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function addFloor($floor,$branch,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO floor (description,branch)
 VALUES
 ('$floor','$branch')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -10374,27 +10374,27 @@ echo "alert('$floor was successfully added in $branch branch');";
 echo  "window.location='http://".$this->getMyUrl()."/COCONUT/floor/addFloor.php?username=$username '";
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 public function radioResult_insert($itemNo,$registrationNo,$radiologist,$medTech,$dateReceived,$dateReleased,$impression,$branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO radiologyResults (itemNo,registrationNo,radiologist,medTech,dateReceived,dateReleased,impression,branch)
 VALUES
 ('$itemNo','$registrationNo','$radiologist','$medTech','$dateReceived','$dateReleased','$impression','$branch')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 /*
 echo "<script type='text/javascript' >";
@@ -10402,7 +10402,7 @@ echo "alert('$service was Successfully Added to the List of Service in $category
 echo  "window.location='http://".$this->getMyUrl()."/Maintenance/addService.php '";
 echo "</script>";
 */
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -10448,17 +10448,17 @@ return $this->radResult_branch;
 //kkuhain ung radio result
 public function getRadioResult($itemNo,$registrationNo){
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from radiologyResults where itemNo = '$itemNo' and registrationNo='$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from radiologyResults where itemNo = '$itemNo' and registrationNo='$registrationNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->radResult_radioNo = $row['radioNo'];
 $this->radResult_itemNo = $row['itemNo'];
@@ -10493,15 +10493,15 @@ a { text-decoration:none; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rsr.*,pc.*,rd.* from radioSavedReport rsr,patientCharges pc,registrationDetails rd where rd.registrationNo = pc.registrationNo and pc.itemNo = rsr.itemNo and pc.registrationNo='$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rsr.*,pc.*,rd.* from radioSavedReport rsr,patientCharges pc,registrationDetails rd where rd.registrationNo = pc.registrationNo and pc.itemNo = rsr.itemNo and pc.registrationNo='$registrationNo'  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -10517,7 +10517,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>Radio#</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>Description</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>Radiologist</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReport_output.php?itemNo=$row[itemNo]&registrationNo=$row[registrationNo]&description=$row[description]'>&nbsp;<font size=3 color=red>View</font>&nbsp;</a></td>";
@@ -10559,18 +10559,18 @@ a { text-decoration:none; color:black; }
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 $fromTime = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTime = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.itemNo,rd.registrationNo,pc.service,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName from registrationDetails rd,patientCharges pc,patientRecord pr where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctor' and (pc.timeCharge between '$fromTime' and '$toTime' ) and pc.dateCharge like '$month%$day%$year' and pc.departmentStatus not like 'doneBy%%%%%' order by lastName asc   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.itemNo,rd.registrationNo,pc.service,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName from registrationDetails rd,patientCharges pc,patientRecord pr where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctor' and (pc.timeCharge between '$fromTime' and '$toTime' ) and pc.dateCharge like '$month%$day%$year' and pc.departmentStatus not like 'doneBy%%%%%' order by lastName asc   ");
 
 echo "<center><font size=2>$doctor</font><div style='border:1px solid #000000; width:500px; height:auto; border-color:black black black black;'>";
 echo "<br>";
@@ -10580,7 +10580,7 @@ echo "<th bgcolor='#3b5998'><font class='data'>Patient</font></th>";
 echo "<th bgcolor='#3b5998'><font class='data'>Service</font></th>";
 echo "<th bgcolor='#3b5998'><font class='data'></font></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='data'>";
 $this->totalPat++;
@@ -10617,15 +10617,15 @@ color:black;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,pc.service from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and rd.dateUnregistered = '' order by pr.lastName,pc.service asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,pc.service from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and rd.dateUnregistered = '' order by pr.lastName,pc.service asc ");
 
 echo "<font size=2>$doctorName</font>";
 $this->coconutTableStart();
@@ -10634,7 +10634,7 @@ $this->coconutTableHeader("Patient");
 $this->coconutTableHeader("Room");
 $this->coconutTableHeader("Service");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tR id='rowz'>";
 //$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/currentPatient/patientInterface1.php?username=$username&registrationNo=$row[registrationNo]' target='_blank'><font class='rowzData'>".$row['lastName'].", ".$row['firstName']."</font></a>");
@@ -10678,15 +10678,15 @@ color:black;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,rd.Company,pc.service from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and rd.dateUnregistered = '' order by pr.lastName,pc.service asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,rd.Company,pc.service from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and rd.dateUnregistered = '' order by pr.lastName,pc.service asc ");
 
 echo "<font size=2>$doctorName</font>";
 $this->coconutTableStart();
@@ -10696,7 +10696,7 @@ $this->coconutTableHeader("Room");
 $this->coconutTableHeader("Service");
 $this->coconutTableHeader("Insurance");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tR id='rowz'>";
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/currentPatient/patientInterface1.php?username=$username&registrationNo=$row[registrationNo]' target='_blank'><font class='rowzData'>".$row['lastName'].", ".$row['firstName']."</font></a>");
@@ -10734,18 +10734,18 @@ color:black;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $m."_".$d."_".$y;
 $toDate = $m1."_".$d1."_".$y1;
 
-$result = mysql_query("SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,pc.service,rd.dateUnregistered,pc.sellingPrice from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and (rd.dateUnregistered between '$fromDate' and '$toDate') order by pr.lastName,pc.service asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,pc.service,rd.dateUnregistered,pc.sellingPrice from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and (rd.dateUnregistered between '$fromDate' and '$toDate') order by pr.lastName,pc.service asc ");
 
 echo "<Center>";
 echo "<font size=2>$doctorName</font><br>";
@@ -10758,7 +10758,7 @@ $this->coconutTableHeader("Service");
 $this->coconutTableHeader("Total Amount/PF");
 $this->coconutTableHeader("Discharged");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 $this->doctorDischargedReport_amount += $price[0];
@@ -10828,17 +10828,17 @@ return $this->soap_service;
 
 public function getSOAP($itemNo,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT s.*,pc.* from SOAP s,patientCharges pc where s.itemNo = pc.itemNo and s.itemNo='$itemNo' and s.registrationNo = '$registrationNo'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT s.*,pc.* from SOAP s,patientCharges pc where s.itemNo = pc.itemNo and s.itemNo='$itemNo' and s.registrationNo = '$registrationNo'   ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->soap_description = $row['description'];
 $this->soap_service = $row['service'];
@@ -10872,15 +10872,15 @@ a { text-decoration:none; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT s.*,pc.*,rd.* from SOAP s,patientCharges pc,registrationDetails rd where rd.registrationNo = pc.registrationNo and pc.itemNo = s.itemNo and pc.registrationNo='$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT s.*,pc.*,rd.* from SOAP s,patientCharges pc,registrationDetails rd where rd.registrationNo = pc.registrationNo and pc.itemNo = s.itemNo and pc.registrationNo='$registrationNo'  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -10896,7 +10896,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>Description</font>&nbsp;</t
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>Doctor</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='data'>Date</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/Doctor/doctorModule/soapView.php?itemNo=$row[itemNo]&registrationNo=$row[registrationNo]&username=$username'>&nbsp;<font size='3' color='red'>View</font>&nbsp;</a></td>";
@@ -10945,15 +10945,15 @@ a { text-decoration:none; color:black; }
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.lastName,pr.firstName,rd.registrationNo,pc.cashPaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' and rd.type='OPD'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,rd.registrationNo,pc.cashPaid from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and (pc.datePaid between '$date' and '$date1') and pc.status = 'PAID' and rd.type='OPD'   ");
 
 echo "<center><br><br><font size=3>Dr.$doctor</font><table border=1 cellpadding=0 cellspacing=0  rules=all>";
 echo "<tr>";
@@ -10962,7 +10962,7 @@ echo "<th>&nbsp;<font size='4'>Patient</font>&nbsp;</th>";
 echo "<th>&nbsp;<font size='4'>Cash</font>&nbsp;</th>";
 echo "</tr>";
 $this->getDoctorPatientReport_cash_docPatient = 1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->getDoctorPatientReport_cash_grandTotal += $row['cashPaid'];
@@ -11003,15 +11003,15 @@ a { text-decoration:none; color:black; }
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.lastName,pr.firstName,rd.registrationNo,pc.company,rd.Company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and (pc.dateCharge between '$date' and '$date1') and pc.status = 'UNPAID' and rd.type='OPD' and pc.company != 0   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,rd.registrationNo,pc.company,rd.Company from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and (pc.dateCharge between '$date' and '$date1') and pc.status = 'UNPAID' and rd.type='OPD' and pc.company != 0   ");
 
 echo "<center><br><br><font size=3>Dr.$doctor</font><table border=1 cellpadding=0 cellspacing=0  rules=all>";
 echo "<tr>";
@@ -11021,7 +11021,7 @@ echo "<th>&nbsp;<font size='4'>Patient</font>&nbsp;</th>";
 echo "<th>&nbsp;<font size='4'>Amount</font>&nbsp;</th>";
 echo "</tr>";
 $this->getDoctorPatientReport_company_docPatient = 1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->getDoctorPatientReport_company_grandTotal += $row['company'];
@@ -11116,18 +11116,18 @@ a { text-decoration:none; color:black; }
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
 
 
-$result = mysql_query("select * from (SELECT pc.description,pc.chargesCode from registrationDetails rd,patientCharges pc where rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.title='PROFESSIONAL FEE' and pc.status not like 'DELETED%%%%%' UNION SELECT pc1.description,pc1.chargesCode from registrationDetails rd1,patientCharges pc1 where rd1.registrationNo = pc1.registrationNo and rd1.type = 'OPD' and (pc1.dateCharge between '$date' and '$date1') and pc1.title='PROFESSIONAL FEE' and pc1.company != 0 and pc1.status not like 'DELETED%%%%%') a order by description");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "select * from (SELECT pc.description,pc.chargesCode from registrationDetails rd,patientCharges pc where rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and (pc.datePaid between '$date' and '$date1') and pc.title='PROFESSIONAL FEE' and pc.status not like 'DELETED%%%%%' UNION SELECT pc1.description,pc1.chargesCode from registrationDetails rd1,patientCharges pc1 where rd1.registrationNo = pc1.registrationNo and rd1.type = 'OPD' and (pc1.dateCharge between '$date' and '$date1') and pc1.title='PROFESSIONAL FEE' and pc1.company != 0 and pc1.status not like 'DELETED%%%%%') a order by description");
 
 
 echo "<center><font size=2></font><table cellpadding=0 cellspacing=0  rules=all>";
@@ -11150,7 +11150,7 @@ echo "<td width='7%' align='center'>&nbsp;<font size=2><b>NO. OF PATIENT</b></fo
 echo "<td width='7%' align='center'>&nbsp;<font size=2><b>AMOUNT</b></font>&nbsp;</td>";
 echo "</tr>";
 $this->docPatient = 1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 //$amount = preg_split ("/\//", $row['sellingPrice']); 
 $this->getDoctorPFReport_pxCount_cash($row['chargesCode'],$date,$date1);
@@ -11176,26 +11176,26 @@ public $docPF_docPF_branch;
 //kkunin ung pf ni doc sa bawat branch
 public function getDoctorPFbyBranch($type,$doctor,$branch,$fromMonth,$fromDay,$fromYear,$toMonth,$toDay,$toYear){
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 $fromDate = $fromYear."-".$fromMonth."-".$fromDay;
 $toDate = $toYear."-".$toMonth."-".$toDay;
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if($type == "OPD") {
-$result = mysql_query("SELECT sum(pc.sellingPrice) as sellingPrice from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and (pc.dateCharge between '$fromDate' and '$toDate') and pc.branch = '$branch' and rd.type='$type'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.sellingPrice) as sellingPrice from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and (pc.dateCharge between '$fromDate' and '$toDate') and pc.branch = '$branch' and rd.type='$type'  ");
 }else if($type == "IPD") {
-$result = mysql_query("SELECT sum(pc.cashUnpaid) as sellingPrice from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and title = 'PROFESSIONAL FEE' and (rd.dateUnregistered between '$fromDate' and '$toDate') and pc.branch = '$branch' and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') and status not like 'DELETED%%%%%%%'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashUnpaid) as sellingPrice from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and pc.description = '$doctor' and title = 'PROFESSIONAL FEE' and (rd.dateUnregistered between '$fromDate' and '$toDate') and pc.branch = '$branch' and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') and status not like 'DELETED%%%%%%%'  ");
 }else {}
 
 $this->docPF_docPF_branch=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 //$pf_branch = preg_split ("/\//", $row['sellingPrice']); 
 return $this->docPF_docPF_branch+=$row['sellingPrice'];
@@ -11213,18 +11213,18 @@ return $this->docTotalPF_branches;
 //ITO UNG MGGING ROW SA REPORT N ANG LAMAN IS UNG TOTAL PF NG BWAT DOCTOR
 public function reportRowBranch_PF($type,$doctor,$m,$d,$y,$m1,$d1,$y1) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
 $this->docTotalPF_branches=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 if($this->getDoctorPFbyBranch($type,$doctor,$row['branch'],$m,$d,$y,$m1,$d1,$y1) > 0) {
 echo "<td>&nbsp;".number_format($this->getDoctorPFbyBranch($type,$doctor,$row['branch'],$m,$d,$y,$m1,$d1,$y1),2)."&nbsp;</td>";
@@ -11243,17 +11243,17 @@ echo "<style type='text/css'>
 #docPF:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from Doctors order by Name asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from Doctors order by Name asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='docPF'>";
 if( $type == "OPD" ) {
@@ -11276,21 +11276,21 @@ echo "</tr>";
 
 public function getResultPatient($title,$type,$chargesCode,$fromDate,$toDate){
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "
 select count(pc.itemNo) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.title = '$title' and rd.type = '$type' and (pc.dateCharge between '$fromDate' and '$toDate') and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%%%%%'
 ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 if( $row['total'] > 0 ) {
 return $row['total'];
@@ -11306,21 +11306,21 @@ return "";
 
 public function getTotalOfTitle_formatted($title,$type,$chargesCode,$fromDate,$toDate){
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "
 select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.title = '$title' and rd.type = '$type' and (pc.dateCharge between '$fromDate' and '$toDate') and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%%%%%'
 ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 if( $row['total'] > 0 ) {
 return number_format($row['total'],2);
@@ -11335,21 +11335,21 @@ return "";
 
 public function getTotalOfTitle($title,$type,$chargesCode,$fromDate,$toDate){
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "
 select sum(pc.total) as total from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.title = '$title' and rd.type = '$type' and (pc.dateCharge between '$fromDate' and '$toDate') and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%%%%%'
 ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 if( $row['total'] > 0 ) {
 return $row['total'];
@@ -11380,17 +11380,17 @@ echo "<style type='text/css'>
 </style>";
 $fromDatez = preg_split ("/\-/",$fromDate);
 $toDatez = preg_split ("/\-/",$toDate);
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT Description,chargesCode from availableCharges WHERE Category = '$title' order by Description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Description,chargesCode from availableCharges WHERE Category = '$title' order by Description asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->listExaminationAsRow_totalCount = ( $this->getResultPatient($title,"IPD",$row['chargesCode'],$fromDate,$toDate) + $this->getResultPatient($title,"OPD",$row['chargesCode'],$fromDate,$toDate) );
 $this->listExaminationAsRow_totalAmount = ( $this->getTotalOfTitle($title,"IPD",$row['chargesCode'],$fromDate,$toDate) + $this->getTotalOfTitle($title,"OPD",$row['chargesCode'],$fromDate,$toDate) );
@@ -11430,26 +11430,26 @@ echo "</tr>";
 
 public function getTotalListHMO($hmo,$branch,$m,$d,$y,$m1,$d1,$y1,$type) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $y."-".$m."-".$d;
 $toDate = $y1."-".$m1."-".$d1;
 
 if( $type == "IPD" ) {
-$result = mysql_query("SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') and pc.company > 0 and (rd.dateUnregistered between '$fromDate' and '$toDate') and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') and pc.company > 0 and (rd.dateUnregistered between '$fromDate' and '$toDate') and status = 'UNPAID' ");
 }else {
-$result = mysql_query("SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and rd.type='$type' and pc.company > 0 and (pc.dateCharge between '$fromDate' and '$toDate') and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and rd.type='$type' and pc.company > 0 and (pc.dateCharge between '$fromDate' and '$toDate') and status = 'UNPAID' ");
 }
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
 }
@@ -11460,18 +11460,18 @@ return $row['total'];
 public $listHMO_total;
 public function reportRowBranch_listHMO($hmo,$m,$d,$y,$m1,$d1,$y1,$type) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT branch from branch order by branch asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT branch from branch order by branch asc  ");
 
 $this->listHMO_total=0;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 if($this->getTotalListHMO($hmo,$row['branch'],$m,$d,$y,$m1,$d1,$y1,$type) > 0) {
 echo "<td><center>&nbsp;".number_format($this->getTotalListHMO($hmo,$row['branch'],$m,$d,$y,$m1,$d1,$y1,$type),2)."&nbsp;</center></td>";
@@ -11495,17 +11495,17 @@ echo "<style type='text/css'>
 #docPF:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT companyName from Company WHERE companyName != '' order by companyName asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT companyName from Company WHERE companyName != '' order by companyName asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='docPF'>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Reports/hmoSOA1.php?username=admin&company=$row[companyName]&fromMonth=$fromMonth&fromDay=$fromDay&fromYear=$fromYear&toMonth=$toMonth&toDay=$toDay&toYear=$toYear&branch=All' target='_blank' style='text-decoration:none; color:black;'>".$row['companyName']."</a>&nbsp;</td>";
@@ -11545,17 +11545,17 @@ return $this->detailed_group_company;
 
 public function detailed_group($registrationNo,$chargesCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.phic) as phic,sum(pc.cashUnpaid) as cashUnpaid,sum(company) as company,sum(cashPaid) as cashPaid from patientCharges pc WHERE pc.registrationNo='$registrationNo' and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED_%%%%%%%' "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.phic) as phic,sum(pc.cashUnpaid) as cashUnpaid,sum(company) as company,sum(cashPaid) as cashPaid from patientCharges pc WHERE pc.registrationNo='$registrationNo' and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED_%%%%%%%' "); 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->detailed_group_qty = $row['qty'];
 $this->detailed_group_total = $row['total'];
@@ -11624,36 +11624,36 @@ font-size:15px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.status = 'UNPAID' order by pc.title asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.status = 'UNPAID' order by pc.title asc  ");
 }else if($show == "try") {
-$result = mysql_query("SELECT pc.chargesCode,SUM(pc.quantity) as quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.status = 'UNPAID' group by pc.chargesCode order by pc.title asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.chargesCode,SUM(pc.quantity) as quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.status = 'UNPAID' group by pc.chargesCode order by pc.title asc  ");
 }
 else if($show == "hmoSOA") {
-$result = mysql_query("SELECT pc.chargesCode,SUM(pc.quantity) as quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo group by pc.chargesCode order by pc.title asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.chargesCode,SUM(pc.quantity) as quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo group by pc.chargesCode order by pc.title asc  ");
 }
 else if($show == "Date") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (dateCharge between '$data1' and '$data2') and pc.status = 'UNPAID' order by pc.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (dateCharge between '$data1' and '$data2') and pc.status = 'UNPAID' order by pc.description asc  ");
 }else if($show == "Category") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and status not like 'DELETED_%%%%%%' and rd.registrationNo = pc.registrationNo and title='$data1' and pc.status = 'UNPAID' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and status not like 'DELETED_%%%%%%' and rd.registrationNo = pc.registrationNo and title='$data1' and pc.status = 'UNPAID' order by description asc  ");
 }else if($show == "phic") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and phic > 0 and pc.status = 'UNPAID' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and phic > 0 and pc.status = 'UNPAID' order by description asc  ");
 }else if($show == "company") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.company > 0 and pc.status = 'UNPAID' order by pc.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.company > 0 and pc.status = 'UNPAID' order by pc.description asc  ");
 }else if($show == "cashPaid") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashPaid > 0 and pc.status = 'UNPAID' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashPaid > 0 and pc.status = 'UNPAID' order by description asc  ");
 }else if($show == "cashUnpaid") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and pc.status not like 'DELETED_%%%%%%' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and pc.status not like 'DELETED_%%%%%%' order by description asc  ");
 }else if($show == "selected") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and itemNo='$data1' and pc.status = 'UNPAID' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and itemNo='$data1' and pc.status = 'UNPAID' order by description asc  ");
 }else {
 echo "";
 }
@@ -11674,7 +11674,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -11765,16 +11765,16 @@ font-size:15px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo order by description asc  ");
 
 echo "<Table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -11793,7 +11793,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -11863,16 +11863,16 @@ font-size:15px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and status = 'UNPAID' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and status = 'UNPAID' order by description asc  ");
 
 echo "<Table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -11890,7 +11890,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -11979,41 +11979,41 @@ font-size:15px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by title asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by title asc  ");
 }
 
 else if($show == "try") {
-$result = mysql_query("SELECT pc.chargesCode,pc.quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.title asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.chargesCode,pc.quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.title asc  ");
 }
 
 
 else if($show == "pharmacy") {
-$result = mysql_query("SELECT pc.chargesCode,pc.title,pc.quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.status = 'UNPAID' and pc.inventoryFrom = 'PHARMACY' order by pc.title,description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.chargesCode,pc.title,pc.quantity,pc.description,pc.quantity,pc.sellingPrice,pc.dateCharge,pc.discount,pc.total,pc.cashPaid,pc.company,pc.phic,pc.cashUnpaid,pc.title,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and pc.registrationNo = rd.registrationNo and pc.status = 'UNPAID' and pc.inventoryFrom = 'PHARMACY' order by pc.title,description asc  ");
 }
 
 else if($show == "Date") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (dateCharge between '$data1' and '$data2') and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (dateCharge between '$data1' and '$data2') and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by pc.description asc  ");
 }else if($show == "Category") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and title='$data1' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and title='$data1' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
 }else if($show == "phic") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and phic > 0 and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and phic > 0 and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
 }else if($show == "company") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.company > 0 and (pc.status  = 'UNPAID' or pc.status = 'Discharged') order by pc.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.company > 0 and (pc.status  = 'UNPAID' or pc.status = 'Discharged') order by pc.description asc  ");
 }else if($show == "cashPaid") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashPaid > 0 and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashPaid > 0 and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
 }else if($show == "cashUnpaid") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and cashUnpaid > 0 and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
 }else if($show == "selected") {
-$result = mysql_query("SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and itemNo='$data1' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and itemNo='$data1' and (pc.status = 'UNPAID' or pc.status = 'Discharged') order by description asc  ");
 }else {
 echo "";
 }
@@ -12037,7 +12037,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -12133,28 +12133,28 @@ font-size:13px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' order by description asc  ");
 }else if($show == "Date") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and (dateCharge between '$data1' and '$data2') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and (dateCharge between '$data1' and '$data2') order by description asc  ");
 }else if($show == "Category") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and title='$data1' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and title='$data1' order by description asc  ");
 }else if($show == "phic") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and phic > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and phic > 0 order by description asc  ");
 }else if($show == "company") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and company > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and company > 0 order by description asc  ");
 }else if($show == "cashPaid") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashPaid > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashPaid > 0 order by description asc  ");
 }else if($show == "cashUnpaid") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashUnpaid > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashUnpaid > 0 order by description asc  ");
 }else {
 echo "";
 }
@@ -12178,7 +12178,7 @@ echo "<input type=hidden name='registrationNo' value='$registrationNo'>";
 echo "<input type=hidden name='username' value=''>";
 echo "<input type=hidden name='show' value='selected'>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -12244,28 +12244,28 @@ font-size:13px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' order by description asc  ");
 }else if($show == "Date") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and (dateCharge between '$data1' and '$data2') order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and (dateCharge between '$data1' and '$data2') order by description asc  ");
 }else if($show == "Category") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and title='$data1' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and title='$data1' order by description asc  ");
 }else if($show == "phic") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and phic > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and phic > 0 order by description asc  ");
 }else if($show == "company") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and company > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and company > 0 order by description asc  ");
 }else if($show == "cashPaid") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashPaid > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashPaid > 0 order by description asc  ");
 }else if($show == "cashUnpaid") {
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashUnpaid > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and cashUnpaid > 0 order by description asc  ");
 }else {
 echo "";
 }
@@ -12287,7 +12287,7 @@ echo "<input type=hidden name='registrationNo' value='$registrationNo'>";
 echo "<input type=hidden name='username' value=''>";
 echo "<input type=hidden name='show' value='selected'>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -12351,16 +12351,16 @@ font-size:13px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and itemNo='$itemNo' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and itemNo='$itemNo' order by description asc  ");
 
 
 /*
@@ -12381,7 +12381,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -12449,16 +12449,16 @@ font-size:13px;
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and itemNo='$itemNo' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientCharges WHERE registrationNo = '$registrationNo' and itemNo='$itemNo' order by description asc  ");
 
 
 /*
@@ -12479,7 +12479,7 @@ echo "</tr>";
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $price = preg_split ("/\//", $row['sellingPrice']); 
 echo "<tr id='charges'>";
@@ -12559,17 +12559,17 @@ echo "<style type='text/css'>
 #docPF:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.total) as totalPF,sum(pc.cashUnpaid) as cashUnpaid,sum(pc.phic) as phic from patientCharges pc WHERE pc.itemNo = '$itemNo'  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.total) as totalPF,sum(pc.cashUnpaid) as cashUnpaid,sum(pc.phic) as phic from patientCharges pc WHERE pc.itemNo = '$itemNo'  "); 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->phicPF_details_totalPF = $row['totalPF'];
 $this->phicPF_details_cashUnpaid = $row['cashUnpaid'];
@@ -12597,21 +12597,21 @@ echo "<style type='text/css'>
 #docPF:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($switch == 1) {
-$result = mysql_query("SELECT sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.title = 'MEDICINE' and pc.registrationNo = '$identificationNo' and pc.status = 'UNPAID' "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.title = 'MEDICINE' and pc.registrationNo = '$identificationNo' and pc.status = 'UNPAID' "); 
 
 }else {
-$result = mysql_query("SELECT sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.title = 'MEDICINE' and pc.itemNo = '$identificationNo' and pc.status = 'UNPAID' "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.title = 'MEDICINE' and pc.itemNo = '$identificationNo' and pc.status = 'UNPAID' "); 
 }
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->phic_DrugsMeds_totalCharges = $row['total'];
 $this->phic_DrugsMeds_totalPHIC = $row['totalPHIC'];
@@ -12639,17 +12639,17 @@ echo "<style type='text/css'>
 #docPF:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE  pc.registrationNo = '$registrationNo' and (pc.title != 'MEDICINE' and pc.title != 'Room And Board' and pc.title != 'PROFESSIONAL FEE' and pc.status = 'UNPAID' ) "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE  pc.registrationNo = '$registrationNo' and (pc.title != 'MEDICINE' and pc.title != 'Room And Board' and pc.title != 'PROFESSIONAL FEE' and pc.status = 'UNPAID' ) "); 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->phic_OTHERS_totalCharges = $row['total'];
 $this->phic_OTHERS_totalPHIC = $row['totalPHIC'];
@@ -12660,8 +12660,8 @@ $this->phic_OTHERS_totalPHIC = $row['totalPHIC'];
 
 public function searchSupplier($username,$searchme) {
 
-$con=mysql_connect($this->host,$this->username,$this->password);
-mysql_select_db($this->database,$con);
+$con=($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
+((bool)mysqli_query($con, "USE " . $this->database));
 
 echo "
 <style type='text/css'>
@@ -12694,13 +12694,13 @@ tr:hover { background-color:yellow;color:black;}
 
 $aplus=1;
 if($searchme=='ALL'){
-$asql=mysql_query("SELECT supplierCode, supplierName FROM supplier WHERE status='Active' ORDER BY supplierName");
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierCode, supplierName FROM supplier WHERE status='Active' ORDER BY supplierName");
 }
 else{
-$asql=mysql_query("SELECT supplierCode, supplierName FROM supplier WHERE supplierName LIKE '%$searchme%' AND status='Active' ORDER BY supplierName");
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierCode, supplierName FROM supplier WHERE supplierName LIKE '%$searchme%' AND status='Active' ORDER BY supplierName");
 }
 
-while($afetch=mysql_fetch_array($asql)){
+while($afetch=mysqli_fetch_array($asql)){
 $supplierCode=$afetch['supplierCode'];
 echo "
   <tr>
@@ -12729,7 +12729,7 @@ echo "
 
 ";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
 
 
@@ -12757,17 +12757,17 @@ echo "<style type='text/css'>
 #docPF:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.title='$title' and pc.chargesCode = '$itemNo' and pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.title='$title' and pc.chargesCode = '$itemNo' and pc.registrationNo = '$registrationNo' and pc.status = 'UNPAID' "); 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->phicBack_3_totalCharges = $row['total'];
 $this->phicBack_3_totalPHIC = $row['totalPHIC'];
@@ -12888,17 +12888,17 @@ echo "<style type='text/css'>
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.*,d.* from patientCharges pc,Doctors d WHERE pc.registrationNo='$registrationNo' and pc.title='PROFESSIONAL FEE' and pc.phic > 0 and pc.chargesCode = d.doctorCode order by d.orderz asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,d.* from patientCharges pc,Doctors d WHERE pc.registrationNo='$registrationNo' and pc.title='PROFESSIONAL FEE' and pc.phic > 0 and pc.chargesCode = d.doctorCode order by d.orderz asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $dateCharge = preg_split ("/\_/", $row['dateCharge']); 
@@ -12978,7 +12978,7 @@ echo "</tr>";
 }
 
 
-if( mysql_num_rows($result) == 1 ) {
+if( mysqli_num_rows($result) == 1 ) {
 
 echo "<tr>";
 echo "<td><input class='docName' type=text name='doctorName2' value=''><Br>&nbsp;<input type=text class='accNo' name='accNo_1_2' value='&nbsp;&nbsp;'><input type=text class='accNo1' name='accNo_2_2' value='&nbsp;&nbsp;'><input type=text class='accNo1' name='accNo_3_2' value='&nbsp;&nbsp;'><input type=text class='accNo1' maxlength=1 name='accNo_4_2' value='&nbsp;&nbsp;'>-
@@ -13022,7 +13022,7 @@ echo "</tr>";
 } // if mysql_num_rows 1
 
 
-else if( mysql_num_rows($result) == 2 ) {
+else if( mysqli_num_rows($result) == 2 ) {
 
 echo "<tr>";
 echo "<td><input class='docName' name='doctorName3' type=text value=''><Br>&nbsp;<input type=text class='accNo' name='accNo_1_3' value=''><input type=text class='accNo1' name='accNo_2_3' value=''><input type=text class='accNo1' name='accNo_3_3' value=''><input type=text class='accNo1' maxlength=1 name='accNo_4_3' value=''>-
@@ -13053,7 +13053,7 @@ echo "</tr>";
 } // if mysql_num_rows 2
 
 
-else if( mysql_num_rows($result) == 3 ) {
+else if( mysqli_num_rows($result) == 3 ) {
 
 echo "<tr>";
 echo "<td><input class='docName' name='doctorName4' type=text value=''><Br>&nbsp;<input type=text class='accNo' name='accNo_1_4' value=''><input type=text class='accNo1' name='accNo_2_4' value=''><input type=text class='accNo1' name='accNo_3_4' value=''><input type=text class='accNo1' maxlength=1 name='accNo_4_4' value=''>-
@@ -13396,17 +13396,17 @@ echo "<style type='text/css'>
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.*,d.* from patientCharges pc,Doctors d WHERE pc.registrationNo='$registrationNo' and pc.title='PROFESSIONAL FEE' and pc.phic > 0 and pc.chargesCode = d.doctorCode order by d.orderz asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,d.* from patientCharges pc,Doctors d WHERE pc.registrationNo='$registrationNo' and pc.title='PROFESSIONAL FEE' and pc.phic > 0 and pc.chargesCode = d.doctorCode order by d.orderz asc  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $dateCharge = preg_split ("/\_/", $row['dateCharge']); 
@@ -13470,7 +13470,7 @@ echo "</tr>";
 }
 
 
-if( mysql_num_rows($result) == 1 ) {
+if( mysqli_num_rows($result) == 1 ) {
 
 echo "<tr>";
 
@@ -13533,7 +13533,7 @@ echo "</tr>";
 
 } // if mysql_num_rows 1
 
-else if( mysql_num_rows($result) == 2 ) {
+else if( mysqli_num_rows($result) == 2 ) {
 
 echo "<tr>";
 echo "<td><input class='docName' type=text value=''><Br>&nbsp;<input type=text class='accNo' value=''><input type=text class='accNo1' value=''><input type=text class='accNo1' value=''><input type=text class='accNo1' maxlength=1 value=''>-
@@ -13564,7 +13564,7 @@ echo "</tr>";
 } // if mysql_num_rows 2
 
 
-else if( mysql_num_rows($result) == 3 ) {
+else if( mysqli_num_rows($result) == 3 ) {
 
 echo "<tr>";
 echo "<td><input class='docName' type=text value=''><Br>&nbsp;<input type=text class='accNo' value=''><input type=text class='accNo1' value=''><input type=text class='accNo1' value=''><input type=text class='accNo1' maxlength=1 value=''>-
@@ -13847,17 +13847,17 @@ return $this->phicBack_meds_phicBenefits;
 
 public function phicBack_meds_group($registrationNo,$chargesCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.registrationNo='$registrationNo' and pc.chargesCode = '$chargesCode' and pc.title = 'MEDICINE' and pc. status = 'UNPAID' and phic > 0   "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.quantity) as qty,sum(pc.total) as total,sum(pc.phic) as totalPHIC from patientCharges pc WHERE pc.registrationNo='$registrationNo' and pc.chargesCode = '$chargesCode' and pc.title = 'MEDICINE' and pc. status = 'UNPAID' and phic > 0   "); 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->phicBack_meds_qty = $row['qty'];
 $this->phicBack_meds_actualCharges = $row['total'];
@@ -13936,15 +13936,15 @@ echo "<style type='text/css'>
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 //selectNow($table,$cols,$identifier,$identifierData)
-$result = mysql_query("SELECT pc.* from patientCharges pc WHERE pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic > 0 and status = 'UNPAID' group by pc.chargesCode   "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.* from patientCharges pc WHERE pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic > 0 and status = 'UNPAID' group by pc.chargesCode   "); 
 
 echo "<table align='center' width='860' border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -13955,7 +13955,7 @@ echo "<td width='10%'><center><font size=4>Unit Price</font></center></td>";
 echo "<td width='10%'><Center><font size=3>Actual<br>Charges</font></center></td>";
 echo "<td width='10%'><center><font size=3>PhilHealth<br>Benefit</font></center></td>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->phic_DrugsMeds("2",$row['itemNo']);
@@ -14001,17 +14001,17 @@ echo "</table>";
 //ilabas kung ilang meds meron pra alam din kung ilang variable ang kelangan i-declare
 public function phicBack_meds_PDF_count($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 //selectNow($table,$cols,$identifier,$identifierData)
-$result = mysql_query("SELECT pc.* from patientCharges pc WHERE pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic > 0 and status = 'UNPAID' group by pc.chargesCode   "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.* from patientCharges pc WHERE pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic > 0 and status = 'UNPAID' group by pc.chargesCode   "); 
 
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
 
 }
 
@@ -14068,18 +14068,18 @@ echo "<style type='text/css'>
 
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.* from patientCharges pc WHERE pc.title = '$title' and pc.registrationNo = '$registrationNo' and phic > 0 and pc.status = 'UNPAID' group by pc.description order by description asc "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.* from patientCharges pc WHERE pc.title = '$title' and pc.registrationNo = '$registrationNo' and phic > 0 and pc.status = 'UNPAID' group by pc.description order by description asc "); 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->phicBack_part3_ByTitle($row['chargesCode'],$title,$registrationNo); // ito ung callee pra mkuha ung actual charges at PHIC benefits
 $this->phicBack_actualCharges+=$this->phicBack_3_totalCharges();
@@ -14128,17 +14128,17 @@ $this->phicBack_part3_phicBenefits_PDF=1;
 
 public function phicBack_part3_PDF_count($title,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.* from patientCharges pc WHERE pc.title = '$title' and pc.registrationNo = '$registrationNo' and phic > 0 and pc.status = 'UNPAID' group by pc.description order by description asc "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.* from patientCharges pc WHERE pc.title = '$title' and pc.registrationNo = '$registrationNo' and phic > 0 and pc.status = 'UNPAID' group by pc.description order by description asc "); 
 
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
 
 }
 
@@ -14157,18 +14157,18 @@ font-size:14px;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientICD WHERE registrationNo = '$registrationNo' order by icdNo asc  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientICD WHERE registrationNo = '$registrationNo' order by icdNo asc  "); 
 echo " <td width='499' class='style7'><font size=2>13. Complete ICD-10 Code/s:</font>&nbsp;";
 $x=1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<font class='icd'><u>(".$x++.")".$row['icdCode']."&nbsp;</u></font>";
   }
@@ -14190,18 +14190,18 @@ font-size:14px;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientICD WHERE registrationNo = '$registrationNo' order by icdNo asc  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientICD WHERE registrationNo = '$registrationNo' order by icdNo asc  "); 
 
 $x=1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $result_array[] =  "<font class='icd'><u>(".$x++.")".$row['icdCode']."&nbsp;</u></font>";
   }
@@ -14216,17 +14216,17 @@ public function getPatientICD_diagnosis($registrationNo) {
 
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientICD WHERE registrationNo='$registrationNo' order by icdNo asc  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientICD WHERE registrationNo='$registrationNo' order by icdNo asc  "); 
 $x=1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<font size=2>(".$x++.")".$row['diagnosis']."&nbsp;</font>";
   }
@@ -14237,17 +14237,17 @@ public function getPatientICD_diagnosis_pdf($registrationNo) {
 
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * from patientICD WHERE registrationNo='$registrationNo' order by icdNo asc  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientICD WHERE registrationNo='$registrationNo' order by icdNo asc  "); 
 $x=1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $result_array[] = "<font size=2>(".$x++.")".$row['diagnosis']."&nbsp;</font>";
   }
@@ -14270,17 +14270,17 @@ font-size:13px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 
-$result = mysql_query("SELECT * from patientICD where registrationNo='$registrationNo' order by icdNo asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from patientICD where registrationNo='$registrationNo' order by icdNo asc  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -14292,7 +14292,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font class='head' color='white'>PF</font>&nbs
 echo "<th bgcolor='#3b5998'></th>";
 echo "<th bgcolor='#3b5998'></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<font class='data'>".$row['icdCode']."</font>&nbsp;</td>";
@@ -14341,21 +14341,21 @@ font-size:12px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($type == "All") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' order by description asc ");
 }else {
 if( $type == "MEDICINE" || $type == "SUPPLIES" ) {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = '$type' and departmentStatus like 'dispensedBy_%%%%%%%%' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = '$type' and departmentStatus like 'dispensedBy_%%%%%%%%' order by description asc ");
 }else {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = '$type' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = '$type' order by description asc ");
 }
 
 }
@@ -14365,7 +14365,7 @@ echo "<input type='hidden' name='registrationNo' value='$registrationNo'>";
 echo "<input type='hidden' name='username' value='$username'>";
 echo "<input type='hidden' name='type' value='$type'>";
 echo "<br><input type=submit value='Assign Payments' style='border:1px solid #ff0000; font-size:13px; background-color:transparent;'><Br><br>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 //$this->getMyResults($this->getResult_labNo($row['itemNo']),$username);
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -14475,30 +14475,30 @@ font-size:12px;
 }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
+  $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }else if($show == "cash2company" || $show == "cash2phic" || $show == "cash2package") {
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }
 
 else if($show == "company2cash" || $show == "company2phic") {
 
-  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and company > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
+  $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and company > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 
 }else if($show == "phic2cash" || $show == "phic2company") {
-  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and phic > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
+  $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and phic > 0 and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }
 
 else {
-  $result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo' and description like '$desc%%%%%%' and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
+  $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo' and description like '$desc%%%%%%' and status = 'UNPAID' and remarks $condition 'takeHomeMeds' order by description asc ");
 }
 
 echo "<form method='get' action='http://".$this->getMyUrl()."/COCONUT/patientProfile/Payments/transferPayment.php'>";
@@ -14506,7 +14506,7 @@ echo "<input type='hidden' name='registrationNo' value='$registrationNo'>";
 echo "<input type='hidden' name='show' value='$show'>";
 echo "<input type='hidden' name='desc' value='$desc'>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 //$this->getMyResults($this->getResult_labNo($row['itemNo']),$username);
 $price = preg_split ("/\//", $row['sellingPrice']); 
@@ -14609,17 +14609,17 @@ return $this->room_branch;
 
 public function getRoom($description) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM room WHERE Description = '$description' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM room WHERE Description = '$description' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->room_roomNo = $row['roomNo'];
@@ -14649,15 +14649,15 @@ color:black;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' order by datePaid asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' order by datePaid asc ");
 echo "<br><center><br>	";
 echo "<table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<tr>";
@@ -14674,7 +14674,7 @@ echo "<th bgcolor='#3b5998'></th>";
 echo "</tr>";
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 echo "<tr id='payment'>";
@@ -14711,17 +14711,17 @@ echo "</table>";
 
 public function sumPartialPayment($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(amountPaid) as total FROM patientPayment WHERE registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(amountPaid) as total FROM patientPayment WHERE registrationNo = '$registrationNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
 
@@ -14738,17 +14738,17 @@ return $this->descPartialPayment_total;
 
 public function descPartialPayment($registrationNo,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT paymentFor,( amountPaid + pf + admitting ) as total,orNo,creditCardNo FROM patientPayment WHERE registrationNo = '$registrationNo' and paymentFor != 'REFUND' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT paymentFor,( amountPaid + pf + admitting ) as total,orNo,creditCardNo FROM patientPayment WHERE registrationNo = '$registrationNo' and paymentFor != 'REFUND' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 if( $row['creditCardNo'] == "" ) {
@@ -14784,17 +14784,17 @@ echo "</tr>";
 
 public function descPartialPayment_company1($registrationNo,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT paymentFor,( amountPaid + pf + admitting ) as total,orNo,creditCardNo FROM patientPayment WHERE registrationNo = '$registrationNo' and paymentFor != 'REFUND' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT paymentFor,( amountPaid + pf + admitting ) as total,orNo,creditCardNo FROM patientPayment WHERE registrationNo = '$registrationNo' and paymentFor != 'REFUND' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 if( $row['creditCardNo'] == "" ) {
@@ -14847,18 +14847,18 @@ color:black;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' order by datePaid asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' order by datePaid asc ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 echo "<tr id='payment'>";
@@ -14919,17 +14919,17 @@ return $this->viewPayment_setter_paymentFor;
 
 public function viewPayment_setter($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->viewPayment_setter_paymentNo = $row['paymentNo'];
 $this->viewPayment_setter_registrationNo = $row['registrationNo'];
@@ -14956,15 +14956,15 @@ font-size:13px;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientPayment WHERE registrationNo = '$registrationNo' ");
 
 echo "<font size=1>Payment History</font><Br><table border=1 cellpadding=0 cellspacing=0 rules=all>";
 echo "<Tr>";
@@ -14973,7 +14973,7 @@ echo "<Th>&nbsp;<font class='heading'>Paid</font>&nbsp;</th>";
 echo "<Th>&nbsp;<font class='heading'>Total</font>&nbsp;</th>";
 echo "<Th>&nbsp;<font class='heading'>Balance	</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<Tr>";
 $this->viewPayment_soa_amountPaid+=$row['amountPaid'];
@@ -14998,20 +14998,20 @@ echo "<br>__________________________<br><font size=2>Cashier / Billing</font><br
 //get total credit ng patient
 public function getCurrentCredit($registrationNo,$title,$via) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title == "PATIENT") {
-$result = mysql_query("SELECT sum(cashUnpaid) as total FROM patientCharges WHERE registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(cashUnpaid) as total FROM patientCharges WHERE registrationNo = '$registrationNo' ");
 }else {
-$result = mysql_query("SELECT sum($via) as total FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($via) as total FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' ");
 }
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 return $row['total'];
@@ -15024,17 +15024,17 @@ return $row['total'];
 
 public function getTotalPatientPayment($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT paymentFor,( amountPaid + pf + admitting ) as total FROM patientPayment WHERE registrationNo = '$registrationNo' and paymentFor != 'REFUND' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT paymentFor,( amountPaid + pf + admitting ) as total FROM patientPayment WHERE registrationNo = '$registrationNo' and paymentFor != 'REFUND' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
 {
 return $row['total'];
 }
@@ -15045,19 +15045,19 @@ return $row['total'];
 //mei credit limit ba ang patient as "PATIENT"???
 public function checkCreditLimit($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo = 'PATIENT' and limitVia = 'cashUnpaid'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo = 'PATIENT' and limitVia = 'cashUnpaid'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -15066,19 +15066,19 @@ return mysql_num_rows($result);
 //mei credit limit ba ang patient as "NOT PATIENT"???
 public function checkCreditLimit_others($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo != 'PATIENT' and limitVia = 'cashUnpaid'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCreditLimit WHERE registrationNo = '$registrationNo' and limitTo != 'PATIENT' and limitVia = 'cashUnpaid'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -15098,16 +15098,16 @@ return $this->getPatientInTheRoom_registrationNo;
 //setter pra mkuha ung details ng patient sa isang room
 public function getPatientInTheRoom($room) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.room = '$room' and rd.dateUnregistered = ''  ");
-while($row=mysql_fetch_array($result)) {
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.room = '$room' and rd.dateUnregistered = ''  ");
+while($row=mysqli_fetch_array($result)) {
 return $row['registrationNo']."_".$row['lastName'].", ".$row['firstName'];
 }
 
@@ -15117,16 +15117,16 @@ return $row['registrationNo']."_".$row['lastName'].", ".$row['firstName'];
 
 public function showFloorAsUpperMenu($branch) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT floor FROM room WHERE branch = '$branch' group by floor order by floor  ");
-while($row=mysql_fetch_array($result)) {
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT floor FROM room WHERE branch = '$branch' group by floor order by floor  ");
+while($row=mysqli_fetch_array($result)) {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/NURSING/nursingStation1.php?username=&module=&branch=$branch&floor=$row[floor]' target='nsX'>$row[floor]</a></li>";
 
 //$this->coconutUpperMenu_headingMenu("http://".$this->getMyUrl()."/COCONUT/NURSING/nursingStation.php?username=&module=&branch=$branch&floor=".$row['floor'],$row['floor']);
@@ -15137,16 +15137,16 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/NURSING/nursingStation1.
 
 public function showFloorAsUpperMenu_billing($branch,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT floor FROM room WHERE branch = '$branch' group by floor order by floor  ");
-while($row=mysql_fetch_array($result)) {
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT floor FROM room WHERE branch = '$branch' group by floor order by floor  ");
+while($row=mysqli_fetch_array($result)) {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/billing/billingStation.php?username=$username&module=&branch=$branch&floor=$row[floor]' target='departmentX'>$row[floor]</a></li>";
 
 //$this->coconutUpperMenu_headingMenu("http://".$this->getMyUrl()."/COCONUT/NURSING/nursingStation.php?username=&module=&branch=$branch&floor=".$row['floor'],$row['floor']);
@@ -15157,17 +15157,17 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/billing/billingStation.p
 
 public function showFloorAsUpperMenu_admin($username,$module) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT floor,branch FROM room group by floor order by floor asc  ");
-while($row=mysql_fetch_array($result)) {
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT floor,branch FROM room group by floor order by floor asc  ");
+while($row=mysqli_fetch_array($result)) {
 
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/billing/billingStation.php?username=$username&module=$module&branch=$row[branch]&floor=$row[floor]' target='departmentX'>$row[floor]</a></li>";
 
@@ -15180,16 +15180,16 @@ echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/billing/billingStation.p
 
 public function showFloor() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT floor FROM room group by floor order by floor  ");
-while($row=mysql_fetch_array($result)) {
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT floor FROM room group by floor order by floor  ");
+while($row=mysqli_fetch_array($result)) {
 echo "<option value='".$row['floor']."'>".$row['floor']."</option>";
 }
 
@@ -15232,18 +15232,18 @@ color:red;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($module == "BILLING") {
-$result = mysql_query("SELECT * FROM room WHERE branch = '$branch' order by Description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM room WHERE branch = '$branch' order by Description asc ");
 }else {
-$result = mysql_query("SELECT * FROM room WHERE branch = '$branch' and floor='$desc' order by Description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM room WHERE branch = '$branch' and floor='$desc' order by Description asc ");
 }
 echo "<br><center><font size=2>Admitted Patient in $desc of $branch</font><div style='border:1px solid #000000; width:600px; height:auto; border-color:black black black black;'>";
 echo "<center><br><table width='75%' border=1 cellpadding=0 cellspacing=0 rules=all>";
@@ -15252,7 +15252,7 @@ echo "<th bgcolor='#3b5998'>&nbsp;<font class='head'>Beds</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='head'>Patient</font>&nbsp;</th>";
 echo "<th bgcolor='#3b5998'>&nbsp;<font class='head'>Pharmacy</font>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
  $patientData = preg_split ("/\_/",$this->getPatientInTheRoom($row['Description'])); //source of data
 
@@ -15372,21 +15372,21 @@ color:black;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $y."-".$m."-".$d;
 $toDate = $y1."-".$m1."-".$d1;
 
 if($branch == "All") {
-$result = mysql_query("select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.dateRegistered,rd.dateUnregistered,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate') order by pr.lastName ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.dateRegistered,rd.dateUnregistered,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate') order by pr.lastName ");
 }else {
-$result = mysql_query("select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.dateRegistered,rd.dateUnregistered,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate') order by pr.lastName ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "select upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.dateRegistered,rd.dateUnregistered,rd.registrationNo from patientRecord pr,registrationDetails rd where pr.patientNo = rd.patientNo and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate') order by pr.lastName ");
 }
 echo "<center>";
 echo "<font size=6>Discharged Patient</font><br>";
@@ -15402,7 +15402,7 @@ $this->coconutTableHeader("Discharged");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
 $x=1;
-while($row=mysql_fetch_array($result)) {
+while($row=mysqli_fetch_array($result)) {
 echo "<tr id='rowz'>";
 $this->coconutTableData("".$x++);
 $this->coconutTableData($row['lastName'].", ".$row['firstName']);
@@ -15440,15 +15440,15 @@ background-color:yellow;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pc.* FROM patientCharges pc where pc.registrationNo='$registrationNo' and status not like 'DELETED_%%%%%%%%' and pc.batchNo='$batchNo' order by pc.description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.* FROM patientCharges pc where pc.registrationNo='$registrationNo' and status not like 'DELETED_%%%%%%%%' and pc.batchNo='$batchNo' order by pc.description asc  ");
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -15461,7 +15461,7 @@ $this->coconutTableHeader("Total");
 $this->coconutTableRowStop();
 
 $totall=0;
-while($row=mysql_fetch_array($result)) {
+while($row=mysqli_fetch_array($result)) {
 echo "<tr id='rowz'>";
 $this->showCart_discount += $row['discount'];
 $this->showCart_total += $row['total'];
@@ -15547,17 +15547,17 @@ echo "&nbsp;<Br><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/ind
 
 public function hmoSOA_HB($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(company) as total FROM patientCharges where registrationNo = '$registrationNo' and title != 'PROFESSIONAL FEE' and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(company) as total FROM patientCharges where registrationNo = '$registrationNo' and title != 'PROFESSIONAL FEE' and status = 'UNPAID' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
   }
@@ -15566,17 +15566,17 @@ return $row['total'];
 
 public function hmoSOA_PF($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(company) as total FROM patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(company) as total FROM patientCharges where registrationNo = '$registrationNo' and title = 'PROFESSIONAL FEE' and status = 'UNPAID' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
   }
@@ -15591,21 +15591,21 @@ public function hmoSOA_ipd($company,$fromDate_month,$fromDate_day,$fromDate_year
 
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 $fromDate = $fromDate_year."-".$fromDate_month."-".$fromDate_day;
 $toDate = $toDate_year."-".$toDate_month."-".$toDate_day;
 if($branch == "All") {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.Company='$company' and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate')  group by rd.registrationNo order by lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.Company='$company' and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate')  group by rd.registrationNo order by lastName asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.branch='$branch' and rd.Company='$company' and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate') group by rd.registrationNo order by lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.branch='$branch' and rd.Company='$company' and rd.type='IPD' and (rd.dateUnregistered between '$fromDate' and '$toDate') group by rd.registrationNo order by lastName asc ");
 }
 
 $this->coconutTableStart();
@@ -15615,7 +15615,7 @@ $this->coconutTableHeader("Confinement Period");
 $this->coconutTableHeader("Hospital Bill");
 $this->coconutTableHeader("Professional Fee");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->coconutTableRowStart();
@@ -15650,13 +15650,13 @@ echo "<style type='text/css'>
 #rowz:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $fromMonth."_".$fromDay."_".$fromYear;
 
@@ -15664,7 +15664,7 @@ $fromTime = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $toTime = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
 
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pp.* from patientRecord pr,registrationDetails rd,patientPayment pp WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and rd.branch='$branch' and pp.datePaid='$fromDate' and (pp.timePaid between '$fromTime' and '$toTime')  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pp.* from patientRecord pr,registrationDetails rd,patientPayment pp WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and rd.branch='$branch' and pp.datePaid='$fromDate' and (pp.timePaid between '$fromTime' and '$toTime')  "); 
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -15674,7 +15674,7 @@ $this->coconutTableHeader("Balance");
 $this->coconutTableHeader("Paid");
 $this->coconutTableHeader("Received By");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<Tr id='rowz'>";
 $current = $this->getCurrentCredit($row['registrationNo'],"PATIENT","cashUnpaid") - $this->getCurrentPaid($row['registrationNo'],"PATIENT","cashUnpaid");
@@ -15705,18 +15705,18 @@ echo "<style type='text/css'>
 #rowz:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $fromYear."-".$fromMonth."-".$fromDay;
 $toDate = $toYear."-".$toMonth."-".$toDay;
 
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pp.*,rd.discount from patientRecord pr,registrationDetails rd,patientPayment pp WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and (pp.datePaid between '$fromDate' and '$toDate') order by rd.registrationNo asc  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pp.*,rd.discount from patientRecord pr,registrationDetails rd,patientPayment pp WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pp.registrationNo and (pp.datePaid between '$fromDate' and '$toDate') order by rd.registrationNo asc  "); 
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -15728,7 +15728,7 @@ $this->coconutTableHeader("Discount");
 $this->coconutTableHeader("Paid");
 $this->coconutTableHeader("Received By");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<Tr id='rowz'>";
 $current = $this->getCurrentCredit($row['registrationNo'],"PATIENT","cashUnpaid") - $this->getCurrentPaid($row['registrationNo'],"PATIENT","cashUnpaid");
@@ -15782,21 +15782,21 @@ background-color:yellow;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $fromDate_year."-".$fromDate_month."-".$fromDate_day;
 $toDate = $toDate_year."-".$toDate_month."-".$toDate_day;
 
 if( $show == "All" ) {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and pc.title = 'PROFESSIONAL FEE' and status not like 'DELETED_%%%%%%%' order by pc.description,pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and pc.title = 'PROFESSIONAL FEE' and status not like 'DELETED_%%%%%%%' order by pc.description,pr.lastName asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and type='IPD' and status not like 'DELETED_%%%%%%%' and pc.title = 'PROFESSIONAL FEE' and pc.description='$show' order by pc.description,pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and type='IPD' and status not like 'DELETED_%%%%%%%' and pc.title = 'PROFESSIONAL FEE' and pc.description='$show' order by pc.description,pr.lastName asc ");
 }
 
 
@@ -15810,7 +15810,7 @@ $this->coconutTableHeader("Doctor");
 $this->coconutTableHeader("Service");
 $this->coconutTableHeader("Price / PF");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='rowz'>";
 //$price = preg_split ("/\//", $row['sellingPrice']); 
@@ -15851,29 +15851,29 @@ background-color:yellow;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromRegistered = $year."-".$month."-".$day;
 $toRegistered = $year1."-".$month1."-".$day1;
 
 if( $dept != "" ) {
 if($type == "IPD") {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered' ) and rd.type in ('IPD','ER','OR/DR','ICU') and rd.registeredFrom='$dept' order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered' ) and rd.type in ('IPD','ER','OR/DR','ICU') and rd.registeredFrom='$dept' order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered') and rd.type='$type' and rd.registeredFrom='$dept' order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered') and rd.type='$type' and rd.registeredFrom='$dept' order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
 }
 }else {
 
 if($type == "IPD") {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered' ) and rd.type in ('IPD','ER','OR/DR','ICU') order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered' ) and rd.type in ('IPD','ER','OR/DR','ICU') order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
 }else {
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered') and rd.type='$type' order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,upper(pr.middleName) as middleName,rd.*,pr.Age,pr.Gender,pr.phic FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and (dateRegistered between '$fromRegistered' and '$toRegistered') and rd.type='$type' order by CAST(rd.pxCount AS UNSIGNED), rd.pxCount asc ");
 }
 
 }
@@ -15894,7 +15894,7 @@ $this->coconutTableHeader("Registered");
 $this->coconutTableHeader("Registered By");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<Tr id='rowz'>";
 $this->censusRegistered_patient += 1;
@@ -15952,15 +15952,15 @@ a { text-decoration:none; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.type='$type' and rd.branch='$branch' order by lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.registrationNo FROM patientRecord pr,registrationDetails rd WHERE pr.patientNo = rd.patientNo and rd.type='$type' and rd.branch='$branch' order by lastName asc ");
 
 echo "<br><center>";
 $this->coconutTableStart();
@@ -15968,7 +15968,7 @@ $this->coconutTableRowStart();
 $this->coconutTableHeader("Registration#");
 $this->coconutTableHeader("Name");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr id='rowz'>";
 $this->specialRoom_patient += 1;
@@ -15986,17 +15986,17 @@ echo "</table>";
 
 public function checkCode($patientNo,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT patientNo,registrationNo FROM registrationDetails where patientNo='$patientNo' and registrationNo='$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT patientNo,registrationNo FROM registrationDetails where patientNo='$patientNo' and registrationNo='$registrationNo' ");
 
-if(mysql_num_rows($result) == 1) {
+if(mysqli_num_rows($result) == 1) {
 session_start();
 $_SESSION['registrationNo'] = $registrationNo;
 header("Location:/COCONUT/Homepage/patientProfile_handler_homepage.php");
@@ -16016,18 +16016,18 @@ history.back();
 
 public function transmitalDiagnosis($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT diagnosis FROM patientICD where registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT diagnosis FROM patientICD where registrationNo = '$registrationNo' ");
 $x=1;
 echo "<td>";
-while($row = mysql_fetch_array($result)){
+while($row = mysqli_fetch_array($result)){
 echo "<font size=2>(".$x++.")".$row['diagnosis']."</font><br>";
   }
 echo "</tD>";
@@ -16051,21 +16051,21 @@ font-size:12px;
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $datez = $month."_".$day."_".$year;
 
-$result = mysql_query("SELECT rd.registrationNo,pr.lastName,pr.firstName,pr.middleName,rd.dateRegistered,rd.dateUnregistered,sum(pc.phic) as phic FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pr.phicType = '$type' and rd.dateUnregistered = '$datez' order by lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pr.lastName,pr.firstName,pr.middleName,rd.dateRegistered,rd.dateUnregistered,sum(pc.phic) as phic FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pr.phicType = '$type' and rd.dateUnregistered = '$datez' order by lastName asc ");
 
 $x=1;
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->phicTransmital_totalClaimed += $row['phic'];
@@ -16093,20 +16093,20 @@ echo "</tR>";
 
 public function addNewNote($registrationNo,$noteType,$noteBy,$noteMessage,$date,$time) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO patientNotes (registrationNo,noteType,noteBy,noteMessage,date,time)
 VALUES
-('".mysql_real_escape_string($registrationNo)."','".mysql_real_escape_string($noteType)."','".mysql_real_escape_string($noteBy)."','".mysql_real_escape_string($noteMessage)."','".mysql_real_escape_string($date)."','".mysql_real_escape_string($time)."')";
+('".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $registrationNo) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $noteType) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $noteBy) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $noteMessage) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $date) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $time) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -16117,7 +16117,7 @@ echo "</script>";
 
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16140,15 +16140,15 @@ text-decoration:none;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientNotes where registrationNo = '$registrationNo' order by date asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientNotes where registrationNo = '$registrationNo' order by date asc ");
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -16160,7 +16160,7 @@ $this->coconutTableHeader("");
 $this->coconutTableRowStop();
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<Tr id='rowz'>";
 $this->coconutTableData($row['noteBy']);
@@ -16193,15 +16193,15 @@ text-decoration:none;
 ";
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM patientNotes where registrationNo = '$registrationNo' order by date asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientNotes where registrationNo = '$registrationNo' order by date asc ");
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -16212,7 +16212,7 @@ $this->coconutTableHeader("Time");
 $this->coconutTableRowStop();
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<Tr id='rowz'>";
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/patientNotes/viewDetailedNote.php?noteNo=$row[noteNo]&noteType=$row[noteType]&noteBy=$row[noteBy]&registrationNo=$row[registrationNo]&noteMessage=$row[noteMessage]'><font size='3' color=red>View</font></a>");
@@ -16297,18 +16297,18 @@ tr:hover{ background-color:yellow; color:black; }
 
 ";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $fromDate = $year."-".$month."-".$day;
 $toDate = $year1."-".$month1."-".$day1;
 
-$result = mysql_query("SELECT * from inventory where (expiration between '$fromDate' and '$toDate') and status not like 'DELETED_%%%%%' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where (expiration between '$fromDate' and '$toDate') and status not like 'DELETED_%%%%%' order by description asc  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -16330,7 +16330,7 @@ echo "<th>&nbsp;<font class='data'>Remarks</font>&nbsp;</th>";
 //echo "<th></th>";
 //echo "<th></th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<font class='data'>".$row['inventoryCode']."</font>&nbsp;</td>";
@@ -16364,15 +16364,15 @@ echo "<style type='text/css'>";
 echo "tr:hover{ background-color:yellow; color:black; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM reportHeading order by reportName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM reportHeading order by reportName asc ");
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -16381,7 +16381,7 @@ $this->coconutTableHeader("Description");
 $this->coconutTableHeader("Value");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->coconutTableData($row['reportName']);
@@ -16393,7 +16393,7 @@ $this->coconutTableRowStop();
 
 $this->coconutTableStop();
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16406,15 +16406,15 @@ echo "<style type='text/css'>";
 //echo "tr:hover{ background-color:yellow; color:black; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM labTest where labTest = '$labTest' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM labTest where labTest = '$labTest' ");
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/Results/clinicalChemistry/labTest1.php");
 echo "<input type='hidden' name='registrationNo' value='$registrationNo'>";
@@ -16431,7 +16431,7 @@ echo "<th>Test</th>";
 echo "<th>Result</th>";
 echo "<th>Normal Values</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 //echo "<td><input type=checkbox name='control[]' value='".$row['description']."' checked ></td>";
@@ -16444,7 +16444,7 @@ $this->coconutFormStop();
 
 echo "</table><br><br>";
 $this->coconutButton("Add Result");
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16452,21 +16452,21 @@ mysql_close($con);
 
 public function addLabTest($labTest,$description,$normalValues) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO labTest (labTest,description,normalValues)
 VALUES
 ('$labTest','$description','$normalValues')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -16476,28 +16476,28 @@ echo "</script>";
 
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function addLabResult($logNo,$registrationNo,$itemNo,$description,$result,$normalValues,$labTest,$pathologist,$medtech) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO labTest_done (logNo,registrationNo,itemNo,description,result,normalValues,labTest,datePerformed,pathologist,medtech)
 VALUES
 ('$logNo','$registrationNo','$itemNo','$description','$result','$normalValues','$labTest','".date("M d, Y")."','$pathologist','$medtech')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 //echo "<script type='text/javascript' >";
@@ -16507,7 +16507,7 @@ if (!mysql_query($sql,$con))
 
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16520,15 +16520,15 @@ echo "tr:hover{ background-color:yellow; color:black; }";
 echo "a { color:black; text-decoration:none; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM labSavedResult where registrationNo = '$registrationNo' group by savedNo ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM labSavedResult where registrationNo = '$registrationNo' group by savedNo ");
 /*
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -16538,7 +16538,7 @@ $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
 */
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->coconutTableData("<a href='#'>".$row['savedNo']."</a>");
@@ -16557,7 +16557,7 @@ echo "<td>&nbsp;</td>";
 
 //$this->coconutTableStop();
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16569,15 +16569,15 @@ echo "<style type='text/css'>";
 //echo "tr:hover{ background-color:yellow; color:black; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM labTest_done where logNo='$logNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM labTest_done where logNo='$logNo' ");
 
 echo "<br><br><center>";
 echo "<table cellpadding=0 cellspacing=0 width='98%' rules=all border=1>";
@@ -16586,7 +16586,7 @@ echo "<th>Test</th>";
 echo "<th>Result</th>";
 echo "<th>Normal Values</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['description']."&nbsp;</td>";
@@ -16596,7 +16596,7 @@ echo "</tr>";
   }
 echo "</table><br><br>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16610,15 +16610,15 @@ echo "<style type='text/css'>";
 echo "a { text-decoration:none; color:black; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM registrationDetails where patientNo='$patientNo' order by registrationNo desc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM registrationDetails where patientNo='$patientNo' order by registrationNo desc ");
 
 echo "<br><br><center>";
 $this->coconutTableStart();
@@ -16626,7 +16626,7 @@ $this->coconutTableRowStart();
 $this->coconutTableHeader("Reg#");
 $this->coconutTableHeader("Date Registered");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/Department/redirect.php?username=$username&registrationNo=$row[registrationNo]' target='window.parent'>".$row['registrationNo']."</a>");
@@ -16636,7 +16636,7 @@ $this->coconutTableRowStop();
 $this->coconutTableStop();
 echo "<br><br>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16671,18 +16671,18 @@ echo "<style type='text/css'>";
 echo "a { text-decoration:none; color:black; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM phicLimit where casetype = '$caseType' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM phicLimit where casetype = '$caseType' ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->getPHIClimit_medicine = $row['medicine'];
 $this->getPHIClimit_supplies = $row['supplies'];
@@ -16690,7 +16690,7 @@ $this->getPHIClimit_room = $row['room'];
 $this->getPHIClimit_pf = $row['pf'];
 $this->getPHIClimit_suppliesOnly = $row['suppliesOnly'];
   }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16703,15 +16703,15 @@ echo "<style type='text/css'>";
 echo "a { text-decoration:none; color:black; }";
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM phicLimit where casetype = '$caseType' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM phicLimit where casetype = '$caseType' ");
 
 echo "<br><br><center>";
 $this->coconutTableStart();
@@ -16722,7 +16722,7 @@ $this->coconutTableHeader("Supplies");
 $this->coconutTableHeader("Room");
 $this->coconutTableHeader("PF");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->coconutTableData("".$row['casetype']);
@@ -16735,35 +16735,35 @@ $this->coconutTableRowStop();
 $this->coconutTableStop();
 echo "<br><br>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function getCurrentPHIC_check($registrationNo,$title) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 //if($title == "SUPPLIES") {
 //$result = mysql_query("SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.phic >0 and (pc.title = 'LABORATORY' or pc.title = 'ECG' or pc.title = 'SUPPLIES' or pc.title = 'RADIOLOGY') and status = 'UNPAID' ");
 
 //}else {
-$result = mysql_query("SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.phic >0 and pc.title = '$title' and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.phic) as totalPHIC FROM registrationDetails rd,patientCharges pc where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.phic >0 and pc.title = '$title' and status = 'UNPAID' ");
 //}
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalPHIC'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16771,40 +16771,40 @@ mysql_close($con);
 //dispaly meds/supplies as dispense
 public function dispensedNow($batchNo,$username) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET departmentStatus = 'dispensedBy_$username'
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET departmentStatus = 'dispensedBy_$username'
 WHERE batchNo='$batchNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function compensable_checker($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT inventory.phic FROM inventory,patientCharges where patientCharges.itemNo='$itemNo' and  patientCharges.chargesCode = inventory.inventoryCode ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventory.phic FROM inventory,patientCharges where patientCharges.itemNo='$itemNo' and  patientCharges.chargesCode = inventory.inventoryCode ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['phic'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16812,44 +16812,44 @@ mysql_close($con);
 
 public function hmo_checker($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.company FROM registrationDetails rd,patientCharges pc where pc.itemNo = '$itemNo' and pc.registrationNo = rd.registrationNo  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.company FROM registrationDetails rd,patientCharges pc where pc.itemNo = '$itemNo' and pc.registrationNo = rd.registrationNo  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['company'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function senior_checker($itemNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT pr.senior FROM registrationDetails rd,patientCharges pc,patientRecord pr where pc.itemNo = '$itemNo' and pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.senior FROM registrationDetails rd,patientCharges pc,patientRecord pr where pc.itemNo = '$itemNo' and pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['senior'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16857,22 +16857,22 @@ mysql_close($con);
 
 public function phicLimit_compare($cols,$casetype) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT ($cols) as cols FROM phicLimit where casetype = '$casetype' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols FROM phicLimit where casetype = '$casetype' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -16881,21 +16881,21 @@ mysql_close($con);
 
 public function add_PHIC_limit($casetype,$medicine,$supplies,$room,$pf,$suppliesOnly) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO phicLimit (casetype,medicine,supplies,room,pf,suppliesOnly)
 VALUES
 ('$casetype','$medicine','$supplies','$room','$pf','$suppliesOnly')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 //echo "<script type='text/javascript' >";
@@ -16905,40 +16905,40 @@ if (!mysql_query($sql,$con))
 
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
 
 public function getTotal($cols,$title,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
 
 if( $title == "MEDICINE" || $title == "SUPPLIES" ) {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and  status = 'UNPAID' and departmentStatus like 'dispensedBy%%%%%%%%'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and  status = 'UNPAID' and departmentStatus like 'dispensedBy%%%%%%%%'  ");
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged') and title not in ('MEDICINE','SUPPLIES')");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged') and title not in ('MEDICINE','SUPPLIES')");
 }
 
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'Discharged' or status = 'BALANCE') ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'Discharged' or status = 'BALANCE') ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -16948,33 +16948,33 @@ mysql_close($con);
 
 public function getTotal_opd($cols,$title,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
 
 if( $title == "MEDICINE" || $title == "SUPPLIES" ) {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and  (status = 'UNPAID' or status = 'PAID') and departmentStatus like 'dispensedBy%%%%%%%%'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and  (status = 'UNPAID' or status = 'PAID') and departmentStatus like 'dispensedBy%%%%%%%%'  ");
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged' or status = 'PAID') ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged' or status = 'PAID') ");
 }
 
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'Discharged' or status = 'PAID') ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'Discharged' or status = 'PAID') ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -16986,33 +16986,33 @@ mysql_close($con);
 
 public function getTotal_No_pf($cols,$title,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
 
 if( $title == "MEDICINE" || $title == "SUPPLIES" ) {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and  status = 'UNPAID' and departmentStatus like 'dispensedBy%%%%%%%%'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and  status = 'UNPAID' and departmentStatus like 'dispensedBy%%%%%%%%'  ");
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged') and title not in ('MEDICINE','SUPPLIES')");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and (status = 'UNPAID' or status = 'Discharged') and title not in ('MEDICINE','SUPPLIES')");
 }
 
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'Discharged' or status = 'BALANCE') and title not in ('PROFESSIONAL FEE') ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and (status = 'UNPAID' or status = 'Discharged' or status = 'BALANCE') and title not in ('PROFESSIONAL FEE') ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17021,27 +17021,27 @@ mysql_close($con);
 
 public function getTotalByBatch($cols,$title,$registrationNo,$batchNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and status = 'UNPAID' and batchNo = '$batchNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and status = 'UNPAID' and batchNo = '$batchNo' ");
 }else {
-$result = mysql_query("SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and batchNo = '$batchNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum($cols) as cols FROM patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and batchNo = '$batchNo' ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17052,27 +17052,27 @@ mysql_close($con);
 
 public function getHighestCharges($title,$payment,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
-$result = mysql_query("SELECT max(total) as mataas FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and $payment > 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT max(total) as mataas FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and $payment > 0 ");
 }else {
-$result = mysql_query("SELECT max(total) as mataas FROM patientCharges where registrationNo = '$registrationNo' and $payment > 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT max(total) as mataas FROM patientCharges where registrationNo = '$registrationNo' and $payment > 0 ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['mataas'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17096,31 +17096,31 @@ return $this->highestCharges_getCash;
 
 public function getHighestCharges_itemNo($title,$registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
-$result = mysql_query("SELECT itemNo,max(phic) as phic,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and title='$title' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,max(phic) as phic,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and title='$title' ");
 }else if($title == "") {
-$result = mysql_query("SELECT itemNo,phic,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and title in ('SUPPLIES','LABORATORY','RADIOLOGY','OR/DR FEE','MISCELLANEOUS','NURSING-CHARGES') and phic > $phic ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,phic,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and title in ('SUPPLIES','LABORATORY','RADIOLOGY','OR/DR FEE','MISCELLANEOUS','NURSING-CHARGES') and phic > $phic ");
 }else {
-$result = mysql_query("SELECT itemNo,phic,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and phic > $phic");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,phic,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and phic > $phic");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->highestCharges_getItemNo =  $row['itemNo'];
 $this->highestCharges_getPHIC = $row['phic']; 
 $this->highestCharges_getCash = $row['cashUnpaid']; 
 }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17138,30 +17138,30 @@ return $this->highestCharges_getCashUnpaid_reverse;
 
 public function getHighestCharges_itemNo_reverse($title,$registrationNo,$cash) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($title != "") {
-$result = mysql_query("SELECT itemNo,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and cashUnpaid > $cash ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and title='$title' and cashUnpaid > $cash ");
 }else if($title == "") {
-$result = mysql_query("SELECT itemNo,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and (title != 'MEDICINE' or title != 'Room And Board' or title != 'PROFESSIONAL FEE') and cashUnpaid > $cash ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and (title != 'MEDICINE' or title != 'Room And Board' or title != 'PROFESSIONAL FEE') and cashUnpaid > $cash ");
 }else {
-$result = mysql_query("SELECT itemNo,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > $cash ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,cashUnpaid FROM patientCharges where registrationNo = '$registrationNo' and cashUnpaid > $cash ");
 }
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->highestCharges_getItemNo_reverse =  $row['itemNo'];
 $this->highestCharges_getCashUnpaid_reverse = $row['cashUnpaid']; 
  }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17173,16 +17173,16 @@ public $creditCharges_phic;
 
 public function creditCharges($registrationNo,$casetype) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT * FROM patientCharges where registrationNo = '$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges where registrationNo = '$registrationNo'  ");
 
 
 $this->coconutTableStart();
@@ -17200,7 +17200,7 @@ $this->coconutTableRowStop();
 
 $this->coconutFormStart("get","http://".$this->getMyUrl()."/COCONUT/patientProfile/phicLimit/itemChecker.php");
 $this->coconutHidden("casetype",$casetype);
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->checkCase_cash += $row['cashUnpaid'];
@@ -17232,7 +17232,7 @@ $this->coconutButton("Case Type");
 $this->coconutFormStop();
 $this->coconutTableStop();
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17255,25 +17255,25 @@ return $this->checkCase_cash;
 
 public function checkCase($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query(" SELECT * FROM patientCharges where registrationNo = '$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT * FROM patientCharges where registrationNo = '$registrationNo'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->checkCase_phic = $row['phic'];
 $this->checkCase_company = $row['company'];
 $this->checkCase_cash = $row['cashUnpaid'];
   }
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17288,16 +17288,16 @@ return $this->getPaymentHistory_showUp_paid;
 public function getPaymentHistory_showUp($registrationNo) {
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query(" SELECT * FROM patientPayment where registrationNo = '$registrationNo' group by paymentNo ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT * FROM patientPayment where registrationNo = '$registrationNo' group by paymentNo ");
 
 echo "<table border=1 cellspacing=0 celllpadding=1>";
 echo "<tr>";
@@ -17307,7 +17307,7 @@ echo "<th>OR#</th>";
 echo "<th>Amount</th>";
 echo "<th>Paid By</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->getPaymentHistory_showUp_paid+=$row['amountPaid'];
@@ -17327,7 +17327,7 @@ echo "</tr>";
 echo "</table>";
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17340,23 +17340,23 @@ return $this->getPaymentHistory_showUp_returnPaid;
 
 public function getPaymentHistory_showUp_returnPaid_setter($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query(" SELECT sum(amountPaid) as total FROM patientPayment where registrationNo = '$registrationNo'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT sum(amountPaid) as total FROM patientPayment where registrationNo = '$registrationNo'  ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->getPaymentHistory_showUp_returnPaid+=$row['total'];
   }
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -17370,16 +17370,16 @@ public function getDischargedPatient($month,$day,$year,$month1,$day1,$year1,$bra
 $fromDate = $year."-".$month."-".$day;
 $toDate = $year1."-".$month1."-".$day1;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query(" SELECT rd.registrationNo,pr.lastName,pr.firstName,rd.room FROM registrationDetails rd,patientRecord pr WHERE rd.patientNo = pr.patientNo and (rd.dateUnregistered between '$fromDate' and '$toDate') ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT rd.registrationNo,pr.lastName,pr.firstName,rd.room FROM registrationDetails rd,patientRecord pr WHERE rd.patientNo = pr.patientNo and (rd.dateUnregistered between '$fromDate' and '$toDate') ");
 
 echo "<Table border=1 cellpadding=1 cellspacing=0>";
 echo "<tr>";
@@ -17387,7 +17387,7 @@ echo "<th>Patient</th>";
 echo "<th>Room</th>";
 echo "<th>&nbsp;Amount Paid&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->getPaymentHistory_showUp_returnPaid_setter($row['registrationNo']);
@@ -17414,16 +17414,16 @@ echo "</table>";
 public function getCriticalLevel($dept) {
 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query(" SELECT description,genericName,quantity,criticalLevel FROM inventory where criticalLevel >= quantity and criticalLevel != 0 and status not like 'DELETED_%%%%%%%' and inventoryLocation = '$dept' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT description,genericName,quantity,criticalLevel FROM inventory where criticalLevel >= quantity and criticalLevel != 0 and status not like 'DELETED_%%%%%%%' and inventoryLocation = '$dept' ");
 
 echo "<Table border=1 cellpadding=1 cellspacing=0>";
 echo "<tr>";
@@ -17432,7 +17432,7 @@ echo "<th>Generic</th>";
 echo "<th>&nbsp;QTY&nbsp;</th>";
 echo "<th>Critical Level</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['description']."&nbsp;</tD>";
@@ -17453,19 +17453,19 @@ public function getMedCensus($description,$month,$day,$year) {
 
 $date = $month."_".$day."_".$year;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query(" SELECT sum(quantity) as totalQTY FROM patientCharges where description = '$description' and dateCharge = '$date' and departmentStatus like 'dispensedBy%%%%%'   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT sum(quantity) as totalQTY FROM patientCharges where description = '$description' and dateCharge = '$date' and departmentStatus like 'dispensedBy%%%%%'   ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalQTY'];
   }
@@ -17476,26 +17476,26 @@ return $row['totalQTY'];
 
 public function requestDeletion($itemNo,$registrationNo,$description,$quantity,$username,$show,$desc,$reason,$requestDeleteBy) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO forDeletion (itemNo,registrationNo,description,quantity,username,showType,descType,reason,requestDeleteBy)
 VALUES
-('$itemNo','$registrationNo','$description','$quantity','$username','".mysql_real_escape_string($show)."','$desc','$reason','$requestDeleteBy')";
+('$itemNo','$registrationNo','$description','$quantity','$username','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $show) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$desc','$reason','$requestDeleteBy')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 $this->gotoPage("http://".$this->getMyUrl()."/COCONUT/patientProfile/patientCharges.php?registrationNo=$registrationNo&username=$requestDeleteBy&show=$show&desc=$desc");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -17507,15 +17507,15 @@ echo "<style type='text/css'>
 tr:hover { background-color:yellow; color:black; }
 </style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT * FROM forDeletion where approvedBy = '' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM forDeletion where approvedBy = '' ");
 
 
 echo "<center><Br><font size=2 color=red>Request to Delete</font><br>";
@@ -17529,7 +17529,7 @@ $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $descriptionZ = preg_split ("/\-/", $row['description']); 
@@ -17544,7 +17544,7 @@ $this->coconutTableRowStop();
 
 $this->coconutTableStop();
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -17559,18 +17559,18 @@ $myDatez = $year."-".$month."-".$day;
 $myFrom = $fromTime_hour.":".$fromTime_minutes.":".$fromTime_seconds;
 $myTo = $toTime_hour.":".$toTime_minutes.":".$toTime_seconds;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($type == "OPD") {
-$result = mysql_query("SELECT pc.paidBy,pr.lastName,pr.firstName,rd.room,sum(pc.cashUnpaid) as totalBal,sum(cashPaid) as totalPaid FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pc.datePaid = '$myDatez' and ( pc.timePaid between '$myFrom' and '$myTo' ) and rd.type like 'OPD%%%%' group by pc.registrationNo order by pc.paidBy,pr.lastName ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.paidBy,pr.lastName,pr.firstName,rd.room,sum(pc.cashUnpaid) as totalBal,sum(cashPaid) as totalPaid FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pc.datePaid = '$myDatez' and ( pc.timePaid between '$myFrom' and '$myTo' ) and rd.type like 'OPD%%%%' group by pc.registrationNo order by pc.paidBy,pr.lastName ");
 }else  {
-$result = mysql_query("SELECT pp.paidBy,pp.amountPaid,pp.datePaid,rd.room,sum(pc.total) as total,pr.lastName,pr.firstName from patientPayment pp,registrationDetails rd,patientCharges pc,patientRecord pr WHERE pp.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pp.datePaid = '$myDatez' and (pp.timePaid between '$myFrom' and '$myTo' ) and pp.paymentFor not in ('BILLED','REFUND') and rd.type='IPD' group by pp.paymentNo ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pp.paidBy,pp.amountPaid,pp.datePaid,rd.room,sum(pc.total) as total,pr.lastName,pr.firstName from patientPayment pp,registrationDetails rd,patientCharges pc,patientRecord pr WHERE pp.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pp.datePaid = '$myDatez' and (pp.timePaid between '$myFrom' and '$myTo' ) and pp.paymentFor not in ('BILLED','REFUND') and rd.type='IPD' group by pp.paymentNo ");
 }
 
 
@@ -17594,7 +17594,7 @@ echo "<th>Balance</th>";
 echo "<th>Received By</th>";
 echo "</tr>";
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 if($type == "OPD") {
@@ -17644,7 +17644,7 @@ echo "<tD>&nbsp;</tD>";
 echo "</tr>";
 echo "</table>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -17655,17 +17655,17 @@ mysql_close($con);
 
 public function getAttendingDoc($registrationNo,$service) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description from patientCharges where registrationNo = '$registrationNo' and service like '%$service%' and status = 'UNPAID'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description from patientCharges where registrationNo = '$registrationNo' and service like '%$service%' and status = 'UNPAID'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['description'];
   }
@@ -17679,17 +17679,17 @@ return $row['description'];
 
 public function sumPartial($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT sum(amountPaid) as total FROM patientPayment WHERE registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(amountPaid) as total FROM patientPayment WHERE registrationNo = '$registrationNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
   }
@@ -17720,17 +17720,17 @@ return $this->soap_planz;
 }
 public function soap_setter($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT subjective,objective,assessment,plan FROM SOAP WHERE registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT subjective,objective,assessment,plan FROM SOAP WHERE registrationNo = '$registrationNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->soap_objectivez = $row['objective'];
 $this->soap_subjectivez = $row['subjective'];
@@ -17746,20 +17746,20 @@ $this->soap_planz = $row['plan'];
 
 public function addNewPackage($description,$price,$pf) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO package (description,price,pf)
 VALUES
 ('".$description."','".$price."','".$pf."')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 
@@ -17770,7 +17770,7 @@ echo "</script>";
 
 
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 
@@ -17779,18 +17779,18 @@ mysql_close($con);
 
 public function soap_charges_auto($registrationNo,$title) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT description FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' ");
 
 $x=1;
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo $row['description']." , ";
   }
@@ -17802,17 +17802,17 @@ echo $row['description']." , ";
 
 public function totalItems($registrationNo,$title) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT count(description) as total FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT count(description) as total FROM patientCharges WHERE registrationNo = '$registrationNo' and title = '$title' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['total'];
   }
@@ -17842,15 +17842,15 @@ a { text-decoration:none; color:black; }
 $datez = $year."-".$month."-".$day;
 $datez1 = $year1."-".$month1."-".$day1;
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registrationNo,rd.dateUnregistered,rd.dateRegistered,pr.lastName,pr.firstName,rd.Company,pc.service,pc.total,pc.timeCharge,pc.company,pc.phic,pc.cashUnpaid FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pc.description = '$name' and (rd.dateUnregistered between '$datez' and '$datez1' and status not like 'DELETED%%%%%%%') and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') order by pr.lastName   ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.dateUnregistered,rd.dateRegistered,pr.lastName,pr.firstName,rd.Company,pc.service,pc.total,pc.timeCharge,pc.company,pc.phic,pc.cashUnpaid FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pc.registrationNo = rd.registrationNo and rd.patientNo = pr.patientNo and pc.description = '$name' and (rd.dateUnregistered between '$datez' and '$datez1' and status not like 'DELETED%%%%%%%') and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') order by pr.lastName   ");
 
 echo "
 
@@ -17865,7 +17865,7 @@ echo "<Th>&nbsp;PHIC&nbsp;</th>";
 echo "<Th>&nbsp;CASH&nbsp;</th>";
 echo "<Th>&nbsp;TOTAL PF&nbsp;</th>";
 echo "</tR>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->individual_doc_PF_hmo += $row['company'];
@@ -17899,52 +17899,52 @@ echo "</table>";
 
 public function checkTransmitted($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT registrationNo from phicTransmit WHERE registrationNo='$registrationNo' "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo from phicTransmit WHERE registrationNo='$registrationNo' "); 
 
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
 
 }
 
 public function getPatientICD_diagnosis_transmittal_check($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT diagnosis from patientICD WHERE registrationNo='$registrationNo'  "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT diagnosis from patientICD WHERE registrationNo='$registrationNo'  "); 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
 
 public function getPatientICD_diagnosis_transmittal($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT diagnosis from patientICD WHERE registrationNo='$registrationNo' order by icdCode asc "); 
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT diagnosis from patientICD WHERE registrationNo='$registrationNo' order by icdCode asc "); 
 echo "<td>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<font size=2>".$row['diagnosis'].",</font>";
   }
@@ -17980,24 +17980,24 @@ echo "
 
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $type == "All" ) {
-$result = mysql_query("SELECT rd.registrationNo,rd.PIN,pr.lastName,pr.firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered from registrationDetails rd,patientRecord pr where pr.patientNo = rd.patientNo and pr.PHIC = 'YES' and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.PIN,pr.lastName,pr.firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered from registrationDetails rd,patientRecord pr where pr.patientNo = rd.patientNo and pr.PHIC = 'YES' and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') order by pr.lastName asc ");
 }else {
-$result = mysql_query("SELECT rd.registrationNo,rd.PIN,pr.lastName,pr.firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered from registrationDetails rd,patientRecord pr where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') and pr.phicType like '$type%' order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.PIN,pr.lastName,pr.firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered from registrationDetails rd,patientRecord pr where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') and pr.phicType like '$type%' order by pr.lastName asc ");
 }
 
 
 $this->coconutFormStart("get","readyTransmit.php");
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -18112,23 +18112,23 @@ echo "
 
 echo "</style>";
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $type == "All"  ) {
-$result = mysql_query("SELECT rd.registrationNo,rd.PIN,UPPER(pr.lastName) as lastName,UPPER(pr.firstName) as firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered,pt.transmitNo from registrationDetails rd,patientRecord pr,phicTransmit pt where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') and pr.PHIC = 'YES' and pt.registrationNo = rd.registrationNo group by pt.registrationNo order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.PIN,UPPER(pr.lastName) as lastName,UPPER(pr.firstName) as firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered,pt.transmitNo from registrationDetails rd,patientRecord pr,phicTransmit pt where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') and pr.PHIC = 'YES' and pt.registrationNo = rd.registrationNo group by pt.registrationNo order by pr.lastName asc ");
 }else {
-$result = mysql_query("SELECT rd.registrationNo,rd.PIN,pr.lastName,pr.firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered,pt.transmitNo from registrationDetails rd,patientRecord pr,phicTransmit pt where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') and pr.phicType like '$type%' and pt.registrationNo = rd.registrationNo group by pt.registrationNo order by pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.PIN,pr.lastName,pr.firstName,pr.age,pr.gender,rd.dateRegistered,rd.dateUnregistered,pt.transmitNo from registrationDetails rd,patientRecord pr,phicTransmit pt where pr.patientNo = rd.patientNo and (rd.dateUnregistered between '$dateDischarged' and '$dateDischarged1') and pr.phicType like '$type%' and pt.registrationNo = rd.registrationNo group by pt.registrationNo order by pr.lastName asc ");
 }
 
 $this->coconutFormStart("get","transmitted_selected.php");
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 
@@ -18249,24 +18249,24 @@ echo "</table>";
 
 public function getMaximumTotal($registrationNo,$case) { //kkuhain ang maximum sa medicine 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($case == "ordinaryCase") {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.sellingPrice > 0 and pc.title = 'MEDICINE' and pc.phic = 0 and i.phic = 'yes' and pc.status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.sellingPrice > 0 and pc.title = 'MEDICINE' and pc.phic = 0 and i.phic = 'yes' and pc.status = 'UNPAID' ");
 }else {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.sellingPrice > 0 and pc.title = 'MEDICINE' and pc.phic = 0 and pc.status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.sellingPrice > 0 and pc.title = 'MEDICINE' and pc.phic = 0 and pc.status = 'UNPAID' ");
 }
 
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalz']."_".$row['itemNo'];
   }
@@ -18277,25 +18277,25 @@ return $row['totalz']."_".$row['itemNo'];
 
 public function getMaximumTotal_checker($registrationNo,$case) { //check kung meron pang pde Lagay sa phic 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if( $case == "ordinaryCase" ) {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic = 0 and i.phic='yes' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic = 0 and i.phic='yes' ");
 }else {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic = 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,inventory i where pc.chargesCode = i.inventoryCode and pc.registrationNo = '$registrationNo' and pc.title = 'MEDICINE' and pc.phic = 0 ");
 }
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -18306,24 +18306,24 @@ return mysql_num_rows($result);
 
 public function getMaximumTotal_PF($registrationNo,$case) { //kkuhain ang maximum sa medicine 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $case == "ordinaryCase" ) {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 and ds.phic = 'yes' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 and ds.phic = 'yes' ");
 }else {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 ");
 }
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalz']."_".$row['itemNo'];
   }
@@ -18333,23 +18333,23 @@ return $row['totalz']."_".$row['itemNo'];
 
 public function getMaximumTotal_checker_PF($registrationNo,$case) { //check kung meron pang pde Lagay sa phic 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 if( $case == "ordinaryCase" ) {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 and ds.phic='yes' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 and ds.phic='yes' ");
 }else {
-$result = mysql_query("SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(pc.cashUnpaid) as totalz,pc.itemNo from patientCharges pc,DoctorService ds where pc.service = ds.serviceName and pc.registrationNo = '$registrationNo' and pc.title = 'PROFESSIONAL FEE' and pc.phic = 0 ");
 }
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -18359,21 +18359,21 @@ return mysql_num_rows($result);
 
 public function getMaximumTotal_supplies($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','SUPPLIES','ECG') and phic = 0 and sellingPrice > 0 and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','SUPPLIES','ECG') and phic = 0 and sellingPrice > 0 and status = 'UNPAID' ");
 
 
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalz']."_".$row['itemNo'];
   }
@@ -18384,21 +18384,21 @@ return $row['totalz']."_".$row['itemNo'];
 
 public function getMaximumTotal_supplies_checker($registrationNo) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','SUPPLIES','NURSING-CHARGES','MISCELLANEOUS') and phic = 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title IN ('LABORATORY','RADIOLOGY','SUPPLIES','NURSING-CHARGES','MISCELLANEOUS') and phic = 0 ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -18408,19 +18408,19 @@ return mysql_num_rows($result);
 
 public function getMaximumTotal_any($registrationNo,$title) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title='$title' and phic = 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title='$title' and phic = 0 ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalz']."_".$row['itemNo'];
   }
@@ -18431,21 +18431,21 @@ return $row['totalz']."_".$row['itemNo'];
 
 public function getMaximumTotal_any_checker($registrationNo,$title) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title='$title' and phic = 0 ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT MAX(cashUnpaid) as totalz,itemNo from patientCharges where registrationNo = '$registrationNo' and title='$title' and phic = 0 ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
-return mysql_num_rows($result);
+return mysqli_num_rows($result);
   }
 
 }
@@ -18454,18 +18454,18 @@ return mysql_num_rows($result);
 
 public function getReady_PHIClimit($registrationNo,$itemNo,$total) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-mysql_query("UPDATE patientCharges SET cashUnpaid = '$total',company = 0,phic = 0
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE patientCharges SET cashUnpaid = '$total',company = 0,phic = 0
 WHERE itemNo = '$itemNo' and registrationNo = '$registrationNo' ");
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
 
 
@@ -18476,28 +18476,28 @@ mysql_close($con);
 
 public function getReadyAllChargesForPHICLimit($registrationNo,$type) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
 if( $type == "supplies" ) {
-$result = mysql_query("SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and (title = 'LABORATORY' or title = 'RADIOLOGY' or title = 'SUPPLIES' ) ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and (title = 'LABORATORY' or title = 'RADIOLOGY' or title = 'SUPPLIES' ) ");
 }else if( $type == "medicine" ) {
-$result = mysql_query("SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = 'MEDICINE' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = 'MEDICINE' ");
 }else if( $type == "pf" ) { 
-$result = mysql_query("SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = 'PROFESSIONAL FEE' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = 'PROFESSIONAL FEE' ");
 }else if( $type == "room" ) {
-$result = mysql_query("SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = 'Room And Board' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo,total,description from patientCharges where registrationNo = '$registrationNo' and status = 'UNPAID' and title = 'Room And Board' ");
 }else { }
 
 
 echo "<table border=0>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 $this->getReady_PHIClimit($registrationNo,$row['itemNo'],$row['total']);
@@ -18519,18 +18519,18 @@ echo "</table>";
 
 public function getBilledPx() {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysql_query("SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.paymentFor = 'BILLED' group by paymentNo order by completeName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,pp.paidVia,upper(pr.completeName) as completeName,pp.paymentFor,pp.paidBy,pp.datePaid,pp.amountPaid FROM patientPayment pp,patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and pp.registrationNo = rd.registrationNo and rd.registrationNo = pc.registrationNo and pp.paymentFor = 'BILLED' group by paymentNo order by completeName asc ");
 
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 if( $this->shouldPay($row['registrationNo']) > 0 && $this->alreadyPay($row['registrationNo']) == 0  ) { // check ung mga patient n bill pru kLangan pren mgbyad sa cashier
@@ -18566,18 +18566,18 @@ echo "</tr>";
 
 public function shouldPay($registrationNo) { //mga patient n bill pru may bbyran p rin sa cashier 
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysql_query("SELECT sum(pc.cashUnpaid) as totalCash from patientCharges pc where registrationNo = '$registrationNo' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.cashUnpaid) as totalCash from patientCharges pc where registrationNo = '$registrationNo' ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['totalCash'];
 }
@@ -18628,26 +18628,26 @@ return $row['pxCount']+1;
 
 public function transferMedicine($stockCardNo,$description,$generic,$unitcost,$quantity,$expiration,$addedBy,$dateAdded,$timeAdded,$inventoryLocation,$inventoryType,$branch,$transition,$remarks,$preparation,$phic,$added,$criticalLevel,$supplier,$begCapital,$begQTY,$suppliesUNITCOST,$autoDispense,$status,$classification,$description1,$genericName1,$ipdPrice,$opdPrice,$unitOfMeasure,$biQTY,$biInventoryCode,$encodedQTY,$fromInventoryCode) {
 
-$con = mysql_connect($this->host,$this->username,$this->password);
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->database, $con);
+((bool)mysqli_query( $con, "USE " . $this->database));
 
 $sql="INSERT INTO inventory (stockCardNo,description,genericName,unitcost,quantity,expiration,addedBy,dateAdded,timeAdded,inventoryLocation,inventoryType,branch,transition,remarks,preparation,phic,Added,criticalLevel,supplier,beginningCapital,beginningQTY,suppliesUNITCOST,autoDispense,classification,ipdPrice,opdPrice,unitOfMeasure,lastEnd_QTY,lastEnd_inventoryCode,encodedQTY,from_inventoryCode)
 VALUES
 ('$stockCardNo','$description','$generic','$unitcost','$quantity','$expiration','$addedBy','$dateAdded','$timeAdded','$inventoryLocation','$inventoryType','$branch','$transition','$remarks','$preparation','$phic','$added','$criticalLevel','$supplier','$begCapital','$begQTY','$suppliesUNITCOST','$autoDispense','$classification','$ipdPrice','$opdPrice','$unitOfMeasure','$biQTY','$biInventoryCode','$encodedQTY','$fromInventoryCode')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<Center><br><br><br>Added <Br> $description - $quantity pcs  to $inventoryLocation</center>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 }
 

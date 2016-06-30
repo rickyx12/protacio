@@ -1,7 +1,4 @@
 
-
-
-
 <title>Synapse Hospital System</title>
 <?php
 include("homeDatabase.php");
@@ -22,7 +19,7 @@ session_destroy();
 //}
 //else {
 echo "<table id='headz' border=0 bgcolor='#3b5998' width='100%'>
-<td>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/Homepage/homepage.php' target='welcome' style='text-decoration:none;'><font size=5 color=white><b>Synapse</b></font></a></td></table>";
+<td>&nbsp;&nbsp;<a href='../COCONUT/Homepage/homepage.php' target='welcome' style='text-decoration:none;'><font size=5 color=white><b>Synapse</b></font></a></td></table>";
 
 $ro->coconutUpperMenuStart();
 $ro->coconutUpperMenu_headingStart("Staff Login");
@@ -33,7 +30,7 @@ $ro->coconutUpperMenuStop();
 
 //echo "<iframe src='http://".$ro->getMyUrl()."/MainPage.php' width='73%' height='555'  name='welcome' border=1 frameborder=no></iframe>";
 
-echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/ADMIN/census/census-new.php' width='100%' height='510'  name='welcome' border=1 frameborder=no></iframe>";
+echo "<iframe src='../COCONUT/ADMIN/census/census-new.php' width='100%' height='510'  name='welcome' border=1 frameborder=no></iframe>";
 
 //echo "<iframe src='http://".$ro->getMyUrl()."/COCONUT/Laboratory/testDone/testDone_update.php' width='27%' height='555'  name='welcome' border=1 frameborder=no></iframe>";
 //}
