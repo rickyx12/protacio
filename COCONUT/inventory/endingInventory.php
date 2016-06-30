@@ -241,6 +241,7 @@ $qtyNo = count($qty);
     				<tbody>
     					<? for($a=0,$b=0,$c=0,$d=0,$e=0;$a<$genericNameNo,$b<$brandNo,$c<$inventoryCodeNo,$d<$countStockCard,$e<$qtyNo;$a++,$b++,$c++,$d++,$e++) { ?>	
     						<? //if( $ro1->selectNow("inventory","invoiceNo","inventoryCode",$inventoryCode[$c]) != "" && $ro1->selectNow("inventory","addedBy","inventoryCode",$inventoryCode[$c]) != "system" ) { ?>
+    						<? if( $ro1->selectNow("inventory","from_inventoryCode","inventoryCodeNo",$inventoryCode[$c]) == "" ) { ?>
     						<? $items++; ?>
 
     						<tr>
@@ -284,6 +285,7 @@ $qtyNo = count($qty);
     							<? } ?>
      						
      						</tr>
+     						<? } ?>
      						<? //} ?>
      					<? } ?>
     				</tbody>
