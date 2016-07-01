@@ -43,6 +43,7 @@ $ot=0;
 $st=0;
 $endoscopy=0;
 $spirometry = 0;
+$nursery = 0;
 $pf=0;
 $erFee=0;
 $others=0;
@@ -67,6 +68,7 @@ $ot_pd=0;
 $st_pd=0;
 $endoscopy_pd=0;
 $spirometry_pd = 0;
+$nursery_pd = 0;
 $pf_pd=0;
 $erFee_pd=0;
 $others_pd=0;
@@ -90,6 +92,7 @@ $ot_disc=0;
 $st_disc=0;
 $endoscopy_disc=0;
 $spirometry_disc = 0;
+$nursery_disc = 0;
 $pf_disc=0;
 $erFee_disc=0;
 $others_disc=0;
@@ -113,6 +116,7 @@ $ot_unpaid=0;
 $st_unpaid=0;
 $endoscopy_unpaid=0;
 $spirometry_unpaid = 0;
+$nursery_unpaid = 0;
 $pf_unpaid=0;
 $erFee_unpaid=0;
 $others_unpaid=0;
@@ -135,6 +139,7 @@ $ot_phic=0;
 $st_phic=0;
 $endoscopy_phic=0;
 $spirometry_phic = 0;
+$nursery_phic = 0;
 $pf_phic=0;
 $erFee_phic=0;
 $others_phic=0;
@@ -159,6 +164,7 @@ $ot_hmo=0;
 $st_hmo=0;
 $endoscopy_hmo=0;
 $spirometry_hmo = 0;
+$nursery_hmo = 0;
 $pf_hmo=0;
 $erFee_hmo=0;
 $others_hmo=0;
@@ -752,6 +758,42 @@ echo "</tr>";
 /****************SPIROMETRY***********************/
 
 
+/********************NURSERY*******************/
+
+if( $ro->checkIfTitleExist_newDetailed_opd($registrationNo,"NURSERY") > 0 ) {
+echo "<tr>";
+echo "<td>&nbsp;<font size=2><b>Nursery</b></font></td>";
+//echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+$ro->newDetailed($registrationNo,"NURSERY");
+
+
+echo "<tr>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td><font size=2><b>Sub Total</b></font></td>";
+echo "<td><font size=1>=====></font></td>";
+$nursery += $ro->newDetailed_total();
+$nursery_pd += $ro->newDetailed_pd();
+$nursery_disc += $ro->newDetailed_disc();
+$nursery_unpaid += $ro->newDetailed_unpaid();
+$nursery_phic += $ro->newDetailed_phic();
+$nursery_hmo += $ro->newDetailed_hmo();
+echo "<td><font size=2><b>".number_format($nursery,2)."</b></font></td>";
+
+echo "</tr>";
+}else { }
+/****************NURSERY***********************/
+
 /****************PF**********************/
 
 if( $ro->checkIfTitleExist_newDetailed_opd($registrationNo,"PROFESSIONAL FEE") > 0 ) {
@@ -951,18 +993,18 @@ if( $ro->selectNow("paidBalance","balanceNo","registrationNo_balance",$registrat
 	$balancePaid_total = 0;
 }
 
-$total = ( $medicine + $supplies + $laboratory + $ultrasound + $ctscan + $xray + $miscellaneous + $ecg + $or_dr + $pt + $ot + $st + $endoscopy + $spirometry + $pf + $erFee + $cardiacMonitor + $balance + $others );
+$total = ( $medicine + $supplies + $laboratory + $ultrasound + $ctscan + $xray + $miscellaneous + $ecg + $or_dr + $pt + $ot + $st + $endoscopy + $spirometry + $nursery + $pf + $erFee + $cardiacMonitor + $balance + $others );
 
-$total_pd = ( $medicine_pd + $supplies_pd + $laboratory_pd + $ultrasound_pd + $ctscan_pd + $xray_pd + $miscellaneous_pd + $ecg_pd + $or_dr_pd + $pt_pd + $ot_pd + $st_pd + $endoscopy_pd + $spirometry_pd + $pf_pd + $erFee_pd + $cardiacMonitor_pd + $balance_pd + $others_pd );
+$total_pd = ( $medicine_pd + $supplies_pd + $laboratory_pd + $ultrasound_pd + $ctscan_pd + $xray_pd + $miscellaneous_pd + $ecg_pd + $or_dr_pd + $pt_pd + $ot_pd + $st_pd + $endoscopy_pd + $spirometry_pd + $nursery_pd + $pf_pd + $erFee_pd + $cardiacMonitor_pd + $balance_pd + $others_pd );
 
 
-$total_phic = ( $medicine_phic + $supplies_phic + $laboratory_phic + $ultrasound_phic + $ctscan_phic + $xray_phic + $miscellaneous_phic + $ecg_phic + $or_dr_phic + $pt_phic + $ot_phic + $st_phic + $endoscopy_phic + $spirometry_phic + $pf_phic + $erFee_phic + $cardiacMonitor_phic + $balance_phic + $others_phic );
+$total_phic = ( $medicine_phic + $supplies_phic + $laboratory_phic + $ultrasound_phic + $ctscan_phic + $xray_phic + $miscellaneous_phic + $ecg_phic + $or_dr_phic + $pt_phic + $ot_phic + $st_phic + $endoscopy_phic + $spirometry_phic + $nursery_phic + $pf_phic + $erFee_phic + $cardiacMonitor_phic + $balance_phic + $others_phic );
 
-$total_hmo = ( $medicine_hmo + $supplies_hmo + $laboratory_hmo + $ultrasound_hmo + $ctscan_hmo + $xray_hmo + $miscellaneous_hmo + $ecg_hmo + $or_dr_hmo + $pt_hmo + $ot_hmo + $st_hmo + $endoscopy_hmo + $spirometry_hmo + $pf_hmo + $erFee_hmo + $cardiacMonitor_hmo + $balance_hmo + $others_hmo );
+$total_hmo = ( $medicine_hmo + $supplies_hmo + $laboratory_hmo + $ultrasound_hmo + $ctscan_hmo + $xray_hmo + $miscellaneous_hmo + $ecg_hmo + $or_dr_hmo + $pt_hmo + $ot_hmo + $st_hmo + $endoscopy_hmo + $spirometry_hmo  + $nursery_hmo+ $pf_hmo + $erFee_hmo + $cardiacMonitor_hmo + $balance_hmo + $others_hmo );
 
-$total_disc = ( $medicine_disc + $supplies_disc + $laboratory_disc + $ultrasound_disc + $ctscan_disc + $xray_disc + $miscellaneous_disc + $ecg_disc + $or_dr_disc + $pt_disc + $st_disc + $ot_disc + $endoscopy_disc + $spirometry_disc + $pf_disc + $erFee_disc + $cardiacMonitor_disc + $balance_disc + $others_disc );
+$total_disc = ( $medicine_disc + $supplies_disc + $laboratory_disc + $ultrasound_disc + $ctscan_disc + $xray_disc + $miscellaneous_disc + $ecg_disc + $or_dr_disc + $pt_disc + $st_disc + $ot_disc + $endoscopy_disc + $spirometry_disc + $nursery_disc + $pf_disc + $erFee_disc + $cardiacMonitor_disc + $balance_disc + $others_disc );
 
-$total_unpaid = ( $medicine_unpaid + $supplies_unpaid + $laboratory_unpaid + $ultrasound_unpaid + $ctscan_unpaid + $xray_unpaid + $miscellaneous_unpaid + $ecg_unpaid + $or_dr_unpaid + $pt_unpaid + $ot_unpaid + $st_unpaid + $endoscopy_unpaid + $spirometry_unpaid + $pf_unpaid + $erFee_unpaid + $cardiacMonitor_unpaid + $balance_unpaid + $others_unpaid );
+$total_unpaid = ( $medicine_unpaid + $supplies_unpaid + $laboratory_unpaid + $ultrasound_unpaid + $ctscan_unpaid + $xray_unpaid + $miscellaneous_unpaid + $ecg_unpaid + $or_dr_unpaid + $pt_unpaid + $ot_unpaid + $st_unpaid + $endoscopy_unpaid + $spirometry_unpaid + $nursery_unpaid + $pf_unpaid + $erFee_unpaid + $cardiacMonitor_unpaid + $balance_unpaid + $others_unpaid );
 
 echo "<tr>";
 echo "<td>&nbsp;</td>";
