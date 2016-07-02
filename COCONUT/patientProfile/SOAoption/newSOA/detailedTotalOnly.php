@@ -44,6 +44,7 @@ $roomTotal=0;
 $pfTotal=0;
 $ctscanTotal=0;
 $spirometryTotal=0;
+$nurseryTotal = 0;
 $rehabTotal=0;
 $dermaTotal=0;
 $ptTotal=0;
@@ -64,6 +65,7 @@ $roomCompany=0;
 $pfCompany=0;
 $ctscanCompany=0;
 $spirometryCompany=0;
+$nurseryCompany = 0;
 $rehabCompany=0;
 $dermaCompany=0;
 $ptCompany=0;
@@ -84,6 +86,7 @@ $roomCash=0;
 $pfCash=0;
 $ctscanCash=0;
 $spirometryCash=0;
+$nurseryCash = 0;
 $rehabCash=0;
 $dermaCash=0;
 $ptCash=0;
@@ -614,6 +617,43 @@ $spirometryCash += $ro->detailedTotalOnly_cash();
 /*******************SPIROMETRY************************/
 
 
+/*******************NURSERY************************/
+
+if( $ro->checkIfTitleExist_newDetailed($registrationNo,"NURSERY") > 0 ) {
+echo "<tr>";
+echo "<td>&nbsp;<font size=2><b>NURSERY</b></font></td>";
+//echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "</tr>";
+
+$ro->detailedTotalOnly($registrationNo,"NURSERY",$chargesCode,$username,$show,$showdate);
+
+
+echo "<tr>";
+echo "<td>&nbsp;</td>";
+//echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td>&nbsp;</td>";
+echo "<td><font size=2><b>".number_format(trim($ro->detailedTotalOnly_total()),2)."</b></font></td>";
+echo "</tr>";
+$nurseryTotal += $ro->detailedTotalOnly_total();
+$nurseryCompany += $ro->detailedTotalOnly_company();
+$nurseryCash += $ro->detailedTotalOnly_cash();
+}else { }
+
+/*******************NURSERY************************/
+
+
+
 /*******************REHAB************************/
 
 if( $ro->checkIfTitleExist_newDetailed($registrationNo,"REHAB") > 0 ) {
@@ -835,7 +875,7 @@ $roomCash += $ro->detailedTotalOnly_cash();
 }else { }
 /***************ROOM*********************/
 
-$HBtotal = ( $medicineTotal + $suppliesTotal + $laboratoryTotal + $ultrasoundTotal + $xrayTotal + $miscellaneousTotal + $orTotal + $roomTotal + $ctscanTotal + $spirometryTotal + $rehabTotal + $ecgTotal + $cardiacTotal + $erFeeTotal + $dermaTotal + $ptTotal + $otTotal + $othersTotal );
+$HBtotal = ( $medicineTotal + $suppliesTotal + $laboratoryTotal + $ultrasoundTotal + $xrayTotal + $miscellaneousTotal + $orTotal + $roomTotal + $ctscanTotal + $spirometryTotal + $nurseryTotal + $rehabTotal + $ecgTotal + $cardiacTotal + $erFeeTotal + $dermaTotal + $ptTotal + $otTotal + $othersTotal );
 
 echo "<tr>";
 echo "<td colspan=2><font size=2><b>TOTAL HOSPITAL BILL</b></font></td>";
@@ -897,12 +937,12 @@ $pfCash += $ro->detailedTotalOnly_cash();
 
 
 
-$total = ( $medicineTotal + $suppliesTotal + $laboratoryTotal + $ultrasoundTotal + $xrayTotal + $miscellaneousTotal + $orTotal + $roomTotal + $pfTotal + $ctscanTotal + $rehabTotal + $ecgTotal + $spirometryTotal + $erFeeTotal + $cardiacTotal + $dermaTotal + $ptTotal + $otTotal + $othersTotal);
+$total = ( $medicineTotal + $suppliesTotal + $laboratoryTotal + $ultrasoundTotal + $xrayTotal + $miscellaneousTotal + $orTotal + $roomTotal + $pfTotal + $ctscanTotal + $rehabTotal + $ecgTotal + $spirometryTotal + $nurseryTotal + $erFeeTotal + $cardiacTotal + $dermaTotal + $ptTotal + $otTotal + $othersTotal);
 
 
-$companyTotal = ( $medicineCompany + $suppliesCompany + $laboratoryCompany + $ultrasoundCompany + $xrayCompany + $miscellaneousCompany + $orCompany + $erFeeCompany + $roomCompany + $pfCompany + $ctscanCompany + $rehabCompany + $ecgCompany + $spirometryCompany + $cardiacCompany + $dermaCompany + $ptCompany + $otCompany + $othersCompany );
+$companyTotal = ( $medicineCompany + $suppliesCompany + $laboratoryCompany + $ultrasoundCompany + $xrayCompany + $miscellaneousCompany + $orCompany + $erFeeCompany + $roomCompany + $pfCompany + $ctscanCompany + $rehabCompany + $ecgCompany + $spirometryCompany + $nurseryCompany + $cardiacCompany + $dermaCompany + $ptCompany + $otCompany + $othersCompany );
 
-$cashTotal = ( $medicineCash + $suppliesCash + $laboratoryCash + $ultrasoundCash + $xrayCash + $miscellaneousCash + $orCash  + $roomCash + $pfCash + $ctscanCash + $rehabCash + $ecgCash + $spirometryCash + $erFeeCash + $cardiacCash + $dermaCash + $ptCash + $otCash + $othersCash );
+$cashTotal = ( $medicineCash + $suppliesCash + $laboratoryCash + $ultrasoundCash + $xrayCash + $miscellaneousCash + $orCash  + $roomCash + $pfCash + $ctscanCash + $rehabCash + $ecgCash + $spirometryCash + $nurseryCash + $erFeeCash + $cardiacCash + $dermaCash + $ptCash + $otCash + $othersCash );
 
 /*echo "<tr>";
 echo "<td>&nbsp;</td>";
