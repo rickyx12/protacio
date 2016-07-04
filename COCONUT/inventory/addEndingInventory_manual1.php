@@ -5,6 +5,7 @@
 <? $currentQTY = $_POST['currentQTY'] ?>
 <? $endingQTY = $_POST['endingQTY'] ?>
 <? $unitcost = $_POST['unitcost'] ?>
+<? $inventoryLocation = $_POST['inventoryLocation'] ?>
 <? $dateAdded = $_POST['dateAdded'] ?>
 <? $quarter = $_POST['quarter'] ?>
 <? $ro4 = new database4(); ?>
@@ -15,6 +16,7 @@
 		"currentQTY" => $currentQTY,
 		"endingQTY" => $endingQTY,
 		"unitcost" => $unitcost,
+		"inventoryLocation" => $inventoryLocation,
 		"date" => $dateAdded." ".date("H:i:s"),
 		"quarter" => $quarter
 	);

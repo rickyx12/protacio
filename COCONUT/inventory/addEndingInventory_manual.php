@@ -8,8 +8,42 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="../../jquery-2.1.4.min.js"></script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.tooltipster.min.js"></script>
 	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../js/jquery-ui.css"></link>
+	<link rel="stylesheet" href="../js/jquery-ui.theme.min.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster-noir.css"></link>
+
+	<script>
+		$(document).ready(function(){
+
+			$("#unitcost").tooltipster({
+				content: $('<span>Loading....</span>'),
+				position: 'right',
+				theme: 'tooltipster-noir',
+				trigger:'click',
+				contentAsHTML:true,
+				functionBefore:function(origin,continueTooltip) {
+					continueTooltip();
+					if( origin.data('ajax') !== 'cached' ){ 
+						$.ajax({
+							type:'POST',
+							url:'addMedicine_unitcost.php',
+							data:{'stockCardNo':'<? echo $stockCardNo ?>'},
+							success:function(data) {
+								origin.tooltipster('content',data).data('ajax','cached');
+							}
+						});
+					}
+				}
+			});				
+
+		});
+	</script>
+
 </head>
 <body>
 	<div class="container">
@@ -63,9 +97,23 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">Unitcost</label>
 							<div class="col-sm-5">
-								<input type="text" name="unitcost" class="form-control col-sm-5" autocomplete="off" placeholder="unitcost per pcs">
+								<input type="text" id="unitcost" name="unitcost" class="form-control col-sm-5" autocomplete="off" placeholder="unitcost per pcs">
 							</div>
 						</div>					
+
+						<div class="form-group"> 
+							<label class="form-label col-sm-2">Location</label>
+							<div class="col-sm-10">
+								<input type="radio" name="inventoryLocation" value="PHARMACY" checked> Pharmacy
+								&nbsp;&nbsp;
+								<input type="radio" name="inventoryLocation" value="ER"> ER
+								&nbsp;&nbsp;
+								<input type="radio" name="inventoryLocation" value="OR"> OR
+								&nbsp;&nbsp;
+								<input type="radio" name="inventoryLocation" value="NS STATION"> NS Station
+							</div>
+						</div>
+
 
 						<div class="form-group">
 							<label class="control-label col-sm-2">Date</label>
