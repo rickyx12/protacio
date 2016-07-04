@@ -1,3 +1,5 @@
+<? require_once "../authentication.php" ?>
+<? include "../../myDatabase.php" ?>
 <? include "../../myDatabase4.php" ?>
 <? $stockCardNo = $_POST['stockCardNo'] ?>
 <? $brandName = $_POST['brandName'] ?>
@@ -8,7 +10,9 @@
 <? $inventoryLocation = $_POST['inventoryLocation'] ?>
 <? $dateAdded = $_POST['dateAdded'] ?>
 <? $quarter = $_POST['quarter'] ?>
-<? $ro4 = new database4(); ?>
+
+<? $ro = new database() ?>
+<? $ro4 = new database4() ?>
 <?
 
 	$data = array(
@@ -18,7 +22,8 @@
 		"unitcost" => $unitcost,
 		"inventoryLocation" => $inventoryLocation,
 		"date" => $dateAdded." ".date("H:i:s"),
-		"quarter" => $quarter
+		"quarter" => $quarter,
+		"username" => $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID'])
 	);
 
 	$ro4->insertNow("endingInventory",$data);

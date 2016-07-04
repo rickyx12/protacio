@@ -1,3 +1,4 @@
+<? require_once "../authentication.php" ?>
 <? include "../../myDatabase.php" ?>
 <? $ro = new database() ?>
 <? $stockCardNo = $_GET['stockCardNo'] ?>
