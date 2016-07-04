@@ -12,8 +12,8 @@ class EndingInventory extends Migration
      */
     public function up()
     {
-        Schema::table('endingInventory',function(Blueprint $table){
-            $table->string('inventoryLocation',50);
+        Schema::table('endingInventory',function(Blueprint $t){
+            $t->string('inventoryLocation',50);
         });
     }
 
@@ -24,8 +24,8 @@ class EndingInventory extends Migration
      */
     public function down()
     {
-        Schema::table('endingInventory',function(Blueprint $table){
-            $table->dropColumn('inventoryLocation');
+        Schema::table('endingInventory',function(Blueprint $t){
+            $t->dropColumn('inventoryLocation');
         });
     }
 }
