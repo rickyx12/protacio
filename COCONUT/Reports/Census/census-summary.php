@@ -60,85 +60,105 @@
 	</head>
 	<body>
 		<div class="container">
-			<h3>Census Summary</h3>
+			<div class="col-sm-12">
 
-			<div class="row">
-				<form method="post" action="<? echo $_SERVER['PHP_SELF'] ?>">
-					<div class="col-md-2">
-						<input type="text" class="form-control" name="date" value="<? echo $date ?>">	
-					</div>
-				</form>			
-			</div>
+				<h3>Census Summary</h3>
 
-			<div class="col-md-3">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Patients</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<? for( $x=1;$x<=31;$x++ ) { ?>
+				<div class="row">
+					<div class="col-sm-6">
+						<form method="post" action="<? echo $_SERVER['PHP_SELF'] ?>">
+							<div class="col-sm-6">
+								<input type="text" class="form-control" name="date" value="<? echo $date ?>">	
+							</div>
+						</form>	
+					</div>		
+				</div>
+
+				<div class="col-sm-5">
+					<table class="table table-hover">
+						<thead>
 							<tr>
-								<td><? echo $ro4->formatDate($year."-".$month."-".$x) ?></td>
-
-								<? if($x < 10) { ?>
-
-									<? $totalOPD += $ro4->get_last_register($year."-".$month."-"."0".$x) ?>
-									<td><? echo $ro4->get_last_register($year."-".$month."-"."0".$x) ?></td>
-								
-								<? }else { ?>
-								
-									<? $totalOPD += $ro4->get_last_register($year."-".$month."-".$x) ?>
-									<td><? echo $ro4->get_last_register($year."-".$month."-".$x) ?></td>
-								
-								<? } ?>
-
+								<th>Date</th>
+								<th>Patients</th>
 							</tr>
-						<? } ?>
-						<tr>
-							<td>Patients</td>
-							<td><? echo $totalOPD ?></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							
+							<? for( $x=1;$x<=31;$x++ ) { ?>
+								<tr>
+									<td>
+										<? 
+											echo $ro4->formatDate($year."-".$month."-".$x) 
+										?>
+									</td>
 
-			<div class="col-md-3">
-				
-			</div>
+									<? if($x < 10) { ?>
 
-			<div class="col-md-3">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Admitted</th>
-						</tr>
-					</thead>
-					<tbody>
-						<? for( $x=1;$x<=31;$x++ ) { ?>
+										<? $totalOPD += $ro4->get_last_register($year."-".$month."-"."0".$x) ?>
+										<td>
+											<? 
+												echo $ro4->get_last_register($year."-".$month."-"."0".$x) 
+											?>
+										</td>
+									
+									<? }else { ?>
+									
+										<? $totalOPD += $ro4->get_last_register($year."-".$month."-".$x) ?>
+										<td>
+											<? 
+												echo $ro4->get_last_register($year."-".$month."-".$x) 
+											?>
+										</td>
+									
+									<? } ?>
+
+								</tr>
+							<? } ?>
+						</tbody>
+						<tfoot>
 							<tr>
-								<td><? echo $ro4->formatDate($year."-".$month."-".$x) ?></td>
-								<? if( $x < 10 ) { ?>
-									<? $totalIPD += $ro4->get_ipd_census($year."-".$month."-"."0".$x) ?>
-									<td><? echo $ro4->get_ipd_census($year."-".$month."-"."0".$x) ?></td>
-								<? }else { ?>
-									<? $totalIPD += $ro4->get_ipd_census($year."-".$month."-".$x) ?>
-									<td><? echo $ro4->get_ipd_census($year."-".$month."-".$x) ?></td>
-								<? } ?>	
+								<td>Patients</td>
+								<td><? echo $totalOPD ?></td>
 							</tr>
-						<? } ?>
-						<tr>
-							<td>Patients</td>
-							<td><? echo $totalIPD ?></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+						</tfoot>
+					</table>
+				</div>
 
+				<div class="col-sm-2">
+					
+				</div>
+
+				<div class="col-sm-5">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Admitted</th>
+							</tr>
+						</thead>
+						<tbody>
+							<? for( $x=1;$x<=31;$x++ ) { ?>
+								<tr>
+									<td><? echo $ro4->formatDate($year."-".$month."-".$x) ?></td>
+									<? if( $x < 10 ) { ?>
+										<? $totalIPD += $ro4->get_ipd_census($year."-".$month."-"."0".$x) ?>
+										<td><? echo $ro4->get_ipd_census($year."-".$month."-"."0".$x) ?></td>
+									<? }else { ?>
+										<? $totalIPD += $ro4->get_ipd_census($year."-".$month."-".$x) ?>
+										<td><? echo $ro4->get_ipd_census($year."-".$month."-".$x) ?></td>
+									<? } ?>	
+								</tr>
+							<? } ?>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>Patients</td>
+								<td><? echo $totalIPD ?></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
