@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::get('test',function(){
 	return 'test';
 });
+
+Route::get('inventory/unitcost/{inventoryType}','stockCardController@stock_card_unitcost');
