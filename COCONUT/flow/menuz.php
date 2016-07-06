@@ -177,4 +177,12 @@ echo "<input type='hidden' name='inventoryType' value='medicine'>";
 echo "<input type='submit' value='Purchases' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='../../laravel/public/inventory/unitcost/medicine' target='rightFrame'>";
+echo "<input type='submit' value='Low Unitcost (medicine)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
+echo "<form method='get' action='../../laravel/public/inventory/unitcost/supplies' target='rightFrame'>";
+echo "<input type='submit' value='Low Unitcost (supplies)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 ?>
