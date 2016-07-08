@@ -38,6 +38,24 @@
 							}
 						}										
 					});
+
+					$("#addInventory{{ $end->stockCardNo }}").click(function(){
+
+						var endQTY = $('#endQTY{{ $end->stockCardNo }}').val();
+
+						$.ajax({
+							type:"POST",
+							url:"{{ url('inventory/ending/put/medicine',[
+							'stockCardNo' => $end->stockCardNo,
+							'endQTY' => $end->endQTY,
+							]) }}",
+							headers: {
+								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							}
+						});
+
+					});
+
 				@endforeach
 
 			});
@@ -47,6 +65,7 @@
 	</head>
 	<body>
 		<? $totalItems = 0 ?>
+		@inject('ro','App\Helpers\Contracts\DatabaseContract')
 		<div class="container">
 			<h3>Ending Inventory Consolidation</h3>
 			<div class="col-sm-5">
@@ -56,6 +75,7 @@
 						<th>Particulars</th>
 						<th>End QTY</th>
 						<th>Cost</th>
+						<th></th>
 					</thead>
 					<tbody>
 						@foreach( $ending as $end )
@@ -65,11 +85,13 @@
 									{{ $end->stockCardNo }}
 								</td>
 								<td>
-									@if( $end->inventoryType == "medicine" )
-										{{ $end->genericName }}
-									@else
-										{{ $end->description }}
-									@endif
+									<span class="details{{ $end->stockCardNo }}">
+										@if( $end->inventoryType == "medicine" )
+											{{ $end->genericName }}
+										@else
+											{{ $end->description }}
+										@endif
+									</span>
 								</td>
 								<td>
 									<span class='details{{ $end->stockCardNo }}'>
@@ -78,8 +100,15 @@
 								</td>
 								<td>
 									<span class='details{{ $end->stockCardNo }}'>
-										{{ number_format($end->totalCost * $end->endQTY,2) }}
+										{{ number_format($end->unitcost * $end->endQTY,2) }}
 									</span>
+								</td>
+								<td>
+									@if( $ro->doubleSelectCondition('inventory','inventoryCode','stockCardNo',$end->stockCardNo,'=','status','DELETED%','not like') )
+
+									@else
+										<input type="button" id="addInventory{{ $end->stockCardNo }}" class="btn btn-success" value="Add Inventory">										
+									@endif
 								</td>
 							</tr>
 						@endforeach

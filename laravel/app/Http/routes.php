@@ -22,3 +22,4 @@ Route::get('test',function(){
 Route::get('inventory/unitcost/{inventoryType}','stockCardController@stock_card_unitcost');
 Route::get('inventory/ending/{inventoryType}/{quarter}','EndingInventoryController@list_ending_inventory');
 Route::post('inventory/ending/{stockCardNo}/{quarter}','EndingInventoryController@encoded_ending_inventory');
+Route::post('inventory/ending/put/medicine/{stockCardNo}/{endQTY}','InventoryController@addMedicine');
