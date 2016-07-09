@@ -88,6 +88,10 @@
 									<span class="details{{ $end->stockCardNo }}">
 										@if( $end->inventoryType == "medicine" )
 											{{ $end->genericName }}
+											<br>
+											<font size=2 color="red">
+												[{{ $end->description }}]
+											</font>
 										@else
 											{{ $end->description }}
 										@endif
