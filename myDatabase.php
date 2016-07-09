@@ -1792,7 +1792,7 @@ if (!mysqli_query($con, $sql))
   }
 
 
-if($title == "LABORATORY" || $title == "ULTRASOUND" || $title == "XRAY" || $title == "RADIOLOGY") { 
+if($title == "LABORATORY" || $title == "ULTRASOUND" || $title == "XRAY" || $title == "RADIOLOGY" || $title == "DERMA") { 
 
 
 echo "
@@ -1827,16 +1827,7 @@ echo "
 <script type='text/javascript'>
 window.location='http://".$this->getMyUrl()."/COCONUT/Doctor/searchDoctor.php?registrationNo=$registrationNo&username=$chargeBy&room=$room&batchNo=$batchNo';
 </script>";
-}else if($title == "DERMA") {
-
-echo "
-<script type='text/javascript'>
-window.location='http://".$this->getMyUrl()."/COCONUT/dermaCharges/?registrationNo=$registrationNo&username=$chargeBy&inventoryFrom=$inventoryFrom&room=$room&batchNo=$batchNo';
-</script>";
-
-}
-
-else {
+}else {
 echo "";
 }
 ((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
