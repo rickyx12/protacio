@@ -21,6 +21,18 @@
 	<script>
 		$(document).ready(function(){
 
+			$("#quarterAlert").hide();
+
+			$("#formButton").click(function(){
+
+				if( $("input[name=quarter]:checked").length > 0 ) {
+					$("#endingForm").submit();
+				}else {
+					$("#quarterAlert").show();
+				}
+
+			});
+
 			$("#unitcost").tooltipster({
 				content: $('<span>Loading....</span>'),
 				position: 'right',
@@ -54,12 +66,17 @@
 		</div>
 
 		<div class="col-md-6">
+			
+			<div id="quarterAlert" class="alert alert-danger text-center">
+				Pls Select Quarter
+			</div>
+			<br>
 			<div class="panel panel-success">
 				<div class="panel panel-heading">
 					Manual Ending Inventory
 				</div>
 				<div class="panel panel-body">
-					<form class="form-horizontal" role="form" method="post" action="addEndingInventory_manual1.php">
+					<form id="endingForm" class="form-horizontal" role="form" method="post" action="addEndingInventory_manual1.php">
 						<div class="form-group">
 							<label class="control-label col-sm-2">Stock#</label>
 							<div class="col-sm-3">
@@ -126,7 +143,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">Quarter</label>
 							<div class="col-sm-10">
-								<input type="radio" name="quarter" value="1st" checked="checked">&nbsp;1st
+								<input type="radio" name="quarter" value="1st">&nbsp;1st
 								&nbsp;&nbsp;&nbsp;
 								<input type="radio" name="quarter" value="2nd">&nbsp;2nd
 								&nbsp;&nbsp;&nbsp;
@@ -138,7 +155,7 @@
 						<br>
 						<div class="form-group">
 							<div class="col-sm-10 text-center">
-								<input type="submit" class="btn btn-success" value="Proceed">
+								<input type="button" id="formButton" class="btn btn-success" value="Proceed">
 							</div>
 						</div>						
 
