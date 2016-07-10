@@ -33,7 +33,7 @@
 
 			});
 
-			$("#unitcost").tooltipster({
+			$("#unitcostMedicine").tooltipster({
 				content: $('<span>Loading....</span>'),
 				position: 'right',
 				theme: 'tooltipster-noir',
@@ -52,7 +52,30 @@
 						});
 					}
 				}
-			});				
+			});		
+
+
+			$("#unitcostSupplies").tooltipster({
+				content: $('<span>Loading....</span>'),
+				position: 'right',
+				theme: 'tooltipster-noir',
+				trigger:'click',
+				contentAsHTML:true,
+				functionBefore:function(origin,continueTooltip) {
+					continueTooltip();
+					if( origin.data('ajax') !== 'cached' ){ 
+						$.ajax({
+							type:'POST',
+							url:'addSupplies_unitcost.php',
+							data:{'stockCardNo':'<? echo $stockCardNo ?>'},
+							success:function(data) {
+								origin.tooltipster('content',data).data('ajax','cached');
+							}
+						});
+					}
+				}
+			});	
+
 
 		});
 	</script>
@@ -115,7 +138,11 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">Unitcost</label>
 							<div class="col-sm-5">
-								<input type="text" id="unitcost" name="unitcost" class="form-control col-sm-5" autocomplete="off" placeholder="unitcost per pcs">
+								<? if( $ro->selectNow('inventoryStockCard','inventoryType','stockCardNo',$stockCardNo) == "medicine" ) { ?>
+									<input type="text" id="unitcostMedicine" name="unitcost" class="form-control col-sm-5" autocomplete="off" placeholder="unitcost per pcs">
+								<? }else { ?>
+									<input type="text" id="unitcostSupplies" name="unitcost" class="form-control col-sm-5" autocomplete="off" placeholder="unitcost per pcs">
+								<? } ?>
 							</div>
 						</div>					
 
