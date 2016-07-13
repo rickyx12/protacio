@@ -299,8 +299,15 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
 
 </ul>
 </li>      
-
-   
+    
+    
+   <li>
+       <a href="../../Maintenance/dbBackupButton.html" target="departmentX">
+            <font color=red>
+                Create Database Backup
+            </font>
+        </a>
+   </li>
 
 
 
