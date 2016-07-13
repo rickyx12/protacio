@@ -65,6 +65,7 @@
 	</head>
 	<body>
 		<? $totalItems = 0 ?>
+		<? $totalCost = 0 ?>
 		@inject('ro','App\Helpers\Contracts\DatabaseContract')
 		<div class="container">
 			<h3>Ending Inventory Consolidation</h3>
@@ -105,6 +106,7 @@
 								<td>
 									<span class='details{{ $end->stockCardNo }}'>
 										{{ number_format($end->unitcost * $end->endQTY,2) }}
+										<? $totalCost += ($end->unitcost * $end->endQTY) ?>
 									</span>
 								</td>
 								<td>
@@ -122,7 +124,7 @@
 							<td></td>						
 							<td><b>Total Items {{ $totalItems }}</b></td>
 							<td></td>
-							<td></td>
+							<td><? echo number_format($totalCost,2) ?></td>
 						</tr>
 					</tfoot>
 				</table>
