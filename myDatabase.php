@@ -52,6 +52,23 @@ return $row['ipaddress'];
 
 }
 
+private function formatDate($date) {
+  $date1 = preg_split ("/\-/", $date); 
+  $month = [
+      '01'=>'Jan',
+      '02'=>'Feb',
+      '03'=>'Mar',
+      '04'=>'Apr',
+      '05'=>'May',
+      '06'=>'Jun',
+      '07'=>'Jul',
+      '08'=>'Aug',
+      '09'=>'Sep',
+      '10'=>'Oct',
+      '11'=>'Nov',
+      '12'=>'Dec'];
+  return $month[$date1[1]]." ".$date1[2].", ".$date1[0];
+}
 
 function ENCRYPT_DECRYPT($Str_Message) {
     $Len_Str_Message=STRLEN($Str_Message);
@@ -5016,23 +5033,6 @@ echo $row['lastName']."\n";
 
 }
 
-private function formatDate($date) {
-  $date1 = preg_split ("/\-/", $date); 
-  $month = [
-      '01'=>'Jan',
-      '02'=>'Feb',
-      '03'=>'Mar',
-      '04'=>'Apr',
-      '05'=>'May',
-      '06'=>'Jun',
-      '07'=>'Jul',
-      '08'=>'Aug',
-      '09'=>'Sep',
-      '10'=>'Oct',
-      '11'=>'Nov',
-      '12'=>'Dec'];
-  return $month[$date1[1]]." ".$date1[2].", ".$date1[0];
-}
 
 public function showPatientHistory($completeName,$username,$start,$end) {
 
@@ -16299,7 +16299,7 @@ if (!$con)
 $fromDate = $year."-".$month."-".$day;
 $toDate = $year1."-".$month1."-".$day1;
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where (expiration between '$fromDate' and '$toDate') and status not like 'DELETED_%%%%%' order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where (expiration between '$fromDate' and '$toDate') and status not like 'DELETED_%%%%%' and quantity > 0 order by description asc  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -16309,15 +16309,9 @@ echo "<th>&nbsp;<font class='data'>Generic</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Preparation</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Unit Cost</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>QTY</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Expiration</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Added By</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Date Added</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Time Added</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Inventory Location</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Inventory Type</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Branch</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Transition</font>&nbsp;</th>";
-echo "<th>&nbsp;<font class='data'>Remarks</font>&nbsp;</th>";
+echo "<th>&nbsp;<font class='data'>Expiration</font>&nbsp;</th>";
 //echo "<th></th>";
 //echo "<th></th>";
 echo "</tr>";
@@ -16328,17 +16322,11 @@ echo "<td>&nbsp;<font class='data'>".$row['inventoryCode']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['description']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['genericName']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<center><font class='data'>".$row['preparation']."</font></center>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['unitcost']."</font>&nbsp;</td>";
+echo "<td>&nbsp;<font class='data'>".number_format($row['unitcost'],2)."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['quantity']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data' color=red>".$row['expiration']."</font>&nbsp;</td>";
 echo "<td>&nbsp;<font class='data'>".$row['addedBy']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['dateAdded']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['timeAdded']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['inventoryLocation']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['inventoryType']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['branch']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['transition']."</font>&nbsp;</td>";
-echo "<td>&nbsp;<font class='data'>".$row['remarks']."</font>&nbsp;</td>";
+echo "<td>&nbsp;<font class='data'>".$this->formatDate($row['dateAdded'])."</font>&nbsp;</td>";
+echo "<td>&nbsp;<font class='data' color=red>".$this->formatDate($row['expiration'])."</font>&nbsp;</td>";
 //echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/editInventory.php?inventoryCode=$row[inventoryCode]&description=$row[description]&genericName=$row[genericName]&unitcost=$row[unitcost]&quantity=$row[quantity]&expiration=$row[expiration]&addedBy=$row[addedBy]&dateAdded=$row[dateAdded]&timeAdded=$row[timeAdded]&inventoryLocation=$row[inventoryLocation]&inventoryType=$row[inventoryType]&branch=$row[branch]&username=$username&transition=$row[transition]&remarks=$row[remarks]&preparation=$row[preparation]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/pencil.jpeg'></a>&nbsp;</td>";
 ///echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/DELETE/deleteInventory.php?inventoryCode=$row[inventoryCode]&username=$username&description=$row[description]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/delete.jpeg'></a>&nbsp;</td>";
 echo "</tr>";
