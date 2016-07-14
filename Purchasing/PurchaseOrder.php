@@ -52,14 +52,14 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $poNo=$_GET['poNo'];
 
-$asql=mysql_query("SELECT supplier, terms, transactionDate FROM purchaseOrderForm WHERE poNo='$poNo'");
-while($afetch=mysql_fetch_array($asql)){$supplier=$afetch['supplier'];$terms=$afetch['terms'];$transactionDate=$afetch['transactionDate'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplier, terms, transactionDate FROM purchaseOrderForm WHERE poNo='$poNo'");
+while($afetch=mysqli_fetch_array($asql)){$supplier=$afetch['supplier'];$terms=$afetch['terms'];$transactionDate=$afetch['transactionDate'];}
 
 $suppliersplit=preg_split("/-/", $supplier);
 
@@ -121,9 +121,9 @@ echo "
       </tr>
 ";
 
-$bsql=mysql_query("SELECT description, quantity, unit, unitPrice FROM purchaseOrderItems WHERE poNo='$poNo' ORDER BY description");
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description, quantity, unit, unitPrice FROM purchaseOrderItems WHERE poNo='$poNo' ORDER BY description");
 $totalAmount=0;
-while($bfetch=mysql_fetch_array($bsql)){
+while($bfetch=mysqli_fetch_array($bsql)){
 $description=$bfetch['description'];
 $quantity=$bfetch['quantity'];
 $unit=$bfetch['unit'];

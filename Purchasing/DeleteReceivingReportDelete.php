@@ -58,8 +58,8 @@ break;
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $sino=$_GET['sino'];
@@ -81,7 +81,7 @@ echo "
 <div align='left' class='style1'>Removing...</div>
 ";
 
-mysql_query("UPDATE salesInvoice SET status='Deleted_$username' WHERE siNo='$sino'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE salesInvoice SET status='Deleted_$username' WHERE siNo='$sino'");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=ViewPurchases.php?username=$username&fmonth=$fmonth&fday=$fday&fyear=$fyear&tmonth=$tmonth&tday=$tday&tyear=$tyear'>";
 ?>

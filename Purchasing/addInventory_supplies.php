@@ -42,8 +42,8 @@ $invoiceNo=$_GET['invoiceNo'];
 
 $ro=new database();
 
-mysql_connect($ro->myHost(),$ro->getUser(),$ro->getPass());
-mysql_select_db($ro->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($ro->myHost(), $ro->getUser(), $ro->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $ro->getDB()));
 
 if( $status == "new" ) {
 $stockCardNo = $ro->selectNow("trackingNo","value","name","stockCardNo");
@@ -278,8 +278,8 @@ echo "
             <select class='textfield1' name='inventoryLocation'>
 ";
 
-$zsql=mysql_query("SELECT inventoryLocation FROM inventoryLocation ORDER BY inventoryLocation");
-while($zfetch=mysql_fetch_array($zsql)){
+$zsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryLocation FROM inventoryLocation ORDER BY inventoryLocation");
+while($zfetch=mysqli_fetch_array($zsql)){
 $inventoryLocation=$zfetch['inventoryLocation'];
 if($inventoryLocation=="PHARMACY"){$opsel="selected='selected'";}else{$opsel="";}
 echo "
@@ -322,13 +322,13 @@ echo "
             <select name='supplier' class='textfield1'>
 ";
 
-$supsql=mysql_query("SELECT supplierCode, supplierName FROM supplier ORDER BY supplierName");
-while($supfetch=mysql_fetch_array($supsql)){
+$supsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierCode, supplierName FROM supplier ORDER BY supplierName");
+while($supfetch=mysqli_fetch_array($supsql)){
 $supplierCode=$supfetch['supplierCode'];
 $supplierName=$supfetch['supplierName'];
 
-$asql=mysql_query("SELECT * FROM salesInvoice WHERE siNo='$sino' AND supplier='$supplierCode'");
-$acount=mysql_num_rows($asql);
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM salesInvoice WHERE siNo='$sino' AND supplier='$supplierCode'");
+$acount=mysqli_num_rows($asql);
 
 if($acount==0){$ss="";}else{$ss="selected='selected'";}
 

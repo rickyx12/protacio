@@ -58,15 +58,15 @@ break;
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $invoiceNo=$_GET['invoiceNo'];
 
 
-$asql=mysql_query("SELECT siNo FROM salesInvoice WHERE invoiceNo='$invoiceNo' AND status='Active'");
-$acount=mysql_num_rows($asql);
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT siNo FROM salesInvoice WHERE invoiceNo='$invoiceNo' AND status='Active'");
+$acount=mysqli_num_rows($asql);
 
 if($acount=='0'){
 echo "
@@ -76,7 +76,7 @@ echo "
 ";
 }
 else{
-while($afetch=mysql_fetch_array($asql)){$sino=$afetch['siNo'];}
+while($afetch=mysqli_fetch_array($asql)){$sino=$afetch['siNo'];}
 echo "
 <br />
 <div align='left' class='style1'>Loading...</div>

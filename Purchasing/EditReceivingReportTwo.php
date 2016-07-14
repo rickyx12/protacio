@@ -37,8 +37,8 @@ break;
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $year=date("Y");
 $month=date("m");
@@ -48,8 +48,8 @@ $username=$_GET['username'];
 $sino=$_GET['sino'];
 $page=$_GET['page'];
 
-$asql=mysql_query("SELECT * FROM salesInvoice WHERE siNo='$sino' AND status='Active'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM salesInvoice WHERE siNo='$sino' AND status='Active'");
+while($afetch=mysqli_fetch_array($asql)){
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
 $terms=$afetch['terms'];
@@ -66,8 +66,8 @@ $rdmonth=date("m",$recieivedDatestr);
 $rdday=date("d",$recieivedDatestr);
 $rdyear=date("Y",$recieivedDatestr);
 
-$bsql=mysql_query("SELECT supplierName FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName'];}
 }
 
 echo "
@@ -96,8 +96,8 @@ echo "
 
 
 
-$supsql=mysql_query("SELECT supplierCode, supplierName FROM supplier ORDER BY supplierName");
-while($supfetch=mysql_fetch_array($supsql)){
+$supsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierCode, supplierName FROM supplier ORDER BY supplierName");
+while($supfetch=mysqli_fetch_array($supsql)){
 $supplierCode=$supfetch['supplierCode'];
 $supplierName=$supfetch['supplierName'];
 

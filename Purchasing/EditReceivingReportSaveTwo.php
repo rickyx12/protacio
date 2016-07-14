@@ -44,8 +44,8 @@ function MM_goToURL() { //v3.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $sino=$_GET['sino'];
@@ -73,8 +73,8 @@ $insertdate=date("ymdHi");
 $tddate=$tdyear.$tdmonth.$tdday;
 $rddate=$rdyear.$rdmonth.$rdday;
 
-$asql=mysql_query("SELECT * FROM salesInvoice WHERE siNo='$sino' AND status='Active'");
-while($afetch=mysql_fetch_array($asql)){$cinvoiceNo=$afetch['invoiceNo'];$csupplier=$afetch['supplier'];$cterms=$afetch['terms'];$ctransactionDate=$afetch['transactionDate'];$creceivedDate=$afetch['recievedDate'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM salesInvoice WHERE siNo='$sino' AND status='Active'");
+while($afetch=mysqli_fetch_array($asql)){$cinvoiceNo=$afetch['invoiceNo'];$csupplier=$afetch['supplier'];$cterms=$afetch['terms'];$ctransactionDate=$afetch['transactionDate'];$creceivedDate=$afetch['recievedDate'];}
 
 if(($cinvoiceNo==$invoiceNo)&&($csupplier==$supplier)&&($cterms==$terms)&&($creceivedDate==$rddate)){
 echo "
@@ -92,8 +92,8 @@ echo "
 echo "<META HTTP-EQUIV='Refresh'CONTENT='3;URL=EditReceivingReportTwo.php?username=$username&sino=$sino&invoiceNo=$invoiceNo&supplier=$supplier&terms=$terms&rdday=$rdday&rdmonth=$rdmonth&rdyear=$rdyear&page=$page'>";
 }
 else{
-$xsql=mysql_query("SELECT invoiceNo, supplier FROM salesInvoice WHERE siNo NOT LIKE '$sino' AND invoiceNo='$invoiceNo' AND supplier='$supplier'");
-$xcount=mysql_num_rows($xsql);
+$xsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo, supplier FROM salesInvoice WHERE siNo NOT LIKE '$sino' AND invoiceNo='$invoiceNo' AND supplier='$supplier'");
+$xcount=mysqli_num_rows($xsql);
 if($xcount!=0){
 echo "
 <br />
@@ -107,7 +107,7 @@ echo "
 <div align='left' class='style2'>Loading...</div>
 ";
 
-mysql_query("UPDATE salesInvoice SET invoiceNo='$invoiceNo', supplier='$supplier', terms='$terms', transactionDate='$rddate', recieveddate='$rddate' WHERE siNo='$sino'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE salesInvoice SET invoiceNo='$invoiceNo', supplier='$supplier', terms='$terms', transactionDate='$rddate', recieveddate='$rddate' WHERE siNo='$sino'");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=CreatedReceivingReport.php?username=$username&sino=$sino&page=0'>";
 }

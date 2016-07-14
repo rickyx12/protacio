@@ -36,8 +36,8 @@
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $year=date("Y");
 $month=date("m");
@@ -54,8 +54,8 @@ echo "
 	    <option selected='selected'>-Select Supplier-</option>
 ";
 
-$supsql=mysql_query("SELECT supplierCode, supplierName FROM supplier ORDER supplierName");
-while($supfetch=mysql_fetch_array($supsql)){
+$supsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierCode, supplierName FROM supplier ORDER supplierName");
+while($supfetch=mysqli_fetch_array($supsql)){
 $supplierCode=$supfetch['supplierCode'];
 $supplierName=$supfetch['supplierName'];
 echo "

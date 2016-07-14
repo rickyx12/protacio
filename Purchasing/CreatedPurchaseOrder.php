@@ -45,14 +45,14 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $poNo=$_GET['poNo'];
 
-$asql=mysql_query("SELECT supplier, terms, transactionDate FROM purchaseOrderForm WHERE poNo='$poNo'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplier, terms, transactionDate FROM purchaseOrderForm WHERE poNo='$poNo'");
+while($afetch=mysqli_fetch_array($asql)){
 $supplier=$afetch['supplier'];
 $terms=$afetch['terms'];
 $transactionDate=$afetch['transactionDate'];
@@ -60,8 +60,8 @@ $transactionDate=$afetch['transactionDate'];
 
 $truesupplier=preg_split("/-/",$supplier);
 
-$bsql=mysql_query("SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$truesupplier[0]'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$truesupplier[0]'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
 
 echo "
 <div align='left'>
@@ -82,8 +82,8 @@ echo "
           </table></td>
 ";
 
-$zsql=mysql_query("SELECT SUM(quantity*unitPrice) AS total FROM purchaseOrderItems WHERE poNo='$poNo'");
-while($zfetch=mysql_fetch_array($zsql)){$total=$zfetch['total'];}
+$zsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(quantity*unitPrice) AS total FROM purchaseOrderItems WHERE poNo='$poNo'");
+while($zfetch=mysqli_fetch_array($zsql)){$total=$zfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 
@@ -160,8 +160,8 @@ echo "
             </tr>
 ";
 
-$asql=mysql_query("SELECT poItemNo, description, quantity, unit, unitPrice FROM purchaseOrderItems WHERE poNo='$poNo' ORDER BY description");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT poItemNo, description, quantity, unit, unitPrice FROM purchaseOrderItems WHERE poNo='$poNo' ORDER BY description");
+while($afetch=mysqli_fetch_array($asql)){
 $poItemNo=$afetch['poItemNo'];
 $description=$afetch['description'];
 $unit=$afetch['unit'];

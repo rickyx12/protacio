@@ -59,8 +59,8 @@ break;
 include("../../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $supplier=$_GET['supplier'];
@@ -105,19 +105,19 @@ for($x=1;$x<=$ax;$x++){
 $var="siNo".$x;
 $siNo=$_GET[$var];
 
-$xsql=mysql_query("SELECT supplierName, vatable FROM supplier WHERE supplierCode='$supplier'");
-while($xfetch=mysql_fetch_array($xsql)){$supplierName=$xfetch['supplierName'];$vatable=$xfetch['vatable'];}
+$xsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, vatable FROM supplier WHERE supplierCode='$supplier'");
+while($xfetch=mysqli_fetch_array($xsql)){$supplierName=$xfetch['supplierName'];$vatable=$xfetch['vatable'];}
 
 if($siNo!=''){
 $bx++;
-$asql=mysql_query("SELECT invoiceNo FROM salesInvoice WHERE siNo='$siNo'");
-while($afetch=mysql_fetch_array($asql)){$invoiceNo=$afetch['invoiceNo'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo FROM salesInvoice WHERE siNo='$siNo'");
+while($afetch=mysqli_fetch_array($asql)){$invoiceNo=$afetch['invoiceNo'];}
 echo "
     <input type='hidden' name='invoiceNo$bx' value='$invoiceNo' />
 ";
 
-$bsql=mysql_query("SELECT SUM(unitPrice*(quantity)) AS totalAmount FROM salesInvoiceItems WHERE siNo='$siNo' AND status='Active'");
-while($bfetch=mysql_fetch_array($bsql)){$totalAmount=$bfetch['totalAmount'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(unitPrice*(quantity)) AS totalAmount FROM salesInvoiceItems WHERE siNo='$siNo' AND status='Active'");
+while($bfetch=mysqli_fetch_array($bsql)){$totalAmount=$bfetch['totalAmount'];}
 
 $lessvat=($totalAmount/1.12);
 $vat=$totalAmount-$lessvat;

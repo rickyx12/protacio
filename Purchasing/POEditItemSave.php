@@ -35,8 +35,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $poNo=$_GET['poNo'];
@@ -53,7 +53,7 @@ echo "
 
 if(!is_numeric($unitPrice)){$trueunitPrice=0;}else{$trueunitPrice=$unitPrice;}
 
-mysql_query("UPDATE purchaseOrderItems SET quantity='$quantity', unit='$unit', unitPrice='$trueunitPrice' WHERE poItemNo='$poItemNo'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE purchaseOrderItems SET quantity='$quantity', unit='$unit', unitPrice='$trueunitPrice' WHERE poItemNo='$poItemNo'");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=CreatedPurchaseOrder.php?username=$username&poNo=$poNo'>";
 ?>

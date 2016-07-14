@@ -45,16 +45,16 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $sino=$_GET['sino'];
 $page=$_GET['page'];
 $refNo=$_GET['refNo'];
 
-$asql=mysql_query("SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
+while($afetch=mysqli_fetch_array($asql)){
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
 $terms=$afetch['terms'];
@@ -62,8 +62,8 @@ $transactionDate=$afetch['transactionDate'];
 $recievedDate=$afetch['recievedDate'];
 }
 
-$bsql=mysql_query("SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
 
 echo "
 <div align='left' onfocus='MM_openBrWindow('PurchseReport.php','','toolbar=yes,location=yes,status=yes,menubar=yes,scrollbars=yes,width=400,height=600')'>
@@ -81,8 +81,8 @@ echo "
           </table></td>
 ";
 
-$csql=mysql_query("SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
-while($cfetch=mysql_fetch_array($csql)){$total=$cfetch['total'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
+while($cfetch=mysqli_fetch_array($csql)){$total=$cfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 
@@ -144,8 +144,8 @@ echo "
     </tr>
 ";
 
-$dsql=mysql_query("SELECT inventoryCode, description FROM salesInvoiceItems WHERE refNo='$refNo'");
-while($dfetch=mysql_fetch_array($dsql)){$inventoryCode=$dfetch['inventoryCode']; $description=$dfetch['description'];}
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode, description FROM salesInvoiceItems WHERE refNo='$refNo'");
+while($dfetch=mysqli_fetch_array($dsql)){$inventoryCode=$dfetch['inventoryCode']; $description=$dfetch['description'];}
 
 echo "
     <tr>
@@ -158,16 +158,16 @@ echo "
 
 $deletedate=date("YmdHis");
 
-$esql=mysql_query("SELECT * FROM inventory WHERE inventoryCode='$inventoryCode'");
-while($efetch=mysql_fetch_array($esql)){
+$esql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM inventory WHERE inventoryCode='$inventoryCode'");
+while($efetch=mysqli_fetch_array($esql)){
 $stockCardNo=$efetch['stockCardNo'];$description=$efetch['description'];$genericName=$efetch['genericName'];$preparation=$efetch['preparation'];$unitcost=$efetch['unitcost'];$phicPrice=$efetch['phicPrice'];$companyPrice=$efetch['companyPrice'];$quantity=$efetch['quantity'];$expiration=$efetch['expiration'];$addedBy=$efetch['addedBy'];$dateAdded=$efetch['dateAdded'];$timeAdded=$efetch['timeAdded'];$inventoryLocation=$efetch['inventoryLocation'];$inventoryType=$efetch['inventoryType'];$branch=$efetch['branch'];
 $transition=$efetch['transition'];$remarks=$efetch['remarks'];$phic=$efetch['phic'];$Added=$efetch['Added'];$criticalLevel=$efetch['criticalLevel'];$accountTitle=$efetch['accountTitle'];$supplier=$efetch['supplier'];$autoDispense=$efetch['autoDispense'];$status=$efetch['status'];$beginningCapital=$efetch['beginningCapital'];$beginningQTY=$efetch['beginningQTY'];$suppliesUNITCOST=$efetch['suppliesUNITCOST'];$from_inventoryCode=$efetch['from_inventoryCode'];$classification=$efetch['classification'];$ipdPrice=$efetch['ipdPrice'];$opdPrice=$efetch['opdPrice'];$invoiceNo=$efetch['invoiceNo'];$fgQuantity=$efetch['fgQuantity'];}
 
 
-mysql_query("INSERT INTO `Coconut`.`inventoryDeleted` (`inventoryCode`, `trueinventoryCode`, `stockCardNo`, `description`, `genericName`, `preparation`, `unitcost`, `phicPrice`, `companyPrice`, `quantity`, `expiration`, `addedBy`, `dateAdded`, `timeAdded`, `inventoryLocation`, `inventoryType`, `branch`, `transition`, `remarks`, `phic`, `Added`, `criticalLevel`, `accountTitle`, `supplier`, `autoDispense`, `status`, `beginningCapital`, `beginningQTY`, `suppliesUNITCOST`, `from_inventoryCode`, `classification`, `ipdPrice`, `opdPrice`, `invoiceNo`, `fgQuantity`, `deletedBy`, `dateDeleted`) VALUES ('', '$inventoryCode', '$stockCardNo', '$description', '$genericName', '$preparation', '$unitcost', '$phicPrice', '$companyPrice', '$quantity', '$expiration', '$addedBy', '$dateAdded', '$timeAdded', '$inventoryLocation', '$inventoryType', '$branch', '$transition', '$remarks', '$phic', '$Added', '$criticalLevel', '$accountTitle', '$supplier', '$autoDispense', '$status', '$beginningCapital', '$beginningQTY', '$suppliesUNITCOST', '$from_inventoryCode', '$classification', '$ipdPrice', '$opdPrice', '$invoiceNo', '$fgQuantity', '$username', '$deletedate')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO `Coconut`.`inventoryDeleted` (`inventoryCode`, `trueinventoryCode`, `stockCardNo`, `description`, `genericName`, `preparation`, `unitcost`, `phicPrice`, `companyPrice`, `quantity`, `expiration`, `addedBy`, `dateAdded`, `timeAdded`, `inventoryLocation`, `inventoryType`, `branch`, `transition`, `remarks`, `phic`, `Added`, `criticalLevel`, `accountTitle`, `supplier`, `autoDispense`, `status`, `beginningCapital`, `beginningQTY`, `suppliesUNITCOST`, `from_inventoryCode`, `classification`, `ipdPrice`, `opdPrice`, `invoiceNo`, `fgQuantity`, `deletedBy`, `dateDeleted`) VALUES ('', '$inventoryCode', '$stockCardNo', '$description', '$genericName', '$preparation', '$unitcost', '$phicPrice', '$companyPrice', '$quantity', '$expiration', '$addedBy', '$dateAdded', '$timeAdded', '$inventoryLocation', '$inventoryType', '$branch', '$transition', '$remarks', '$phic', '$Added', '$criticalLevel', '$accountTitle', '$supplier', '$autoDispense', '$status', '$beginningCapital', '$beginningQTY', '$suppliesUNITCOST', '$from_inventoryCode', '$classification', '$ipdPrice', '$opdPrice', '$invoiceNo', '$fgQuantity', '$username', '$deletedate')");
 
-mysql_query("DELETE FROM salesInvoiceItems WHERE refNo='$refNo'");
-mysql_query("DELETE FROM inventory WHERE inventoryCode='$inventoryCode'");
+mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM salesInvoiceItems WHERE refNo='$refNo'");
+mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM inventory WHERE inventoryCode='$inventoryCode'");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=CreatedReceivingReport.php?username=$username&sino=$sino&page=0'>";
 

@@ -46,14 +46,14 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $supplierCode=$_GET['supplierCode'];
 
-$asql=mysql_query("SELECT * FROM supplier WHERE supplierCode='$supplierCode'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM supplier WHERE supplierCode='$supplierCode'");
+while($afetch=mysqli_fetch_array($asql)){
 $csupplierName=$afetch['supplierName'];
 }
 
@@ -64,7 +64,7 @@ echo "
 <div align='lef' class='style5'>$csupplierName deleted!</div>
 ";
 
-mysql_query("UPDATE supplier SET status='Deleted_".$datetime.$username."' WHERE supplierCode='$supplierCode'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE supplier SET status='Deleted_".$datetime.$username."' WHERE supplierCode='$supplierCode'");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='1;URL=SearchSupplier.php?username=$username'>";
 ?>

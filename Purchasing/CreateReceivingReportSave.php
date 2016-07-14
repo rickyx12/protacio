@@ -44,8 +44,8 @@ function MM_goToURL() { //v3.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $invoiceNo=$_GET['invoiceNo'];
 $supplier=$_GET['supplier'];
@@ -90,8 +90,8 @@ echo "<META HTTP-EQUIV='Refresh'CONTENT='3;URL=CreateReceivingReportError.php?us
 }
 else{
 
-$xsql=mysql_query("SELECT invoiceNo, supplier FROM salesInvoice WHERE invoiceNo='$invoiceNo' AND supplier='$supplier' AND status NOT LIKE 'Deleted%%'");
-$xcount=mysql_num_rows($xsql);
+$xsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo, supplier FROM salesInvoice WHERE invoiceNo='$invoiceNo' AND supplier='$supplier' AND status NOT LIKE 'Deleted%%'");
+$xcount=mysqli_num_rows($xsql);
 if($xcount!=0){
 echo "
 <br />
@@ -115,13 +115,13 @@ echo "
 
 $pdate=date("Ymd");
 
-$cdatesql=mysql_query("SELECT counterdate FROM counters");
-while($cdatefetch=mysql_fetch_array($cdatesql)){$cdate=$cdatefetch['counterdate'];}
+$cdatesql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counterdate FROM counters");
+while($cdatefetch=mysqli_fetch_array($cdatesql)){$cdate=$cdatefetch['counterdate'];}
 
-if($cdate!=$pdate){mysql_query("UPDATE counters SET counterdate='$pdate', counter01='0'");}
+if($cdate!=$pdate){mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counterdate='$pdate', counter01='0'");}
 
-$c01sql=mysql_query("SELECT counter01 FROM counters");
-while($c01fetch=mysql_fetch_array($c01sql)){$c01=$c01fetch['counter01'];}
+$c01sql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counter01 FROM counters");
+while($c01fetch=mysqli_fetch_array($c01sql)){$c01=$c01fetch['counter01'];}
 
 if($c01<10){$sino=date("Ymd")."000".$c01;}
 else if(($c01<100)&&($c01>9)){$sino=date("Ymd")."00".$c01;}
@@ -130,9 +130,9 @@ else{$sino=date("Ymd").$c01;}
 
 $c01plus=$c01+1;
 
-mysql_query("INSERT INTO salesInvoice VALUES('$sino', '$invoiceNo', '$supplier', '$terms', '$rddate', '$tddate', 'Active', '$username', '$insertdate')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO salesInvoice VALUES('$sino', '$invoiceNo', '$supplier', '$terms', '$rddate', '$tddate', 'Active', '$username', '$insertdate')");
 
-mysql_query("UPDATE counters SET counter01='$c01plus'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counter01='$c01plus'");
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=CreatedReceivingReport.php?username=$username&sino=$sino&page=0'>";
 }
 }

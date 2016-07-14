@@ -49,8 +49,8 @@ function MM_goToURL() { //v3.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 
@@ -86,8 +86,8 @@ echo "
     </tr>
 ";
 
-$asql=mysql_query("SELECT siNo, invoiceNo, supplier, transactionDate FROM salesInvoice WHERE (recievedDate BETWEEN '$fdate' AND '$tdate') AND status='Active'  ORDER BY transactionDate");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT siNo, invoiceNo, supplier, transactionDate FROM salesInvoice WHERE (recievedDate BETWEEN '$fdate' AND '$tdate') AND status='Active'  ORDER BY transactionDate");
+while($afetch=mysqli_fetch_array($asql)){
 $siNo=$afetch['siNo'];
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
@@ -96,11 +96,11 @@ $transactionDate=$afetch['transactionDate'];
 $transactionDatestr=strtotime($transactionDate);
 $transactionDatefmt=date("M d, Y",$transactionDatestr);
 
-$bsql=mysql_query("SELECT supplierName FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName'];}
 
-$csql=mysql_query("SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$siNo' ORDER BY refNo");
-while($cfetch=mysql_fetch_array($csql)){$total=$cfetch['total'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$siNo' ORDER BY refNo");
+while($cfetch=mysqli_fetch_array($csql)){$total=$cfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 
@@ -128,8 +128,8 @@ echo "
       </form>
 ";
 
-$csql=mysql_query("SELECT * FROM salesInvoiceItems WHERE siNo='$siNo' AND status='Active'");
-$ccount=mysql_num_rows($csql);
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM salesInvoiceItems WHERE siNo='$siNo' AND status='Active'");
+$ccount=mysqli_num_rows($csql);
 if($ccount=='0'){
 echo "
       <form id='View' name='view' method='get' action='DeleteReceivingReport.php'>

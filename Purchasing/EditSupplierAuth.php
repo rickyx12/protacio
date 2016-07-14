@@ -46,8 +46,8 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $supplierCode=$_GET['supplierCode'];
@@ -58,8 +58,8 @@ $address=$_GET['address'];
 $description=$_GET['description'];
 $vatable=$_GET['vatable'];
 
-$asql=mysql_query("SELECT * FROM supplier WHERE supplierCode='$supplierCode'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM supplier WHERE supplierCode='$supplierCode'");
+while($afetch=mysqli_fetch_array($asql)){
 $csupplierName=$afetch['supplierName'];
 $ccontactPerson=$afetch['contactPerson'];
 $ccontactNo=$afetch['contactNo'];
@@ -89,7 +89,7 @@ echo "
 <div align='lef' class='style2'>Saving changes...</div>
 ";
 
-mysql_query("UPDATE supplier SET supplierName='$supplierName', contactPerson='$contactPerson', contactNo='$contactNo', address='$address', description='$description', vatable='$vatable' WHERE supplierCode='$supplierCode'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE supplier SET supplierName='$supplierName', contactPerson='$contactPerson', contactNo='$contactNo', address='$address', description='$description', vatable='$vatable' WHERE supplierCode='$supplierCode'");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=SearchSupplier.php?username=$username'>";
 }

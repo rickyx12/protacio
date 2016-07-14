@@ -46,8 +46,8 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $supplierName=$_GET['supplierName'];
@@ -57,8 +57,8 @@ $address=$_GET['address'];
 $description=$_GET['description'];
 $vatable=$_GET['vatable'];
 
-$asql=mysql_query("SELECT * FROM supplier WHERE supplierName='$supplierName' AND contactPerson='$contactPerson' AND contactNo='$contactNo' AND address='$address' AND description='$description'");
-$acount=mysql_num_rows($asql);
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM supplier WHERE supplierName='$supplierName' AND contactPerson='$contactPerson' AND contactNo='$contactNo' AND address='$address' AND description='$description'");
+$acount=mysqli_num_rows($asql);
 
 
 if($acount>'0'){
@@ -82,7 +82,7 @@ echo "
 <div align='lef' class='style2'>Supplier added!</div>
 ";
 
-mysql_query("INSERT INTO supplier (supplierName, contactPerson, contactNo, address, description, vatable, status) VALUES ('$supplierName', '$contactPerson', '$contactNo', '$address', '$description', '$vatable', 'Active')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO supplier (supplierName, contactPerson, contactNo, address, description, vatable, status) VALUES ('$supplierName', '$contactPerson', '$contactNo', '$address', '$description', '$vatable', 'Active')");
 
 echo "<META HTTP-EQUIV='Refresh'CONTENT='1;URL=SearchSupplier.php?username=$username'>";
 }

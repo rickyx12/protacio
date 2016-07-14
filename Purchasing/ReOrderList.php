@@ -46,8 +46,8 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $show=$_GET['show'];
@@ -57,13 +57,13 @@ if($show=='Medicine'){$buttonmed='button2';$buttonsup='button1';$amed='style3';$
 if($sort=='1'){$sortme='description';}else if($sort=='2'){$sortme='quantity,description';}
 
 //Count Medicine
-$zsql=mysql_query("SELECT stockCardNo, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme,description");
+$zsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT stockCardNo, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme,description");
 $zx=0;
-while($zfetch=mysql_fetch_array($zsql)){
+while($zfetch=mysqli_fetch_array($zsql)){
 $zstockCardNo=$zfetch['stockCardNo'];
 $ztotalqty=$zfetch['totalqty'];
-$ysql=mysql_query("SELECT * FROM inventory WHERE stockCardNo='$zstockCardNo' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
-while($yfetch=mysql_fetch_array($ysql)){$ycriticalLevel=$yfetch['criticalLevel'];}
+$ysql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM inventory WHERE stockCardNo='$zstockCardNo' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
+while($yfetch=mysqli_fetch_array($ysql)){$ycriticalLevel=$yfetch['criticalLevel'];}
 if($ycriticalLevel==''){$trueycriticalLevel='0';}else{$trueycriticalLevel=$ycriticalLevel;}
 if($ztotalqty<=$trueycriticalLevel){
 $zx++;
@@ -74,13 +74,13 @@ else{
 //End Count Medicine
 
 //Count Supplies
-$xsql=mysql_query("SELECT stockCardNo, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme,description");
+$xsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT stockCardNo, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme,description");
 $xx=0;
-while($xfetch=mysql_fetch_array($xsql)){
+while($xfetch=mysqli_fetch_array($xsql)){
 $xstockCardNo=$xfetch['stockCardNo'];
 $xtotalqty=$xfetch['totalqty'];
-$wsql=mysql_query("SELECT * FROM inventory WHERE stockCardNo='$xstockCardNo' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
-while($wfetch=mysql_fetch_array($wsql)){$wcriticalLevel=$wfetch['criticalLevel'];}
+$wsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM inventory WHERE stockCardNo='$xstockCardNo' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
+while($wfetch=mysqli_fetch_array($wsql)){$wcriticalLevel=$wfetch['criticalLevel'];}
 if($wcriticalLevel==''){$truewcriticalLevel='0';}else{$truewcriticalLevel=$wcriticalLevel;}
 if($xtotalqty<=$truewcriticalLevel){
 $xx++;
@@ -123,16 +123,16 @@ echo "
       </tr>
 ";
 
-$asql=mysql_query("SELECT inventoryCode, stockCardNo, description, genericName, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme");
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode, stockCardNo, description, genericName, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme");
 $ax=0;
-while($afetch=mysql_fetch_array($asql)){
+while($afetch=mysqli_fetch_array($asql)){
 $astockCardNo=$afetch['stockCardNo'];
 $adescription=$afetch['description'];
 $agenericName=$afetch['genericName'];
 $atotalqty=$afetch['totalqty'];
 
-$bsql=mysql_query("SELECT * FROM inventory WHERE stockCardNo='$astockCardNo' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
-while($bfetch=mysql_fetch_array($bsql)){$bcriticalLevel=$bfetch['criticalLevel'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM inventory WHERE stockCardNo='$astockCardNo' AND inventoryType='medicine' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
+while($bfetch=mysqli_fetch_array($bsql)){$bcriticalLevel=$bfetch['criticalLevel'];}
 if($bcriticalLevel==''){$truebcriticalLevel='0';}else{$truebcriticalLevel=$bcriticalLevel;}
 if($atotalqty<=$truebcriticalLevel){
 $ax++;
@@ -177,16 +177,16 @@ echo "
       </tr>
 ";
 
-$asql=mysql_query("SELECT inventoryCode, stockCardNo, description, genericName, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme,description");
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode, stockCardNo, description, genericName, SUM(quantity) AS totalqty FROM inventory WHERE quantity<='50' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' GROUP BY stockcardNo ORDER BY $sortme,description");
 $ax=0;
-while($afetch=mysql_fetch_array($asql)){
+while($afetch=mysqli_fetch_array($asql)){
 $astockCardNo=$afetch['stockCardNo'];
 $adescription=$afetch['description'];
 $agenericName=$afetch['genericName'];
 $atotalqty=$afetch['totalqty'];
 
-$bsql=mysql_query("SELECT * FROM inventory WHERE stockCardNo='$astockCardNo' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
-while($bfetch=mysql_fetch_array($bsql)){$bcriticalLevel=$bfetch['criticalLevel'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM inventory WHERE stockCardNo='$astockCardNo' AND inventoryType='supplies' AND status NOT LIKE 'DELETED_%%%%' ORDER BY criticalLevel");
+while($bfetch=mysqli_fetch_array($bsql)){$bcriticalLevel=$bfetch['criticalLevel'];}
 if($bcriticalLevel==''){$truebcriticalLevel='0';}else{$truebcriticalLevel=$bcriticalLevel;}
 if($atotalqty<=$truebcriticalLevel){
 $ax++;

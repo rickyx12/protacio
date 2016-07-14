@@ -71,8 +71,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 
@@ -111,8 +111,8 @@ $b=0;
 $c=0;
 $d=0;
 $e=0;
-$asql=mysql_query("SELECT si.supplier, s.supplierName, s.vatable FROM salesInvoice si, supplier s WHERE si.supplier=s.supplierCode AND (si.recievedDate BETWEEN '$fdate' AND '$tdate') AND si.status NOT LIKE 'Deleted_%%%%' GROUP BY si.supplier ORDER BY s.supplierName");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT si.supplier, s.supplierName, s.vatable FROM salesInvoice si, supplier s WHERE si.supplier=s.supplierCode AND (si.recievedDate BETWEEN '$fdate' AND '$tdate') AND si.status NOT LIKE 'Deleted_%%%%' GROUP BY si.supplier ORDER BY s.supplierName");
+while($afetch=mysqli_fetch_array($asql)){
 $supplier=$afetch['supplier'];
 $supplierName=$afetch['supplierName'];
 $vatable=$afetch['vatable'];
@@ -141,8 +141,8 @@ $finaltotal=0;
 $totalpaidamount=0;
 $totalwtax=0;
 
-$bsql=mysql_query("SELECT siNo, invoiceNo, recievedDate FROM salesInvoice WHERE supplier='$supplier' AND (recievedDate BETWEEN '$fdate' AND '$tdate') AND status NOT LIKE 'Deleted_%%%%' ORDER BY recievedDate");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT siNo, invoiceNo, recievedDate FROM salesInvoice WHERE supplier='$supplier' AND (recievedDate BETWEEN '$fdate' AND '$tdate') AND status NOT LIKE 'Deleted_%%%%' ORDER BY recievedDate");
+while($bfetch=mysqli_fetch_array($bsql)){
 $siNo=$bfetch['siNo'];
 $invoiceNo=$bfetch['invoiceNo'];
 $recievedDate=$bfetch['recievedDate'];
@@ -150,8 +150,8 @@ $recievedDate=$bfetch['recievedDate'];
 $recievedDatestr=strtotime($recievedDate);
 $recievedDatefmt=date("M d, Y",$recievedDatestr);
 
-$csql=mysql_query("SELECT SUM(unitPrice*quantity) AS total FROM salesInvoiceItems WHERE siNo='$siNo' AND status NOT LIKE 'Deleted_%%%%'");
-while($cfetch=mysql_fetch_array($csql)){$total=$cfetch['total'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(unitPrice*quantity) AS total FROM salesInvoiceItems WHERE siNo='$siNo' AND status NOT LIKE 'Deleted_%%%%'");
+while($cfetch=mysqli_fetch_array($csql)){$total=$cfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 
@@ -161,9 +161,9 @@ $amountfmt=number_format($amount,2,'.',',');
 $vat=$total-($total/1.12);
 $vatfmt=number_format($vat,2,'.',',');
 
-$dsql=mysql_query("SELECT amount, vat, wtax FROM vouchers WHERE payee LIKE '%$supplierName%' AND invoiceNo='$invoiceNo'");
-$dcount=mysql_num_rows($dsql);
-while($dfetch=mysql_fetch_array($dsql)){$damount=$dfetch['amount'];$vat=$dfetch['vat'];$wtax=$dfetch['wtax'];}
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT amount, vat, wtax FROM vouchers WHERE payee LIKE '%$supplierName%' AND invoiceNo='$invoiceNo'");
+$dcount=mysqli_num_rows($dsql);
+while($dfetch=mysqli_fetch_array($dsql)){$damount=$dfetch['amount'];$vat=$dfetch['vat'];$wtax=$dfetch['wtax'];}
 
 if($dcount==0){
 $paidamount=0;

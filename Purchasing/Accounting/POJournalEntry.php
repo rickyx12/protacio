@@ -57,8 +57,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 
@@ -98,9 +98,9 @@ $num=0;
 $totamountwovat=0;
 $totamountvat=0;
 $finaltotamount=0;
-$asql=mysql_query("SELECT siNo, invoiceNo, supplier, recievedDate FROM salesInvoice WHERE (recievedDate BETWEEN '$fdate' AND '$tdate') AND status='Active' ORDER BY recievedDate");
-$acount=mysql_num_rows($asql);
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT siNo, invoiceNo, supplier, recievedDate FROM salesInvoice WHERE (recievedDate BETWEEN '$fdate' AND '$tdate') AND status='Active' ORDER BY recievedDate");
+$acount=mysqli_num_rows($asql);
+while($afetch=mysqli_fetch_array($asql)){
 $siNo=$afetch['siNo'];
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
@@ -109,11 +109,11 @@ $recievedDate=$afetch['recievedDate'];
 $recievedDatestr=strtotime($recievedDate);
 $recievedDatefmt=date("M d, Y",$recievedDatestr);
 
-$bsql=mysql_query("SELECT supplierName, vatable FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName'];$vatable=$bfetch['vatable'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, vatable FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName'];$vatable=$bfetch['vatable'];}
 
-$csql=mysql_query("SELECT SUM(unitPrice*quantity) AS totamount FROM salesInvoiceItems WHERE siNo='$siNo'");
-while($cfetch=mysql_fetch_array($csql)){$totamount=$cfetch['totamount'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(unitPrice*quantity) AS totamount FROM salesInvoiceItems WHERE siNo='$siNo'");
+while($cfetch=mysqli_fetch_array($csql)){$totamount=$cfetch['totamount'];}
 
 $amountwovat=$totamount/1.12;
 $amountvat=$totamount-$amountwovat;
@@ -124,9 +124,9 @@ $totamountfmt=number_format($totamount,2,'.',',');
 
 
 $num++;
-$dsql=mysql_query("SELECT checkedNo, amount, date, bank, vat, wtax FROM vouchers WHERE invoiceNo LIKE '$invoiceNo'");
-$dcount[$num]=mysql_num_rows($dsql);
-while($dfetch=mysql_fetch_array($dsql)){
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT checkedNo, amount, date, bank, vat, wtax FROM vouchers WHERE invoiceNo LIKE '$invoiceNo'");
+$dcount[$num]=mysqli_num_rows($dsql);
+while($dfetch=mysqli_fetch_array($dsql)){
 $vcheckedNo=$dfetch['checkedNo'];
 $vamount=$dfetch['amount'];
 $vdate=$dfetch['date'];

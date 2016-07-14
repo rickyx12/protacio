@@ -47,15 +47,15 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $sino=$_GET['sino'];
 $page=$_GET['page'];
 
-$asql=mysql_query("SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
+while($afetch=mysqli_fetch_array($asql)){
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
 $terms=$afetch['terms'];
@@ -63,11 +63,11 @@ $transactionDate=$afetch['transactionDate'];
 $recievedDate=$afetch['recievedDate'];
 }
 
-$bsql=mysql_query("SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
 
-$pagesql=mysql_query("SELECT refNo, description, unit, unitPrice, quantity FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
-$pagecount=mysql_num_rows($pagesql);
+$pagesql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT refNo, description, unit, unitPrice, quantity FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
+$pagecount=mysqli_num_rows($pagesql);
 
 echo "
 <div align='left'>
@@ -126,8 +126,8 @@ echo "
           </table></td>
 ";
 
-$zsql=mysql_query("SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
-while($zfetch=mysql_fetch_array($zsql)){$total=$zfetch['total'];}
+$zsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
+while($zfetch=mysqli_fetch_array($zsql)){$total=$zfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 
@@ -151,8 +151,8 @@ echo "
               </tr>
 ";
 
-$msql=mysql_query("SELECT SUM(amount+vat+wtax) AS totamount FROM vouchers WHERE invoiceNo='$invoiceNo'");
-while($mfetch=mysql_fetch_array($msql)){$amount=$mfetch['totamount'];}
+$msql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(amount+vat+wtax) AS totamount FROM vouchers WHERE invoiceNo='$invoiceNo'");
+while($mfetch=mysqli_fetch_array($msql)){$amount=$mfetch['totamount'];}
 
 $amountfmt=number_format($amount,2,'.',',');
 
@@ -320,8 +320,8 @@ echo "
             </tr>
 ";
 
-$asql=mysql_query("SELECT inventoryCode,refNo, description, unit, unitPrice, quantity, fgquantity FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo LIMIT $page,$num");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode,refNo, description, unit, unitPrice, quantity, fgquantity FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo LIMIT $page,$num");
+while($afetch=mysqli_fetch_array($asql)){
 $refNo=$afetch['refNo'];
 $description=$afetch['description'];
 $unit=$afetch['unit'];

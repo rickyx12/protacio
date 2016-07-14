@@ -45,16 +45,16 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $sino=$_GET['sino'];
 $page=$_GET['page'];
 $refNo=$_GET['refNo'];
 
-$asql=mysql_query("SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
+while($afetch=mysqli_fetch_array($asql)){
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
 $terms=$afetch['terms'];
@@ -62,8 +62,8 @@ $transactionDate=$afetch['transactionDate'];
 $recievedDate=$afetch['recievedDate'];
 }
 
-$bsql=mysql_query("SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $Address=$bfetch['Address'];}
 
 echo "
 <div align='left' onfocus='MM_openBrWindow('PurchseReport.php','','toolbar=yes,location=yes,status=yes,menubar=yes,scrollbars=yes,width=400,height=600')'>
@@ -81,8 +81,8 @@ echo "
           </table></td>
 ";
 
-$csql=mysql_query("SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
-while($cfetch=mysql_fetch_array($csql)){$total=$cfetch['total'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(quantity*unitPrice) AS total FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
+while($cfetch=mysqli_fetch_array($csql)){$total=$cfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 
@@ -144,8 +144,8 @@ echo "
     </tr>
 ";
 
-$dsql=mysql_query("SELECT refNo, description, unit, unitPrice, quantity FROM salesInvoiceItems WHERE refNo='$refNo'");
-while($dfetch=mysql_fetch_array($dsql)){$description=$dfetch['description'];}
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT refNo, description, unit, unitPrice, quantity FROM salesInvoiceItems WHERE refNo='$refNo'");
+while($dfetch=mysqli_fetch_array($dsql)){$description=$dfetch['description'];}
 
 echo "
     <tr>

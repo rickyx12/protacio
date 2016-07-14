@@ -48,8 +48,8 @@ function MM_goToURL() { //v3.0
 include("../../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $supplier=$_GET['supplier'];
@@ -58,8 +58,8 @@ $day=date("d");
 $month=date("m");
 $year=date("Y");
 
-$asql=mysql_query("SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
-while($afetch=mysql_fetch_array($asql)){$supplierName=$afetch['supplierName'];$Address=$afetch['Address'];$contactNo=$afetch['contactNo'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, contactNo, Address FROM supplier WHERE supplierCode='$supplier'");
+while($afetch=mysqli_fetch_array($asql)){$supplierName=$afetch['supplierName'];$Address=$afetch['Address'];$contactNo=$afetch['contactNo'];}
 
 
 if($supplier=='-Select Supplier-'){
@@ -115,8 +115,8 @@ echo "
 ";
 
 $x=0;
-$bsql=mysql_query("SELECT siNo, invoiceNo, terms, recievedDate FROM salesInvoice WHERE supplier='$supplier' AND status='Active' ORDER BY recievedDate");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT siNo, invoiceNo, terms, recievedDate FROM salesInvoice WHERE supplier='$supplier' AND status='Active' ORDER BY recievedDate");
+while($bfetch=mysqli_fetch_array($bsql)){
 $siNo=$bfetch['siNo'];
 $invoiceNo=$bfetch['invoiceNo'];
 $terms=$bfetch['terms'];
@@ -125,13 +125,13 @@ $receivedDate=$bfetch['recievedDate'];
 $receivedDatestr=strtotime($receivedDate);
 $receivedDatefmt=date("M d, Y",$receivedDatestr);
 
-$csql=mysql_query("SELECT SUM(unitPrice*(quantity)) AS totalAmount FROM salesInvoiceItems WHERE siNo='$siNo' AND status='Active'");
-while($cfetch=mysql_fetch_array($csql)){$totalAmount=$cfetch['totalAmount'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(unitPrice*(quantity)) AS totalAmount FROM salesInvoiceItems WHERE siNo='$siNo' AND status='Active'");
+while($cfetch=mysqli_fetch_array($csql)){$totalAmount=$cfetch['totalAmount'];}
 
 $totalAmountfmt=number_format($totalAmount,2,'.',',');
 
-$dsql=mysql_query("SELECT SUM(amount+vat+wtax) AS totamount FROM vouchers WHERE invoiceNo='$invoiceNo'");
-while($dfetch=mysql_fetch_array($dsql)){$amount=$dfetch['totamount'];}
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(amount+vat+wtax) AS totamount FROM vouchers WHERE invoiceNo='$invoiceNo'");
+while($dfetch=mysqli_fetch_array($dsql)){$amount=$dfetch['totamount'];}
 
 $balance=$totalAmount-$amount;
 

@@ -35,8 +35,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $poNo=$_GET['poNo'];
@@ -49,9 +49,9 @@ echo "
 ";
 
 $pdate=date("Ymd");
-$cdatesql=mysql_query("SELECT counterdate FROM counters WHERE counterdate='$pdate'");
-$cdatecount=mysql_num_rows($cdatesql);
-if($cdatecount==0){mysql_query("UPDATE counters SET counterdate='$pdate', counter04='0'");}
+$cdatesql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counterdate FROM counters WHERE counterdate='$pdate'");
+$cdatecount=mysqli_num_rows($cdatesql);
+if($cdatecount==0){mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counterdate='$pdate', counter04='0'");}
 
 for($x=1;$x<=$bx;$x++){
 $var1="stockCardNo".$x;
@@ -66,21 +66,21 @@ $unitPrice=$_GET[$var4];
 
 if(!is_numeric($unitPrice)){$trueunitPrice=0;}else{$trueunitPrice=$unitPrice;}
 
-$descsql=mysql_query("SELECT description FROM inventoryStockCard WHERE stockCardNo='$stockCardNo'");
-while($descfetch=mysql_fetch_array($descsql)){$description=$descfetch['description'];}
+$descsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description FROM inventoryStockCard WHERE stockCardNo='$stockCardNo'");
+while($descfetch=mysqli_fetch_array($descsql)){$description=$descfetch['description'];}
 
-$c4sql=mysql_query("SELECT counter04 FROM counters");
-while($c4fetch=mysql_fetch_array($c4sql)){$c4=$c4fetch['counter04'];}
+$c4sql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counter04 FROM counters");
+while($c4fetch=mysqli_fetch_array($c4sql)){$c4=$c4fetch['counter04'];}
 if($c4<10){$poItemNo=$pdate."000".$c4;}
 else if(($c4<100)&&($c4>9)){$poItemNo=$pdate."00".$c4;}
 else if(($c4<1000)&&($c4>99)){$poItemNo=$pdate."0".$c4;}
 else{$poItemNo=$pdate.$c4;}
 
-mysql_query("INSERT INTO `Coconut`.`purchaseOrderItems` (`poItemNo`, `poNo`, `stockCardNo`, `description`, `quantity`, `unit`, `unitPrice`, `dateAdded`, `status`, `logInUser`) VALUES ('$poItemNo', '$poNo', '$stockCardNo', '$description', '$quantity', '$unit', '$trueunitPrice', '$dateadded', 'Active', '$username')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO `Coconut`.`purchaseOrderItems` (`poItemNo`, `poNo`, `stockCardNo`, `description`, `quantity`, `unit`, `unitPrice`, `dateAdded`, `status`, `logInUser`) VALUES ('$poItemNo', '$poNo', '$stockCardNo', '$description', '$quantity', '$unit', '$trueunitPrice', '$dateadded', 'Active', '$username')");
 
 $poItemNoplus=$c4+1;
 
-mysql_query("UPDATE counters SET counter04='$poItemNoplus'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counter04='$poItemNoplus'");
 
 }
 

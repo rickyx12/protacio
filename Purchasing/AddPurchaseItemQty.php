@@ -47,8 +47,8 @@ tr:hover { background-color:red;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $poNo=$_GET['poNo'];
@@ -84,8 +84,8 @@ if($stockCardNo==''){
 }
 else{
 $bx++;
-$bsql=mysql_query("SELECT description FROM inventoryStockCard WHERE stockCardNo='$stockCardNo'");
-while($bfetch=mysql_fetch_array($bsql)){$description=$bfetch['description'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description FROM inventoryStockCard WHERE stockCardNo='$stockCardNo'");
+while($bfetch=mysqli_fetch_array($bsql)){$description=$bfetch['description'];}
 echo "
             <tr>
               <td width='200'><div align='left' class='style6'><input type='hidden' name='stockCardNo$bx' value='' /><input type='checkbox' name='stockCardNo$bx' class='textfield1' value='$stockCardNo' checked />$description</div></td>

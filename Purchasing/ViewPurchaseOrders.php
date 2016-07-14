@@ -47,8 +47,8 @@ function MM_goToURL() { //v3.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 
@@ -81,8 +81,8 @@ echo "
     </tr>
 ";
 
-$asql=mysql_query("SELECT poNo, supplier, transactionDate FROM purchaseOrderForm WHERE transactionDate BETWEEN '$fdate' AND '$tdate' ORDER BY transactionDate");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT poNo, supplier, transactionDate FROM purchaseOrderForm WHERE transactionDate BETWEEN '$fdate' AND '$tdate' ORDER BY transactionDate");
+while($afetch=mysqli_fetch_array($asql)){
 $poNo=$afetch['poNo'];
 $supplier=$afetch['supplier'];
 $transactionDate=$afetch['transactionDate'];
@@ -92,8 +92,8 @@ $transactionDatefmt=date("M d, Y",$transactionDatestr);
 
 $truesupplier=preg_split("/-/", $supplier);
 
-$csql=mysql_query("SELECT SUM(quantity*unitPrice) AS total FROM purchaseOrderItems WHERE poNo='$poNo' ORDER BY poNo");
-while($cfetch=mysql_fetch_array($csql)){$total=$cfetch['total'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(quantity*unitPrice) AS total FROM purchaseOrderItems WHERE poNo='$poNo' ORDER BY poNo");
+while($cfetch=mysqli_fetch_array($csql)){$total=$cfetch['total'];}
 
 $totalfmt=number_format($total,2,'.',',');
 

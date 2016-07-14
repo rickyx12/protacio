@@ -35,8 +35,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $terms=$_GET['terms'];
@@ -69,17 +69,17 @@ echo "
 <div align='left' class='style1'>Saving...</div>
 ";
 $pdate=date("Ymd");
-$cdatesql=mysql_query("SELECT counterdate FROM counters WHERE counterdate='$pdate'");
-$cdatecount=mysql_num_rows($cdatesql);
-if($cdatecount==0){mysql_query("UPDATE counters SET counterdate='$pdate', counter03='0', counter04='0'");}
-$c3sql=mysql_query("SELECT counter03 FROM counters");
-while($c3fetch=mysql_fetch_array($c3sql)){$c3=$c3fetch['counter03'];}
+$cdatesql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counterdate FROM counters WHERE counterdate='$pdate'");
+$cdatecount=mysqli_num_rows($cdatesql);
+if($cdatecount==0){mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counterdate='$pdate', counter03='0', counter04='0'");}
+$c3sql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counter03 FROM counters");
+while($c3fetch=mysqli_fetch_array($c3sql)){$c3=$c3fetch['counter03'];}
 if($c3<10){$poNo=$pdate."000".$c3;}
 else if(($c3<100)&&($c3>9)){$poNo=$pdate."00".$c3;}
 else if(($c3<1000)&&($c3>99)){$poNo=$pdate."0".$c3;}
 else{$poNo=$pdate.$c3;}
 
-mysql_query("INSERT INTO `Coconut`.`purchaseOrderForm` (`poNo`, `supplier`, `terms`, `transactionDate`, `deliveryDate`, `dateAdded`, `status`, `logInUser`) VALUES ('$poNo', '$supplier', '$terms', '$transDate', '$rcvDate', '$dateadded', 'Active', '$username')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO `Coconut`.`purchaseOrderForm` (`poNo`, `supplier`, `terms`, `transactionDate`, `deliveryDate`, `dateAdded`, `status`, `logInUser`) VALUES ('$poNo', '$supplier', '$terms', '$transDate', '$rcvDate', '$dateadded', 'Active', '$username')");
 
 for($x=1;$x<=$bx;$x++){
 $var1="stockCardNo".$x;
@@ -94,27 +94,27 @@ $unitPrice=$_GET[$var4];
 
 if(!is_numeric($unitPrice)){$trueunitPrice=0;}else{$trueunitPrice=$unitPrice;}
 
-$descsql=mysql_query("SELECT description FROM inventoryStockCard WHERE stockCardNo='$stockCardNo'");
-while($descfetch=mysql_fetch_array($descsql)){$description=$descfetch['description'];}
+$descsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description FROM inventoryStockCard WHERE stockCardNo='$stockCardNo'");
+while($descfetch=mysqli_fetch_array($descsql)){$description=$descfetch['description'];}
 
-$c4sql=mysql_query("SELECT counter04 FROM counters");
-while($c4fetch=mysql_fetch_array($c4sql)){$c4=$c4fetch['counter04'];}
+$c4sql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT counter04 FROM counters");
+while($c4fetch=mysqli_fetch_array($c4sql)){$c4=$c4fetch['counter04'];}
 if($c4<10){$poItemNo=$pdate."000".$c4;}
 else if(($c4<100)&&($c4>9)){$poItemNo=$pdate."00".$c4;}
 else if(($c4<1000)&&($c4>99)){$poItemNo=$pdate."0".$c4;}
 else{$poItemNo=$pdate.$c4;}
 
-mysql_query("INSERT INTO `Coconut`.`purchaseOrderItems` (`poItemNo`, `poNo`, `stockCardNo`, `description`, `quantity`, `unit`, `unitPrice`, `dateAdded`, `status`, `logInUser`) VALUES ('$poItemNo', '$poNo', '$stockCardNo', '$description', '$quantity', '$unit', '$trueunitPrice', '$dateadded', 'Active', '$username')");
+mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO `Coconut`.`purchaseOrderItems` (`poItemNo`, `poNo`, `stockCardNo`, `description`, `quantity`, `unit`, `unitPrice`, `dateAdded`, `status`, `logInUser`) VALUES ('$poItemNo', '$poNo', '$stockCardNo', '$description', '$quantity', '$unit', '$trueunitPrice', '$dateadded', 'Active', '$username')");
 
 $poItemNoplus=$c4+1;
 
-mysql_query("UPDATE counters SET counter04='$poItemNoplus'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counter04='$poItemNoplus'");
 
 }
 
 $poNoplus=$c3+1;
 
-mysql_query("UPDATE counters SET counter03='$poNoplus'");
+mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE counters SET counter03='$poNoplus'");
 echo "<META HTTP-EQUIV='Refresh'CONTENT='0;URL=CreatedPurchaseOrder.php?username=$username&poNo=$poNo'>";
 }
 }

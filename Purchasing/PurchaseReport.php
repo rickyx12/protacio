@@ -48,13 +48,13 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $sino=$_GET['sino'];
 
-$asql=mysql_query("SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT invoiceNo, supplier, terms, transactionDate, recievedDate FROM salesInvoice WHERE siNo='$sino'");
+while($afetch=mysqli_fetch_array($asql)){
 $invoiceNo=$afetch['invoiceNo'];
 $supplier=$afetch['supplier'];
 $terms=$afetch['terms'];
@@ -63,8 +63,8 @@ $recievedDate=$afetch['recievedDate'];
 }
 
 
-$bsql=mysql_query("SELECT supplierName, contactNo, address FROM supplier WHERE supplierCode='$supplier'");
-while($bfetch=mysql_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $address=$bfetch['address'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierName, contactNo, address FROM supplier WHERE supplierCode='$supplier'");
+while($bfetch=mysqli_fetch_array($bsql)){$supplierName=$bfetch['supplierName']; $address=$bfetch['address'];}
 
 echo "
 <div align='center'>
@@ -124,8 +124,8 @@ echo "
 ";
 
 
-$csql=mysql_query("SELECT description, unit, unitPrice, quantity, (quantity*unitPrice) AS gross FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
-while($cfetch=mysql_fetch_array($csql)){
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description, unit, unitPrice, quantity, (quantity*unitPrice) AS gross FROM salesInvoiceItems WHERE siNo='$sino' ORDER BY refNo");
+while($cfetch=mysqli_fetch_array($csql)){
 $description=$cfetch['description'];
 $unit=$cfetch['unit'];
 $unitPrice=$cfetch['unitPrice'];

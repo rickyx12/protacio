@@ -34,8 +34,8 @@ break;
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $year=date("Y");
 $month=date("m");
@@ -70,8 +70,8 @@ echo "
 
 
 
-$supsql=mysql_query("SELECT supplierCode, supplierName FROM supplier ORDER BY supplierName");
-while($supfetch=mysql_fetch_array($supsql)){
+$supsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT supplierCode, supplierName FROM supplier ORDER BY supplierName");
+while($supfetch=mysqli_fetch_array($supsql)){
 $supplierCode=$supfetch['supplierCode'];
 $supplierName=$supfetch['supplierName'];
 echo "
