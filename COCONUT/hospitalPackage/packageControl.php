@@ -37,17 +37,17 @@ $this->database = $_SERVER['DB_DB'];
 
 public function getMyUrl() {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT ipaddress FROM ipaddress ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ipaddress FROM ipaddress ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['ipaddress'];
   }
@@ -87,23 +87,23 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
 
-$result = mysql_query("SELECT Description,chargesCode,Category,WARD from availableCharges where Description like '$desc%%%%%%%%' order by Description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Description,chargesCode,Category,WARD from availableCharges where Description like '$desc%%%%%%%%' order by Description asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<Th>Description</th>";
 echo "<Th>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['Description']."</tD>";
@@ -126,16 +126,16 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
 
-$result = mysql_query("SELECT description,inventoryCode,upper(inventoryType) as inventoryType,unitcost,Added,inventoryLocation,opdPrice from inventory where description like '$desc%%%%%%%%' and status not like 'DELETED_%%%%%%%' and inventoryLocation = '$searchFrom' order by description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description,inventoryCode,upper(inventoryType) as inventoryType,unitcost,Added,inventoryLocation,opdPrice from inventory where description like '$desc%%%%%%%%' and status not like 'DELETED_%%%%%%%' and inventoryLocation = '$searchFrom' order by description asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -143,7 +143,7 @@ echo "<Th>Description</th>";
 echo "<Th>Location</th>";
 echo "<Th>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['description']."</tD>";
@@ -172,23 +172,23 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
 
-$result = mysql_query("SELECT Name,doctorCode from Doctors where Name like '$desc%%%%%%%%' order by Name asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Name,doctorCode from Doctors where Name like '$desc%%%%%%%%' order by Name asc ");
 
 echo "<table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<Th>Description</th>";
 echo "<Th>&nbsp;</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;".$row['Name']."</tD>";
@@ -203,21 +203,21 @@ echo "</table>";
 
 public function addPackageInclude($packageName,$packageIncluded_desc,$packageIncluded_qty,$unitcost,$Added) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
 $sql="INSERT INTO hospitalPackage (packageName,packageIncluded_description,packageIncluded_qty,unitcost,Added)
 VALUES
-('".mysql_real_escape_string($packageName)."','".mysql_real_escape_string($packageIncluded_desc)."','$packageIncluded_qty','$unitcost','$Added')";
+('".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $packageName) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $packageIncluded_desc) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$packageIncluded_qty','$unitcost','$Added')";
 
-if (!mysql_query($sql,$con))
+if (!mysqli_query($con, $sql))
   {
-  die('Error: ' . mysql_error());
+  die('Error: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
 echo "<script type='text/javascript' >";
@@ -225,7 +225,7 @@ echo "<script type='text/javascript' >";
 echo  "window.location='http://".$this->getMyUrl()."/COCONUT/hospitalPackage/searchCharges.php?packageName=$packageName';";
 echo "</script>";
 
-mysql_close($con);
+((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 
 
 }
@@ -242,15 +242,15 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT packageName,packageNo,packageIncluded_description,packageIncluded_qty,Added FROM hospitalPackage WHERE packageName = '$packageName' order by packageIncluded_description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT packageName,packageNo,packageIncluded_description,packageIncluded_qty,Added FROM hospitalPackage WHERE packageName = '$packageName' order by packageIncluded_description asc ");
 
 echo "<center>";
 $this->coconutTableStart();
@@ -261,7 +261,7 @@ $this->coconutTableHeader("Price");
 $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 
@@ -304,15 +304,15 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT packageName,packagePrice,package_phicPrice FROM hospitalPackage group by packageName order by packageName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT packageName,packagePrice,package_phicPrice FROM hospitalPackage group by packageName order by packageName asc ");
 
 echo "<center>";
 $this->coconutTableStart();
@@ -321,7 +321,7 @@ $this->coconutTableHeader("Package Name");
 $this->coconutTableHeader("");
 $this->coconutTableHeader("");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->coconutTableData("&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/hospitalPackage/showAddedPackage_update.php?packageName=$row[packageName]' target='selection1'>".$row['packageName']."</a>");
@@ -338,17 +338,17 @@ $this->coconutTableStop();
 //UNIVERSAL SELECT
 public function selectNow($table,$cols,$identifier,$identifierData) {
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT ($cols) as cols from $table  where $identifier = '$identifierData'  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols from $table  where $identifier = '$identifierData'  ");
 
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 return $row['cols'];
   }
@@ -367,15 +367,15 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT packageNo,packageIncluded_description,packageIncluded_qty,unitcost,Added FROM hospitalPackage WHERE packageName = '$packageName' order by packageIncluded_description asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT packageNo,packageIncluded_description,packageIncluded_qty,unitcost,Added FROM hospitalPackage WHERE packageName = '$packageName' order by packageIncluded_description asc ");
 
 
 echo "<form method='get' action='http://".$this->getMyUrl()."/COCONUT/hospitalPackage/onPatient/applyPackage.php'>";
@@ -390,7 +390,7 @@ $this->coconutTableHeader("Description");
 $this->coconutTableHeader("QTY");
 $this->coconutTableHeader("Total");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 
 $this->showAddedPackage_onPatient_total += $row['Added'];
@@ -447,22 +447,22 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT packageName,packagePrice FROM hospitalPackage group by packageName order by packageName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT packageName,packagePrice FROM hospitalPackage group by packageName order by packageName asc ");
 
 echo "<center>";
 $this->coconutTableStart();
 $this->coconutTableRowStart();
 $this->coconutTableHeader("Package Name");
 $this->coconutTableRowStop();
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
 $this->coconutTableData("&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/hospitalPackage/onPatient/showIncluded.php?packageName=$row[packageName]&registrationNo=$registrationNo&username=$username' target='selection1'>".$row['packageName']."</a>");
@@ -486,15 +486,15 @@ tr:hover { background-color:yellow;color:black;}
 a { text-decoration:none; color:black; }
 </style>";
 
-$con = mysql_connect($this->myHost(),$this->getUser(),$this->getPass());
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost(), $this->getUser(), $this->getPass()));
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
   }
 
-mysql_select_db($this->getDB(), $con);
+((bool)mysqli_query( $con, "USE " . $this->getDB()));
 
-$result = mysql_query("SELECT inventoryCode,description,quantity,genericName FROM inventory WHERE (description like '%%%%%$item%%%%%' or genericName like '%%%%%$item%%%%%') and quantity > 0 and inventoryLocation = '$inventoryLocation' and status not like 'DELETED%%%%%%' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT inventoryCode,description,quantity,genericName FROM inventory WHERE (description like '%%%%%$item%%%%%' or genericName like '%%%%%$item%%%%%') and quantity > 0 and inventoryLocation = '$inventoryLocation' and status not like 'DELETED%%%%%%' ");
 
 echo "<center>";
 echo "<table border=1 cellspacing=0 cellpadding=1>";
@@ -503,7 +503,7 @@ echo "<th>Particulars</th>";
 echo "<th>Generic</th>";
 echo "<th>QTY</th>";
 echo "</tr>";
-while($row = mysql_fetch_array($result))
+while($row = mysqli_fetch_array($result))
   {
 echo "<tr>";
 echo "<td>&nbsp;<a href='/COCONUT/hospitalPackage/onPatient/itemQTY.php?packageNo=$packageNo&inventoryCode=$row[inventoryCode]'>".$row['description']."</a></td>";
