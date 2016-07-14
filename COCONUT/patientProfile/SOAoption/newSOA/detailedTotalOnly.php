@@ -1342,7 +1342,7 @@ $remainingBill = ($ro->detailedTotalOnly_patientToPay_cashUnpaid() - ($ro->detai
 
 
 if( $remainingBill > 0 ) { //kpg may remaining na cash bawasan ng discount
-	echo "<td>&nbsp;<font size=2><b>".number_format(trim($remainingBill - $discount),2)."</b></font></td>";
+	echo "<td>&nbsp;<font size=2><b>".number_format(trim($remainingBill),2)."</b></font></td>";
 }else { //kpg wlang cash na remaining puro HMO,PHIC lng wag n ibawas ung discount
 	echo "<td>&nbsp;<font size=2><b>".number_format(trim($remainingBill),2)."</b></font></td>";
 }
