@@ -120,6 +120,11 @@ echo "<td><font class='labelz'>Quantity&nbsp;</font></td>";
 echo "<td><input type=text class='shortField' name='quantity' value='$quantity' autocomplete='off'></td>";
 echo "</tr>";
 
+echo "<tr>";
+echo "<td><font class='labelz'>Expiration&nbsp;</font></td>";
+echo "<td><input type=text class='shortField' name='expiration' value='".$ro->selectNow("inventory","expiration","inventoryCode",$inventoryCode)."' autocomplete='off'></td>";
+echo "</tr>";
+
 /*
 echo "<tr>";
 echo "<td><font class='labelz'>Expiration&nbsp;</font></td>";

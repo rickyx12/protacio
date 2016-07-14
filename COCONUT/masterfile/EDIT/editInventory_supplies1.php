@@ -12,6 +12,7 @@ $phic = $_POST['phic'];
 $remarks = $_POST['remarks'];
 $supplier = $_POST['supplier'];
 $criticalLevel = $_POST['criticalLevel'];
+$expiration = $_POST['expiration'];
 $username  = $_POST['username'];
 
 $ro = new database3();
@@ -38,6 +39,7 @@ $ipdPrice = $ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode
 $ro->editedInventory($stockCardNo,$inventoryCode,$description,$generic,$qty,$unitcost,$opdPrice,$ipdPrice,$inventoryType,date("H:i:s"),date("Y-m-d"),$username);
 
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"quantity",$quantity);
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"expiration",$expiration);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"dateAdded",$dateAdded);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"inventoryLocation",$inventoryLocation);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"phic",$phic);
