@@ -11,8 +11,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="../../jquery-2.1.4.min.js"></script>
-	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.tooltipster.min.js"></script>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
+	<link rel="stylesheet" href="../js/jquery-ui.css"></link>
+	<link rel="stylesheet" href="../js/jquery-ui.theme.min.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster-noir.css"></link>	
 
 	<script>
 		$(document).ready(function(){
@@ -50,6 +56,28 @@
 					})
 				})
 
+
+			$(".details<? echo $inventoryCode ?>").tooltipster({
+				content: $('<span>Loading....</span>'),
+				position: 'right',
+				theme: 'tooltipster-noir',
+				contentAsHTML:true,
+				functionBefore:function(origin,continueTooltip) {
+					continueTooltip();
+					if( origin.data('ajax') !== 'cached' ){ 
+						$.ajax({
+							type:'POST',
+							url:'inventoryDetails.php',
+							data:{'inventoryCode':'<? echo $inventoryCode ?>'},
+							success:function(data) {
+								origin.tooltipster('content',data).data('ajax','cached');
+							}
+						});
+					}
+				}				
+			});
+
+
 			<?php } ?>
 
 		});
@@ -83,8 +111,8 @@
 				<tr>
 					<td>&nbsp;<?php echo $inventoryCode ?></td>
 					<td>&nbsp;<?php echo $ro1->selectNow("inventory","stockCardNo","inventoryCode",$inventoryCode) ?></td>
-					<td>&nbsp;<?php echo $ro1->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></td>
-					<td>&nbsp;<?php echo $ro1->selectNow("inventory","genericName","inventoryCode",$inventoryCode) ?></td>
+					<td>&nbsp;<span class="details<? echo $inventoryCode ?>"><?php echo $ro1->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></span></td>
+					<td>&nbsp;<span class="details<? echo $inventoryCode ?>"><?php echo $ro1->selectNow("inventory","genericName","inventoryCode",$inventoryCode) ?></span></td>
 					<td>&nbsp;<?php echo $ro1->selectNow("inventory","quantity","inventoryCode",$inventoryCode) ?></td>
 					<td>&nbsp;<?php echo $ro->number_format($ro1->selectNow("inventory","unitcost","inventoryCode",$inventoryCode)) ?></td>
 					<td>&nbsp;<?php echo $ro->number_format($ro1->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode)) ?></td>

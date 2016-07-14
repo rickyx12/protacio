@@ -9,39 +9,69 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="../../jquery-2.1.4.min.js"></script>
-	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.tooltipster.min.js"></script>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
+	<link rel="stylesheet" href="../js/jquery-ui.css"></link>
+	<link rel="stylesheet" href="../js/jquery-ui.theme.min.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster.css"></link> 
+	<link rel="stylesheet" href="../myCSS/tooltipster-noir.css"></link>	
 
 	<script>
-		<? foreach($ro4->inventory_list_inventoryCode() as $inventoryCode) { ?>
-			$(document).on("click","#removeBtn<? echo $inventoryCode ?>",function(){
-				$.post("medicine-new-delete.php",{inventoryCode:<? echo $inventoryCode ?>},function(){
-					$("#myTable").load("supplies-new.php #myTable");
+		$(document).ready(function(){
+			<? foreach($ro4->inventory_list_inventoryCode() as $inventoryCode) { ?>
+				$(document).on("click","#removeBtn<? echo $inventoryCode ?>",function(){
+					$.post("medicine-new-delete.php",{inventoryCode:<? echo $inventoryCode ?>},function(){
+						$("#myTable").load("supplies-new.php #myTable");
+					});
 				});
+
+				$(document).on("click","#updateBtn<? echo $inventoryCode ?>",function(){
+
+					var inventoryCode = <? echo $inventoryCode ?>;
+					var description = $("#description<? echo $inventoryCode ?>").val();
+					var quantity = $("#quantity<? echo $inventoryCode ?>").val();
+					var unitcost = $("#unitcost<? echo $inventoryCode ?>").val();
+					var price = $("#price<? echo $inventoryCode ?>").val();
+
+					var myData = {
+						"inventoryCode":inventoryCode,
+						"description":description,
+						"quantity":quantity,
+						"unitcost":unitcost,
+						"price":price
+					}
+
+					$.post("supplies-new-update.php",myData,function(){
+						$("#myTable").load("supplies-new.php #myTable");
+					});
+				});
+
+
+			$(".details<? echo $inventoryCode ?>").tooltipster({
+				content: $('<span>Loading....</span>'),
+				position: 'right',
+				theme: 'tooltipster-noir',
+				contentAsHTML:true,
+				functionBefore:function(origin,continueTooltip) {
+					continueTooltip();
+					if( origin.data('ajax') !== 'cached' ){ 
+						$.ajax({
+							type:'POST',
+							url:'inventoryDetails.php',
+							data:{'inventoryCode':'<? echo $inventoryCode ?>'},
+							success:function(data) {
+								origin.tooltipster('content',data).data('ajax','cached');
+							}
+						});
+					}
+				}				
 			});
 
-			$(document).on("click","#updateBtn<? echo $inventoryCode ?>",function(){
 
-				var inventoryCode = <? echo $inventoryCode ?>;
-				var description = $("#description<? echo $inventoryCode ?>").val();
-				var quantity = $("#quantity<? echo $inventoryCode ?>").val();
-				var unitcost = $("#unitcost<? echo $inventoryCode ?>").val();
-				var price = $("#price<? echo $inventoryCode ?>").val();
-
-				var myData = {
-					"inventoryCode":inventoryCode,
-					"description":description,
-					"quantity":quantity,
-					"unitcost":unitcost,
-					"price":price
-				}
-
-				$.post("supplies-new-update.php",myData,function(){
-					$("#myTable").load("supplies-new.php #myTable");
-				});
-			});
-
-		<? } ?>
+			<? } ?>
+		});
 	</script>
 
 	</head>
@@ -67,7 +97,11 @@
 					<tr>
 						<td>&nbsp;<? echo $inventoryCode ?></td>
 						<td>&nbsp;<? echo $ro->selectNow("inventory","stockCardNo","inventoryCode",$inventoryCode) ?></td>
-						<td>&nbsp;<? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></td>
+						<td>&nbsp;
+							<span class="details<? echo $inventoryCode ?>">
+								<? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?>
+							</span>
+						</td>
 						<td>&nbsp;<? echo $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode) ?></td>
 						<td>&nbsp;<? echo $ro4->number_format($ro->selectNow("inventory","suppliesUNITCOST","inventoryCode",$inventoryCode)) ?></td>
 						<td>&nbsp;<? echo $ro4->number_format($ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode)) ?></td>
