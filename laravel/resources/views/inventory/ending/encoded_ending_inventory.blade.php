@@ -30,6 +30,9 @@
 						<td>
 							{{ $ending->username }}
 						</td>
+						<td>
+							{{ number_format($ending->unitcost * $ending->endingQTY,2) }}
+						</td>
 
 					</tr>
 				@endforeach

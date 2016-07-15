@@ -13,7 +13,7 @@ class EndingInventoryController extends Controller
 
 		$ending = DB::table('endingInventory')
 		->join('inventoryStockCard','endingInventory.stockCardNo','=','inventoryStockCard.stockCardNo')
-		->select('endingInventory.stockCardNo','inventoryStockCard.inventoryType','endingInventory.quarter','inventoryStockCard.description','inventoryStockCard.genericName',DB::raw('SUM(endingInventory.endingQTY) as endQTY'),DB::raw('SUM(endingInventory.unitcost) as unitcost'))
+		->select('endingInventory.stockCardNo','inventoryStockCard.inventoryType','endingInventory.quarter','inventoryStockCard.description','inventoryStockCard.genericName',DB::raw('SUM(endingInventory.endingQTY) as endQTY'),DB::raw('SUM(endingInventory.unitcost) as unitcost'),DB::raw('SUM((endingInventory.endingQTY * endingInventory.unitcost)) as totalCost'))
 		->where('quarter','=',$quarter)
 		->where('inventoryStockCard.inventoryType','=',$inventoryType)
 		->groupBy('stockCardNo')

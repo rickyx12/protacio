@@ -105,8 +105,8 @@
 								</td>
 								<td>
 									<span class='details{{ $end->stockCardNo }}'>
-										{{ number_format($end->unitcost * $end->endQTY,2) }}
-										<? $totalCost += ($end->unitcost * $end->endQTY) ?>
+										{{ number_format($end->totalCost,2) }}
+										<? $totalCost += ($end->totalCost) ?>
 									</span>
 								</td>
 								<td>
