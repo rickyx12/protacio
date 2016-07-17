@@ -67,8 +67,10 @@ font-size:13px;
 
 </style>";
 
-mysql_connect($ro->myHost(),$ro->getUser(),$ro->getPass());
-mysql_select_db($ro->getDB());
+$patientNo = $ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
+$pxCount = $ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo);
+$manual_patientNo = $ro->selectNow("patientRecord","manual_patientNo","patientNo",$patientNo);
+$manual_registrationNo = $ro->selectNow("registrationDetails","manual_registrationNo","registrationNo",$registrationNo);
 
 echo "<form method='get' action='editInformation1.php'>";
 echo "<input type=hidden name='patientNo' value='".$ro->getRegistrationDetails_patientNo()."'>";
@@ -78,9 +80,6 @@ echo "<center><br><div style='border:1px solid #000000; width:500px; height:auto
 echo "<br>";
 echo "<table border=0 cellpadding=0 cellspacing=0>";
 echo "<tr>";
-
-$asql=mysql_query("SELECT manual_patientNo, manual_registrationNo, pxCount FROM registrationDetails WHERE registrationNo='$registrationNo'");
-while($afetch=mysql_fetch_array($asql)){$manual_patientNo=$afetch['manual_patientNo']; $manual_registrationNo=$afetch['manual_registrationNo']; $pxCount=$afetch['pxCount'];}
 
 echo "<td>Px Count&nbsp;</td>";
 echo "<td>";

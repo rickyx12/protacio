@@ -59,11 +59,6 @@ $ro->getPatientProfile($registrationNo);
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"incrementalCost",$incrementalCost);
 //}
 
-mysql_connect($ro->myHost(),$ro->getUser(),$ro->getPass());
-mysql_select_db($ro->getDB());
-
-mysql_query("UPDATE patientRecord SET manual_patientNo='$manual_patientNo' WHERE patientNo=$patientNo");
-
 $ro->editCompleteName($patientNo,$lastname." ".$firstname." ".$middlename);
 $ro->editLastName($patientNo,$lastname);
 $ro->editFirstName($patientNo,$firstname);
@@ -95,6 +90,7 @@ $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"LimitCASH",
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"LimitHMO",$hmoLimit);
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"package",$package);
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"privateORhouse_case",$typeCase);
+$ro->editNow("patientRecord","patientNo",$patientNo,"manual_patientNo",$manual_patientNo);
 $hmoType = $ro->selectNow("Company","type","companyName",$company);
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"companyType",$hmoType);
 if( isset($_GET['CashLIMIT']) ) {
