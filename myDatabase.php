@@ -16299,7 +16299,7 @@ if (!$con)
 $fromDate = $year."-".$month."-".$day;
 $toDate = $year1."-".$month1."-".$day1;
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where (expiration between '$fromDate' and '$toDate') and status not like 'DELETED_%%%%%' and quantity > 0 order by description asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from inventory where (expiration between '$fromDate' and '$toDate') and status not like 'DELETED_%%%%%' and quantity > 0 and classification != 'noInventory' order by description asc  ");
 
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
