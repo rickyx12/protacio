@@ -40,6 +40,7 @@
 					var unitcost = $("#unitcost<?php echo $inventoryCode ?>").val();
 					var ipdPrice = $("#ipdPrice<?php echo $inventoryCode ?>").val();
 					var opdPrice = $("#opdPrice<?php echo $inventoryCode ?>").val();
+					var expiration = $("#expiration<? echo $inventoryCode ?>").val();
 
 					var myData = {
 						inventoryCode:<?php echo $inventoryCode ?>,
@@ -48,7 +49,8 @@
 						quantity:quantity,
 						unitcost:unitcost,
 						ipdPrice:ipdPrice,
-						opdPrice:opdPrice
+						opdPrice:opdPrice,
+						expiration:expiration
 					}
 
 					$.post("medicine-new-update.php",myData,function(data) {
@@ -78,8 +80,12 @@
 			});
 
 
-			<?php } ?>
+			$("#expiration<? echo $inventoryCode ?>").datepicker({
+				dateFormat:'yy-mm-dd'
+			});			
 
+
+			<?php } ?>
 		});
 
 	</script>
@@ -179,6 +185,13 @@
 								<label>Outpatient Price</label>
 								<input type="text" id="opdPrice<?php echo $inventoryCode ?>" class="form-control" value="<?php echo $ro1->selectNow('inventory','opdPrice','inventoryCode',$inventoryCode) ?>">
 							</div>
+
+							<div class="form-group">
+								<label>Expiration</label>
+								<input type="text" id="expiration<?php echo $inventoryCode ?>" class="form-control" value="<?php echo $ro1->selectNow('inventory','expiration','inventoryCode',$inventoryCode) ?>" readonly>
+							</div>
+
+							
 						</div>
 						</div>
 					</div>

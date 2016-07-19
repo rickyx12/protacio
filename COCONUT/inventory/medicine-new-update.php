@@ -8,6 +8,7 @@ $quantity = $_POST['quantity'];
 $unitcost = $_POST['unitcost'];
 $ipdPrice = $_POST['ipdPrice'];
 $opdPrice = $_POST['opdPrice'];
+$expiration = $_POST['expiration'];
 
 
 
@@ -77,6 +78,7 @@ $ro->editNow("inventory","inventoryCode",$inventoryCode,"genericName",$generic);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"quantity",$quantity);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"unitcost",$unitcost);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"ipdPrice",$ipdPrice);
-$ro->editNow("inventory","inventoryCode",$inventoryCode,"opdPrice",$opdPrice)
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"opdPrice",$opdPrice);
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"expiration",$expiration);
 
 ?>

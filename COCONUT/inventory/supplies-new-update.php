@@ -5,6 +5,7 @@ $description = $_POST['description'];
 $quantity = $_POST['quantity'];
 $unitcost = $_POST['unitcost'];
 $price = $_POST['price'];
+$expiration = $_POST['expiration'];
 
 $ro = new database3();
 
@@ -61,6 +62,7 @@ $ro->editNow("inventory","inventoryCode",$inventoryCode,"description",$descripti
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"quantity",$quantity);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"suppliesUNITCOST",$unitcost);
 $ro->editNow("inventory","inventoryCode",$inventoryCode,"unitcost",$price);
+$ro->editNow("inventory","inventoryCode",$inventoryCode,"expiration",$expiration);
 
 /*
 echo $inventoryCode."<br>";

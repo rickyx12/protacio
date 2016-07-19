@@ -34,13 +34,16 @@
 					var quantity = $("#quantity<? echo $inventoryCode ?>").val();
 					var unitcost = $("#unitcost<? echo $inventoryCode ?>").val();
 					var price = $("#price<? echo $inventoryCode ?>").val();
+					var expiration = $("#expiration<? echo $inventoryCode ?>").val();
+
 
 					var myData = {
 						"inventoryCode":inventoryCode,
 						"description":description,
 						"quantity":quantity,
 						"unitcost":unitcost,
-						"price":price
+						"price":price,
+						"expiration":expiration
 					}
 
 					$.post("supplies-new-update.php",myData,function(){
@@ -49,28 +52,34 @@
 				});
 
 
-			$(".details<? echo $inventoryCode ?>").tooltipster({
-				content: $('<span>Loading....</span>'),
-				position: 'right',
-				theme: 'tooltipster-noir',
-				contentAsHTML:true,
-				functionBefore:function(origin,continueTooltip) {
-					continueTooltip();
-					if( origin.data('ajax') !== 'cached' ){ 
-						$.ajax({
-							type:'POST',
-							url:'inventoryDetails.php',
-							data:{'inventoryCode':'<? echo $inventoryCode ?>'},
-							success:function(data) {
-								origin.tooltipster('content',data).data('ajax','cached');
-							}
-						});
-					}
-				}				
+
+				$(".details<? echo $inventoryCode ?>").tooltipster({
+					content: $('<span>Loading....</span>'),
+					position: 'right',
+					theme: 'tooltipster-noir',
+					contentAsHTML:true,
+					functionBefore:function(origin,continueTooltip) {
+						continueTooltip();
+						if( origin.data('ajax') !== 'cached' ){ 
+							$.ajax({
+								type:'POST',
+								url:'inventoryDetails.php',
+								data:{'inventoryCode':'<? echo $inventoryCode ?>'},
+								success:function(data) {
+									origin.tooltipster('content',data).data('ajax','cached');
+								}
+							});
+						}
+					}				
+				});
+	
+
+			$("#expiration<? echo $inventoryCode ?>").datepicker({
+				dateFormat:'yy-mm-dd'
 			});
 
-
 			<? } ?>
+
 		});
 	</script>
 
@@ -182,6 +191,11 @@
 			        			<label>Price</label>
 			        			<input type="text" id="price<? echo $inventoryCode ?>" class="form-control" value="<? echo $ro->selectNow('inventory','unitcost','inventoryCode',$inventoryCode) ?>">
 			        		</div>
+			        		<div class="form-group">
+			        			<label>Expiration</label>
+			        			<input type="text" id="expiration<? echo $inventoryCode ?>" class="form-control" value="<? echo $ro->selectNow('inventory','expiration','inventoryCode',$inventoryCode) ?>" readonly>
+			        		</div>
+
 			        	</div>
 		        	</div>
 
