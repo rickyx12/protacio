@@ -77,15 +77,7 @@ echo "</script>";
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/accounting/voucher/addVoucher.php?username=<?php echo $username; ?>" target="departmentX">Expenses</a></li>
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/manualPayment.php?username=<?php echo $username; ?>&paymentType=manual_" target="departmentX">Manual Payments</a></li>
-
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/manualPayment.php?username=<?php echo $username; ?>&paymentType=derma_" target="departmentX">Derma Payments</a></li>
-
-
                     <li><a href="ipdBalance.php" target="departmentX">IPD Balance</a></li>
-
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/walkinButton.php?username=<?php echo $username ?>&module=<?php echo 'Cashier'; ?>&from=Cashier" target="departmentX">Walk-in</a></li>
-
 
 <li>
 <form method="post" action="/COCONUT/currentPatient/patientInterface.php" target="_blank">
