@@ -20,6 +20,26 @@ Route::get('test',function(){
 });
 
 Route::get('inventory/unitcost/{inventoryType}','stockCardController@stock_card_unitcost');
-Route::get('inventory/ending/{inventoryType}/{quarter}','EndingInventoryController@list_ending_inventory');
+
+Route::get('inventory/ending/quarter',function(){
+	return view('inventory/ending/endingInventory_quarter');
+});
+
+Route::get('inventory/ending/{inventoryType}/{quarter}',[
+		'as' => 'endingInventory',
+		'uses' => 'EndingInventoryController@list_ending_inventory'
+	]);
+
+Route::get('inventory/ending/post',function(){
+	$inventoryType = Input::get('inventoryType');
+	$quarter = Input::get('quarter');
+	return redirect()->route('endingInventory',[
+			'inventoryType' => $inventoryType,
+			'quarter' => $quarter
+		]);
+});
+
 Route::post('inventory/ending/{stockCardNo}/{quarter}','EndingInventoryController@encoded_ending_inventory');
 Route::post('inventory/ending/put/medicine/{stockCardNo}/{endQTY}','InventoryController@addMedicine');
+
+Route::get('inventory/test','InventoryController@testInventory');
