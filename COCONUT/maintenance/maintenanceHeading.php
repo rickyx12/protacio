@@ -77,38 +77,8 @@ body.onload=function() { history.go();  }
                 <a href="#">Add New<span class="arrow"></span></a>
                 
                 <ul>
-	                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?username=<?php echo $username; ?>&module=LABORATORY" target="departmentX">Laboratory Charges</a></li>
-
-		                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=ULTRASOUND&username=<?php echo $username; ?>" target="departmentX">ULTRASOUND Charges</a></li>
-
-		                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=XRAY&username=<?php echo $username; ?>" target="departmentX">XRAY Charges</a></li>
-
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=MISCELLANEOUS&username=<?php echo $username; ?>" target="departmentX">Miscellaneous</a></li>
-
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=OR/DR/ER Fee&username=<?php echo $username; ?>" target="departmentX">OR/DR/ER Fee</a></li>
-
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=CTSCAN&username=<?php echo $username; ?>" target="departmentX">CT Scan</a></li>
-
-<?php
-//check kung nka activate ung rehab module [Activate execute rehab module] [Deactivate don't execute rehab] 
- if( $ro->selectNow("reportHeading","information","reportName","rehab") == "Activate" ) { ?>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=REHAB&username=<?php echo $username; ?>" target="departmentX">Rehab Charges</a></li>
-<?php } else { }?>
-
-<?php
-//check kung nka activate ung dialysis module [Activate execute dialysis module] [Deactivate don't execute dialysis] 
- if( $ro->selectNow("reportHeading","information","reportName","dialysis") == "Activate" ) { ?>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=DIALYSIS&username=<?php echo $username; ?>" target="departmentX">Dialysis Charges</a></li>
-<?php } else { }?>
-
-
-<?php
-//check kung nka activate ung NBS module [Activate execute NBS module] [Deactivate don't execute NBS] 
- if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activate" ) { ?>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=NBS&username=<?php echo $username; ?>" target="departmentX">NBS Charges</a></li>
-<?php } else { }?>
-
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addCharges.php?module=OTHERS&username=<?php echo $username; ?>" target="departmentX">Other's</a></li>
+    
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/add-charges.php" target="departmentX">Add Charges</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addDiscountType.php" target="departmentX">Add Discount Type</a></li>
 
