@@ -112,8 +112,6 @@
 								<td>
 									@if( $ro->doubleSelectCondition('inventory','inventoryCode','stockCardNo',$end->stockCardNo,'=','status','DELETED%','not like') )
 
-									@elseif( $ro->doubleSelectCondition('inventory','inventoryCode','stockCardNo',$end->stockCardNo,'=','quantity','0','!=') )
-
 									@else
 										<input type="button" id="addInventory{{ $end->stockCardNo }}" class="btn btn-success" value="Add Inventory">										
 									@endif
