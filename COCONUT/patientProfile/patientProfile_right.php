@@ -37,7 +37,7 @@ echo "
 		$('#timeAdmission').wickedpicker({
 			now:'".$timePickerDefault."',
 			title:'Time Admission',
-			twentyFour:true
+			twentyFour:true,
 		});
 
 		$('#saveTimeBtn').click(function(){
