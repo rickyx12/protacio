@@ -34,7 +34,7 @@ public function formatDate($date) {
 }
 
 public function formatTime($time) {
-	return date('h:i:s A', strtotime($time));
+	return date('h:i A', strtotime($time));
 }
 
 public function number_format($number) {
@@ -57,6 +57,23 @@ public function calculateDays($date,$date1) {
 	return $days;
 }
 
+public function select($table,$cols) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT ".$cols." as cols FROM ".$table) or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['cols'];
+	}
+}
+
+public function selectLast($table,$cols,$identifier,$identifierData,$ordering) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "select ".$cols." as cols FROM ".$table." WHERE ".$identifier." = '".$identifierData."' ORDER BY ".$ordering." desc limit 1 ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['cols'];
+	}
+}
 
 private $aging_of_accounts_details_firstName;
 private $aging_of_accounts_details_lastName;
@@ -965,7 +982,7 @@ public function inpatient_hmo_total($registrationNo) {
 
 public function inpatient_hmoExcess($registrationNo,$cols) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(".$cols.") as excess FROM registrationDetails WHERE registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(".$cols.") as excess FROM registrationDetails WHERE registrationNo = '$registrationNo' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['excess'];
@@ -974,7 +991,7 @@ public function inpatient_hmoExcess($registrationNo,$cols) {
 
 public function inpatient_phic_total($registrationNo) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(phic) as phic FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(phic) as phic FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['phic'];
@@ -989,10 +1006,25 @@ public function stock_card_list_stockCardNo() {
 
 public function stock_card_list($inventoryType) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT stockCardNo FROM inventoryStockCard WHERE status not like 'DELETED%' and inventoryType = '$inventoryType' order by genericName,description asc ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT stockCardNo FROM inventoryStockCard WHERE status not like 'DELETED%' and inventoryType = '$inventoryType' order by genericName,description asc ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->stock_card_list_stockCardNo[] = $row['stockCardNo'];
+	}
+}
+
+private $stock_card_search_stockCardNo;
+
+public function stock_card_search_stockCardNo() {
+	return $this->stock_card_search_stockCardNo;
+}
+
+public function stock_card_search($search) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT stockCardNo FROM inventoryStockCard WHERE (stockCardNo = '$search' or genericName like '$search%' or description like '$search%') and status not like 'DELETED%' order by genericName,description asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->stock_card_search_stockCardNo[] = $row['stockCardNo'];
 	}
 }
 
@@ -1004,7 +1036,7 @@ public function daily_hmo_patient_registrationNo() {
 
 public function daily_hmo_patient($date,$shift) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.Company != '' AND rd.type = 'OPD' and rd.dateUnregistered = '$date' and pc.reportShift = '$shift' group by rd.registrationNo ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.Company != '' AND rd.type = 'OPD' and rd.dateUnregistered = '$date' and pc.reportShift = '$shift' group by rd.registrationNo ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->daily_hmo_patient_registrationNo[] = $row['registrationNo'];
@@ -1013,7 +1045,7 @@ public function daily_hmo_patient($date,$shift) {
 
 public function outpatient_hmo_total($registrationNo,$shift) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(company) as hmo FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') and reportShift = '$shift' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(company) as hmo FROM patientCharges WHERE registrationNo = '$registrationNo' and status in ('UNPAID','Discharged') and reportShift = '$shift' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['hmo'];
@@ -1028,7 +1060,7 @@ public function non_invoice_inventory_inventoryCode() {
 
 public function non_invoice_inventory($inventoryType) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT inventoryCode FROM inventory WHERE inventoryType = '$inventoryType' and invoiceNo = '' and status not like 'DELETED%' and classification != 'noInventory' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT inventoryCode FROM inventory WHERE inventoryType = '$inventoryType' and invoiceNo = '' and status not like 'DELETED%' and classification != 'noInventory' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->non_invoice_inventory_inventoryCode[] = $row['inventoryCode'];
@@ -1038,7 +1070,7 @@ public function non_invoice_inventory($inventoryType) {
 
 public function count_inventory_via_stockCard($stockCardNo) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(quantity) as qty FROM inventory WHERE stockCardNo = '$stockCardNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(quantity) as qty FROM inventory WHERE stockCardNo = '$stockCardNo' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['qty'];
@@ -1047,7 +1079,7 @@ public function count_inventory_via_stockCard($stockCardNo) {
 
 public function stockCard_purchases($stockCardNo,$fromDate,$toDate,$inventoryType) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT sum(beginningCapital) as purchases  FROM inventory WHERE stockCardNo = '$stockCardNo' and invoiceNo != '' and dateAdded between '$fromDate' and '$toDate' and from_inventoryCode = '' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, "SELECT sum(beginningCapital) as purchases  FROM inventory WHERE stockCardNo = '$stockCardNo' and invoiceNo != '' and dateAdded between '$fromDate' and '$toDate' and from_inventoryCode = '' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['purchases'];
@@ -1062,26 +1094,178 @@ public function get_purchases_via_stockcard_inventoryCode() {
 
 public function get_purchases_via_stockcard($stockCardNo,$fromDate,$toDate) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT inventoryCode  FROM inventory WHERE stockCardNo = '$stockCardNo' and invoiceNo != '' and dateAdded between '$fromDate' and '$toDate' and from_inventoryCode = '' order by inventoryCode asc ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, " SELECT inventoryCode  FROM inventory WHERE stockCardNo = '$stockCardNo' and invoiceNo != '' and dateAdded between '$fromDate' and '$toDate' and from_inventoryCode = '' order by inventoryCode asc ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->get_purchases_via_stockcard_inventoryCode[] = $row['inventoryCode'];
 	}
 }
 
+private $view_purchases_siNo;
+
+public function view_purchases_siNo() {
+	return $this->view_purchases_siNo;
+}
+
+public function view_purchases($fromDate,$toDate) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT siNo  FROM salesInvoice WHERE (recievedDate BETWEEN '$fromDate' and '$toDate') and (status = 'Active' and invoiceNo not like 'DELETED%') order by recievedDate asc  ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->view_purchases_siNo[] = $row['siNo'];
+	}
+}
 
 public function sum_unitcost_endingInventory($stockCardNo,$quarter) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT SUM(unitcost) as unitcost  FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, " SELECT SUM(unitcost) as unitcost  FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['unitcost'];
 	}
 }
 
+private $get_invoice_items_refNo;
+
+public function get_invoice_items_refNo() {
+	return $this->get_invoice_items_refNo;
+}
+
+public function get_invoice_items($siNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT refNo FROM salesInvoiceItems WHERE siNo = '$siNo' and status = 'Active' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_invoice_items_refNo[] = $row['refNo'];
+	}
+}
+
+
+private $list_invoice_siNo;
+
+public function list_invoice_siNo() {
+	return $this->list_invoice_siNo;
+} 
+
+public function list_invoice($from,$to) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT siNo FROM salesInvoice WHERE (dateEncoded BETWEEN '$from' and '$to') and status = 'Active' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_invoice_siNo[] = $row['siNo'];
+	}
+}
+
+private $search_invoice_siNo;
+
+public function search_invoice_siNo() {
+	return $this->search_invoice_siNo;
+}
+
+public function search_invoice($invoiceNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT siNo FROM salesInvoice WHERE invoiceNo like '$invoiceNo%' and status = 'Active' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->search_invoice_siNo[] = $row['siNo'];
+	}
+}
+
+public function total_invoice($siNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT SUM(unitPrice) as total FROM salesInvoiceItems WHERE siNo = '$siNo' and status = 'Active' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['total'];
+	}
+}
+
+private $stock_room_inventoryCode;
+
+public function stock_room_inventoryCode() {
+	return $this->stock_room_inventoryCode;
+}
+
+public function stock_room($inventoryType) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT  inventoryCode FROM inventory WHERE inventoryLocation = 'Stockroom' and inventoryType = '$inventoryType' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->stock_room_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
+private $search_stock_room_inventoryCode;
+
+public function search_stock_room_inventoryCode() {
+	return $this->search_stock_room_inventoryCode;
+}
+
+public function search_stock_room($search) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT  inventoryCode FROM inventory WHERE (description like '$search%' or genericName like '$search%') and inventoryLocation = 'Stockroom' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->search_stock_room_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
+private $requested_inventory_verificationNo;
+
+public function requested_inventory_verificationNo() {
+	return $this->requested_inventory_verificationNo;
+}
+
+public function requested_inventory($requesitionNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT  verificationNo FROM inventoryManager WHERE batchNo = '$requesitionNo' and status = 'requesting' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->requested_inventory_verificationNo[] = $row['verificationNo'];
+	}
+}
+
+private $pending_request_batchNo;
+
+public function pending_request_batchNo() {
+	return $this->pending_request_batchNo;
+}
+
+public function pending_request($module) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT batchNo FROM inventoryManager WHERE requestingDepartment = '$module' and status = 'requesting' group by batchNo ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->pending_request_batchNo[] = $row['batchNo'];
+	}
+}
+
+public function count_pending_request($module) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT COUNT(verificationNo) FROM inventoryManager WHERE requestingDepartment = '$module' and status = 'requesting' group by batchNo ") or die("Query fail: " . mysqli_error()); 
+
+	return mysqli_num_rows($result);
+
+}
+
+private $pending_request_details_verificationNo;
+
+public function pending_request_details_verificationNo() {
+	return $this->pending_request_details_verificationNo;
+}
+
+public function pending_request_details($batchNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT verificationNo FROM inventoryManager WHERE batchNo = '$batchNo' and status = 'requesting' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->pending_request_details_verificationNo[] = $row['verificationNo'];
+	}
+}
+
 public function sum_quantity_endingInventory($stockCardNo,$quarter) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT SUM(endingQTY) as qty  FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter ='$quarter' ") or die("Query fail: " . mysqli_alerror()); 
+	$result = mysqli_query($connection, " SELECT SUM(endingQTY) as qty  FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter ='$quarter' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['qty'];
