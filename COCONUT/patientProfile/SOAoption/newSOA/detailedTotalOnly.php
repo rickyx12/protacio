@@ -1,5 +1,7 @@
 <?php
 include("../../../../myDatabase2.php");
+include "../../../../myDatabase4.php";
+
 $registrationNo = $_GET['registrationNo'];
 $username = $_GET['username'];
 $show = $_GET['show'];
@@ -7,6 +9,8 @@ $chargesCode = $_GET['chargesCode'];
 $showdate = $_GET['showdate'];
 
 $ro = new database2();
+$ro4 = new database4();
+
 $ro->getPatientProfile($registrationNo);
 $ro->soap_setter($registrationNo);
 ?>
@@ -109,7 +113,7 @@ tr:hover { background-color:yellow;color:black;}
 
 
 $admdate=$ro->selectNow("registrationDetails","dateRegistered","registrationNo",$registrationNo);
-$admtime=$ro->selectNow("registrationDetails","timeRegistered","registrationNo",$registrationNo);
+$admtime=$ro->selectNow("registrationDetails","timeAdmission","registrationNo",$registrationNo);
 $admdatestr=strtotime($admdate);
 $admdatefmt=date("M d, Y",$admdatestr);
 $manualPatientNo=$ro->selectNow("registrationDetails","manual_patientNo","registrationNo",$registrationNo);
@@ -134,7 +138,7 @@ echo "<td><font class='labelz'><b>Senior:</b></font></td>";
 echo "<td><font size=2>".$ro->getPatientRecord_senior()."</font></td>";
 echo "</tr>";
 echo "<tr>";
-echo "<td><font class='labelz'><b>Date of Addmission:</b></font></td><td><font size=2>".$admdatefmt." - ".$admtime."&nbsp;&nbsp;&nbsp;</font></td>";
+echo "<td><font class='labelz'><b>Date of Addmission:</b></font></td><td><font size=2>".$admdatefmt." - ".$ro4->formatTime($admtime)."&nbsp;&nbsp;&nbsp;</font></td>";
 echo "<Td>&nbsp;</td>";
 $disdate=$ro->selectNow("registrationDetails","dateUnregistered","registrationNo",$registrationNo);
 $disdatestr=strtotime($disdate);
