@@ -1,5 +1,5 @@
 <?
-	require_once "../authentication.php";
+	//require_once "../authentication.php";
 	include "../../myDatabase.php";
 	include "../../myDatabase4.php";
 
