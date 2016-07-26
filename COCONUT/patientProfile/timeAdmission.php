@@ -5,8 +5,8 @@
 	$timeAdmission = $_POST['timeAdmission'];
 
 	$ro = new database();
-
-	$ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeAdmission",$timeAdmission);
+	$time = str_replace(' ', '', $timeAdmission);
+	$ro->editNow("registrationDetails","registrationNo",$registrationNo,"timeAdmission",$time);
 
 	//echo $timeAdmission;
 
