@@ -17,6 +17,7 @@ class EndingInventoryController extends Controller
 		->where('quarter','=',$quarter)
 		->where('inventoryStockCard.inventoryType','=',$inventoryType)
 		->groupBy('stockCardNo')
+		->orderBy('genericName','asc')
 		->get();
 
 		$data = array(
