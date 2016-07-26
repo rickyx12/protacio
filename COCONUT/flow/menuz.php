@@ -185,4 +185,10 @@ echo "<form method='get' action='../../laravel/public/inventory/unitcost/supplie
 echo "<input type='submit' value='Low Unitcost (supplies)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='post' action='../purchasing/view-purchases.php' target='rightFrame'>";
+echo "<input type='hidden' name='fromDate' value='".date("Ymd")."'>";
+echo "<input type='hidden' name='toDate' value='".date("Ymd")."'>";
+echo "<input type='submit' value='Purchases List' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 ?>
