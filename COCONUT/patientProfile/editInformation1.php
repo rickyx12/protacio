@@ -104,10 +104,10 @@ $ro->EditNow("patientRecord","patientNo",$ro->getRegistrationDetails_patientNo()
 
 
 
-
 if($type == "OPD") { // kung opd ang type
 $ro->EditNow("room","Description",$room,"status","Vacant"); // gwen vacant ang room bago pa mag update as opd
 $ro->EditNow("registrationDetails","registrationNo",$registrationNo,"room","OPD_OPD"); //set room as opd
+$ro->EditNow("registrationDetails","registrationNo",$registrationNo,"timeAdmission","");
 //$ro->deleteRoom($registrationNo);
 $ro->removeRoom($registrationNo,$username);
 }else if($type == "ER") {

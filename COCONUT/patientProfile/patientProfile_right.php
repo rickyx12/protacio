@@ -8,6 +8,60 @@ $ro = new database2();
 $ro1 = new database4();
 $ro->getPatientProfile($registrationNo);
 $ro->setPatientRecord($ro->getRegistrationDetails_patientNo());
+
+$timePickerDefault = "";
+$buttonClass = "";
+
+echo "<script type='text/javascript' src='../js/jquery-2.1.4.min.js'></script>";
+echo "<script type='text/javascript' src='../js/wickedpicker/dist/wickedpicker.min.js'></script>";
+echo "<link rel='stylesheet' href='../../bootstrap-3.3.6/css/bootstrap.css'></link>";
+echo "<link rel='stylesheet' href='../js/wickedpicker/dist/wickedpicker.min.css'></link>";
+
+
+	if( $ro->selectNow("registrationDetails","timeAdmission","registrationNo",$registrationNo) != "" ) {
+		$timePickerDefault = $ro->selectNow("registrationDetails","timeAdmission","registrationNo",$registrationNo);
+		$buttonClass = "btn btn-danger";
+	}else {
+		$timePickerDefault = $ro->selectNow("registrationDetails","timeRegistered","registrationNo",$registrationNo);
+		$buttonClass = "btn btn-success";
+	}
+
+
+echo "
+
+<script>
+	$(document).ready(function(){
+
+		$('#thumbsup').hide();
+
+		$('#timeAdmission').wickedpicker({
+			now:'".$timePickerDefault."',
+			title:'Time Admission',
+			twentyFour:true
+		});
+
+		$('#saveTimeBtn').click(function(){
+
+			var registrationNo = ".$registrationNo.";
+			var timeAdmission = $('#timeAdmission').val();
+
+			var data = {
+				registrationNo:registrationNo,
+				timeAdmission:timeAdmission
+			};
+
+			$.post('timeAdmission.php',data,function(result){
+				$('#saveTimeBtn').hide();
+				$('#thumbsup').show();
+			});
+
+		});
+
+	});
+</script>
+
+";
+
 echo "
 <style type='text/css'>
 .informationLabel {
@@ -93,8 +147,25 @@ echo "<br><font class='informationLabel'>Company2:</font>&nbsp;".$ro->selectNow(
 
 //echo "<br><font class='informationLabel'>Mother's Name:</font>&nbsp;".$ro->selectNow("patientRecord","mothersName","patientNo",$ro->getRegistrationDetails_patientNo());
 //echo "<br><font class='informationLabel'>Father's Name:</font>&nbsp;".$ro->selectNow("patientRecord","fathersName","patientNo",$ro->getRegistrationDetails_patientNo());
-echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro1->formatTime($ro->getRegistrationDetails_timeRegistered());
-echo "<br><font class='informationLabel'>Date Registered:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateRegistered());
+
+if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD" ) {
+	echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro1->formatTime($ro->getRegistrationDetails_timeRegistered());
+	echo "<br><font class='informationLabel'>Date Registered:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateRegistered());
+}else{
+	echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro1->formatTime($ro->getRegistrationDetails_timeRegistered());
+	echo "<br><div class='col-xs-3 input-group'>
+				<span class='input-group-addon'><i class='glyphicon glyphicon-time'></i> Admitted</span>
+				<input type='text' class='form-control' id='timeAdmission' placeholder='click to add time'>
+				<span class='input-group-btn'>
+					<button id='saveTimeBtn' class='".$buttonClass."'>
+						Save
+					</button>
+				</span>
+			</div>";
+	echo "<font class='informationLabel'>Date Registered:</font>&nbsp;".$ro1->formatDate($ro->getRegistrationDetails_dateRegistered());
+}
+
+
 //echo "<br><font class='informationLabel'>Branch Registered:</font>&nbsp;".$ro->getRegistrationDetails_branch();
 echo "<br><font class='informationLabel'>Case Type:</font>&nbsp;<a href='#' style='text-decoration:none; color:black;'>".$ro->selectNow("registrationDetails","privateORhouse_case","registrationNo",$registrationNo)."</a>";
 //selectNow($table,$cols,$identifier,$identifierData)
