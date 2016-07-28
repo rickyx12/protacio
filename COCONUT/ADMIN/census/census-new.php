@@ -58,17 +58,19 @@
 							</tr>
 						</thead>
 						<tbody>
-							<? foreach($ro4->opd_patient_census_registrationNo() as $registrationNo) { ?>
-								<tr>
-									<td>&nbsp;<? echo $ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo) ?></td>
-									<td>&nbsp;<? echo $ro->selectNow("patientRecord","lastName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?>, <? echo $ro->selectNow("patientRecord","firstName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?></td>
+							<? if( $ro4->opd_patient_census_registrationNo() != "" ) { ?>
+								<? foreach($ro4->opd_patient_census_registrationNo() as $registrationNo) { ?>
+									<tr>
+										<td>&nbsp;<? echo $ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo) ?></td>
+										<td>&nbsp;<? echo $ro->selectNow("patientRecord","lastName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?>, <? echo $ro->selectNow("patientRecord","firstName","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) ?></td>
 
-									<? if($ro->selectNow("registrationDetails","mgh_date","registrationNo",$registrationNo) != "") { ?>
-										<td><span class="glyphicon glyphicon-ok"></span></td>
-									<? }else { ?>
-										<td>&nbsp;</td>
-									<? } ?>
-								</tr>
+										<? if($ro->selectNow("registrationDetails","mgh_date","registrationNo",$registrationNo) != "") { ?>
+											<td><span class="glyphicon glyphicon-ok"></span></td>
+										<? }else { ?>
+											<td>&nbsp;</td>
+										<? } ?>
+									</tr>
+								<? } ?>
 							<? } ?>
 						</tbody>
 					</table>
