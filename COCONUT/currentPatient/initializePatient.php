@@ -31,7 +31,7 @@ $ro->coconutBoxStart("600","100");
 echo "<br>";
 echo "<font size=3 color=black>Logged as $username</font>";
 echo "<Br>";
-echo "<a href='http://".$ro->getMyUrl()."/LOGINPAGE/module.php'><font color=red size=2><< Sign Out</a>&nbsp;&nbsp;&nbsp;";
+echo "<a href='../session/out.php'><font color=red size=2><< Sign Out</a>&nbsp;&nbsp;&nbsp;";
 //echo "&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/currentPatient/patientInterface.php?patientSearch=&username=$username&module=$module'><font color=blue size=2>Sign In >></font></a>";
 
 
