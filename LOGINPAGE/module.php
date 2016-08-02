@@ -2,13 +2,13 @@
 <title>Synapse Hospital System</title>
 <?php
 include("homeDatabase.php");
-session_start();
+//session_start();
 $ro = new synapse();
 
 
-unset($_SESSION['username']);
-unset($_SESSION['module']);
-session_destroy();
+//unset($_SESSION['username']);
+//unset($_SESSION['module']);
+//session_destroy();
 //setcookie ("username", "",time()-60); 
 //setcookie ("module", "",time()-60); 
  
