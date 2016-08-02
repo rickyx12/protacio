@@ -49,7 +49,7 @@ $ro->coconutBoxStart("600","100");
 echo "<br>";
 echo "<span class='style3'>Logged in as $username</span>";
 echo "<Br>";
-echo "<a href='http://".$ro->getMyUrl()."/LOGINPAGE/module.php'><span class='style2'>&lt;&lt; Sign Out</span></a>&nbsp;&nbsp;&nbsp;";
+echo "<a href='../session/out.php'><span class='style2'>&lt;&lt; Sign Out</span></a>&nbsp;&nbsp;&nbsp;";
 echo "&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/maintenance/maintenanceHeading.php'><span class='style1'>Sign In &gt;&gt;</span></a>";
 $ro->coconutBoxStop();
 
