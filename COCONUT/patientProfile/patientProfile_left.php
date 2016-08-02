@@ -109,7 +109,7 @@ echo "<ul>";
 if( $ro->getRegistrationDetails_dateUnregistered() == "" ) {
 
 if( $from == "PHARMACY" ) {
-echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/ECART/cartHandler_custom.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."&username=$username&room=".$ro->getRegistrationDetails_room()."&batchNo=$batchNo' target='rightFrame'><font size=2>Charges Cart</font></a></li>";
+echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/ECART/cartHandler.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."&username=$username&room=".$ro->getRegistrationDetails_room()."&batchNo=$batchNo' target='rightFrame'><font size=2>Charges Cart</font></a></li>";
 }else {
 echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/ECART/cartHandler.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."&username=$username&room=".$ro->getRegistrationDetails_room()."&batchNo=$batchNo' target='rightFrame'><font size=2>Charges Cart</font></a></li>";
 
