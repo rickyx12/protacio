@@ -6,8 +6,9 @@ $ro = new database();
 
 //unset($_SESSION['username']);
 //unset($_SESSION['module']);
-//session_destroy();
+unset($_SESSION['employeeID']);
+session_destroy();
 
-header("Location:/COCONUT/maintenance/maintenanceHeading.php?module=synapse");
+header("Location: ../../LOGINPAGE/module.php");
 
 ?>
