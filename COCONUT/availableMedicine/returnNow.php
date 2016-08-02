@@ -71,7 +71,7 @@ $paidViax = $ro->selectNow("patientCharges","paidVia","itemNo",$itemNo);
 $cashPaidx = $ro->selectNow("patientCharges","cashPaid","itemNo",$itemNo);
 $batchNox = $ro->selectNow("patientCharges","batchNo","itemNo",$itemNo);
 $inventoryFromx = $ro->selectNow("patientCharges","inventoryFrom","itemNo",$itemNo);
-$branch="Consolacion";
+$branch="";
 $dispensedBy = $ro->selectNow("patientCharges","departmentStatus","itemNo",$itemNo);
 
 
