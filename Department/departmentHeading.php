@@ -1,11 +1,12 @@
 <?php
-include("../myDatabase.php");
 require_once('../COCONUT/authentication.php');
+include("../myDatabase.php");
+include "../myDatabase4.php";
 $username = $_SESSION['username'];
 $module = $_SESSION['module'];
 $from = $_SESSION['from'];
 $ro = new database();
-
+$ro4 = new database4();
 $branch = "Paranaque";
 
 
@@ -16,10 +17,10 @@ $branch = "Paranaque";
 <head>
 
 <title><?php echo $module; ?></title>
-
 <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/rickyCSS1.css" />
         <script type="text/javascript" src="http://<?php echo $ro->getMyUrl() ?>/Registration/menu/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="http://<?php echo $ro->getMyUrl() ?>/Registration/menu/jquery.fixedMenu.js"></script>
+        <script src="../COCONUT/js/open.js"></script>
         <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl();?>/Registration/menu/fixedMenu_style1.css" />
 
 <?php
@@ -29,6 +30,15 @@ echo "
 
         $('document').ready(function(){
             $('.menu').fixedMenu();
+
+
+            $('#requesition').click(function(){
+                open('POST','../COCONUT/requestition/generateRequesitionNo.php',{},'departmentX');
+            });
+
+            $('#pendingRequest').click(function(){
+                open('POST','../COCONUT/requestition/pending-request.php',{module:'PHARMACY'},'departmentX');
+            });
 
         });
 
@@ -174,7 +184,7 @@ echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/del
 
 echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
 
-echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/addInvoice.php?username='.$username.'" target="departmentX">Add Invoice</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/add-invoice.php" target="departmentX">Add Invoice</a></li>';
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchStockCard.php?username='.$username.'" target="departmentX">Add Inventory</a></li>';
 
@@ -386,10 +396,14 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 
 if($module == "PHARMACY" || $module == "CSR" ) {
 echo "<li>";
-echo "<a href='#'>Request<span id='totalApproved'><span class='arrow'></span></a>";
+echo "<a href='#'>Request</a>";
 echo "<ul>";
-echo $ro->getCSRBranch("departmentX",$username,$module,$ro->getUserBranch_username($username,$module));
-echo "</li>";
+echo "<a href='#' id='requesition'>Inventory Requesition</a>";
+if( $ro4->count_pending_request('PHARMACY') > 0 ) {
+    echo "<a href='#' id='pendingRequest'>Pending Request (<font color=red>".$ro4->count_pending_request("PHARMACY")."</font>)</a>";
+}else {
+    echo "<a href='#'>Pending Request</a>";
+}
 echo "</ul>";
 }else {
 echo "";
