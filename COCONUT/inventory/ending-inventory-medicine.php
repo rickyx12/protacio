@@ -24,6 +24,7 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th>Stock#</th>
 							<th>Brand</th>
 							<th>Generic</th>
 							<th>Ending QTY</th>
@@ -36,6 +37,11 @@
 							<tr>
 								<? if( $ro->selectNow("inventoryStockCard","inventoryType","stockCardNo",$ro->selectNow("endingInventory","stockCardNo","endingNo",$endingNo)) == "medicine" ) { ?>
 
+									<td>
+										<?
+											echo $ro->selectNow("endingInventory","stockCardNo","endingNo",$endingNo)
+										?>
+									</td>
 									<td>
 										<? 
 											$inventoryBrand = $ro->selectNow("inventory","description","inventoryCode",$ro->selectNow("endingInventory","inventoryCode","endingNo",$endingNo));
@@ -69,6 +75,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
