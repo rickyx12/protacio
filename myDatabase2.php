@@ -9027,12 +9027,6 @@ $this->currentAdmittedPatient_name = "";
 $this->currentAdmittedPatient_registrationNo = "";
 $this->currentAdmittedPatient_dateRegistered = "";
 
-echo "
-<style type='text/css'>
-a { text-decoration:none; color:black; }
-tr:hover { background-color:yellow;color:black;}
-
-</style>";
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
