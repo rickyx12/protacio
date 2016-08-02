@@ -67,7 +67,7 @@
 	</head>
 	<body>
 		<ol class="breadcrumb">
-			<li><a href="../../LOGINPAGE/module.php">Home</a></li>
+			<li><a href="../session/out.php">Home</a></li>
 			<li class="active">Purchasing</li>
 		</ol>
 		<div class="menu">
