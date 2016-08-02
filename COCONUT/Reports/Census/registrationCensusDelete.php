@@ -1,6 +1,5 @@
 <?php
 include("../../../myDatabase.php");
-$username = $_GET['username'];
 $registrationNo = $_GET['registrationNo'];
 $fromMonth = $_GET['fromMonth'];
 $fromDay = $_GET['fromDay'];
@@ -15,16 +14,15 @@ $ro = new database();
 $ro->getPatientProfile($registrationNo);
 
 
-mysql_connect($ro->myHost(),$ro->getUser(),$ro->getPass());
-mysql_select_db($ro->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($ro->myHost(), $ro->getUser(), $ro->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $ro->getDB()));
 
-$asql=mysql_query("SELECT * FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%'");
-$acount=mysql_num_rows($asql);
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%'");
+$acount=mysqli_num_rows($asql);
 
 if($acount!=0){
-$ro->coconutFormStart("get","selectShift_registered.php?username=$username");
+$ro->coconutFormStart("get","selectShift_registered.php");
 $ro->coconutHidden("registrationNo",$registrationNo);
-$ro->coconutHidden("username",$username);
 echo "<Br><Br><br><br><br><Br>";
 $ro->coconutBoxStart_red("600","120");
 echo "<br>	";
