@@ -14,9 +14,9 @@ $ro = new database();
 
 echo "
 
-<frameset cols='60%,180%' framespacing='0' border='1'>
+<frameset cols='50%,200%' framespacing='0' border='1'>
    <frame src='http://".$ro->getMyUrl()."/COCONUT/ER/erPatient1.php?date=$date&username=$username'  scrolling=yes frameborder=1 framespacing=1 name='selection' />
-   <frame src='#'  scrolling=yes frameborder=1 framespacing=1 name='rightFrame' />
+   <frame src='erNull.php'  scrolling=yes frameborder=1 framespacing=1 name='rightFrame' />
 
 </frameset>
 
