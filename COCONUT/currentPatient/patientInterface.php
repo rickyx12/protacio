@@ -1,18 +1,14 @@
 <?php
+require_once('../authentication.php');
 include("../../myDatabase.php");
 include "../../myDatabase4.php";
 
-//require_once('../authentication.php');
-$username = $_POST['username'];
-$module = $_POST['module'];
-//$_SESSION['username'] = $username;
 $ro = new database();
 $ro4 = new database4();
-/*
-if ( (!isset($username) && !isset($module)) ) {
-header("Location:http://".$ro->getMyUrl()."/LOGINPAGE/module.php ");
-}
-*/
+
+$username = $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID']);
+$module = $ro->selectNow('registeredUser','module','employeeID',$_SESSION['employeeID']);
+$ro->showPatientHistory($ro->selectNow('patientRecord','patientNo','completeName',$_POST['patientSearch']));
 ?>
 
 <html>
@@ -25,6 +21,7 @@ header("Location:http://".$ro->getMyUrl()."/LOGINPAGE/module.php ");
 <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/rickyCSS1.css" />
 <script type="text/javascript" src="http://<?php echo $ro->getMyUrl(); ?>/jquery.js"></script>
 <script type="text/javascript" src="http://<?php echo $ro->getMyUrl(); ?>/jquery.autocomplete.js"></script>
+<script src="../js/open.js"></script>
 <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/jquery.autocomplete.css" />
 
 
@@ -41,6 +38,15 @@ header("Location:http://".$ro->getMyUrl()."/LOGINPAGE/module.php ");
 $("form[name='searchMe']").submit();
  });
 ;
+
+  <? if( $ro->showPatientHistory_registrationNo() != "" ) { ?>
+    <? foreach( $ro->showPatientHistory_registrationNo() as $registrationNo ) { ?>
+      $("#name<? echo $registrationNo ?>").click(function(){
+        open('POST','patientInterface1.php',{registrationNo:<? echo $registrationNo ?>},'_self');
+      });
+    <? } ?> 
+  <? } ?>
+
 	});
         
 
@@ -163,10 +169,68 @@ $ro->coconutTableHeader("In");
 $ro->coconutTableHeader("Out");
 $ro->coconutTableHeader("Type");
 $ro->coconutTableRowStop();
-$ro->showPatientHistory($_POST['patientSearch'],$_POST['username'],"0","10");
-echo "</div>";
-echo "</table>";
+?>
+  <? if( $ro->showPatientHistory_registrationNo() != "" ) { ?>
+    <? foreach( $ro->showPatientHistory_registrationNo() as $registrationNo ) { ?>
+      <tr>
+        <td>
+          &nbsp;
+            <? if( $ro->selectNow('registrationDetails','dateUnregistered','registrationNo',$registrationNo) == "" ) { ?>
+                <font color="Blue">Active</font>
+            <? }else { ?>
+                <font color="Red">Discharged</font>
+            <? } ?>
+          &nbsp;
+        </td>
+        <td>
+          &nbsp;
+            <?
+              echo $registrationNo
+            ?>
+          &nbsp;
+        </td>
+        <td>
+          &nbsp;
+            <a href="#" id="name<? echo $registrationNo ?>" style="text-decoration:none; color:black">
+              <?
+                $patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
+                echo $ro->selectNow('patientRecord','completeName','patientNo',$patientNo);
+              ?>
+            </a>
+          &nbsp;
+        </td>
+        <td>
+          &nbsp;
+            <?
+              echo $ro4->formatDate($ro->selectNow('registrationDetails','dateRegistered','registrationNo',$registrationNo))
+            ?>
+          &nbsp;
+        </td>
+        <td>
+          &nbsp;
+            <?
+              if( $ro->selectNow('registrationDetails','dateUnregistered','registrationNo',$registrationNo) == "" ) {
 
+              }else {
+                echo $ro4->formatDate($ro->selectNow('registrationDetails','dateUnregistered','registrationNo',$registrationNo));
+              }
+            ?>
+          &nbsp;
+        </td>
+        <td>
+          &nbsp;
+            <?
+              echo $ro->selectNow('registrationDetails','type','registrationNo',$registrationNo)
+            ?>
+          &nbsp;
+        </td>
+      </tr>
+    <? } ?>
+  <? } ?>
+</div>
+</table>
+<?
+/*
 if( $ro->showPatientHistory_count($_POST['patientSearch'],$_POST['username']) > 10 ) {
 echo "
 <div id='seeMoreRecords'>
@@ -193,7 +257,7 @@ echo "</div>";
 
 echo "</center>";
 }else { }
-
+*/
 ?>
 </body>
 </html>

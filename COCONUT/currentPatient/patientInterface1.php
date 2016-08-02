@@ -1,29 +1,20 @@
 <?php
+require_once "../authentication.php";
 include("../../myDatabase.php");
-//require_once('../authentication.php');
-$username = $_POST['username'];
+
 $registrationNo = $_POST['registrationNo'];
 
+/*
 if( isset($_POST['from']) ) {
 $from = $_POST['from'];
 }else {
 $from = "";
 }
-
-$ro = new database();
-
-$ro->getPatientProfile($_POST['registrationNo']);
-
-/*
-if ( (!isset($_SESSION['username']) || !isset($_SESSION['registrationNo'])) ) {
-header("Location:/COCONUT/patientProfile/unknownUser/verifyUser.php?registrationNo=$_GET[registrationNo] ");
-die();
-}
 */
-
-if($_POST['username'] == "" ) {
-$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/unknownUser/verifyUser.php?registrationNo=$registrationNo");
-}
+$ro = new database();
+$username = $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID']);
+$from = $ro->selectNow('registeredUser','module','employeeID',$_SESSION['employeeID']);
+$ro->getPatientProfile($_POST['registrationNo']);
 
 ?>
 <title><?php
