@@ -435,6 +435,22 @@ public function inventory_list($type) {
 	}
 }
 
+
+private $search_inventory_inventoryCode;
+
+public function search_inventory_inventoryCode() {
+	return $this->search_inventory_inventoryCode;
+}
+
+public function search_inventory($desc,$inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT inventoryCode FROM inventory WHERE inventoryLocation = '$inventoryLocation' and status not like 'DELETED_%' and (description like '$desc%' or genericName like '$desc%') and quantity > 0 order by genericName,description asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->search_inventory_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
 private $edited_inventory_editNo;
 
 public function edited_inventory_editNo() {
@@ -1107,12 +1123,38 @@ public function view_purchases_siNo() {
 	return $this->view_purchases_siNo;
 }
 
+//ipakita lahat ng purchases/invoice in a date range
 public function view_purchases($fromDate,$toDate) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, " SELECT siNo  FROM salesInvoice WHERE (recievedDate BETWEEN '$fromDate' and '$toDate') and (status = 'Active' and invoiceNo not like 'DELETED%') order by recievedDate asc  ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->view_purchases_siNo[] = $row['siNo'];
+	}
+}
+
+//pra sa "request" menu ng purchasing ilabas kung ilan ung lahat ng request
+public function count_requesition() {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT COUNT(batchNo) as request FROM inventoryManager WHERE status = 'requesting' group by batchNo ") or die("Query fail: " . mysqli_error()); 
+
+	return mysqli_num_rows($result);
+}
+
+
+private $list_requesition_batchNo;
+
+public function list_requesition_batchNo() {
+	return $this->list_requesition_batchNo;
+}
+
+//list lahat ng requesition by batch pag click ng "request" menu s purchasing
+public function list_requesition() {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT batchNo FROM inventoryManager WHERE status = 'requesting' and requestTo_department = 'Stockroom' group by batchNo ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_requesition_batchNo[] = $row['batchNo'];
 	}
 }
 
@@ -1203,7 +1245,7 @@ public function search_stock_room_inventoryCode() {
 
 public function search_stock_room($search) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT  inventoryCode FROM inventory WHERE (description like '$search%' or genericName like '$search%') and inventoryLocation = 'Stockroom' and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, " SELECT  inventoryCode FROM inventory WHERE (description like '$search%' or genericName like '$search%') and inventoryLocation = 'Stockroom' and quantity > 0 and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->search_stock_room_inventoryCode[] = $row['inventoryCode'];
@@ -1255,6 +1297,8 @@ public function pending_request_details_verificationNo() {
 }
 
 public function pending_request_details($batchNo) {
+
+	$this->pending_request_details_verificationNo = array(); //clear ung huling content ng array kc sa loop q e2 gngmet
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, " SELECT verificationNo FROM inventoryManager WHERE batchNo = '$batchNo' and status = 'requesting' ") or die("Query fail: " . mysqli_error()); 
 
@@ -1270,6 +1314,116 @@ public function sum_quantity_endingInventory($stockCardNo,$quarter) {
 	while($row = mysqli_fetch_array($result)) {
 	 	return $row['qty'];
 	}
+}
+
+private $ekit_inventory_inventoryCode;
+
+public function ekit_inventory_inventoryCode() {
+	return $this->ekit_inventory_inventoryCode;
+}
+
+public function ekit_inventory($inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT inventoryCode FROM inventory WHERE inventoryLocation = '$inventoryLocation' and status not like 'DELETED_%' order by genericName,description asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->ekit_inventory_inventoryCode[] = $row['inventoryCode'];
+	}
+}
+
+
+private $charges_cart_itemNo;
+
+public function charges_cart_itemNo() {
+	return $this->charges_cart_itemNo;
+}
+
+public function charges_cart($batchNo,$registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT itemNo FROM patientCharges WHERE batchNo = '$batchNo' and registrationNo = '$registrationNo' and status = 'UNPAID' order by description asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->charges_cart_itemNo[] = $row['itemNo'];
+	}
+}
+
+
+//count inventory to dispense group by registrationNo..
+public function count_dept_dispense($inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT registrationNo FROM `patientCharges` WHERE inventoryFrom = '$inventoryLocation' and status = 'UNPAID' and departmentStatus = '' group by registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+	return mysqli_num_rows($result);
+
+}
+
+private $dept_dispense_registrationNo;
+
+public function dept_dispense_registrationNo() {
+	return $this->dept_dispense_registrationNo;
+}
+
+public function dept_dispense($inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT registrationNo FROM `patientCharges` WHERE inventoryFrom = '$inventoryLocation' and status = 'UNPAID' and departmentStatus = '' group by registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->dept_dispense_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+private $dept_dispense_patient_itemNo;
+
+public function dept_dispense_patient_itemNo() {
+	return $this->dept_dispense_patient_itemNo;
+}
+
+public function dept_dispense_patient($registrationNo,$inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT itemNo FROM `patientCharges` WHERE registrationNo = '$registrationNo' and inventoryFrom = '$inventoryLocation' and status = 'UNPAID' and departmentStatus = '' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->dept_dispense_patient_itemNo[] = $row['itemNo'];
+	}
+}
+
+
+private $get_return_inventory_registrationNo;
+
+public function get_return_inventory_registrationNo() {
+	return $this->get_return_inventory_registrationNo;
+}
+
+public function get_return_inventory($inventoryFrom) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT registrationNo FROM `patientCharges` WHERE inventoryFrom = '$inventoryFrom' and status = 'Return' group by registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_return_inventory_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+private $get_return_inventory_itemNo;
+
+public function get_return_inventory_itemNo() {
+	return $this->get_return_inventory_itemNo;
+}
+
+public function get_return_inventory_item($registrationNo,$inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT itemNo FROM `patientCharges` WHERE registrationNo = '$registrationNo' and inventoryFrom = '$inventoryLocation' and status = 'Return' and departmentStatus != '' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_return_inventory_itemNo[] = $row['itemNo'];
+	}
+}
+
+public function count_return_inventory($inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT registrationNo FROM `patientCharges` WHERE inventoryFrom = '$inventoryLocation' and status = 'Return' and departmentStatus != '' group by registrationNo ") or die("Query fail: " . mysqli_error()); 
+
+	return mysqli_num_rows($result);
+
 }
 
 /*temporary function lng e2*/
