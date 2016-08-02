@@ -4,8 +4,6 @@ include("../../../myDatabase.php");
 $ro = new database();
 $ro->coconutDesign();
 
-$username = $_GET['username'];
-
 echo "<form method='get' action='registrationCensus.php'>";
 
 echo "<br><br><Br><br><center><div style='border:1px solid #000000; width:500px; height:180px; border-color:black black black black;'>";
@@ -97,7 +95,6 @@ echo "</tr>";
 echo "</table>";
 echo "<br><input type=submit value='Proceed' style='border:1px solid #000; background-color:#3b5998; color:white;' >";
 echo "</div>";
-echo "<br><input type=hidden name='username' value='$username'>";
 
 echo "</form>";
 $ro->coconutBoxStop();
