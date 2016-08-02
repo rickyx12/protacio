@@ -182,14 +182,14 @@ echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/del
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/Maintenance/addSupplier.php?username='.$username.'" target="_blank">Add Supplier</a></li>';
 
-echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
+//echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
 
-echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/add-invoice.php" target="departmentX">Add Invoice</a></li>';
+//echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/add-invoice.php" target="departmentX">Add Invoice</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchStockCard.php?username='.$username.'" target="departmentX">Add Inventory</a></li>';
+//echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchStockCard.php?username='.$username.'" target="departmentX">Add Inventory</a></li>';
 
 
-echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/requestition/dateRequest.php?username='.$username.'" target="departmentX" >Requesition Report</a></li>';
+//echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/requestition/dateRequest.php?username='.$username.'" target="departmentX" >Requesition Report</a></li>';
 
 echo  ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?module=REGISTRATION&from='.$module.'" target="_blank">Registration</a></li>';
 
