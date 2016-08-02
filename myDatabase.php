@@ -4990,6 +4990,8 @@ WHERE registrationNo = '$registrationNo' ");
 
 }
 
+
+/*
 public function showPatient($completeName) {
 
 $mysqli = new mysqli($this->host,$this->username,$this->password,$this->database);
@@ -5009,9 +5011,29 @@ while ($row = $result->fetch_assoc()) {
 echo $row['completeName']."\n";
 }
 
-/* Close connection */
+/* Close connection 
 $mysqli -> close();
 
+}
+*/
+
+public function showPatient($search) {
+
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  
+  if( is_numeric($search) == 1 ) {
+    $result = mysqli_query($connection, " SELECT patientNo FROM registrationDetails WHERE registrationNo = '$search' ") or die("Query fail: " . mysqli_error()); 
+
+    while($row = mysqli_fetch_array($result)) {
+      echo $this->selectNow('patientRecord','completeName','patientNo',$row['patientNo'])."\n";
+    }    
+  }else {
+    $result = mysqli_query($connection, " SELECT completeName FROM patientRecord WHERE completeName like '$search%' and statusz not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+    while($row = mysqli_fetch_array($result)) {
+      echo $row['completeName']."\n";
+    }
+  }
 }
 
 public function showPatient_walkIn($completeName) {
@@ -5034,6 +5056,8 @@ echo $row['lastName']."\n";
 }
 
 
+
+/*
 public function showPatientHistory($completeName,$username,$start,$end) {
 
 echo "
@@ -5097,7 +5121,22 @@ echo "</tr>";
   }
 ((is_null($___mysqli_res = mysqli_close($con))) ? false : $___mysqli_res);
 }
+*/
 
+private $showPatientHistory_registrationNo;
+
+public function showPatientHistory_registrationNo() {
+  return $this->showPatientHistory_registrationNo;
+}
+
+public function showPatientHistory($patientNo) {
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $result = mysqli_query($connection, " SELECT registrationNo FROM registrationDetails WHERE patientNo = '$patientNo' and dateRegistered not like 'DELETED%' order by dateRegistered desc limit 20 ") or die("Query fail: " . mysqli_error()); 
+
+  while($row = mysqli_fetch_array($result)) {
+    $this->showPatientHistory_registrationNo[] = $row['registrationNo'];
+  }
+}
 
 
 public function showPatientHistory_count($completeName,$username) {
@@ -10649,7 +10688,7 @@ $this->coconutTableStop();
 
 
 
-public function getDoctorPatient_ipdCensus($doctorName,$type,$username) {
+public function getDoctorPatient_ipdCensus($doctorName,$type) {
 
 echo "
 <style type='text/css'>
@@ -10690,7 +10729,7 @@ $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
 echo "<tR id='rowz'>";
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/currentPatient/patientInterface1.php?username=$username&registrationNo=$row[registrationNo]' target='_blank'><font class='rowzData'>".$row['lastName'].", ".$row['firstName']."</font></a>");
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/currentPatient/patientInterface1.php?registrationNo=$row[registrationNo]' target='_blank'><font class='rowzData'>".$row['lastName'].", ".$row['firstName']."</font></a>");
 $this->coconutTableData("<font class='rowzData'>".$row['room']."</font>");
 $this->coconutTableData("<font class='rowzData'>".$row['service']."</font>");
 $this->coconutTableData("<font class='rowzData'>".$row['Company']."</font>");
