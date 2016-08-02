@@ -72,12 +72,12 @@ echo "<Br><br>
 <option value='XRAY'>XRAY</option>
 <option value='MAINTENANCE'>MAINTENANCE</option>
 <option value='REGISTRATION'>REGISTRATION</option>
-<option value='PATIENT'>PATIENT</option>
-<option value='PHILHEALTH'>PHILHEALTH</option>
+<option value='NURSING'>NURSING</option>
+<option value='OR'>OR</option>
 <option value='PHARMACY'>PHARMACY</option>
 <option value='ADMIN'>ADMIN</option>
-<option value='ER'>ER</option>
-<option value='REHAB'>REHAB</option>
+<option value='E.R'>E.R</option>
+<option value='PURCHASING'>PURCHASING</option>
 ";
 
 if( $ro->selectNow("reportHeading","information","reportName","rehab") == "Activate" ) {
