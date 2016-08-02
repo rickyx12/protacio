@@ -41,8 +41,6 @@ while($row = mysqli_fetch_array($result))
 
 if($row['name'] == "REGISTRATION") {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/opdRegistration.php?module=$row[name]&from=main'>".$x++.". ".$row['name']."</a></li>";
-}else if($row['name'] == "NURSING") {
-echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/NURSING/nursingPage.php?module=$row[name]'>".$x++.". ".$row['name']."</a></li>";
 }else if($row['name'] == "OR/DR") {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/specialRoom/specialRoom.php?module=$row[name]' target='welcome'>".$x++.". ".$row['name']."</a></li>";
 }else if($row['name'] == "REQUISTITION" ) {
