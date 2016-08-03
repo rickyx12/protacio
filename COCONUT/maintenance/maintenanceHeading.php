@@ -82,7 +82,10 @@ body.onload=function() { history.go();  }
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addDiscountType.php" target="departmentX">Add Discount Type</a></li>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchStockCard.php?username=<?php echo $username; ?>" target="departmentX">Add Inventory</a></li>
+<!-----
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchStockCard.php?username=<?php echo $username; ?>" target="departmentX">Add Inventory</a></li>-->
+
+
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Doctor/addNewDoctor.php?username=<?php echo $username; ?>" target="departmentX">Doctor</a></li>
 
