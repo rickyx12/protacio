@@ -1,6 +1,5 @@
 <?php
 include("../../myDatabase.php");
-$username = $_GET['username'];
 
 $ro = new database();
 /*
@@ -41,7 +40,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("livesearch").style.border="0px solid #A5ACB2";
     }
   }
-xmlhttp.open("GET","searchAvailableStockCard.php?username="+document.addCharge.username.value+"&description="+document.addCharge.description.value,true);
+xmlhttp.open("GET","searchAvailableStockCard.php?description="+document.addCharge.description.value,true);
 xmlhttp.send();
 }
 
@@ -67,6 +66,7 @@ window.onload=function() { SetMsg(document.getElementById('charges', false)); }
 
 
 <?php
+echo "<center>";
 echo  "<body onload='DisplayTime();'>";
 echo "<form name='addCharge'>";
 echo "&nbsp;<input type=text name='description' autocomplete='off' id='charges' style='   
@@ -81,7 +81,6 @@ echo "&nbsp;<input type=text name='description' autocomplete='off' id='charges' 
 	value=''
 >";
 echo "<p id='curTime'></p>";
-echo "<input type=hidden name='username' value='$username'>";
 echo "</form>";
 echo "<div id='livesearch'></div>";
 echo "</body>";
