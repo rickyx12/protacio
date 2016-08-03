@@ -8025,7 +8025,7 @@ echo "
 //End For Purchasing-Mark^
 
 
-public function getMasterListStockCard($description,$username) {
+public function getMasterListStockCard($description) {
 
 
 echo "
@@ -8038,6 +8038,7 @@ tr:hover { background-color:yellow;color:black;}
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 $result = mysqli_query($connection, " SELECT stockCardNo,description,genericName,encodedDetails,encodedBy,inventoryType from inventoryStockCard where (description like '$description%' or genericName like '$description%' or stockCardNo = '$description') and status not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
 
 $this->coconutTableStart();
 $this->coconutTableRowStart();
@@ -8063,12 +8064,12 @@ $this->coconutTableData("&nbsp;".$row['encodedBy']);
 if( $row['inventoryType'] == "medicine" ) {
 //$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
 
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addMedicine.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addMedicine.php?status=old&stockCardNo=$row[stockCardNo]&description=$row[description]&genericName=$row[genericName]' style='color:red; text-decoration:none;'>Add</a>");
 
 }else {
 //$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
 
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addSupplies.php?username=$username&status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
+$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/addSupplies.php?status=old&stockCardNo=$row[stockCardNo]&description=$row[description]' style='color:red; text-decoration:none;'>Add</a>");
 
 }
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/inventory/stockCard.php?stockCardNo=$row[stockCardNo]&inventoryType=$row[inventoryType]&show=all' style='color:blue; text-decoration:none;'>View</a>");
@@ -8079,7 +8080,7 @@ $this->coconutTableStop();
 
 //echo "<br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory.php?username=$username&status=new&stockCardNo=&description=&genericName=' style='color:red; text-decoration:none;'>New Medicine & Stock Card</a><br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addInventory_supplies.php?username=$username&status=new&stockCardNo=&description=' style='color:blue; text-decoration:none;'>New Supplies & Stock Card</a>";
 
-echo "<br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addNewMedicine.php?username=$username' style='color:red; text-decoration:none;'>New Medicine & Stock Card</a><br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addNewSupplies.php?username=$username' style='color:blue; text-decoration:none;'>New Supplies & Stock Card</a>";
+echo "<br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addNewMedicine.php' style='color:red; text-decoration:none;'>New Medicine & Stock Card</a><br><br><a href='http://".$this->getMyUrl()."/COCONUT/inventory/addNewSupplies.php' style='color:blue; text-decoration:none;'>New Supplies & Stock Card</a>";
 
 }
 
