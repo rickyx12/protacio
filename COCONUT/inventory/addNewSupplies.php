@@ -1,9 +1,9 @@
+<? require_once "../authentication.php" ?>
 <? include "../../myDatabase.php" ?>
-
-<? $username = $_GET['username'] ?>
 
 <? $ro = new database() ?>
 <? $stockCardNo = $ro->selectNow("trackingNo","value","name","stockCardNo") ?>
+<? $username = $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID']) ?>
 
 <!DOCTYPE html>
 <html>
@@ -119,9 +119,9 @@
 							</div>
 
 							<div class="form-group">
-								<label class="form-label col-sm-2">Invoice#</label>
+								<label class="form-label col-sm-2">OR#</label>
 								<div class="col-sm-5">
-									<input name="invoiceNo" type="text" class="form-control col-sm-5" autocomplete="off">
+									<input name="orNo" type="text" class="form-control col-sm-5" autocomplete="off">
 								</div>
 							</div>
 
