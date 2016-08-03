@@ -18,7 +18,7 @@ $dateAdded = $_POST['dateAdded'];
 $inventoryLocation = $_POST['inventoryLocation'];
 $criticalLevel = $_POST['criticalLevel'];
 $supplier = $_POST['supplier'];
-$invoiceNo = $_POST['invoiceNo'];
+$orNo = $_POST['orNo'];
 $remarks = $_POST['remarks'];
 $username = $_POST['username'];
 $lock = $_POST['lock'];
@@ -45,7 +45,7 @@ $medicine = array(
 	"beginningQTY" => $quantity,
 	"ipdPrice" => $ipdPrice,
 	"opdPrice" => $opdPrice,
-	"invoiceNo" => $invoiceNo,
+	"retail" => $orNo,
 	"locked" => $lock
 );
 
