@@ -48,7 +48,7 @@ $ro = new database();
 
 $ro->getAuthorizedRegistrar($password);
 
-if($ro->getUserRegistrar() == "REGISTRATION" || $ro->getUserRegistrar() == "PHARMACY" || $ro->getUserRegistrar() == "CASHIER" || $ro->getUserRegistrar() == "LABORATORY" || $ro->getUserRegistrar() == "ER" || $ro->getUserRegistrar() == "RADIOLOGY" ) { //IF 1
+if($ro->getUserRegistrar() == "REGISTRATION" || $ro->getUserRegistrar() == "PHARMACY" || $ro->getUserRegistrar() == "CASHIER" || $ro->getUserRegistrar() == "LABORATORY" || $ro->getUserRegistrar() == "E.R" || $ro->getUserRegistrar() == "RADIOLOGY" ) { //IF 1
 
 if($lastname == "") {
 echo "<script type='text/javascript'>";
