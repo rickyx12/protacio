@@ -186,7 +186,7 @@ echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/del
 
 //echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/add-invoice.php" target="departmentX">Add Invoice</a></li>';
 
-//echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchStockCard.php?username='.$username.'" target="departmentX">Add Inventory</a></li>';
+echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchStockCard.php" target="departmentX">Add Retail</a></li>';
 
 
 //echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/requestition/dateRequest.php?username='.$username.'" target="departmentX" >Requesition Report</a></li>';
