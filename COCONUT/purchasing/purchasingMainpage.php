@@ -76,6 +76,7 @@
 					<a href="#">Invoice<span class="arrow"></span></a>
 					<ul>
 						<a href="add-invoice.php" target="departmentX">Add Invoice</a>
+						<a href="../maintenance/searchStockCard.php" target="departmentX">Add Retail</a>
 						<a href="list-invoice.php" target="departmentX">View Invoice</a>
 						<a href="#" id="viewPurchases">View Purchases</a>
 						<a href="search-invoice.php" target="departmentX">Search Invoice</a>
