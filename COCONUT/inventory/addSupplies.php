@@ -1,7 +1,11 @@
+<? require_once "../authentication.php" ?>
 <? include "../../myDatabase.php" ?>
 
 <?
-$username = $_GET['username'];
+
+$ro = new database();
+
+$username = $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID']);
 $status = $_GET['status'];
 $stockCardNo = $_GET['stockCardNo'];
 $description = $_GET['description'];
@@ -87,7 +91,7 @@ $description = $_GET['description'];
 			<h3></h3>
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Entry for New Supplies
+						Retail for New Supplies
 					</div>
 					<div class="panel-body">
 						<form class="form-horizontal" method="post" action="addSupplies1.php" role="form">
@@ -168,9 +172,9 @@ $description = $_GET['description'];
 							</div>
 
 							<div class="form-group">
-								<label class="form-label col-sm-2">Invoice#</label>
+								<label class="form-label col-sm-2">OR#</label>
 								<div class="col-sm-5">
-									<input name="invoiceNo" type="text" class="form-control col-sm-5" autocomplete="off">
+									<input name="orNo" type="text" class="form-control col-sm-5" autocomplete="off">
 								</div>
 							</div>
 
