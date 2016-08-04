@@ -53,8 +53,10 @@
 						<? foreach( $ro4->get_invoice_items_refNo() as $refNo ) { ?>
 							<tr>
 								<? $unitcost = $ro->selectNow('salesInvoiceItems','unitPrice','refNo',$refNo) ?>
+								<? $freeGoods = $ro->selectNow('salesInvoiceItems','fgquantity','refNo',$refNo) ?>
 								<? $qty = $ro->selectNow('salesInvoiceItems','quantity','refNo',$refNo) ?>
-								<? $total += ($unitcost * $qty) ?>
+								<? $originalQTY = ( $qty - $freeGoods ) ?>
+								<? $total += ($unitcost * $originalQTY) ?>
 								<td>
 									<?
 										echo $ro->selectNow('salesInvoiceItems','description','refNo',$refNo)
