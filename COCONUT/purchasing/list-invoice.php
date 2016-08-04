@@ -154,7 +154,7 @@
 									<? 
 										( $ro4->total_invoice($siNo) > 0 ) ? $x = number_format($ro4->total_invoice($siNo),2) : $x = "";
 										echo $x;
-										$totalInvoice += $x;
+										$totalInvoice += $ro4->total_invoice($siNo);
 									 ?>
 								</td>
 								<td>
