@@ -103,33 +103,41 @@ echo "</script>";
                 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/collectionMenu.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Collection&status=PAID" target="departmentX">Collection</a></li>
 
 
+                <!---
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashCollection/cashCollectionMenu.php?username=<?php echo $username; ?>" target="departmentX">Cash Collection</a>
                 </li>
+				-->
 
+				<!----
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/hmoSOA_type.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company (Receivable)</a>
                 </li>
+				-->
 
+				<!----
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/hmoSOA_type.php?username=<?php echo $username; ?>" target="departmentX">HMO SOA</a>
-                </li>  
+                </li> -->
 
+                <!----
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/summarizeReportShift.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Summarize Collection&status=PAID" target="departmentX">Summarize Collection</a>
-                </li>
+                </li>-->
 
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Doctor/doctorModule/doctorPF_shift.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">IPD Individual Doctor's PF</a>
                 </li>
 
                 <li>
-                    <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Doctor/doctorModule/doctorPF_shift_opd.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>&username=<?php echo $username; ?>" target="departmentX">OPD Doctor's PF</a>
+                    <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Doctor/doctorModule/doctorPF_shift_opd.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>&username=<?php echo $username; ?>" target="departmentX">OPD Individual Doctor's PF</a>
                 </li>
 
+                <!--
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/discharge_with_company_phic.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>&username=<?php echo $username; ?>" target="departmentX">Discharge with Company/PHIC</a>
                 </li>
+				-->
 
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/showVoucher_date.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>&username=<?php echo $username; ?>" target="departmentX">Expenses</a>
@@ -148,17 +156,19 @@ echo "</script>";
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/ADMIN/discharged_cutoff.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>&username=<?php echo $username; ?>" target="departmentX">Discharged Report</a>
                 </li>
 
+                <!---
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/cashReport_date.php?username=<?php echo $username; ?>" target="_blank">Chart of Accounts</a>
-                </li>
+                </li>-->
 
+                <!----
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/Forms/VatableMedSupSD.php?username=<?php echo $username; ?>" target="_blank">Vatable Meds-Sup Summary</a>
                 </li>
 
                 <li>
                     <a href="http://<?php echo $ro->getMyUrl(); ?>/Forms/DermaCollectionSummarySD.php?username=<?php echo $username; ?>" target="_blank">Derma Collection Summary</a>
-                </li>           
+                </li> -->          
             </ul>
         </li>
     </ul>      
