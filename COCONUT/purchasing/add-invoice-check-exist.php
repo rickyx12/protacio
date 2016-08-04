@@ -5,7 +5,7 @@
 
 	$ro = new database();
 
-	if( $ro->selectNow('salesInvoice','siNo','invoiceNo',$invoiceNo) != "" ) {
+	if( $ro->doubleSelectNow('salesInvoice','siNo','invoiceNo',$invoiceNo,"status","Active") != "" ) {
 		echo "1";
 	}else {
 		echo "2";
