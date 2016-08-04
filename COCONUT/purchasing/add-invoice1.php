@@ -13,8 +13,8 @@
 	$ro4 = new database4();
 
 	$purchaseDate = date("Ymd");
-	$counterDate = $ro4->select("counters","counterDate");
-	$counter01 = $ro4->select("counters","counter01");
+	$counterDate = $ro->selectNow("counters","counterDate","id","1");
+	$counter01 = $ro->selectNow("counters","counter01","id","1");
 
 	if( $purchaseDate != $counterDate ) {
 		$ro->editNow("counters","id","1","counterDate",$purchaseDate);
