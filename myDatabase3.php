@@ -3701,7 +3701,7 @@ $this->doctorPatient_doctor += $row['doctorsPF'];
 $this->doctorPatient_patient++;
 
 echo "<tr>";
-echo "<td>&nbsp;".$row['dateUnregistered']."</td>";
+echo "<td>&nbsp;".$this->formatDate($row['dateUnregistered'])."</td>";
 echo "<td>&nbsp;".strtoupper($row['lastName']).", ".strtoupper($row['firstName'])."</td>";
 echo "<td>&nbsp;".$row['total']."</td>";
 echo "<td>&nbsp;".$row['company']."</td>";
