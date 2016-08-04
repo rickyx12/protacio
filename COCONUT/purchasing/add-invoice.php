@@ -128,7 +128,7 @@
 									<label>Supplier</label>
 									<select id="supplier" class="form-control">
 										<option></option>
-										<? $ro->showOption("supplier","supplierName") ?>
+										<? $ro->showOption_with_value("supplier","supplierName","supplierCode") ?>
 									</select>
 								</div>
 							</div>
