@@ -70,42 +70,42 @@ $toMonth_word = "DECEMBER";
 
 
 
-if( $day == 01 ) {
+if( $day == "01" ) {
 $oneDigit_fromDay = 1;
-}else if( $day == 02 ) {
+}else if( $day == "02" ) {
 $oneDigit_fromDay = 2;
-}else if( $day == 03 ) {
+}else if( $day == "03" ) {
 $oneDigit_fromDay = 3;
-}else if( $day == 04 ) {
+}else if( $day == "04" ) {
 $oneDigit_fromDay = 4;
-}else if( $day == 05 ) {
+}else if( $day == "05" ) {
 $oneDigit_fromDay = 5;
-}else if( $day == 06 ) {
+}else if( $day == "06" ) {
 $oneDigit_fromDay = 6;
-}else if( $day == 07 ) {
+}else if( $day == "07" ) {
 $oneDigit_fromDay = 7;
-}else if( $day == 08 ) {
+}else if( $day == "08" ) {
 $oneDigit_fromDay = 8;
-}else if( $day == 09 ) {
+}else if( $day == "09" ) {
 $oneDigit_fromDay = 9;
 }else {
 $oneDigit_fromDay = $day;
 }
 
 
-if( $day1 == 01 ) {
+if( $day1 == "01" ) {
 $oneDigit_toDay = 1;
-}else if( $day1 == 02 ) {
+}else if( $day1 == "02" ) {
 $oneDigit_toDay = 2;
-}else if( $day1 == 03 ) {
+}else if( $day1 == "03" ) {
 $oneDigit_toDay = 3;
-}else if( $day1 == 04 ) {
+}else if( $day1 == "04" ) {
 $oneDigit_toDay = 4;
-}else if( $day1 == 05 ) {
+}else if( $day1 == "05" ) {
 $oneDigit_toDay = 5;
-}else if( $day1 == 06 ) {
+}else if( $day1 == "06" ) {
 $oneDigit_toDay = 6;
-}else if( $day1 == 07 ) {
+}else if( $day1 == "07" ) {
 $oneDigit_toDay = 7;
 }else if( $day1 == "08" ) {
 $oneDigit_toDay = 8;
