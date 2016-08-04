@@ -90,9 +90,6 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Cashier/cash
 echo "<input type=submit value='Daily Cashiers Report' class='button'>";
 echo "</form>";
 
-echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Cashier/cashierReport/collection_monthlyDate.php' target='_blank'>";
-echo "<input type=submit value='Monthly Collection Report' class='button1'>";
-echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Cashier/cashierReport/CollectionReportSD.php' target='_blank'>";
 $ro->coconutHidden("username",$username);

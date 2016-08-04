@@ -37,8 +37,8 @@ tr:hover { background-color:yellow;color:black;}
 include("../../../myDatabase2.php");
 $cuz = new database2();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $fy=$_GET['fy'];
@@ -78,8 +78,8 @@ echo "
 ";
 
 $asubtotCP=0;
-$asql=mysql_query("SELECT registrationNo, orNO, datePaid, timePaid FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND (datePaid BETWEEN '$fdate' AND '$tdate') AND (timePaid BETWEEN '$ftime' AND '$ttime') AND paidVia='Cash' GROUP BY registrationNo ORDER BY datePaid,timePaid");
-$acount=mysql_num_rows($asql);
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo, orNO, datePaid, timePaid FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND (datePaid BETWEEN '$fdate' AND '$tdate') AND (timePaid BETWEEN '$ftime' AND '$ttime') AND paidVia='Cash' GROUP BY registrationNo ORDER BY datePaid,timePaid");
+$acount=mysqli_num_rows($asql);
 
 if($acount!=0){
 echo "
@@ -103,7 +103,7 @@ echo "
      </tr>
 ";
 
-while($afetch=mysql_fetch_array($asql)){
+while($afetch=mysqli_fetch_array($asql)){
 $aregistrationNo=$afetch['registrationNo'];
 $adatePaid=$afetch['datePaid'];
 $atimePaid=$afetch['timePaid'];
@@ -112,8 +112,8 @@ $adatePaidstr=strtotime($adatePaid);
 $adatePaidfmt=date("M d, Y",$adatePaidstr);
 
 $btotCP=0;
-$bsql=mysql_query("SELECT cashPaid, title, paidBy, doctorsPF FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND registrationNo='$aregistrationNo' AND paidVia='Cash'");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT cashPaid, title, paidBy, doctorsPF FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND registrationNo='$aregistrationNo' AND paidVia='Cash'");
+while($bfetch=mysqli_fetch_array($bsql)){
 $bcashPaid=$bfetch['cashPaid'];
 $btitle=$bfetch['title'];
 $bpaidBy=$bfetch['paidBy'];
@@ -133,10 +133,10 @@ echo "
         <td><div align='center' class='style4'>
 ";
 
-$cashorsql=mysql_query("SELECT orNO FROM patientCharges WHERE registrationNo='$aregistrationNo' AND (status='PAID' OR status='BALANCE') AND paidVia='Cash' GROUP BY orNO");
-$cashorcount=mysql_num_rows($cashorsql);
+$cashorsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT orNO FROM patientCharges WHERE registrationNo='$aregistrationNo' AND (status='PAID' OR status='BALANCE') AND paidVia='Cash' GROUP BY orNO");
+$cashorcount=mysqli_num_rows($cashorsql);
 $cashcounter=0;
-while($cashorfetch=mysql_fetch_array($cashorsql)){
+while($cashorfetch=mysqli_fetch_array($cashorsql)){
 $cashorNO=$cashorfetch['orNO'];
 $cashcounter++;
 if($cashcounter==$cashorcount){echo $cashorNO;}else{echo $cashorNO."; ";}
@@ -174,8 +174,8 @@ echo "
 ";
 
 $csubtotCP=0;
-$csql=mysql_query("SELECT registrationNo, orNOFromBalance, datePaidFromBalance, timePaidFromBalance FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND orNOFromBalance NOT LIKE '' AND (datePaidFromBalance BETWEEN '$fdate' AND '$tdate') AND (timePaidFromBalance BETWEEN '$ftime' AND '$ttime') GROUP BY registrationNo ORDER BY datePaid,timePaid");
-$ccount=mysql_num_rows($csql);
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo, orNOFromBalance, datePaidFromBalance, timePaidFromBalance FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND orNOFromBalance NOT LIKE '' AND (datePaidFromBalance BETWEEN '$fdate' AND '$tdate') AND (timePaidFromBalance BETWEEN '$ftime' AND '$ttime') GROUP BY registrationNo ORDER BY datePaid,timePaid");
+$ccount=mysqli_num_rows($csql);
 
 if($ccount!=0){
 echo "
@@ -199,7 +199,7 @@ echo "
      </tr>
 ";
 
-while($cfetch=mysql_fetch_array($csql)){
+while($cfetch=mysqli_fetch_array($csql)){
 $cregistrationNo=$cfetch['registrationNo'];
 $cdatePaidFromBalance=$cfetch['datePaidFromBalance'];
 $ctimePaidFromBalance=$cfetch['timePaidFromBalance'];
@@ -208,8 +208,8 @@ $cdatePaidFromBalancestr=strtotime($cdatePaidFromBalance);
 $cdatePaidFromBalancefmt=date("M d, Y",$cdatePaidFromBalancestr);
 
 $dtotCP=0;
-$dsql=mysql_query("SELECT cashPaidFromBalance, title, paidBy, doctorsPF FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND registrationNo='$cregistrationNo'");
-while($dfetch=mysql_fetch_array($dsql)){
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT cashPaidFromBalance, title, paidBy, doctorsPF FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND registrationNo='$cregistrationNo'");
+while($dfetch=mysqli_fetch_array($dsql)){
 $dcashPaidFromBalance=$dfetch['cashPaidFromBalance'];
 $dtitle=$dfetch['title'];
 $dpaidBy=$dfetch['paidBy'];
@@ -229,10 +229,10 @@ echo "
         <td><div align='center' class='style4'>
 ";
 
-$balorsql=mysql_query("SELECT orNOFromBalance FROM patientCharges WHERE registrationNo='$cregistrationNo' AND (status='PAID' OR status='BALANCE') GROUP BY orNO");
-$balorcount=mysql_num_rows($balorsql);
+$balorsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT orNOFromBalance FROM patientCharges WHERE registrationNo='$cregistrationNo' AND (status='PAID' OR status='BALANCE') GROUP BY orNO");
+$balorcount=mysqli_num_rows($balorsql);
 $balcounter=0;
-while($balorfetch=mysql_fetch_array($balorsql)){
+while($balorfetch=mysqli_fetch_array($balorsql)){
 $balorNO=$balorfetch['orNO'];
 $balcounter++;
 if($balcounter==$balorcount){echo $balorNO;}else{echo $balorNO."; ";}
@@ -270,8 +270,8 @@ echo "
 ";
 
 $esubtotCP=0;
-$esql=mysql_query("SELECT registrationNo, orNO, datePaid, timePaid FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND (datePaid BETWEEN '$fdate' AND '$tdate') AND (timePaid BETWEEN '$ftime' AND '$ttime') AND paidVia='Credit Card' GROUP BY registrationNo ORDER BY datePaid,timePaid");
-$ecount=mysql_num_rows($esql);
+$esql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo, orNO, datePaid, timePaid FROM patientCharges WHERE (status='PAID' OR status='BALANCE') AND (datePaid BETWEEN '$fdate' AND '$tdate') AND (timePaid BETWEEN '$ftime' AND '$ttime') AND paidVia='Credit Card' GROUP BY registrationNo ORDER BY datePaid,timePaid");
+$ecount=mysqli_num_rows($esql);
 
 if($ecount!=0){
 echo "
@@ -296,7 +296,7 @@ echo "
      </tr>
 ";
 
-while($efetch=mysql_fetch_array($esql)){
+while($efetch=mysqli_fetch_array($esql)){
 $eregistrationNo=$efetch['registrationNo'];
 $edatePaid=$efetch['datePaid'];
 $etimePaid=$efetch['timePaid'];
@@ -305,8 +305,8 @@ $edatePaidstr=strtotime($edatePaid);
 $edatePaidfmt=date("M d, Y",$edatePaidstr);
 
 $ftotCP=0;
-$fsql=mysql_query("SELECT title, paidBy, doctorsPF, cardType, creditCardNo, amountPaidFromCreditCard FROM patientCharges WHERE registrationNo='$eregistrationNo' AND (status='PAID' OR status='BALANCE') AND paidVia='Credit Card'");
-while($ffetch=mysql_fetch_array($fsql)){
+$fsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT title, paidBy, doctorsPF, cardType, creditCardNo, amountPaidFromCreditCard FROM patientCharges WHERE registrationNo='$eregistrationNo' AND (status='PAID' OR status='BALANCE') AND paidVia='Credit Card'");
+while($ffetch=mysqli_fetch_array($fsql)){
 $famountPaidFromCreditCard=$ffetch['amountPaidFromCreditCard'];
 $fcardType=$ffetch['cardType'];
 $fcreditCardNo=$ffetch['creditCardNo'];
@@ -329,10 +329,10 @@ echo "
         <td><div align='center' class='style4'>
 ";
 
-$credorsql=mysql_query("SELECT orNO FROM patientCharges WHERE registrationNo='$eregistrationNo' AND (status='PAID' OR status='BALANCE') AND paidVia='Credit Card' GROUP BY orNO");
-$credorcount=mysql_num_rows($credorsql);
+$credorsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT orNO FROM patientCharges WHERE registrationNo='$eregistrationNo' AND (status='PAID' OR status='BALANCE') AND paidVia='Credit Card' GROUP BY orNO");
+$credorcount=mysqli_num_rows($credorsql);
 $credcounter=0;
-while($credorfetch=mysql_fetch_array($credorsql)){
+while($credorfetch=mysqli_fetch_array($credorsql)){
 $credorNO=$credorfetch['orNO'];
 $credcounter++;
 if($credcounter==$credorcount){echo $credorNO;}else{echo $credorNO."; ";}
@@ -370,8 +370,8 @@ echo "
 ";
 
 $gsubtotAP=0;
-$gsql=mysql_query("SELECT registrationNo, amountPaid, datePaid, timePaid, orNo FROM patientPayment WHERE (datePaid BETWEEN '$fdate' AND '$tdate') AND (timePaid BETWEEN '$ftime' AND '$ttime') GROUP BY orNo,registrationNo ORDER BY datePaid,timePaid");
-$gcount=mysql_num_rows($gsql);
+$gsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo, amountPaid, datePaid, timePaid, orNo FROM patientPayment WHERE (datePaid BETWEEN '$fdate' AND '$tdate') AND (timePaid BETWEEN '$ftime' AND '$ttime') GROUP BY orNo,registrationNo ORDER BY datePaid,timePaid");
+$gcount=mysqli_num_rows($gsql);
 
 if($gcount!=0){
 echo "
@@ -396,7 +396,7 @@ echo "
      </tr>
 ";
 
-while($gfetch=mysql_fetch_array($gsql)){
+while($gfetch=mysqli_fetch_array($gsql)){
 $gorNO=$gfetch['orNo'];
 $gregistrationNo=$gfetch['registrationNo'];
 $gdatePaid=$gfetch['datePaid'];
@@ -406,8 +406,8 @@ $gdatePaidstr=strtotime($gdatePaid);
 $gdatePaidfmt=date("M d, Y",$gdatePaidstr);
 
 $htotAP=0;
-$hsql=mysql_query("SELECT amountPaid, paidBy, paymentFor, paidVia, creditCardNo FROM patientPayment WHERE registrationNo='$gregistrationNo' AND orNO='$gorNO'");
-while($hfetch=mysql_fetch_array($hsql)){
+$hsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT amountPaid, paidBy, paymentFor, paidVia, creditCardNo FROM patientPayment WHERE registrationNo='$gregistrationNo' AND orNO='$gorNO'");
+while($hfetch=mysqli_fetch_array($hsql)){
 $hamountPaid=$hfetch['amountPaid'];
 $hpaymentFor=$hfetch['paymentFor'];
 $hpaidBy=$hfetch['paidBy'];
