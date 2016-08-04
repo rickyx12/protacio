@@ -15825,7 +15825,7 @@ $fromDate = $fromDate_year."-".$fromDate_month."-".$fromDate_day;
 $toDate = $toDate_year."-".$toDate_month."-".$toDate_day;
 
 if( $show == "All" ) {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and pc.title = 'PROFESSIONAL FEE' and status not like 'DELETED_%%%%%%%' order by pc.description,pr.lastName asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and rd.type = 'IPD' and pc.title = 'PROFESSIONAL FEE' and status not like 'DELETED_%%%%%%%' order by pc.description,pr.lastName asc ");
 }else {
 $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.*,pc.* FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and type='IPD' and status not like 'DELETED_%%%%%%%' and pc.title = 'PROFESSIONAL FEE' and pc.description='$show' order by pc.description,pr.lastName asc ");
 }
@@ -15849,7 +15849,7 @@ $this->doctorPF_ipd_price += $row['cashUnpaid'];
 $this->doctorPF_ipd_pf += $row['cashUnpaid'];
 $this->coconutTableData($row['lastName'].", ".$row['firstName']);
 $this->coconutTableData($row['branch']);
-$this->coconutTableData($row['dateRegistered']." - ".$row['dateUnregistered']);
+$this->coconutTableData($this->formatDate($row['dateRegistered'])." - ".$this->formatDate($row['dateUnregistered']));
 $this->coconutTableData($row['description']);
 $this->coconutTableData($row['service']);
 $this->coconutTableData($row['cashUnpaid']);
@@ -17893,7 +17893,7 @@ $this->individual_doc_PF_patient ++;
 echo "<tR id='xxx' >";
 echo "<Td>&nbsp;".strtoupper($row['lastName']).", ".strtoupper($row['firstName'])."&nbsp;</td>";
 echo "<td>&nbsp;".$row['Company']."</td>";
-echo "<Td>&nbsp;".$row['dateRegistered']." to ".$row['dateUnregistered']."&nbsp;</tD>";
+echo "<Td>&nbsp;".$this->formatDate($row['dateRegistered'])." - ".$this->formatDate($row['dateUnregistered'])."&nbsp;</tD>";
 echo "<td>&nbsp;".number_format($row['company'],2)."</td>";
 echo "<td>&nbsp;".number_format($row['phic'],2)."</td>";
 echo "<td>&nbsp;".number_format($row['cashUnpaid'],2)."</td>";
