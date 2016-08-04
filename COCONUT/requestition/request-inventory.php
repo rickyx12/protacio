@@ -28,7 +28,7 @@
 				$("#searchInventory").click(function(){
 					
 					var searchBox = $("#searchBox").val();
-					var requesitionNo = <? echo $requesitionNo ?>;
+					var requesitionNo = '<? echo $requesitionNo ?>';
 
 					var data = {
 						searchValue:searchBox,
