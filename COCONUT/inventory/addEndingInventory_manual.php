@@ -151,11 +151,11 @@
 							<div class="col-sm-10">
 								<input type="radio" name="inventoryLocation" value="PHARMACY" checked> Pharmacy
 								&nbsp;&nbsp;
-								<input type="radio" name="inventoryLocation" value="ER"> ER
+								<input type="radio" name="inventoryLocation" value="E.R"> E.R
 								&nbsp;&nbsp;
 								<input type="radio" name="inventoryLocation" value="OR"> OR
 								&nbsp;&nbsp;
-								<input type="radio" name="inventoryLocation" value="NS STATION"> NS Station
+								<input type="radio" name="inventoryLocation" value="NURSING"> NS Station
 							</div>
 						</div>
 
