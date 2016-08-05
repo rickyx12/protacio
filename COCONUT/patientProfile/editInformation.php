@@ -104,7 +104,7 @@ echo "</tr>";
 
 echo "<td>Last name&nbsp;</td>";
 
-if( $ro->selectNow("registeredUser","module","username",$username) == "ER" ) {
+if( $ro->selectNow("registeredUser","module","username",$username) == "E.R" ) {
 echo "<td><input type=text name='lastname'class='txtBox' value='".$ro->getLastName_patientRecord()."'></td>";
 }else {
 
@@ -122,7 +122,7 @@ if( $ro->getFirstName_patientRecord() == "N/A" && $ro->getMiddleName_patientReco
 echo "<tr>";
 echo "<td>First name&nbsp;</td>";
 
-if( $ro->selectNow("registeredUser","module","username",$username) == "ER" ) {
+if( $ro->selectNow("registeredUser","module","username",$username) == "E.R" ) {
 echo "<td><input type=text name='firstname'class='txtBox' value='".$ro->getFirstName_patientRecord()."'></td>";
 }else {
 
@@ -141,7 +141,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<td>Middle name&nbsp;</td>";
 
-if( $ro->selectNow("registeredUser","module","username",$username) == "ER" ) {
+if( $ro->selectNow("registeredUser","module","username",$username) == "E.R" ) {
 echo "<td><input type=text name='middlename'class='txtBox' value='".$ro->getMiddleName_patientRecord()."' ></td>";
 }else {
 
