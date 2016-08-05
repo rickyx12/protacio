@@ -20,7 +20,7 @@
 				$("#searchValue").keypress(function(event){
 					if(event.which == 13) {
 						var search = $("#searchValue").val();
-						$.post("invoice-items-add1.php",{ search:search,invoiceNo:<? echo $invoiceNo ?>,siNo:<? echo $siNo ?> },function(result) { 
+						$.post("invoice-items-add1.php",{ search:search,invoiceNo:'<? echo $invoiceNo ?>',siNo:'<? echo $siNo ?>' },function(result) { 
 							$("#result").html(result);
 						});					
 					}
