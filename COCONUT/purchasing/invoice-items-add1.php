@@ -22,11 +22,11 @@ $ro4->stock_card_search($_POST['search'])
 
 				<? foreach( $ro4->stock_card_search_stockCardNo() as $stockCardNo ) { ?>
 					$("#medicineBtn<? echo $stockCardNo ?>").click(function(){
-						$("#invoiceItems").load("addMedicine.php",{ stockCardNo:<? echo $stockCardNo ?>,invoiceNo:<? echo $invoiceNo ?>,siNo:<? echo $siNo ?> });
+						$("#invoiceItems").load("addMedicine.php",{ stockCardNo:'<? echo $stockCardNo ?>',invoiceNo:'<? echo $invoiceNo ?>',siNo:'<? echo $siNo ?>' });
 					});
 
 					$("#suppliesBtn<? echo $stockCardNo ?>").click(function(){
-						$("#invoiceItems").load("addSupplies.php",{ stockCardNo:<? echo $stockCardNo ?>,invoiceNo:<? echo $invoiceNo ?>,siNo:<? echo $siNo ?> });
+						$("#invoiceItems").load("addSupplies.php",{ stockCardNo:'<? echo $stockCardNo ?>',invoiceNo:'<? echo $invoiceNo ?>',siNo:'<? echo $siNo ?>' });
 					});
 				<? } ?>
 
