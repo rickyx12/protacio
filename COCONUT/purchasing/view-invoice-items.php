@@ -50,32 +50,34 @@
 						</tr>
 					</thead>
 					<tbody>
-						<? foreach( $ro4->get_invoice_items_refNo() as $refNo ) { ?>
-							<tr>
-								<? $unitcost = $ro->selectNow('salesInvoiceItems','unitPrice','refNo',$refNo) ?>
-								<? $freeGoods = $ro->selectNow('salesInvoiceItems','fgquantity','refNo',$refNo) ?>
-								<? $qty = $ro->selectNow('salesInvoiceItems','quantity','refNo',$refNo) ?>
-								<? $originalQTY = ( $qty - $freeGoods ) ?>
-								<? $total += ($unitcost * $originalQTY) ?>
-								<td>
-									<?
-										echo $ro->selectNow('salesInvoiceItems','description','refNo',$refNo)
-									?>
-								</td>
-								<td>
-									<?
-										echo $qty
-									?>
-								</td>
-								<td>
-									<?
-										echo $unitcost
-									?>
-								</td>
-								<td>
-									<input type="button" id="removeBtn<? echo $refNo ?>" class="btn btn-danger" value="Remove">
-								</td>
-							</tr>
+						<? if( $ro4->get_invoice_items_refNo() != "" ) { ?>
+							<? foreach( $ro4->get_invoice_items_refNo() as $refNo ) { ?>
+								<tr>
+									<? $unitcost = $ro->selectNow('salesInvoiceItems','unitPrice','refNo',$refNo) ?>
+									<? $freeGoods = $ro->selectNow('salesInvoiceItems','fgquantity','refNo',$refNo) ?>
+									<? $qty = $ro->selectNow('salesInvoiceItems','quantity','refNo',$refNo) ?>
+									<? $originalQTY = ( $qty - $freeGoods ) ?>
+									<? $total += ($unitcost * $originalQTY) ?>
+									<td>
+										<?
+											echo $ro->selectNow('salesInvoiceItems','description','refNo',$refNo)
+										?>
+									</td>
+									<td>
+										<?
+											echo $qty
+										?>
+									</td>
+									<td>
+										<?
+											echo $unitcost
+										?>
+									</td>
+									<td>
+										<input type="button" id="removeBtn<? echo $refNo ?>" class="btn btn-danger" value="Remove">
+									</td>
+								</tr>
+							<? } ?>
 						<? } ?>
 					</tbody>
 				</table>
