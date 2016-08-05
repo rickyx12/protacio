@@ -21,7 +21,11 @@
 				<thead>
 					<tr>
 						<th>Description</th>
+						<th>QTY</th>
+						<th>Free</th>
+						<th>Total QTY</th>
 						<th>Unitcost</th>
+						<th>Total Cost</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,7 +38,34 @@
 							</td>
 							<td>
 								<?
+									echo ($ro->selectNow("salesInvoiceItems","quantity","refNo",$refNo) - $ro->selectNow("salesInvoiceItems","fgquantity","refNo",$refNo))
+								?>
+							</td>
+							<td>
+								<?
+									echo $ro->selectNow("salesInvoiceItems","fgquantity","refNo",$refNo)
+
+								?>
+							</td>
+							<td>
+								<?
+									echo $ro->selectNow("salesInvoiceItems","quantity","refNo",$refNo)
+								?>
+							</td>
+							<td>
+								<?
 									echo $ro->selectNow("salesInvoiceItems","unitPrice","refNo",$refNo)
+								?>
+							</td>
+							<td>
+								<?
+									$qty = ($ro->selectNow("salesInvoiceItems","quantity","refNo",$refNo) - $ro->selectNow("salesInvoiceItems","fgquantity","refNo",$refNo));
+									$cost = $ro->selectNow("salesInvoiceItems","unitPrice","refNo",$refNo);
+									$totalCost = ( $qty * $cost );
+									
+									( $totalCost > 0 ) ? $x = number_format($totalCost,2) : $x = "";
+									echo $x;
+
 								?>
 							</td>
 						</tr>
