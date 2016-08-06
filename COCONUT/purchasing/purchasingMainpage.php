@@ -80,6 +80,7 @@
 						<a href="list-invoice.php" target="departmentX">View Invoice</a>
 						<a href="#" id="viewPurchases">View Purchases</a>
 						<a href="search-invoice.php" target="departmentX">Search Invoice</a>
+						<a href="../../Maintenance/addSupplier.php" target="departmentX">Add Supplier</a>
 					</ul>
 				</li>
 
@@ -98,6 +99,7 @@
 						<a href="#" id="ER">E.R Emegency Kit</a>
 						<a href="#" id="OR">OR Emergency Kit</a>
 						<a href="#" id="nursing">NS Emergency Kit</a>
+						<a href="../../laravel/public/inventory/ending/quarter?inventoryType=medicine" target="departmentX">Ending Inventory</a>
 					</ul>
 				</li>
 
