@@ -5022,7 +5022,7 @@ public function showPatient($search) {
   $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
   
   if( is_numeric($search) == 1 ) {
-    $result = mysqli_query($connection, " SELECT patientNo FROM registrationDetails WHERE registrationNo = '$search' and statusz not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+    $result = mysqli_query($connection, " SELECT patientNo FROM registrationDetails WHERE registrationNo = '$search' ") or die("Query fail: " . mysqli_error()); 
 
     while($row = mysqli_fetch_array($result)) {
       echo $this->selectNow('patientRecord','completeName','patientNo',$row['patientNo'])."\n";

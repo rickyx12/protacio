@@ -8,7 +8,7 @@ $ro4 = new database4();
 
 $username = $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID']);
 $module = $ro->selectNow('registeredUser','module','employeeID',$_SESSION['employeeID']);
-$ro->showPatientHistory($ro->selectNow('patientRecord','patientNo','completeName',$_POST['patientSearch']));
+$ro->showPatientHistory($ro->doubleSelectNow('patientRecord','patientNo','completeName',$_POST['patientSearch'],"statusz",""));
 ?>
 
 <html>
