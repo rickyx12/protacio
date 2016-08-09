@@ -2030,7 +2030,7 @@ public function showAllAccountTitle_debit_paid($date1,$date2,$cols,$type,$title)
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.".$cols." > 0 and pc.title ='$title' ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select sum(pc.".$cols.") as pdMethod from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.datePaid between '$date1' and '$date2') and rd.type = '$type' and pc.status not like 'DELETED%%%%%%' and pc.".$cols." > 0 and pc.title ='$title' and rd.dateUnregistered != '' ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -3604,14 +3604,14 @@ tr.border_bottom td {
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 
-$result = mysqli_query($connection, " select siNo,invoiceNo,recievedDate,terms from salesInvoice where supplier = '$supplierCode' and status = 'Active'") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select siNo,invoiceNo,recievedDate,terms from salesInvoice where supplier = '$supplierCode' and status = 'Active' order by recievedDate asc") or die("Query fail: " . mysqli_error()); 
 
 echo "<form method='get' action='/COCONUT/accounting/voucher/addVoucher_purchasing.php'>";
 $this->coconutHidden("username",$username);
 echo "<br><br><center><table border=1 cellspacing=0>";
 echo "<Tr>";
 echo "<th>&nbsp;Invoice#</th>";
-echo "<th>&nbsp;Received</th>";
+echo "<th>&nbsp;Date</th>";
 echo "<th>&nbsp;Terms</th>";
 echo "<th>&nbsp;Total</th>";
 echo "<th>&nbsp;</th>";
@@ -3624,9 +3624,15 @@ $paid = ( $totalAmt - $this->purchasingPayablesPayment($row['invoiceNo']) );
 
 if( $paid > 0.01 ) {
 
+$date = $row['recievedDate'];
+$year = substr($date,0,4);
+$month = substr($date,4,2);
+$day = substr($date,6,2);
+$formatDate = $year."-".$month."-".$day;	
+
 echo "<tr>";
 echo "<td>&nbsp;".$row['invoiceNo']."</td>";
-echo "<td>&nbsp;".$row['recievedDate']."</td>";
+echo "<td>&nbsp;".$this->formatDate($formatDate)."</td>";
 echo "<td>&nbsp;".$row['terms']."</td>";
 echo "<td>&nbsp;".number_format($totalAmt,2)."</td>";
 echo "<td>&nbsp;<input type='checkbox' name='siNo[]' value='$row[siNo]'></td>";
