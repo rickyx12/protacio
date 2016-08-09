@@ -22,7 +22,7 @@
 					</div>
 
 					<div class="panel-body">
-						<form method="post" action="endingInventory_quarter1.php">
+						<form method="post" action="new-ending-inventory.php">
 							<div class="row">
 								<div class="form-group">
 									<label class="control-label col-sm-2">Type</label>
