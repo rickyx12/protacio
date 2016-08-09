@@ -40,6 +40,34 @@ $wTax = ($data[1] * 0.01);
 */
 
 
+echo "<script src='../../js/jquery-2.1.4.min.js'></script>";
+echo "<script src='../../js/jquery-ui.min.js'></script>";
+echo "<link rel='stylesheet' href='../../myCSS/jquery-ui.css'></link>";
+echo "
+
+<script>
+
+$(document).ready(function(){
+	$('#date').datepicker({
+		dateFormat:'yy-mm-dd'
+	});
+});
+
+</script>
+
+<style>
+.shortField {
+	border: 1px solid #000;
+	color: #000;
+	height: 30px;
+	width: 120px;
+	padding:4px 4px 4px 5px;
+}
+</style>
+
+
+";
+
 $invoiceTotal1="";
 
 $ro->coconutFormStart("get","addVouchers_purchasing1.php");
@@ -48,7 +76,10 @@ for($x=0;$x<$count;$x++) {
 
 $invoiceTotal = ( $ro->purchasingPayablesTotal($siNo[$x]));
 
-echo "<input type='checkbox' name='siNo[]' value='".$siNo[$x]."' checked>Invoice#".$ro->selectNow("salesInvoice","invoiceNo","siNo",$siNo[$x])." - ".number_format(round($invoiceTotal,2),2)."<br>";
+//echo "<input type='checkbox' style='visibility:hidden' name='siNo[]' value='".$siNo[$x]."' checked>Invoice#".$ro->selectNow("salesInvoice","invoiceNo","siNo",$siNo[$x])." - ".number_format(round($invoiceTotal,2),2)."<br>";
+
+echo "<input type='checkbox' style='visibility:hidden' name='siNo[]' value='".$siNo[$x]."' checked>";
+
 $invoiceTotal1 += $invoiceTotal;
 $supplier = $ro->selectNow("supplier","supplierName","supplierCode",$ro->selectNow("salesInvoice","supplier","siNo",$siNo[$x]));
 }
@@ -150,7 +181,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<TD>Date</tD>";
 echo "<TD>";
-$ro->coconutTextBox_short("date",date("Y-m-d"));
+echo "<input type='text' id='date' class='shortField' value='".date("Y-m-d")."' readonly>";
 echo "</td>";
 echo "</tr>";
 

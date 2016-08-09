@@ -1,10 +1,12 @@
 <?php
+require_once "../authentication.php";
 include("../../myDatabase3.php");
-$username = $_GET['username'];
-$supplier = $_GET['supplier'];
+$supplier = $_POST['supplier'];
 $ro = new database3();
 
+$username = $ro->selectNow("registeredUser","username","employeeID",$_SESSION['employeeID']);
 
+echo "<center>";
 echo $ro->selectNow("supplier","supplierName","supplierCode",$supplier);
 echo "<Br>";
 echo $ro->selectNow("supplier","address","supplierCode",$supplier);

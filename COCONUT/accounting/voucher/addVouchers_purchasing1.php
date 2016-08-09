@@ -26,7 +26,7 @@ $vattable = round($invoiceTotal / 1.12,2);
 $vat = round($invoiceTotal - $vattable,2);
 $wTax = round($vattable * 0.01,2);
 $netTotal = round($invoiceTotal - $wTax,2);
-echo "Vattable: ".$vattable."........Vat: ".$vat."........wTax: ".$wTax.".......Net: ".$netTotal."<Br>";
+echo $siNo[$x]."......."."Vattable: ".$vattable."........Vat: ".$vat."........wTax: ".$wTax.".......Net: ".$netTotal."<Br>";
 
 
 if($paymentMode == "cash") {
@@ -38,14 +38,16 @@ $voucherNo1 = "CH".$voucherNo;
 
 $ro->payment_voucher_purhcasing($ro->selectNow("salesInvoice","invoiceNo","siNo",$siNo[$x]),$checkNo,$bank,$orNo,$paymentMode,$description,$invoiceTotal,$vattable,$wTax,$vat,$payee,$date,$username,$voucherNo1);
 
+
+
 if($paymentMode == "cash") {
-$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"INVENTORY",$invoiceTotal,"",$siNo,date("Y-m-d"));
-$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"CASH","",$netTotal,$siNo,date("Y-m-d"));
-$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"WITHHOLDING TAX - EXPANDED","",$wTax,$siNo,date("Y-m-d"));
+$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"INVENTORY",$invoiceTotal,"",$siNo[$x],date("Y-m-d"));
+$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"CASH","",$netTotal,$siNo[$x],date("Y-m-d"));
+$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"WITHHOLDING TAX - EXPANDED","",$wTax,$siNo[$x],date("Y-m-d"));
 }else {
-$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"ACCOUNTS PAYABLE",$invoiceTotal,"",$siNo,date("Y-m-d"));
-$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"CASH IN BANK - $bank","",$netTotal,$siNo,date("Y-m-d"));
-$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"WITHHOLDING TAX - EXPANDED","",$wTax,$siNo,date("Y-m-d"));
+$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"ACCOUNTS PAYABLE",$invoiceTotal,"",$siNo[$x],date("Y-m-d"));
+$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"CASH IN BANK - $bank","",$netTotal,$siNo[$x],date("Y-m-d"));
+$ro->addToPurchaseJournal($voucherNo1,$invoiceNo,"WITHHOLDING TAX - EXPANDED","",$wTax,$siNo[$x],date("Y-m-d"));
 }
 
 
