@@ -79,8 +79,10 @@
 						<a href="../maintenance/searchStockCard.php" target="departmentX">Add Retail</a>
 						<a href="../../Maintenance/addSupplier.php" target="departmentX">Add Supplier</a>
 						<a href="list-invoice.php" target="departmentX">View Invoice</a>
+						<a href="view-retail.php" target="departmentX">View Retail</a>
 						<a href="#" id="viewPurchases">View Purchases</a>
 						<a href="search-invoice.php" target="departmentX">Search Invoice</a>
+						<a href="pay-invoice.php" target="departmentX">Invoice Payment</a>
 					</ul>
 				</li>
 
@@ -99,7 +101,10 @@
 						<a href="#" id="ER">E.R Emegency Kit</a>
 						<a href="#" id="OR">OR Emergency Kit</a>
 						<a href="#" id="nursing">NS Emergency Kit</a>
+						<!--
 						<a href="../../laravel/public/inventory/ending/quarter?inventoryType=medicine" target="departmentX">Ending Inventory</a>
+						-->
+						<a href="../inventory/endingInventory_quarter.php" target="departmentX">Ending Inventory</a>
 					</ul>
 				</li>
 
