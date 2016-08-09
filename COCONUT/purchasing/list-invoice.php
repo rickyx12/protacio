@@ -49,6 +49,7 @@
 	<script src="../js/jquery-2.1.4.min.js"></script>
 	<script src="../js/jquery.tooltipster.min.js"></script>
 	<script src="../../bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	<script src="../js/open.js"></script>
 	<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 	<link rel="stylesheet" href="../myCSS/tooltipster.css"></link> 
 	<link rel="stylesheet" href="../myCSS/tooltipster-noir.css"></link>
@@ -57,7 +58,7 @@
 		$(document).ready(function(){
 
 			<? foreach( $ro4->list_invoice_siNo() as $siNo ) { ?>
-
+				<? $invoiceNo = $ro->selectNow("salesInvoice","invoiceNo","siNo",$siNo) ?>
 				$(".details<? echo $siNo ?>").tooltipster({
 					content: $('<span>Loading....</span>'),
 					position: 'right',
@@ -80,8 +81,34 @@
 
 				$("#removeBtn<? echo $siNo ?>").click(function(){
 					$.post("delete-invoice.php",{ siNo:<? echo $siNo ?> },function(){
-						location.reload();
+
+						var data = {
+							"month":'<? echo $month ?>',
+							"year":'<? echo $year ?>'
+						};
+
+						open("POST","list-invoice.php",data,"_self");
 					});
+				});
+
+				$("#paid<? echo $invoiceNo ?>").tooltipster({
+					content: $('<span>Loading....</span>'),
+					position: 'left',
+					theme: 'tooltipster-noir',
+					contentAsHTML:true,	
+					functionBefore:function(origin,continueTooltip) {
+						continueTooltip();
+						if( origin.data('ajax') !== 'cached' ){ 
+							$.ajax({
+								type:'POST',
+								url:'payment-details.php',
+								data:{invoiceNo:'<? echo $invoiceNo ?>'},
+								success:function(data) {
+									origin.tooltipster('content',data).data('ajax','cached');
+								}
+							});
+						}
+					}									
 				});
 
 			<? } ?>
@@ -133,54 +160,64 @@
 						</tr>
 					</thead>
 					<tbody>
-						<? foreach( $ro4->list_invoice_siNo() as $siNo ) { ?>
-							<tr>
-								<td>
-									<span class="details<? echo $siNo ?>">
+						<? if( $ro4->list_invoice_siNo() != "" ) { ?>
+							<? foreach( $ro4->list_invoice_siNo() as $siNo ) { ?>
+								<tr>
+									<td>
+										<span class="details<? echo $siNo ?>">
+											<? 
+												$invoiceNo = $ro->selectNow("salesInvoice","invoiceNo","siNo",$siNo);
+												echo $invoiceNo;
+											?>
+										</span>
+									</td>
+									<td>
+										<span class="details<? echo $siNo ?>">
+											<? 
+												echo $ro->selectNow("supplier","supplierName","supplierCode",$ro->selectNow("salesInvoice","supplier","siNo",$siNo)) 
+											?>
+										</span>
+									</td>
+									<td>
 										<? 
-											$invoiceNo = $ro->selectNow("salesInvoice","invoiceNo","siNo",$siNo);
-											echo $invoiceNo;
+											( $ro4->total_invoice($siNo) > 0 ) ? $x = number_format($ro4->total_invoice($siNo),2) : $x = "";
+											echo $x;
+											$totalInvoice += $ro4->total_invoice($siNo);
+										 ?>
+									</td>
+									<td>
+										<?
+											echo $ro->selectNow("salesInvoice","terms","siNo",$siNo)
 										?>
-									</span>
-								</td>
-								<td>
-									<span class="details<? echo $siNo ?>">
-										<? 
-											echo $ro->selectNow("supplier","supplierName","supplierCode",$ro->selectNow("salesInvoice","supplier","siNo",$siNo)) 
+									</td>
+									<td>
+										<?
+											$date = $ro->selectNow("salesInvoice","recievedDate","siNo",$siNo);
+											$year = substr($date,0,4);
+											$month = substr($date,4,2);
+											$day = substr($date,6,2);
+											$formatDate = $year."-".$month."-".$day;									
+											echo $ro4->formatDate($formatDate);
 										?>
-									</span>
-								</td>
-								<td>
-									<? 
-										( $ro4->total_invoice($siNo) > 0 ) ? $x = number_format($ro4->total_invoice($siNo),2) : $x = "";
-										echo $x;
-										$totalInvoice += $ro4->total_invoice($siNo);
-									 ?>
-								</td>
-								<td>
-									<?
-										echo $ro->selectNow("salesInvoice","terms","siNo",$siNo)
-									?>
-								</td>
-								<td>
-									<?
-										$date = $ro->selectNow("salesInvoice","dateEncoded","siNo",$siNo);
-										$year = substr($date,0,4);
-										$month = substr($date,4,2);
-										$day = substr($date,6,2);
-										$formatDate = $year."-".$month."-".$day;									
-										echo $ro4->formatDate($formatDate);
-									?>
-								</td>
-								<td>
-									<?
-										echo $ro->selectNow("salesInvoice","encodedBy","siNo",$siNo)
-									?>
-								</td>
-								<td>
-									<input type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal<? echo $siNo ?>" value="Remove">
-								</td>
-							</tr>	
+									</td>
+									<td>
+										<?
+											echo $ro->selectNow("salesInvoice","encodedBy","siNo",$siNo)
+										?>
+									</td>
+									<? if( $ro->selectNow("vouchers","controlNo","invoiceNo",$invoiceNo) != "" ) { ?>
+										<td>
+											<span id="paid<? echo $invoiceNo ?>" class="label label-success">
+												PAID
+											</span>
+										</td>
+									<? }else { ?>
+										<td>
+											<input type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal<? echo $siNo ?>" value="Remove">
+										</td>
+									<? } ?>
+								</tr>	
+							<? } ?>
 						<? } ?>
 					</tbody>
 					<tfoot>
@@ -194,25 +231,27 @@
 						</tr>
 					</tfoot>
 				</table>
-					<? foreach( $ro4->list_invoice_siNo() as $siNo ) { ?>
-						<div id="removeModal<? echo $siNo ?>" class="modal fade" role="dialog">
-							<div class="modal-dialog">
+					<? if( $ro4->list_invoice_siNo() != "" ) { ?>
+						<? foreach( $ro4->list_invoice_siNo() as $siNo ) { ?>
+							<div id="removeModal<? echo $siNo ?>" class="modal fade" role="dialog">
+								<div class="modal-dialog">
 
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Header</h4>
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Remove</h4>
+										</div>
+										<div class="modal-body">
+											Remove Invoice <? echo $invoiceNo ?> ?
+										</div>
+										<div class="modal-footer">
+											<button class="btn btn-success" data-dismiss="modal">Cancel Remove</button>
+											<button id="removeBtn<? echo $siNo ?>" class="btn btn-danger" data-dismiss="modal">Confirm Remove</button>
+										</div>
 									</div>
-									<div class="modal-body">
-										Remove Invoice <? echo $invoiceNo ?> ?
-									</div>
-									<div class="modal-footer">
-										<button class="btn btn-success" data-dismiss="modal">Cancel Remove</button>
-										<button id="removeBtn<? echo $siNo ?>" class="btn btn-danger" data-dismiss="modal">Confirm Remove</button>
-									</div>
+
 								</div>
-
-							</div>
-						</div>	
+							</div>	
+						<? } ?>
 					<? } ?>
 			</div>
 		</div>
