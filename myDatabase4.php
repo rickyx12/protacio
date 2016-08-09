@@ -68,7 +68,16 @@ public function select($table,$cols) {
 
 public function selectLast($table,$cols,$identifier,$identifierData,$ordering) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "select ".$cols." as cols FROM ".$table." WHERE ".$identifier." = '".$identifierData."' ORDER BY ".$ordering." desc limit 1 ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "select ".$cols." as cols FROM ".$table." WHERE ".$identifier." = '".$identifierData."' and ".$cols." != '' ORDER BY ".$ordering." desc limit 1 ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['cols'];
+	}
+}
+
+public function doubleSelectCondition($table,$cols,$identifier,$identifierData,$condition,$identifier1,$identifierData1,$condition1) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection,"SELECT (".$cols.") as cols FROM ".$table." WHERE ".$identifier." ".$condition." '".$identifierData."' and ".$identifier1." ".$condition1." '".$identifierData1."' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['cols'];
@@ -734,18 +743,50 @@ public function ipd_census($date) {
 	}
 }
 
-private $ending_inventory_list_endingNo;
+private $ending_inventory_list_stockCardNo;
+private $ending_inventory_list_totalCost;
 
-public function ending_inventory_list_endingNo() {
-	return $this->ending_inventory_list_endingNo;
+public function ending_inventory_list_stockCardNo() {
+	return $this->ending_inventory_list_stockCardNo;
 }
 
-public function ending_inventory_list($quarter) {
+public function ending_inventory_list_totalCost() {
+	return $this->ending_inventory_list_totalCost;
+}
+
+public function ending_inventory_list($quarter,$inventoryType) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory WHERE quarter = '$quarter' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT ei.stockCardNo,SUM(ei.endingQTY * ei.unitcost) as totalCost FROM endingInventory ei,inventoryStockCard isc WHERE ei.stockCardNo = isc.stockCardNo and isc.inventoryType = '$inventoryType' and ei.quarter = '$quarter' group by ei.stockCardNo order by isc.genericName asc ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
-		$this->ending_inventory_list_endingNo[] = $row['endingNo'];
+		$this->ending_inventory_list_stockCardNo[] = $row['stockCardNo'];
+		$this->ending_inventory_list_totalCost[] = $row['totalCost'];
+	}
+}
+
+
+public function ending_inventory_sumQTY($stockCardNo,$quarter) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT SUM(endingQTY) as endTotal FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['endTotal'];
+	}
+}
+
+
+private $ending_inventory_list_details_endingNo;
+
+public function ending_inventory_list_details_endingNo() {
+	return $this->ending_inventory_list_details_endingNo;
+}
+
+public function ending_inventory_list_details($stockCardNo,$quarter) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter'") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		$this->ending_inventory_list_details_endingNo[] = $row['endingNo'];
 	}
 }
 
@@ -1191,7 +1232,7 @@ public function list_invoice_siNo() {
 
 public function list_invoice($from,$to) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT siNo FROM salesInvoice WHERE (dateEncoded BETWEEN '$from' and '$to') and status = 'Active' ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, " SELECT siNo FROM salesInvoice WHERE (recievedDate BETWEEN '$from' and '$to') and status = 'Active' ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->list_invoice_siNo[] = $row['siNo'];
@@ -1415,6 +1456,22 @@ public function get_return_inventory_item($registrationNo,$inventoryLocation) {
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->get_return_inventory_itemNo[] = $row['itemNo'];
+	}
+}
+
+
+private $list_retail_inventoryCode;
+
+public function list_retail_inventoryCode() {
+	return $this->list_retail_inventoryCode;
+}
+
+public function list_retail($from,$to) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT inventoryCode FROM inventory WHERE status not like 'DELETED%' and (dateAdded between '$from' and '$to') and retail != '' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_retail_inventoryCode[] = $row['inventoryCode'];
 	}
 }
 
