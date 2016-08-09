@@ -15438,8 +15438,8 @@ echo "<tr id='rowz'>";
 $this->coconutTableData("".$x++);
 $this->coconutTableData($row['lastName'].", ".$row['firstName']);
 $this->coconutTableData($this->selectNow("patientICD","diagnosis","registrationNo",$row['registrationNo']));
-$this->coconutTableData($row['dateRegistered']);
-$this->coconutTableData($row['dateUnregistered']);
+$this->coconutTableData($this->formatDate($row['dateRegistered']));
+$this->coconutTableData($this->formatDate($row['dateUnregistered']));
 $this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/soaOption.php?registrationNo=$row[registrationNo]&username=$username' style='text-decoration:none;' target='_blank'><font size=2 color=red>View S.O.A</font></a>");
 echo "</tr>";
 }
