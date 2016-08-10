@@ -8124,7 +8124,7 @@ echo "<th>&nbsp;</th>";
 //echo "<th>&nbsp;</th>";
 echo "<th>&nbsp;</th>";
 echo "<th>&nbsp;</th>";
-echo "<th>&nbsp;</th>";
+//echo "<th>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Inv#</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Stck#</font>&nbsp;</th>";
 echo "<th>&nbsp;<font class='data'>Description</font>&nbsp;</th>";
@@ -8164,7 +8164,7 @@ echo "<td>&nbsp;</td>";
 }
 
 
-echo "<td>&nbsp;<a href='/COCONUT/inventory/transferInventory.php?stockCardNo=$row[stockCardNo]&description=$row[description]&generic=$row[genericName]&unitcost=$row[unitcost]&quantity=$row[quantity]&expiration=$row[expiration]&addedBy=$row[addedBy]&inventoryType=$row[inventoryType]&branch=$row[branch]&transition=$row[transition]&remarks=$row[remarks]&preparation=$row[preparation]&phic=$row[phic]&added=$row[Added]&criticalLevel=$row[criticalLevel]&supplier=$row[supplier]&suppliesUNITCOST=$row[suppliesUNITCOST]&autoDispense=$row[autoDispense]&status=$row[status]&classification=$row[classification]&ipdPrice=$row[ipdPrice]&opdPrice=$row[opdPrice]&unitOfMeasure=$row[unitOfMeasure]&inventoryCode=$row[inventoryCode]' style='text-decoration:none;'><font size=2>Transfer</font></a></td>";
+//echo "<td>&nbsp;<a href='/COCONUT/inventory/transferInventory.php?stockCardNo=$row[stockCardNo]&description=$row[description]&generic=$row[genericName]&unitcost=$row[unitcost]&quantity=$row[quantity]&expiration=$row[expiration]&addedBy=$row[addedBy]&inventoryType=$row[inventoryType]&branch=$row[branch]&transition=$row[transition]&remarks=$row[remarks]&preparation=$row[preparation]&phic=$row[phic]&added=$row[Added]&criticalLevel=$row[criticalLevel]&supplier=$row[supplier]&suppliesUNITCOST=$row[suppliesUNITCOST]&autoDispense=$row[autoDispense]&status=$row[status]&classification=$row[classification]&ipdPrice=$row[ipdPrice]&opdPrice=$row[opdPrice]&unitOfMeasure=$row[unitOfMeasure]&inventoryCode=$row[inventoryCode]' style='text-decoration:none;'><font size=2>Transfer</font></a></td>";
 
 
 echo "<td>&nbsp;<font class='data'>".$row['inventoryCode']."</font>&nbsp;</td>";
