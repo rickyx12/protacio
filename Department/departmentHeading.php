@@ -182,7 +182,7 @@ echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/del
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/Maintenance/addSupplier.php?username='.$username.'" target="_blank">Add Supplier</a></li>';
 
-echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
+//echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
 
 //echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/add-invoice.php" target="departmentX">Add Invoice</a></li>';
 
