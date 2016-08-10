@@ -123,7 +123,7 @@ echo  ' <li>
 </form>
 </li>';
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/currentPatient/patientInterface_walkIn.php?username='.$username.'&completeName=" target="_blank">Search Walk In</a></li>';
+//echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/currentPatient/patientInterface_walkIn.php?username='.$username.'&completeName=" target="_blank">Search Walk In</a></li>';
 
 echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/systemBiller/generatorCharge/generatorShift.php?username='.$username.'" target="departmentX">Generator</a></li>';
 
@@ -146,7 +146,7 @@ echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?modu
 
 }else { }
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/Registration/specialRegistration/unknownPatient.php?username='.$username.'&from='.$module.'" target="_blank">Walk-in</a></li>';
+//echo  ' <li><a href="http://'.$ro->getMyUrl().'/Registration/specialRegistration/unknownPatient.php?username='.$username.'&from='.$module.'" target="_blank">Walk-in</a></li>';
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/accounting/voucher/addVoucher.php?username='.$username.'" target="departmentX">Expenses</a></li>';
 
@@ -165,11 +165,11 @@ echo  ' <li>
 </form>
 </li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/Registration/specialRegistration/unknownPatient.php?username='.$username.'&from='.$module.'" target="_blank">Walk-in</a></li>';
+//echo '<li><a href="http://'.$ro->getMyUrl().'/Registration/specialRegistration/unknownPatient.php?username='.$username.'&from='.$module.'" target="_blank">Walk-in</a></li>';
 
 echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchInventory.php?username='.$username.'&inventoryType=PHARMACY&branch=All&show=search" target="departmentX" >Search Inventory</a></li>';
 
-echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/supplier.php?username='.$username.'" target="_blank">Supplier Master List</a></li>';
+//echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/supplier.php?username='.$username.'" target="_blank">Supplier Master List</a></li>';
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/inventory.php?username='.$username.'&inventoryType=medicine&branch=All&show=All" target="_blank">Medicine Master List</a></li>';
 
@@ -182,7 +182,7 @@ echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/inventory/del
 
 //echo '<li><a href="http://'.$ro->getMyUrl().'/Maintenance/addSupplier.php?username='.$username.'" target="_blank">Add Supplier</a></li>';
 
-//echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
+echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/Purchasing/pframe.php?username='.$username.'" target="departmentX">Recieving And P.O.</a></li>';
 
 //echo '<li><a class="hide" href="http://'.$ro->getMyUrl().'/COCONUT/purchasing/add-invoice.php" target="departmentX">Add Invoice</a></li>';
 
