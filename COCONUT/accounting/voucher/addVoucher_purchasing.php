@@ -181,7 +181,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<TD>Date</tD>";
 echo "<TD>";
-echo "<input type='text' id='date' class='shortField' value='".date("Y-m-d")."' readonly>";
+echo "<input type='text' id='date' name='date' class='shortField' value='".date("Y-m-d")."' readonly>";
 echo "</td>";
 echo "</tr>";
 
