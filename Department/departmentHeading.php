@@ -391,10 +391,11 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 
 <?php } ?>
 
-                   
-    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/inventoryReport/selectShift.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Current Usages&branch=<?php echo $ro->getUserBranch_username($username,$module);  ?>" target="departmentX" >Usages</a></li>
+     <!--                 
+    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/inventoryReport/selectShift.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Current Usages&branch=<?php echo $ro->getUserBranch_username($username,$module);  ?>" target="departmentX" >Usages</a></li>-->
 
-     <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/deptReorder.php?username=<?php echo $username; ?>" target='departmentX'>Re-Order List</a></li>
+    <!--
+     <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/deptReorder.php?username=<?php echo $username; ?>" target='departmentX'>Re-Order List</a></li>-->
                     </ul>
                 </li>    
 
