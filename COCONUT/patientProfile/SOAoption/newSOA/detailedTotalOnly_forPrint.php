@@ -1168,9 +1168,9 @@ echo "<br>
 
 <Br>
 ";
-
+/*
 if($showdate==1){
-echo "<font size=2>".date("M d, Y")."@".date("H:i:s")."</font>";
+//echo "<font size=2>".date("M d, Y")."@".date("H:i:s")."</font>";
 }
 else if($showdate==2){
 $setdate=$ro->selectNow("setdatetime","setdate","registrationNo",$registrationNo);
@@ -1178,9 +1178,9 @@ $setdatestr=strtotime($setdate);
 $setdatefmt=date("M d, Y",$setdatestr);
 $settime=$ro->selectNow("setdatetime","settime","registrationNo",$registrationNo);
 
-echo "<font size=2>".$setdatefmt."@".$settime."</font>";
+//echo "<font size=2>".$setdatefmt."@".$settime."</font>";
 }
-
+*/
 echo "<br>";
 $ro->coconutBoxStop();
 echo "</div>";
