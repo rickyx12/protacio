@@ -345,8 +345,9 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/availableMedicine/expiredMed.php?username=<?php echo $username; ?>.php?username=<?php echo $username; ?>" target="departmentX">Expiration</a></li>
 
+<!---
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/dailyCashiersReport_date.php?username=<?php echo $username; ?>.php?username=<?php echo $username; ?>" target="departmentX">Daily Cashiers Report</a></li>
-
+-->
 <?php }else if( $module == "LABORATORY" ) { ?>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Summary Laboratory Census</a></li>
 
