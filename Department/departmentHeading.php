@@ -324,13 +324,19 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/movement-supplies.php" target="departmentX">Movement Supplies</a></li>
 
+<!--
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/endingInventory_quarter.php" target="departmentX">Ending Inventory</a></li>
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/MGH/date_MGH.php?username=<?php echo $username; ?>" target="departmentX">Unlock</a></li>
 
+
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=search" target="_blank">Search Item</a></li>
 
+
+
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Pharmacy/selectShift.php?username=<?php echo $username; ?>" target="departmentX">Receiving</a></li>
+
+-->
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/inventory/stockCard/sortStockCard.php" target="departmentX">Merge Stock Card</a></li>
 
