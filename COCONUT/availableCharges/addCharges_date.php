@@ -28,6 +28,23 @@ $docSpecialization = $_GET['doctorSpecialization'];
 $docSpecialization="";
 }
 
+
+echo "<script src='../js/jquery-2.1.4.min.js'></script>";
+echo "<script src='../js/jquery-ui.min.js'></script>";
+echo "<link rel='stylesheet' href='../myCSS/jquery-ui.css'></link>";
+echo "<link rel='stylesheet' href='../myCSS/coconutCSS.css'></link>";
+echo "
+
+<script>
+	$(document).ready(function(){
+		$('#dateCharge').datepicker({
+			dateFormat:'yy-mm-dd'
+		});
+	});
+</script>
+
+";
+
 $ro = new storedProcedure();
 $ro->coconutDesign();
 
@@ -37,6 +54,7 @@ $ro->coconutBoxStart("500","100");
 echo "<Br>";
 echo "<font color=red>$description</font>";
 echo "<br>";
+/*
 echo "<table border=0>";
 echo "<tr>";
 echo "<Td>Date Charge&nbsp;</td>";
@@ -82,6 +100,8 @@ echo "</td>";
 echo "</tr>";
 
 echo "</table>";
+*/
+echo "<input type='text' id='dateCharge' name='dateCharge' class='shortField' value='".date("Y-m-d")."' readonly> ";
 echo "<br>";
 $ro->coconutButton("Proceed");
 $ro->coconutBoxStop();

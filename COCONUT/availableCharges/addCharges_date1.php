@@ -7,9 +7,10 @@ $description = $_GET['description'];
 $sellingPrice = $_GET['sellingPrice'];
 $discount = $_GET['discount'];
 $timeCharge = $_GET['timeCharge'];
-$month = $_GET['month'];
-$day = $_GET['day'];
-$year = $_GET['year'];
+//$month = $_GET['month'];
+//$day = $_GET['day'];
+//$year = $_GET['year'];
+$dateCharge = $_GET['dateCharge'];
 $chargeBy = $_GET['chargeBy'];
 $service = $_GET['service'];
 $title = $_GET['title'];
@@ -51,16 +52,16 @@ $ro->getBack("Sorry, Not Enough Stock");
 }else {
 
 if( $title == "MISCELLANEOUS" ) {
-$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/availableCharges/quantityMisc.php?status=$status&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&timeCharge=$timeCharge&room=$room&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&inventoryFrom=$inventoryFrom");
+$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/availableCharges/quantityMisc.php?status=$status&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&dateCharge=$timeCharge&room=$room&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&inventoryFrom=$inventoryFrom");
 }else if( $title == "OXYGEN" ) {
-$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/availableCharges/quantityMisc.php?status=$status&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&timeCharge=$timeCharge&room=$room&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&inventoryFrom=$inventoryFrom");
+$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/availableCharges/quantityMisc.php?status=$status&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&dateCharge=$timeCharge&room=$room&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&inventoryFrom=$inventoryFrom");
 }else if( $title == "NURSING-CHARGES" ) {
-$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/availableCharges/quantityMisc.php?status=$status&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&timeCharge=$timeCharge&room=$room&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&inventoryFrom=$inventoryFrom");
+$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/availableCharges/quantityMisc.php?status=$status&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&dateCharge=$timeCharge&room=$room&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&inventoryFrom=$inventoryFrom");
 }
 
 else {
 
-$dateCharge = $year."-".$month."-".$day;
+//$dateCharge = $year."-".$month."-".$day;
 
 if($title == "PROFESSIONAL FEE") {
 $price = preg_split ("/\//", $sellingPrice ); 
