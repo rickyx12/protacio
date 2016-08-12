@@ -22,6 +22,10 @@
 					open("POST","view-purchases.php",{fromDate:'<? echo date('Ymd') ?>',toDate:'<? echo date('Ymd') ?>'},"departmentX");
 				});
 
+				$("#addStockCard").click(function(){
+					open("POST","add-stockcard.php",{},"departmentX");
+				});
+
 				$("#pharmacy").click(function(){
 					open('POST','dept-inventory.php',{inventoryLocation:'PHARMACY'},'departmentX');
 				});
@@ -81,6 +85,7 @@
 						<a href="list-invoice.php" target="departmentX">View Invoice</a>
 						<a href="view-retail.php" target="departmentX">View Retail</a>
 						<a href="#" id="viewPurchases">View Purchases</a>
+						<a href="#" id="addStockCard">Add Stockcard</a>
 						<a href="search-invoice.php" target="departmentX">Search Invoice</a>
 						<a href="pay-invoice.php" target="departmentX">Invoice Payment</a>
 					</ul>
