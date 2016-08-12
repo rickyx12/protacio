@@ -22,7 +22,25 @@ $remarks = $_GET['remarks'];
 $stockCardNo = $_GET['stockCardNo'];
 $ro = new database();
 
+
+echo "<script src='../js/jquery-2.1.4.min.js'></script>";
+echo "<script src='../js/jquery-ui.min.js'></script>";
+echo "<link rel='stylesheet' href='../myCSS/coconutCSS.css'></link>";
+echo "<link rel='stylesheet' href='../myCSS/jquery-ui.css'></link>";
+
 echo "
+<script>
+	$(document).ready(function(){
+		$('#dateCharge').datepicker({
+			dateFormat:'yy-mm-dd'
+		});
+	});
+</script>
+
+";
+
+echo "
+
 <style type='text/css'>
 .qty {
 	border: 1px solid #000;
@@ -98,6 +116,7 @@ echo "</tr>";
 echo "<tr>";
 echo "<td><font size=2>Date Charge</font>&nbsp;</td>";
 echo "<td>";
+/*
 $ro->coconutComboBoxStart_short("month");
 echo "<option value='".date("m")."'>".date("M")."</option>";
 echo "<option value='01'>Jan</option>";
@@ -133,6 +152,8 @@ $ro->coconutComboBoxStop();
 echo "-";
 
 $ro->coconutTextBox_short("year",date("Y"));
+*/
+echo "<input type='text' id='dateCharge' name='dateCharge' class='shortField' value='".date("Y-m-d")."' readonly>";
 echo "</td>";
 echo "</tr>";
 
