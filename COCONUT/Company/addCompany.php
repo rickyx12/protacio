@@ -106,19 +106,18 @@ echo "<table id='headz' border=0 bgcolor='#3b5998' width='100%'>
 <td>&nbsp;&nbsp;<font size=5 color=white><b>Company Registration</b></font></td></table>";
 */
 echo "<br>";
-echo "<center><div style='border:1px solid #000000; width:500px; height:370px; border-color:black black black black;'>";
+echo "<center><div style='border:1px solid #000000; width:500px; height:250px; border-color:black black black black;'>";
 echo "<br><Br>";
 echo "<form method='get' action='addCompany_insert.php'>";
-echo "<input type=text name='companyName' class='txtBox' id='companyNamez' value='Company Name' 
-onfocus='SetCompanyName(this, true);'
-onblur='SetCompanyName(this,false);'
+echo "<input type=text name='companyName' class='txtBox' id='companyNamez' placeholder='Company Name' 
+autocomplete='off'
  >";
 echo "<br><br>";
 echo "<textarea class='companyAddress' id='companyAddress' name='companyAddress'
 onfocus='SetCompanyAddress(this, true);'
 onblur='SetCompanyAddress(this,false);'
 >Company Address</textarea>";
-
+/*
 echo "<br><br>";
 echo "<table border=0 cellpadding=0 cellspacing=0>";
 echo "<tr>";
@@ -169,7 +168,8 @@ onblur='SetRate(this,false);'
 echo "</td>";
 echo "</tr>";
 echo "</table>";
-echo "<br><input type=submit value='Add Company' style='border:1px solid #000000; background:#3b5998 no-repeat 4px 4px; color:white;'>";
+*/
+echo "<br><br><input type=submit value='Add Company' style='border:1px solid #000000; background:#3b5998 no-repeat 4px 4px; color:white;'>";
 echo "</form>";
 echo "</div>";
 
