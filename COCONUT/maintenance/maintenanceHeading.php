@@ -94,24 +94,27 @@ body.onload=function() { history.go();  }
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Company/addCompany.php?username=<?php echo $username; ?>" target="departmentX">Company</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addUser.php?usernamez=<?php echo $username; ?>" target="departmentX">User</a></li>
-
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/philhealth/icdCode/addICD.php?username=<?php echo $username; ?>" target="departmentX">ICD Code</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/philhealth/icdCode/addICD.php?username=<?php echo $username; ?>" target="departmentX">ICD Code</a></li>-->
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/room/addRoom.php?username=<?php echo $username; ?>" target="departmentX">Room</a></li>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/floor/addFloor.php?username=<?php echo $username; ?>" target="departmentX">Floor</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/floor/addFloor.php?username=<?php echo $username; ?>" target="departmentX">Floor</a></li>-->
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/addSupplier.php?username=<?php echo $username; ?>" target="departmentX">Supplier</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/hospitalPackage/addPackage.php" target="departmentX">Package</a></li>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/resultList/addResultForm.php" target="departmentX">Laboratory Template</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/resultList/addResultForm.php" target="departmentX">Laboratory Template</a></li>-->
 
+<!--
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/availableMedicine/reOrder/reOrder_handler.php?username=<?php echo $username; ?>&inventoryFrom=PHARMACY" target="_blank">Order Form</a></li>
 
 
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/mimsy/newEntry.php" target="_blank">Mims</a></li>
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/mimsy/newEntry.php" target="_blank">Mims</a></li>-->
 
 
 
@@ -141,14 +144,16 @@ body.onload=function() { history.go();  }
 //execute rehab or not?
 if( $ro->selectNow("reportHeading","information","reportName","rehab") == "Activate" ) {
 ?>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/charges.php?username=<?php echo $username; ?>&title=REHAB&show=All" target="departmentX">Rehab Charges</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/charges.php?username=<?php echo $username; ?>&title=REHAB&show=All" target="departmentX">Rehab Charges</a></li>-->
 <?php }else { } ?>
 
 <?php
 //execute dialysis or not?
 if( $ro->selectNow("reportHeading","information","reportName","dialysis") == "Activate" ) {
 ?>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/charges.php?username=<?php echo $username; ?>&title=DIALYSIS&show=All" target="departmentX">Dialysis Charges</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/charges.php?username=<?php echo $username; ?>&title=DIALYSIS&show=All" target="departmentX">Dialysis Charges</a></li>-->
 <?php }else { } ?>
 
 
@@ -162,11 +167,15 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/charges.php?username=<?php echo $username; ?>&title=OTHERS&show=All" target="departmentX">Other's</a></li>
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=medicine&branch=All&show=All" target='departmentX'>Medicine</a></li>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=supplies&branch=All&show=All" target='departmentX'>Supplies</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=All" target='departmentX'>Pharmacy</a></li>
-                   
- <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=CSR&branch=All&show=All" target='departmentX'>CSR</a></li>
+                    <!--
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=medicine&branch=All&show=All" target='departmentX'>Medicine</a></li>-->
+
+<!---                    
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=supplies&branch=All&show=All" target='departmentX'>Supplies</a></li>-->
+<!---
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=All" target='departmentX'>Pharmacy</a></li>-->
+<!---                   
+ <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/inventory.php?username=<?php echo $username; ?>&inventoryType=CSR&branch=All&show=All" target='departmentX'>CSR</a></li>-->
 
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Maintenance/listDiscountType.php" target='departmentX'>Discount Type</a></li>
 
@@ -174,13 +183,17 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/doctorService.php?username=<?php echo $username; ?>&show=All" target='departmentX'>Doctor Service</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/company.php?username=<?php echo $username; ?>&show=All" target='departmentX'>Company</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/user.php?username=<?php echo $username; ?>&show=All&desc=" target='departmentX'>User</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/icdCode.php?username=<?php echo $username; ?>&desc=&show=All&protoType=maintenance&registrationNo=" target='departmentX'>ICD Code</a></li>
+                    <!----
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/icdCode.php?username=<?php echo $username; ?>&desc=&show=All&protoType=maintenance&registrationNo=" target='departmentX'>ICD Code</a></li>-->
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/diagnosticTimer/diagnosticTimer.php?usernamez=<?php echo $username; ?>" target="departmentX">Diagnostic Timer</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/percentage.php?username=<?php echo $username; ?>" target='departmentX'>Percentage</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/diagnosticTimer/diagnosticTimer.php?usernamez=<?php echo $username; ?>" target="departmentX">Diagnostic Timer</a></li>-->
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/percentage.php?username=<?php echo $username; ?>" target='departmentX'>Percentage</a></li>-->
+
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/viewRoom.php?username=<?php echo $username; ?>&desc=&show=All" target='departmentX'>Room</a></li>
-                  
- <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/floor.php?username=<?php echo $username; ?>&desc=&show=All" target='departmentX'>Floor</a></li>
+ <!---                 
+ <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/floor.php?username=<?php echo $username; ?>&desc=&show=All" target='departmentX'>Floor</a></li>-->
  
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/availableMedicine/expiredMed.php?username=<?php echo $username; ?>" target='departmentX'>Expiration</a></li>
 
@@ -188,16 +201,18 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
 
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/supplier.php?username=<?php echo $username; ?>" target='departmentX'>Supplier</a></li>
 
- <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/casetype/showCasetype.php?username=<?php echo $username; ?>" target='departmentX'>Case Type</a></li>
+<!---
+ <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/casetype/showCasetype.php?username=<?php echo $username; ?>" target='departmentX'>Case Type</a></li>-->
 
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/hospitalPackage/masterfile/packageMasterfile.php?username=<?php echo $username; ?>" target='departmentX'>Package</a></li>
 
- <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/deptReorder.php?username=<?php echo $username; ?>" target='departmentX'>Re-Order List</a></li>
+<!---
+ <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/deptReorder.php?username=<?php echo $username; ?>" target='departmentX'>Re-Order List</a></li>-->
 
-
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/resultList/resultFormMasterfile.php" target='departmentX'>Laboratory Template</a></li>
-
-                   <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/patientRecord.php?username=<?php echo $username; ?>&desc=&show=All" target='departmentX'>Patient Record</a></li>
+<!---
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/resultList/resultFormMasterfile.php" target='departmentX'>Laboratory Template</a></li>-->
+                    <!--
+                   <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/masterfile/patientRecord.php?username=<?php echo $username; ?>&desc=&show=All" target='departmentX'>Patient Record</a></li>-->
 
 </ul>
 </li>           
@@ -225,7 +240,8 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
 //execute rehab or not??
 if( $ro->selectNow("reportHeading","information","reportName","rehab") == "Activate" ) {
 ?>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=REHAB&show=search" target="departmentX">Rehab Charges</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=REHAB&show=search" target="departmentX">Rehab Charges</a></li>-->
 <?php }else { } ?>
 
 
@@ -249,20 +265,26 @@ if( $ro->selectNow("reportHeading","information","reportName","nbs") == "Activat
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=OTHERS&show=search" target="departmentX">Other's</a></li>
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=medicine&branch=All&show=search" target='departmentX'>Medicine</a></li>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=supplies&branch=All&show=search" target='departmentX'>Supplies</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=search" target='departmentX'>Pharmacy</a></li>
+                    <!---
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=medicine&branch=All&show=search" target='departmentX'>Medicine</a></li>-->
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=CSR&branch=All&show=search" target='departmentX'>CSR</a></li>
+                    <!---
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=supplies&branch=All&show=search" target='departmentX'>Supplies</a></li>-->
+                    <!---
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=search" target='departmentX'>Pharmacy</a></li>-->
+                    <!--
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=CSR&branch=All&show=search" target='departmentX'>CSR</a></li>-->
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchDoctor.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Doctor</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchDoctorService.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Doctor Service</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCompany.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Company</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchUser.php?username=<?php echo $username; ?>&show=search" target='departmentX'>User</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchICDcode.php?username=<?php echo $username; ?>&show=search&protoType=maintenance&registrationNo=" target='departmentX'>ICD Code</a></li>
+                    <!--
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchICDcode.php?username=<?php echo $username; ?>&show=search&protoType=maintenance&registrationNo=" target='departmentX'>ICD Code</a></li>-->
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchRoom.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Room</a></li>
 
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchFloor.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Floor</a></li>
+                    <!--
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchFloor.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Floor</a></li>-->
 
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/currentPatient/manualSearch.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Patient Manual Search</a></li>
 
