@@ -21,6 +21,24 @@ $room = "";
 $paycash = $_GET['paycash'];
 $remarks = $_GET['remarks'];
 
+echo "<script src='../js/jquery-2.1.4.min.js'></script>";
+echo "<script src='../js/jquery-ui.min.js'></script>";
+echo "<link rel='stylesheet' href='../myCSS/coconutCSS.css'></link>";
+echo "<link rel='stylesheet' href='../myCSS/jquery-ui.css'></link>";
+
+echo "
+
+<script>
+	$(document).ready(function(){
+		$('#dateCharge').datepicker({
+			dateFormat:'yy-mm-dd'
+		});
+	});
+</script>
+
+";
+
+
 $ro = new storedProcedure();
 $ro->coconutDesign();
 
@@ -34,6 +52,7 @@ echo "<table border=0>";
 echo "<tr>";
 echo "<Td>Date Charge&nbsp;</td>";
 echo "<Td>";
+/*
 $ro->coconutComboBoxStart_short("month");
 echo "<option value='".date("m")."'>".date("M")."</option>";
 echo "<option value='01'>Jan</option>";
@@ -69,8 +88,8 @@ $ro->coconutComboBoxStop();
 echo "-";
 
 $ro->coconutTextBox_short("year",date("Y"));
-
-
+*/
+echo "<input type='text' id='dateCharge' name='dateCharge' class='shortField' value='".date("Y-m-d")."' readonly>";
 echo "</td>";
 echo "</tr>";
 

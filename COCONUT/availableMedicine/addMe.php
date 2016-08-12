@@ -7,9 +7,10 @@ $description = $_GET['description'];
 $sellingPrice = $_GET['sellingPrice'];
 $discount = $_GET['discount'];
 $timeCharge = $_GET['timeCharge'];
-$month = $_GET['month'];
-$day = $_GET['day'];
-$year = $_GET['year'];
+//$month = $_GET['month'];
+//$day = $_GET['day'];
+//$year = $_GET['year'];
+$dateCharge = $_GET['dateCharge'];
 $chargeBy = $_GET['chargeBy'];
 $service = $_GET['service'];
 $title = $_GET['title'];
@@ -31,7 +32,7 @@ $company=0;
 $ro->getPatientProfile($registrationNo);
 
 
-$dateCharge = $year."-".$month."-".$day;
+//$dateCharge = $year."-".$month."-".$day;
 
 $currentTotal = $quantity * $sellingPrice;
 
