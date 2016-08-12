@@ -5028,7 +5028,7 @@ public function showPatient($search) {
       echo $this->selectNow('patientRecord','completeName','patientNo',$row['patientNo'])."\n";
     }    
   }else {
-    $result = mysqli_query($connection, " SELECT completeName FROM patientRecord WHERE completeName like '$search%' and statusz not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+    $result = mysqli_query($connection, " SELECT patientNo,completeName FROM patientRecord WHERE completeName like '$search%' and statusz not like 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
 
     while($row = mysqli_fetch_array($result)) {
       echo $row['completeName']."\n";
@@ -8296,11 +8296,6 @@ echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<th>&nbsp;Service Name&nbsp;</th>";
 echo "<th>&nbsp;Specialization&nbsp;</th>";
-echo "<th>&nbsp;Cash&nbsp;</th>";
-echo "<th>&nbsp;Company&nbsp;</th>";
-echo "<th>&nbsp;PF Share&nbsp;</th>";
-echo "<th>&nbsp;Senior Discount&nbsp;</th>";
-echo "<th>&nbsp;PHIC&nbsp;</th>";
 echo "<th>&nbsp;</th>";
 echo "</tr>";
 while($row = mysqli_fetch_array($result))
@@ -8308,11 +8303,6 @@ while($row = mysqli_fetch_array($result))
 echo "<tr>";
 echo "<td>&nbsp;".$row['serviceName']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['specialization']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['cashAmount']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['companyRate']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['doctorShare']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['discount']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['phic']."&nbsp;</td>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/EditDoctorService.php?serviceNo=$row[serviceNo]&serviceName=$row[serviceName]&specialization=$row[specialization]&cashAmount=$row[cashAmount]&companyRate=$row[companyRate]&doctorShare=$row[doctorShare]&discount=$row[discount]&username=$username'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/pencil.jpeg'></a>&nbsp;</td>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/DELETE/deleteDoctorService.php?username=$username&serviceNo=$row[serviceNo]&serviceName=$row[serviceName]&specialization=$row[specialization]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/delete.jpeg'></a>&nbsp;</td>";
 echo "</tr>";
@@ -8397,10 +8387,6 @@ echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<th>&nbsp;Name&nbsp;</th>";
 echo "<th>&nbsp;Address&nbsp;</th>";
-echo "<th>&nbsp;Rate 1&nbsp;</th>";
-echo "<th>&nbsp;Rate 2&nbsp;</th>";
-echo "<th>&nbsp;Rate 3&nbsp;</th>";
-echo "<th>&nbsp;Rate 4&nbsp;</th>";
 echo "<th>&nbsp;Type&nbsp;</th>";
 echo "<th></th>";
 echo "<th></th>";
@@ -8410,10 +8396,6 @@ while($row = mysqli_fetch_array($result))
 echo "<tr>";
 echo "<td>&nbsp;".$row['companyName']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['companyAddress']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['rate1']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['rate2']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['rate3']."&nbsp;</td>";
-echo "<td>&nbsp;".$row['rate4']."&nbsp;</td>";
 echo "<td>&nbsp;".$row['type']."&nbsp;</td>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/editCompany.php?username=$username&companyName=$row[companyName]&companyAddress=$row[companyAddress]&rate1=$row[rate1]&rate2=$row[rate2]&rate3=$row[rate3]&rate4=$row[rate4]&companyNo=$row[companyNo]&username=$username&show=$show&desc=$desc'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/pencil.jpeg'></a>&nbsp;</td>";
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/DELETE/deleteCompany.php?username=$username&companyNo=$row[companyNo]&companyName=$row[companyName]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/delete.jpeg'></a>&nbsp;</td>";
@@ -8447,9 +8429,9 @@ if (!$con)
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
 if($show == "All") {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from registeredUser order by username asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from registeredUser WHERE password not like 'DEL_%' order by username asc  ");
 }else {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from registeredUser WHERE username like '$desc%%%%%%' order by username asc  ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * from registeredUser WHERE username like '$desc%%%%%%' and password not like 'DEL_%' order by username asc  ");
 }
 echo "<center><table border=1 cellpadding=0 cellspacing=0>";
 echo "<tr>";
