@@ -137,6 +137,7 @@ onblur='SetCompanyAddress(this,false);'
 
 echo "<br><br>";
 echo "<table border=0 cellpadding=0 cellspacing=0>";
+/*
 echo "<tr>";
 echo "<td width='18%'>";
 echo "<font size=2>Rate 1:</font>&nbsp;";
@@ -184,12 +185,12 @@ onblur='SetRate(this,false);'
  >";
 echo "</td>";
 echo "</tr>";
-
+*/
 echo "<tr>";
 echo "<td>Type</td>";
 echo "<td>";
 $ro->coconutComboBoxStart_long("type");
-echo "<option value='hmo'>HMO</option>";
+echo "<option value='HMO'>HMO</option>";
 echo "<option value='company'>Company</option>";
 echo "<option value='insurance'>Insurance</option>";
 $ro->coconutComboBoxStop();
