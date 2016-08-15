@@ -110,6 +110,7 @@
 						<a href="../../laravel/public/inventory/ending/quarter?inventoryType=medicine" target="departmentX">Ending Inventory</a>
 						-->
 						<a href="../inventory/endingInventory_quarter.php" target="departmentX">Ending Inventory</a>
+						<a href="inventory-preparation.php" target="departmentX">Preparation</a>
 					</ul>
 				</li>
 
