@@ -1,19 +1,12 @@
 <?php
 include("../../myDatabase3.php");
-$month = $_GET['month'];
-$day = $_GET['day'];
-$year = $_GET['year'];
-$month1 = $_GET['month1'];
-$day1 = $_GET['day1'];
-$year1 = $_GET['year1'];
 
+$date = $_POST['date'];
+$date1 = $_POST['date1'];
 
 $ro = new database3();
 
-$date = $year."-".$month."-".$day;
-$date1 = $year1."-".$month1."-".$day1;
-
-echo "From <b>$date</b> to <b>$date1</b>";
+echo "From <b>".$ro->formatDate($date)."</b> to <b>".$ro->formatDate($date1)."</b>";
 
 $ro->paidInpatient($date,$date1,"ricky");
 
