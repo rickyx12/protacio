@@ -86,16 +86,37 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
         <ul>
    
 
-            <li>
-                <a href="#">Convenience<span class="arrow"></span></a>
-                
-                <ul>
-               <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/ADMIN/viewConvenienceInv.php" target="departmentX">Inventory</a></li>
-		<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/convenience/convenienceCollection_date.php?username=<?php echo $username; ?>" target="departmentX">Collection Report</a></li>
-                </ul>
-            </li>
+        <li>
+            
+            <a href="#">Protacio Reports</a>
+            <ul>
+                <a href="date/opd-transaction-date.php" target="departmentX">OPD Transaction</a>
+                <a href="date/pending-opd-transaction-date.php" target="departmentX">Pending OPD Transaction</a>
+                <a href="../Cashier/cashierReport/CollectionReportSD.php?username=x" target="departmentX">Collection Report</a>
+                <a href="date/admission-date.php" target="departmentX">Admission</a>
+                <a href="date/discharged-with-pf.php" target="departmentX">Discharge w/ PF</a>
+                <a href="date/petty-cash-expenses-date.php" target="departmentX">Petty Cash Expenses</a>
+                <a href="../Cashier/cashierReport/dailyCashiersReport_date.php" target="departmentX">Daily Cashier</a>
+                <a href="../Company/daily-hmo-control.php" target="departmentX">Daily HMO Report</a>
+                <a href="../Reports/hmoSOA_type.php" target="departmentX">Monthly HMO Report</a>
+                <a href="date/daily-transaction-date.php" target="departmentX">Daily Transaction</a>
+                <a href="../billing/selectShift_transactionSummary.php" target="departmentX">Transaction Summary</a>
+                <a href="../Doctor/doctorModule/doctorPF_shift.php?username=x&module=ADMIN" target="departmentX">PF/Doctor</a>
+                <a href="../Company/selectCompany.php" target="departmentX">Aging of Accounts</a>
+                <a href="../accounting/purchaseJournalDate.php" target="departmentX">Purchase Journal</a>
+                <a href="../Reports/dermaPx_date.php" target="departmentX">Derma Patient</a>
+                <a href="../accounting/inventoryAdjustmentDate.php" target="departmentX">Inventory Adjustment</a>
+                <a href="../flow/chartList.php" target="departmentX">Chart</a>
+                <a href="../inventory/endingInventory_quarter.php" target="departmentX">Ending Inventory List</a>
+                <a href="../Reports/paid-balance.php" target="departmentX">Paid Balance</a>
+                <a href="../inventory/stockCardList.php?inventoryType=medicine" target="departmentX">Stock Card Medicine</a>
+                <a href="../inventory/stockCardList.php?inventoryType=supplies" target="departmentX">Stock Card Supplies</a>
+                <a href="../purchasing/view-purchases.php" target="departmentX">Purchases List</a>
+                <a href="../philhealth/phicReceivables/new-receivables.php" target="departmentX">Philhealth Receivables</a>
+            </ul>
+        </li>
 
-
+        <!---
  		 <li>
                 <a href="#">MMC Reports<span class="arrow"></span></a>
                 
@@ -124,14 +145,16 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
 
                 </ul>
             	</li>
+  -->  
 
-
+          
             <li>
-                <a href="#">Financial<span class="arrow"></span></a>
+                <!--<a href="#">Financial<span class="arrow"></span></a>-->
+                
                 <ul>
 <?php //admin_reportRange.php?module=&username=&reportName=Laboratory ?>
-
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/billing/selectType.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Laboratory" target="departmentX">Cash (Paid)</a></li>
+                    <!--
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/billing/selectType.php?module=<?php echo $module; ?>&username=<?php echo $username; ?>&reportName=Laboratory" target="departmentX">Cash (Paid)</a></li>-->
 
 <? //cash collection
 /*
@@ -150,18 +173,26 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
 */
 ?>
 
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/hmoSOA_type.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company (Receivable)</a></li>
+                    -->
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Company/companyPaymentReport.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company (Posted Payment)</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Company/getRefNo.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company (Via RefNo)</a></li>
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Company/getRefNo.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company (Via RefNo)</a></li>-->
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/companySummary/selectCutoff.php?username=<?php echo $username; ?>&reportName=Remittance" target="departmentX">Company Summary (Receivable)</a></li>
-                  
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/philhealth/phicReceivables/dateCovered.php?username=<?php echo $username; ?>" target="departmentX">PhilHealth (Receivable)</a></li
-
+                    -->
+  
+<!---
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/philhealth/phicReceivables/dateCovered.php?username=<?php echo $username; ?>" target="departmentX">PhilHealth (Receivable)</a></li>-->
+    <!---
   <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/doctorReport/selectType.php?username=<?php echo $username; ?>" target="departmentX">Doctor's PF</a></li>
+  -->
 
 
-
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/doctorReport/selectShiftBranch.php?username=<?php echo $username; ?>" target="departmentX">Doctor's PF Summary</a></li>
+                    -->
 
 <?php     
   /*         
@@ -169,12 +200,13 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
                             <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/philhealth/transmittedShift.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">PhilHealth Transmitted</a></li>  
 */
 ?>
-
+<!--
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/ADMIN/voidPayment_shift.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">Void Payments</a></li>
-
+-->
+<!---
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/billing/transactionSummaryDate.php" target="departmentX">Transaction Summary</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/accounting/purchaseJournalDate.php" target="departmentX">Purchase Journal</a></li>
-
+-->
 
  </ul>
            </li>    
@@ -193,21 +225,25 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
 		<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Departamental Examination Census</a></li>
 */
 ?>
-
+<!--
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/ADMIN/census/census-new.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Registered Patients</a></li>
-
+-->
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/ipd-census-new.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Inpatient Saved Census</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift_registered.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Registration Census</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/census-summary.php" target="departmentX">Census Summary</a></li>
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Summary Laboratory Census</a></li>
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Summary Charges Census</a></li>
 
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/charges-census-date.php" target="departmentX">Charges Census</a></li>
+
+<!--
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/dischargedDate.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">Discharged Patient</a></li>  
-
+-->
+<!---
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/dailyCashiersReport.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">test Daily Cashiers Report</a></li>  
-
+-->
 
                 </ul>
             </li>
@@ -216,20 +252,30 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
  <li>
                 <a href="#">Search<span class="arrow"></span></a>
                 <ul>
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=LABORATORY&show=search" target="departmentX">Laboratory Charges</a></li>
+ <!--               
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=LABORATORY&show=search" target="departmentX">Laboratory Charges</a></li>-->
 
-<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=RADIOLOGY&show=search" target="departmentX">Radiology Charges</a></li>
+<!--
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCharges.php?username=<?php echo $username; ?>&title=RADIOLOGY&show=search" target="departmentX">Radiology Charges</a></li>-->
 
-
+                    <!----
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=medicine&branch=All&show=search" target='departmentX'>Medicine</a></li>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=supplies&branch=All&show=search" target='departmentX'>Supplies</a></li>
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchInventory.php?username=<?php echo $username; ?>&inventoryType=PHARMACY&branch=All&show=search" target='departmentX'>Pharmacy</a></li>
+                    -->
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchDoctor.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Doctor</a></li>
+                    -->
+                    <!---
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchDoctorService.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Doctor Service</a></li>
+                    -->
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchService.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Charges Service</a></li>
+                    -->
+                    <!--
                     <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchCompany.php?username=<?php echo $username; ?>&show=search" target='departmentX'>Company</a></li>
-                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchUser.php?username=<?php echo $username; ?>&show=search" target='departmentX'>User</a></li>
-
+                    <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchUser.php?username=<?php echo $username; ?>&show=search" target='departmentX'>User</a></li>-->
+    
 <?php
 
 echo  ' <li>
@@ -246,7 +292,7 @@ echo  ' <li>
 </ul>
 </li>   
 
-
+            <!---
             <li>
                 <a href="#">Admitted Patient<span class="arrow"></span></a>
                 
@@ -265,8 +311,9 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/billing/billingStation.php
   
         </ul>
 	</li>
+    -->
 
-
+<!----
  <li>
                 <a href="#">Accounting<span class="arrow"></span></a>
                 
@@ -295,13 +342,15 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/billing/billingStation.php
 
 
                 </ul>
-            </li>
+            </li>-->
+
 
 
  <li>
                 <a href="#">Chart<span class="arrow"></span></a>
                 
                 <ul>
+<!---
  <li><a href="#" target="departmentX"><font color=red>Financial</font></a></li> 
 
  <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/graphicalReport/pieChart/selectShift_revenue.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">Daily Collection Chart</a></li>     
@@ -363,16 +412,16 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/billing/billingStation.php
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/graphicalReport/bestSelling/selectShift_ipd.php?username=<?php echo $username; ?>&title=RADIOLOGY" target="departmentX">Radiology</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/graphicalReport/bestSelling/selectShift_ipd.php?username=<?php echo $username; ?>&title=PROFESSIONAL FEE" target="departmentX">Doctor</a></li>
-
+-->
 
  <li><a href="#" target="departmentX"><font color=red>Fast Moving Items</font></a></li> 
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/graphicalReport/bestSelling/selectShift_fastMoving.php?username=<?php echo $username; ?>&title=MEDICINE" target="departmentX">Medicine</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/graphicalReport/bestSelling/selectShift_fastMoving.php?username=<?php echo $username; ?>&title=SUPPLIES" target="departmentX">Supplies</a></li>
-
+<!---
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/searchStockCard.php?username=<?php echo $username; ?>" target="departmentX">Add Inventory</a></li>
-
+-->
 
                 </ul>
             </li>
@@ -385,7 +434,7 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/billing/billingStation.php
 
 
 
-<iframe src="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/ADMIN/requestDelete_update.php?username=<?php echo $username; ?>" width="100%" height="540"  name="departmentX" border=1 frameborder=no></iframe>
+<iframe src="adminNull.php" width="100%" height="540"  name="departmentX" border=1 frameborder=no></iframe>
 
 </body>
 </html>
