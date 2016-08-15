@@ -1018,6 +1018,22 @@ public function inpatient_discharged($date1,$date2) {
 	}
 }
 
+
+private $outpatient_discharged_registrationNo;
+
+public function outpatient_discharged_registrationNo() {
+	return $this->outpatient_discharged_registrationNo;
+}
+
+public function outpatient_discharged($date1,$date2) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT registrationNo FROM registrationDetails WHERE type = 'OPD' and (dateUnregistered between '$date1' and '$date2') order by dateUnregistered asc ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->outpatient_discharged_registrationNo[] = $row['registrationNo'];
+	}
+}
+
 /*
 public function inpatient_payment_summary_total($registrationNo,$paidVia) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
@@ -1475,6 +1491,45 @@ public function list_retail($from,$to) {
 	}
 }
 
+
+private $list_charges_chargesCode;
+
+public function list_charges_chargesCode() {
+	return $this->list_charges_chargesCode;
+}
+
+public function list_charges($title,$date1,$date2) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT ac.chargesCode FROM availableCharges ac,patientCharges pc where pc.title = '$title' and ac.chargesCode = pc.chargesCode and (pc.dateCharge BETWEEN '$date1' and '$date2') and pc.status not like 'DELETED%' group by ac.chargesCode order by ac.Description asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_charges_chargesCode[] = $row['chargesCode'];
+	}
+}
+
+//bilangin kung ilan procedure/examination ung ngwa
+public function count_charges($chargesCode,$date1,$date2,$type) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = '$type' and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+
+	return mysqli_num_rows($result);
+}
+
+private $count_charges_details_itemNo;
+
+public function count_charges_details_itemNo() {
+	return $this->count_charges_details_itemNo;
+}
+
+public function count_charges_details($chargesCode,$date1,$date2,$type) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = '$type' and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+
+	while( $row = mysqli_fetch_array($result) ) {
+		$this->count_charges_details_itemNo[] = $row['itemNo'];
+	}
+}
+
 public function count_return_inventory($inventoryLocation) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, " SELECT registrationNo FROM `patientCharges` WHERE inventoryFrom = '$inventoryLocation' and status = 'Return' and departmentStatus != '' group by registrationNo ") or die("Query fail: " . mysqli_error()); 
@@ -1482,6 +1537,23 @@ public function count_return_inventory($inventoryLocation) {
 	return mysqli_num_rows($result);
 
 }
+
+
+private $list_inventory_preparation_preparationNo;
+
+public function list_inventory_preparation_preparationNo() {
+	return $this->list_inventory_preparation_preparationNo;
+}
+
+public function list_inventory_preparation() {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT preparationNo FROM inventoryPreparation ORDER BY preparation ASC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_inventory_preparation_preparationNo[] = $row['preparationNo'];
+	}
+}
+
 
 /*temporary function lng e2*/
 
