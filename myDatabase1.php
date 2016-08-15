@@ -1572,15 +1572,26 @@ return $row['unitcost'];
 }
 
 
-public $getPhilHealthReceivables_lab;
-public $getPhilHealthReceivables_rad;
-public $getPhilHealthReceivables_med;
-public $getPhilHealthReceivables_sup;
-public $getPhilHealthReceivables_room;
-public $getPhilHealthReceivables_nbs;
-public $getPhilHealthReceivables_total;
-public $getPhilHealthReceivables_grandTotal;
-public $getPhilHealthReceivables_totalPaid;
+private $getPhilHealthReceivables_lab;
+private $getPhilHealthReceivables_xray;
+private $getPhilHealthReceivables_utz;
+private $getPhilHealthReceivables_ctscan;
+private $getPhilHealthReceivables_ecg;
+private $getPhilHealthReceivables_pt;
+private $getPhilHealthReceivables_ot;
+private $getPhilHealthReceivables_st;
+private $getPhilHealthReceivables_others;
+private $getPhilHealthReceivables_erFee;
+private $getPhilHealthReceivables_misc;
+private $getPhilHealthReceivables_nursery;
+private $getPhilHealthReceivables_ordr;
+private $getPhilHealthReceivables_spiro;
+private $getPhilHealthReceivables_med;
+private $getPhilHealthReceivables_sup;
+private $getPhilHealthReceivables_room;
+private $getPhilHealthReceivables_total;
+private $getPhilHealthReceivables_grandTotal;
+private $getPhilHealthReceivables_totalPaid;
 
 public function getPhilHeealthReceivables($fromMonth,$fromDay,$fromYear,$toMonth,$toDay,$toYear,$type) {
 
@@ -1636,16 +1647,29 @@ echo "<th>Reg#</th>";
 echo "<th>Discharged</th>";
 echo "<th>Patient</th>";
 echo "<th>Laboratory</th>";
-echo "<th>Radiology</th>";
+echo "<th>XRAY</th>";
+echo "<th>UTZ</th>";
+echo "<th>CTSCAN</th>";
+echo "<th>ECG</th>";
+echo "<th>PT</th>";
+echo "<th>OT</th>";
+echo "<th>ST</th>";
+echo "<th>OTHERS</th>";
+echo "<th>ER FEE</th>";
+echo "<th>Misc</th>";
+echo "<th>Nursery</th>";
+echo "<th>OR/DR</th>";
+echo "<th>SPIRO</th>";
 echo "<th>Medicine</th>";
 echo "<th>Supplies</th>";
 echo "<th>Room</th>";
-echo "<th>NBS</th>";
 echo "<th>Total</th>";
+/*
 echo "<th>Paid</th>";
 echo "<th>Refno</th>";
 echo "<th>Date</th>";
 echo "<th>Remarks</th>";
+*/
 $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
@@ -1656,7 +1680,31 @@ $this->coconutTableData($row['lastName'].", ".$row['firstName']);
 
 $this->getPhilHealthReceivables_lab += $this->getCurrentPHIC_check($row['registrationNo'],"LABORATORY");
 
-$this->getPhilHealthReceivables_rad += $this->getCurrentPHIC_check($row['registrationNo'],"RADIOLOGY");
+$this->getPhilHealthReceivables_xray += $this->getCurrentPHIC_check($row['registrationNo'],"XRAY");
+
+$this->getPhilHealthReceivables_utz += $this->getCurrentPHIC_check($row['registrationNo'],"ULTRASOUND");
+
+$this->getPhilHealthReceivables_ctscan += $this->getCurrentPHIC_check($row['registrationNo'],"CTSCAN");
+
+$this->getPhilHealthReceivables_ecg += $this->getCurrentPHIC_check($row['registrationNo'],"ECG");
+
+$this->getPhilHealthReceivables_pt += $this->getCurrentPHIC_check($row['registrationNo'],"PT");
+
+$this->getPhilHealthReceivables_ot += $this->getCurrentPHIC_check($row['registrationNo'],"OT");
+
+$this->getPhilHealthReceivables_st += $this->getCurrentPHIC_check($row['registrationNo'],"ST");
+
+$this->getPhilHealthReceivables_others += $this->getCurrentPHIC_check($row['registrationNo'],"OTHERS");
+
+$this->getPhilHealthReceivables_erFee += $this->getCurrentPHIC_check($row['registrationNo'],"ER FEE");
+
+$this->getPhilHealthReceivables_misc += $this->getCurrentPHIC_check($row['registrationNo'],"MISCELLANEOUS");
+
+$this->getPhilHealthReceivables_nursery += $this->getCurrentPHIC_check($row['registrationNo'],"NURSERY");
+
+$this->getPhilHealthReceivables_ordr += $this->getCurrentPHIC_check($row['registrationNo'],"OR/DR/ER Fee");
+
+$this->getPhilHealthReceivables_spiro += $this->getCurrentPHIC_check($row['registrationNo'],"SPIROMETRY");
 
 $this->getPhilHealthReceivables_med += $this->getCurrentPHIC_check($row['registrationNo'],"MEDICINE");
 
@@ -1664,11 +1712,26 @@ $this->getPhilHealthReceivables_sup += $this->getPHIC_supplies($row['registratio
 
 $this->getPhilHealthReceivables_room += $this->getCurrentPHIC_check($row['registrationNo'],"Room And Board");
 
-$this->getPhilHealthReceivables_nbs += $this->getCurrentPHIC_check($row['registrationNo'],"NBS");
 
-$this->getPhilHealthReceivables_total = ( $this->getCurrentPHIC_check($row['registrationNo'],"LABORATORY") + $this->getCurrentPHIC_check($row['registrationNo'],"RADIOLOGY") + $this->getCurrentPHIC_check($row['registrationNo'],"MEDICINE") + $this->getPHIC_supplies($row['registrationNo']) + $this->getCurrentPHIC_check($row['registrationNo'],"Room And Board") + $this->getCurrentPHIC_check($row['registrationNo'],"NBS") );
-
-$this->getPhilHealthReceivables_totalPaid += $this->selectNow("phicReconcile","amount","registrationNo",$row['registrationNo']);
+$this->getPhilHealthReceivables_total = ( 
+  $this->getCurrentPHIC_check($row['registrationNo'],"LABORATORY") + 
+  $this->getCurrentPHIC_check($row['registrationNo'],"XRAY") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"ULTRASOUND") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"CTSCAN") + 
+  $this->getCurrentPHIC_check($row['registrationNo'],"ECG") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"PT") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"OT") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"ST") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"OTHERS") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"ER FEE") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"MISCELLANEOUS") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"NURSERY") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"OR/DR/ER Fee") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"SPIROMETRY") +
+  $this->getCurrentPHIC_check($row['registrationNo'],"MEDICINE") + 
+  $this->getPHIC_supplies($row['registrationNo']) + 
+  $this->getCurrentPHIC_check($row['registrationNo'],"Room And Board")
+  );
 
 $this->getPhilHealthReceivables_grandTotal += $this->getPhilHealthReceivables_total;
 
@@ -1678,10 +1741,82 @@ $this->coconutTableData("");
 $this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"LABORATORY"),2));
 }
 
-if( $this->getCurrentPHIC_check($row['registrationNo'],"RADIOLOGY") == 0 ) {
+if( $this->getCurrentPHIC_check($row['registrationNo'],"XRAY") == 0 ) {
 $this->coconutTableData("");
 }else {
-$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"RADIOLOGY"),2));
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"XRAY"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"ULTRASOUND") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"ULTRASOUND"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"CTSCAN") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"CTSCAN"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"ECG") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"ECG"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"PT") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"PT"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"OT") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"OT"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"ST") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"ST"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"OTHERS") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"OTHERS"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"ER FEE") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"ER FEE"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"MISCELLANEOUS") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"MISCELLANEOUS"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"NURSERY") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"NURSERY"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"OR/DR/ER Fee") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"OR/DR/ER Fee"),2));
+}
+
+if( $this->getCurrentPHIC_check($row['registrationNo'],"SPIROMETRY") == 0 ) {
+$this->coconutTableData("");
+}else {
+$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"SPIROMETRY"),2));
 }
 
 if( $this->getCurrentPHIC_check($row['registrationNo'],"MEDICINE") == 0 ) {
@@ -1704,29 +1839,24 @@ $this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registra
 }
 
 
-if( $this->getCurrentPHIC_check($row['registrationNo'],"NBS") == 0 ) {
-$this->coconutTableData("");
-}else { 
-$this->coconutTableData(number_format($this->getCurrentPHIC_check($row['registrationNo'],"NBS"),2));
-}
-
 if( $this->getPhilHealthReceivables_total == 0 ) {
 $this->coconutTableData("");
 }else {
 $this->coconutTableData(number_format($this->getPhilHealthReceivables_total,2));
 }
 
-
+/*
 if( $this->selectNow("phicReconcile","amount","registrationNo",$row['registrationNo']) == 0 ) {
 $this->coconutTableData("");
 }else {
 $this->coconutTableData(number_format($this->selectNow("phicReconcile","amount","registrationNo",$row['registrationNo']),2));
 }
-
+*/
+/*
 $this->coconutTableData($this->selectNow("phicReconcile","refno","registrationNo",$row['registrationNo']));
 $this->coconutTableData($this->selectNow("phicReconcile","date","registrationNo",$row['registrationNo']));
 $this->coconutTableData($this->selectNow("phicReconcile","remarks","registrationNo",$row['registrationNo']));
-
+*/
 $this->coconutTableRowStop();
   }  
 $this->coconutTableRowStart();
@@ -1734,18 +1864,30 @@ $this->coconutTableData("<b>Total</b>");
 $this->coconutTableData("&nbsp;");
 $this->coconutTableData("&nbsp;");
 $this->coconutTableData( number_format($this->getPhilHealthReceivables_lab,2));
-$this->coconutTableData( number_format($this->getPhilHealthReceivables_rad,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_xray,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_utz,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_ctscan,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_ecg,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_pt,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_ot,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_st,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_others,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_erFee,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_misc,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_nursery,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_ordr,2));
+$this->coconutTableData( number_format($this->getPhilHealthReceivables_spiro,2));
 $this->coconutTableData( number_format($this->getPhilHealthReceivables_med,2));
 $this->coconutTableData( number_format($this->getPhilHealthReceivables_sup,2));
 $this->coconutTableData( number_format($this->getPhilHealthReceivables_room,2));
-$this->coconutTableData( number_format($this->getPhilHealthReceivables_nbs,2));
 $this->coconutTableData( number_format($this->getPhilHealthReceivables_grandTotal,2) );
+/*
 $this->coconutTableData("&nbsp;".number_format($this->getPhilHealthReceivables_totalPaid));
 $this->coconutTableData("&nbsp;");
 $this->coconutTableData("&nbsp;");
 $this->coconutTableData("&nbsp;");
+*/
 $this->coconutTableRowStop();
-
 $this->coconutTableStop();
 }
 
