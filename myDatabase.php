@@ -11455,9 +11455,9 @@ $fromDate = $y."-".$m."-".$d;
 $toDate = $y1."-".$m1."-".$d1;
 
 if( $type == "IPD" ) {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') and pc.company > 0 and (rd.dateUnregistered between '$fromDate' and '$toDate') and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and (rd.type='IPD' or rd.type='OR/DR' or rd.type='ICU') and pc.company > 0 and (rd.dateUnregistered between '$fromDate' and '$toDate') and status IN ('UNPAID','Discharged') ");
 }else {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and rd.type='$type' and pc.company > 0 and (pc.dateCharge between '$fromDate' and '$toDate') and status = 'UNPAID' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sum(pc.company) as total from patientCharges pc,registrationDetails rd WHERE rd.registrationNo = pc.registrationNo and rd.Company = '$hmo' and rd.type='$type' and pc.company > 0 and (rd.dateUnregistered between '$fromDate' and '$toDate') and status = 'UNPAID' ");
 }
 
 
