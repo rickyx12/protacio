@@ -57,23 +57,11 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/Cens
 	echo "<input type='submit' value='Admission' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
-echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Reports/paidIPD.php' target='rightFrame'>";
-	$ro->coconutHidden("month",$curDate[1]);
-	$ro->coconutHidden("day",$curDate[2]);
-	$ro->coconutHidden("year",$curDate[0]);
-	$ro->coconutHidden("month1",$curDate[1]);
-	$ro->coconutHidden("day1",$curDate[2]);
-	$ro->coconutHidden("year1",$curDate[0]);
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/ADMIN/date/discharged-with-pf.php' target='rightFrame'>";
 	echo "<input type='submit' value='Discharged' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
-echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Cashier/expenses.php' target='rightFrame'>";
-$ro->coconutHidden("month",$curDate[1]);
-$ro->coconutHidden("day",$curDate[2]);
-$ro->coconutHidden("year",$curDate[0]);
-$ro->coconutHidden("month1",$curDate[1]);
-$ro->coconutHidden("day1",$curDate[2]);
-$ro->coconutHidden("year1",$curDate[0]);
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/ADMIN/date/petty-cash-expenses-date.php' target='rightFrame'>";
 echo "<input type='submit' value='Expenses' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
