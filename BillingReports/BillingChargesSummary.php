@@ -65,8 +65,8 @@ tr:hover { background-color:yellow;color:black;}
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $registrationNo=$_GET['registrationNo'];
@@ -82,8 +82,8 @@ echo "
 ";
 
 
-$asql=mysql_query("SELECT title FROM patientCharges WHERE registrationNo='$registrationNo' AND (status NOT LIKE 'DELETED_%%%%' OR status NOT LIKE 'PAID') GROUP BY title ORDER BY title ");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT title FROM patientCharges WHERE registrationNo='$registrationNo' AND (status NOT LIKE 'DELETED_%%%%' OR status NOT LIKE 'PAID') GROUP BY title ORDER BY title ");
+while($afetch=mysqli_fetch_array($asql)){
 echo "
       <tr>
         <td colspan='8' height='30' class='tableTopBottom' valign='bottom'><div align='left' class='style3'>".$afetch['title']."</div></td>
@@ -107,8 +107,8 @@ $totcompany=0;
 $finaltotal=0;
 
 if(($afetch['title']=="MEDICINE")||($afetch['title']=="SUPPLIES")){
-$bsql=mysql_query("SELECT description FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND status='UNPAID' AND departmentStatus LIKE 'dispensedBy%%%%' GROUP BY description, sellingPrice ORDER BY description");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND status='UNPAID' AND departmentStatus LIKE 'dispensedBy%%%%' GROUP BY description, sellingPrice ORDER BY description");
+while($bfetch=mysqli_fetch_array($bsql)){
 $description=$bfetch['description'];
 
 $subquantity=0;
@@ -117,8 +117,8 @@ $subcashUnpaid=0;
 $subphic=0;
 $subcompany=0;
 $subtotal=0;
-$csql=mysql_query("SELECT sellingPrice, quantity, discount, cashUnpaid, phic, company FROM patientCharges WHERE registrationNo='$registrationNo' AND description='$description' AND status='UNPAID' AND departmentStatus LIKE 'dispensedBy%%%%' ORDER BY itemNo");
-while($cfetch=mysql_fetch_array($csql)){
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT sellingPrice, quantity, discount, cashUnpaid, phic, company FROM patientCharges WHERE registrationNo='$registrationNo' AND description='$description' AND status='UNPAID' AND departmentStatus LIKE 'dispensedBy%%%%' ORDER BY itemNo");
+while($cfetch=mysqli_fetch_array($csql)){
 $sellingPrice=$cfetch['sellingPrice'];
 $quantity=$cfetch['quantity'];
 $discount=$cfetch['discount'];
@@ -157,8 +157,8 @@ echo "
 
 }
 else{
-$bsql=mysql_query("SELECT description, sellingPrice, SUM(quantity) AS quantity, SUM(discount) AS discount, SUM(cashUnpaid) AS cashUnpaid, SUM(phic) AS phic, SUM(company) AS company, departmentStatus FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND (status='UNPAID' OR status='Discharged') GROUP BY description, sellingPrice ORDER BY description");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description, sellingPrice, SUM(quantity) AS quantity, SUM(discount) AS discount, SUM(cashUnpaid) AS cashUnpaid, SUM(phic) AS phic, SUM(company) AS company, departmentStatus FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND (status='UNPAID' OR status='Discharged') GROUP BY description, sellingPrice ORDER BY description");
+while($bfetch=mysqli_fetch_array($bsql)){
 $sellingPriceNotReal=$bfetch['sellingPrice'];
 if($afetch['title']=='PROFESSIONAL FEE'){$splitprice=preg_split('[/]',$sellingPriceNotReal); $sellingPrice=$splitprice[0];}else{$sellingPrice=$sellingPriceNotReal;}
 
