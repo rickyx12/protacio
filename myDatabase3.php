@@ -3672,6 +3672,20 @@ public $doctorPatient_patient=0;
 public function doctorPatient($docName,$date,$date1,$type) {
 
 echo "
+
+<script src='../../js/jquery-2.1.4.min.js'></script>
+<script src='../../js/table2excel/dist/jquery.table2excel.min.js'></script>
+<link rel='stylesheet' href='../../../bootstrap-3.3.6/css/bootstrap.css'></link>
+<script>
+  $(document).ready(function() {
+    $('#exportOPD').click(function(){
+      $('#opdTbl').table2excel({
+          filename: '".$docName."_PF_OPD_(".$this->formatDate($date)." to ".$this->formatDate($date1).")'
+      });
+    });
+  });
+</script>
+
 <style type='text/css'>
 tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
@@ -3688,7 +3702,10 @@ $connection = mysqli_connect($this->host,$this->username,$this->password,$this->
 $result = mysqli_query($connection, " select pr.lastName,pr.firstName,rd.registrationNo,rd.dateUnregistered,pc.total,pc.company,pc.cashUnpaid,pc.cashPaid,pc.doctorsPF from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.description = '$docName' and (rd.dateUnregistered between '$date' and '$date1') and rd.type = '$type' and pc.title='PROFESSIONAL FEE' and pc.status in ('PAID','UNPAID') order by rd.dateUnregistered,pc.description asc  ") or die("Query fail: " . mysqli_error()); 
 
 
-echo "<table border=1 cellspacing=0>";
+echo "<br><br>";
+echo "<input id='exportOPD' class='btn btn-success' type='submit' value='Export Outpatient to Excel'>";
+echo "<br><br>";
+echo "<table id='opdTbl' border=1 cellspacing=0>";
 echo "<tr>";
 echo "<th>Date</th>";
 echo "<th>Patient</th>";
@@ -4314,7 +4331,7 @@ while($row = mysqli_fetch_array($result))
 $this->coconutTableRowStart();
 $this->coconutTableData($row['status']);
 $this->coconutTableData($row['time']);
-$this->coconutTableData($row['date']);
+$this->coconutTableData($this->formatDate($row['date']));
 $this->coconutTableData($row['username']);
 $this->coconutTableRowStop();
 }
