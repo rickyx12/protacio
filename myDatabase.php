@@ -1478,8 +1478,6 @@ if($this->selectNow("registeredUser","module","username",$username) == "PHARMACY
 
 $this->getPatientProfile($registrationNo);
 
-echo "|&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableCharges/addCharges.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$row[sellingPrice]&discount=0&timeCharge=$serverTime&chargeBy=$username&service=Examination&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&room=OPD_OPD&paycash=yes&remarks='><font color=red>Pay Cash</font></a>&nbsp;";
-
 
 echo "|&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/availableCharges/chargesWithDate_redirect.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$row[chargesCode]&description=$row[Description]&sellingPrice=$sellingPrice&discount=0&timeCharge=$serverTime&chargeBy=$username&service=$row[Service]&title=$row[Category]&paidVia=Cash&cashPaid=0.00&batchNo=$batchNo&username=$username&quantity=1&inventoryFrom=none&paycash=no&remarks=&url=/COCONUT/availableCharges/addCharges_date1.php&stockCardNo='><font size=2 color=brown>Add w/ Date</font></a>&nbsp;";
 
@@ -10674,6 +10672,7 @@ $this->coconutTableStop();
 public function getDoctorPatient_ipdCensus($doctorName,$type) {
 
 echo "
+<link rel='stylesheet' href='../../../bootstrap-3.3.6/css/bootstrap.css'></link>
 <style type='text/css'>
 #rowz:hover {
 background-color:yellow;
@@ -10699,21 +10698,34 @@ if (!$con)
 
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,rd.Company,pc.service from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.type='$type' and pc.description = '$doctorName' and rd.dateUnregistered = '' order by pr.lastName,pc.service asc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,rd.room,rd.Company,pc.service,rd.dateRegistered from patientRecord pr,registrationDetails rd,patientCharges pc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and rd.room != '' and rd.type='$type' and pc.description = '$doctorName' and rd.dateUnregistered = '' order by pr.lastName,pc.service asc ");
 
 echo "<font size=2>$doctorName</font>";
 $this->coconutTableStart();
 $this->coconutTableRowStart();
 $this->coconutTableHeader("Patient");
 $this->coconutTableHeader("Room");
+$this->coconutTableHeader("Admitted");
 $this->coconutTableHeader("Service");
 $this->coconutTableHeader("Insurance");
 $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
 echo "<tR id='rowz'>";
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/COCONUT/currentPatient/patientInterface1.php?registrationNo=$row[registrationNo]' target='_blank'><font class='rowzData'>".$row['lastName'].", ".$row['firstName']."</font></a>");
+$this->coconutTableData("
+  <form method='post' action='../../currentPatient/patientInterface1.php' target='_blank'>
+    &nbsp;
+    <center>
+    <input type='hidden' name='registrationNo' value='".$row['registrationNo']."'>
+    <button type='submit' class='btn btn-success'>
+      ".$row['lastName'].", ".$row['firstName']."
+    </button>
+    </center>
+    &nbsp;
+  </form>
+  ");
 $this->coconutTableData("<font class='rowzData'>".$row['room']."</font>");
+$this->coconutTableData("<font class='rowzData'>".$this->formatDate($row['dateRegistered'])."</font>");
 $this->coconutTableData("<font class='rowzData'>".$row['service']."</font>");
 $this->coconutTableData("<font class='rowzData'>".$row['Company']."</font>");
 echo "</tr>";
@@ -16605,7 +16617,9 @@ echo "</table><br><br>";
 
 public function getRecord($patientNo,$username) {
 
-echo "<style type='text/css'>";
+echo "
+<link rel='stylesheet' href='../../../bootstrap-3.3.6/css/bootstrap.css'></link>
+<style type='text/css'>";
 echo "a { text-decoration:none; color:black; }";
 echo "</style>";
 
@@ -16617,19 +16631,28 @@ if (!$con)
 
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM registrationDetails where patientNo='$patientNo' order by registrationNo desc ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationNo,dateRegistered,type FROM registrationDetails where patientNo='$patientNo' order by registrationNo desc ");
 
 echo "<br><br><center>";
 $this->coconutTableStart();
 $this->coconutTableRowStart();
 $this->coconutTableHeader("Reg#");
 $this->coconutTableHeader("Date Registered");
+$this->coconutTableHeader("Type");
 $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
-$this->coconutTableData("<a href='http://".$this->getMyUrl()."/Department/redirect.php?username=$username&registrationNo=$row[registrationNo]' target='window.parent'>".$row['registrationNo']."</a>");
-$this->coconutTableData("<a href='#'>".$row['dateRegistered']."</a>");
+$this->coconutTableData("
+    <form method='post' action='../../currentPatient/patientInterface1.php' target='_blank'>
+      <input type='hidden' name='registrationNo' value='".$row['registrationNo']."'>
+      &nbsp;
+        <input type='submit' class='btn btn-success' value='".$row['registrationNo']."'>
+      &nbsp;
+    </form>
+  ");
+$this->coconutTableData("<a href='#'>".$this->formatDate($row['dateRegistered'])."</a>");
+$this->coconutTableData("<a href='#'>".$row['type']."</a>");
 $this->coconutTableRowStop();
   }
 $this->coconutTableStop();
@@ -17831,7 +17854,23 @@ public $individual_doc_PF_patient=0;
 
 public function individual_doc_PF($name,$month,$day,$year,$month1,$day1,$year1) {
 
+$from = $year."-".$month."-".$day;
+$to = $year1."-".$month1."-".$day1;
+
 echo "
+<script src='../../js/jquery-2.1.4.min.js'></script>
+<script src='../../js/table2excel/dist/jquery.table2excel.min.js'></script>
+<link rel='stylesheet' href='../../../bootstrap-3.3.6/css/bootstrap.css'></link>
+<script>
+  $(document).ready(function() {
+    $('#exportBtn').click(function(){
+      $('#admissionTbl').table2excel({
+          filename: '".$name."_PF_IPD_(".$this->formatDate($from)." to ".$this->formatDate($to).")'
+      });
+    });
+  });
+</script>
+
 <style type='text/css'>
 #xxx:hover { background-color:yellow;color:black;}
 
@@ -17854,7 +17893,10 @@ $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.registrationNo,rd.
 echo "
 
 <font size=4>$name</font><br>
-<Br><br><center><table width='80%' border=1 cellpadding=0 cellspacing=0 rules='all'>";
+<center>
+<input id='exportBtn' class='btn btn-success' type='submit' value='Export Inpatient to Excel'>
+<Br><br>
+<table width='80%' id='admissionTbl' border=1 cellpadding=0 cellspacing=0 rules='all'>";
 echo "<tr>";
 echo "<Th>Patient</th>";
 echo "<Th>&nbsp;</th>";
