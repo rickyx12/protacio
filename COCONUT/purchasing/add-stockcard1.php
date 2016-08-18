@@ -24,6 +24,6 @@
 		"encodedBy" => $ro->selectNow("registeredUser","username","employeeID",$_SESSION['employeeID']),
 
 		);
-	//$ro4->insertNow("inventoryStockCard",$data);
+	$ro4->insertNow("inventoryStockCard",$data);
 
 ?>
