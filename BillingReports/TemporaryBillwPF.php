@@ -51,8 +51,8 @@ function printF(printData)
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $registrationNo=$_GET['registrationNo'];
@@ -100,8 +100,8 @@ $middleName=$cuz->selectNow("patientRecord","middleName","patientNo",$patientNo)
 $dateRegisteredstr=strtotime($dateRegistered);
 $dateRegisteredfmt=date("M d, Y", $dateRegisteredstr);
 
-$asql=mysql_query("SELECT description FROM patientCharges WHERE title='Room And Board' AND registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' ORDER BY dateCharge, timeCharge");
-while($afetch=mysql_fetch_array($asql)){$room=$afetch['description'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description FROM patientCharges WHERE title='Room And Board' AND registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' ORDER BY dateCharge, timeCharge");
+while($afetch=mysqli_fetch_array($asql)){$room=$afetch['description'];}
 
 $romsplit=preg_split('[_]',$room);
 
@@ -125,15 +125,15 @@ echo "
   </tr>
 ";
 $cu=0;
-$bsql=mysql_query("SELECT itemNo, cashUnpaid, departmentStatus, title FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' AND title NOT LIKE 'PROFESSIONAL FEE'");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo, cashUnpaid, departmentStatus, title FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' AND title NOT LIKE 'PROFESSIONAL FEE'");
+while($bfetch=mysqli_fetch_array($bsql)){
 $itemNo=$bfetch['itemNo'];
 $title=$bfetch['title'];
 $cashUnpaid=$bfetch['cashUnpaid'];
 
 if(($title=='MEDICINE')||($title=='SUPPLIES')){
-$findifdispsql=mysql_query("SELECT departmentStatus FROM patientCharges WHERE itemNo='$itemNo' AND departmentStatus LIKE 'dispensedBy_%%%%'");
-$findifdispcount=mysql_num_rows($findifdispsql);
+$findifdispsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT departmentStatus FROM patientCharges WHERE itemNo='$itemNo' AND departmentStatus LIKE 'dispensedBy_%%%%'");
+$findifdispcount=mysqli_num_rows($findifdispsql);
 if($findifdispcount==0){
 }
 else{
@@ -147,13 +147,13 @@ $cu+=$cashUnpaid;
 
 }
 
-$csql=mysql_query("SELECT SUM(cashUnpaid) AS pf FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' AND title='PROFESSIONAL FEE'");
-while($cfetch=mysql_fetch_array($csql)){$pf=$cfetch['pf'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(cashUnpaid) AS pf FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' AND title='PROFESSIONAL FEE'");
+while($cfetch=mysqli_fetch_array($csql)){$pf=$cfetch['pf'];}
 
-$dsql=mysql_query("SELECT SUM(amountPaid) AS dp FROM patientPayment WHERE registrationNo='$registrationNo'");
-while($dfetch=mysql_fetch_array($dsql)){$dp=$dfetch['dp'];}
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(amountPaid) AS dp FROM patientPayment WHERE registrationNo='$registrationNo'");
+while($dfetch=mysqli_fetch_array($dsql)){$dp=$dfetch['dp'];}
 
-$dsql=mysql_query("SELECT ");
+$dsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ");
 
 $temptot=($cu+$pf)-$dp;
 
