@@ -113,7 +113,7 @@
 			"inventoryCode" => $inventoryCode,
 			"description" => $description,
 			"unitPrice" => $unitcost,
-			"quantity" => $quantity,
+			"quantity" => ($quantity + $freeGoods),
 			"fgquantity" => $freeGoods,
 			"type" => "supplies",
 			"status" => "Active",
