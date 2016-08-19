@@ -58,16 +58,16 @@ echo "<td><font class='labelz'>Hospital Bill</font></tD>";
 echo "<td><input type=text name='amountPaid' value='' class='shortField' autocomplete='off'></tD>";
 echo "</tr>";
 
-echo "<tr>";
-echo "<td><font class='labelz'>PF</font></tD>";
-echo "<td><input type=text name='pf' value='0' class='shortField' autocomplete='off' ></tD>";
-echo "</tr>";
+//echo "<tr>";
+//echo "<td><font class='labelz'>PF</font></tD>";
+echo "<td><input type=hidden name='pf' value='0' class='shortField' autocomplete='off' ></tD>";
+//echo "</tr>";
 
 
-echo "<tr>";
-echo "<td><font class='labelz'>Discount</font></tD>";
-echo "<td><input type=text name='discount' value='".$ro->selectNow("registrationDetails","discount","registrationNo",$registrationNo)."' class='shortField' autocomplete='off' ></tD>";
-echo "</tr>";
+//echo "<tr>";
+//echo "<td><font class='labelz'>Discount</font></tD>";
+echo "<td><input type=hidden name='discount' value='".$ro->selectNow("registrationDetails","discount","registrationNo",$registrationNo)."' class='shortField' autocomplete='off' ></tD>";
+//echo "</tr>";
 
 echo "<tr>";
 echo "<td><font class='labelz'>Date</font></tD>";
