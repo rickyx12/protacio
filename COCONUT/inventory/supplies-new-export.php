@@ -21,22 +21,33 @@ $ro4->inventory_list("supplies");
 		<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 		<script>
 			$(document).ready(function(){
-				$("#export").click(function() {
-					/*
-					var data='<table>'+$("#medicine").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-					var reportName = '<? echo 'Medicine ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
 
-					$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
-					 $('#ReportTableData').submit().remove();
-					 return false;	
-					 */		
+				var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+				console.log(isChrome);				
 
-					$("#supplies").table2excel({
-					    name: "Supplies",
-					    filename: "Supplies [<? echo $ro4->formatDate(date('Y-m-d')) ?>]" //do not include extension
+
+				if( isChrome == true ) {
+					$("#export").click(function() {
+						/*
+						var data='<table>'+$("#medicine").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+						var reportName = '<? echo 'Medicine ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
+
+						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
+						 $('#ReportTableData').submit().remove();
+						 return false;	
+						 */		
+
+						$("#supplies").table2excel({
+						    name: "Supplies",
+						    filename: "Supplies [<? echo $ro4->formatDate(date('Y-m-d')) ?>]" //do not include extension
+						});
 					});
+				}else {
+					$("#export").hide();
+					$("#msg").text("Exporting available only on Google Chrome");
+				}
 
-				});
+
 			});
 		</script>
 	</head>
@@ -47,6 +58,7 @@ $ro4->inventory_list("supplies");
 				<button id="export" class="btn btn-success col-xs">
 					Export To Excel
 				</button>
+				<i id="msg"></i>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
