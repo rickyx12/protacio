@@ -105,16 +105,17 @@ echo "<input type=hidden name='username' value='$username'>";
 echo "<input type=hidden name='show' value='try'>";
 echo "<input type='hidden' name='chargesCode' value='off'>";
 echo "<input type='hidden' name='showdate' value='1'>";
-echo "<input type=submit value='S.O.A (for Printing)' class='button'>";
+echo "<input type=submit value='S.O.A (for Printing)' class='button1'>";
 echo "</form>";
 
 }
-
+/*
 echo "<form method='get' action='soaOption1.php'>";
 echo "<input type=hidden name='registrationNo' value='$registrationNo' >";
 echo "<input type=hidden name='username' value='$username'>";
 echo "<input type=submit value='Customized S.O.A' class='button1'>";
 echo "</form>";
+*/
 /*
 }else {
 echo " <font color=red>You are not allowed to view the S.O.A</font><br> ";
