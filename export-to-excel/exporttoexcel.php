@@ -12,7 +12,7 @@ if( !isset($_POST['reportName']) ) {
 	header("Content-Type: application/octet-stream");
 	header("Content-Type: application/download");
 	*/
-	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+	header("Content-Type:application/vnd.ms-excel; charset=utf-8");
 	header("Content-Disposition: attachment;filename='".$_POST['reportName'].".xls'");
 	header("Content-Transfer-Encoding: binary ");
 
