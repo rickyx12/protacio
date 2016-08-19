@@ -113,6 +113,7 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
                 <a href="../inventory/stockCardList.php?inventoryType=supplies" target="departmentX">Stock Card Supplies</a>
                 <a href="../purchasing/view-purchases.php" target="departmentX">Purchases List</a>
                 <a href="../philhealth/phicReceivables/new-receivables.php" target="departmentX">Philhealth Receivables</a>
+                <a href="../inventory/medicine-new-printable.php" target="departmentX">Medicine</a>
             </ul>
         </li>
 
