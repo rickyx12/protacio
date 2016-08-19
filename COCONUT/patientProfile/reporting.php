@@ -8,7 +8,7 @@ echo "<br><br><br>";
 $ro->coconutFormStart("get","reporting1.php");
 $ro->coconutHidden("registrationNo",$registrationNo);
 echo "<center><font color=blue>".$ro->getPatientRecord_lastName().", ".$ro->getPatientRecord_firstName()."</font>";
-$ro->coconutBoxStart("500","150");
+$ro->coconutBoxStart("500","100");
 echo "<br>";
 echo "<table border=0>";
 
@@ -19,18 +19,18 @@ $datez = $ro->getRegistrationDetails_dateUnregistered();
 }else {
 $datez = date("Y-m-d");
 }
-
+/*
 echo "<tr>";
 echo "<td></td>";
 echo "<td><font color=red>(YYYY-MM-DD)</font></td>";
 echo "</tr>";
-
-echo "<tr>";
-echo "<td>Reporting Date</td>";
-echo "<td>";
-$ro->coconutTextBox("reportDate",$datez);
-echo "</td>";
-echo "</tr>";
+*/
+//echo "<tr>";
+//echo "<td>Reporting Date</td>";
+//echo "<td>";
+$ro->coconutHidden("reportDate",$datez);
+//echo "</td>";
+//echo "</tr>";
 
 
 echo "<tr>";
