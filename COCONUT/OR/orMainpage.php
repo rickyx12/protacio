@@ -31,10 +31,6 @@
 					open("POST","../currentPatient/patientInterface.php",data,'_blank')
 				});
 
-				$("#doctorPx").click(function(){
-					open("POST","../Doctor/showDocName.php",{},'departmentX');	
-				});
-
 				$("#pendingRequest").click(function(){
 					open("POST","../requestition/pending-request.php",{module:'OR'},"departmentX");
 				});
@@ -75,7 +71,6 @@
 					<a href="#">Patient<span class="arrow"></span></a>
 					<ul>
 						<a href="#" id="searchPx">Search Patient</a>
-						<a href="#" id="doctorPx">Doctor's Patient</a>
 					</ul>
 				</li>
 
