@@ -36,13 +36,13 @@
 					};
 					
 					if( $('#supplies').is(':checked') || $('#medicine').is(':checked') ) {
-						$.post("add-stockcard1.php",data,function(){
+						$.post("add-stockcard1.php",data,function(result){
 							swal("Success","Stock Card Added to Masterfile","success");
 							$("#description").val("");
 							$("#genericName").show();
 							$("#genericNameLabel").show();
 							$("#genericName").val("");
-							 $('.inventoryType').prop('checked', false);
+							$('.inventoryType').prop('checked', false);
 						});	
 					}else {
 						swal("Sorry","Pls select which inventory type is the stockcard","error");
