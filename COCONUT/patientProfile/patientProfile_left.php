@@ -83,12 +83,12 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/patientChar
 
 
 
-
+/*
 //check if rehab is activated 
 if( $ro->selectNow("reportHeading","information","reportName","rehab") == "Activate" ) {
 echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/patientChargesTitle.php?registrationNo=$registrationNo&title=REHAB&username=$username&show=&desc=' target='rightFrame'><font size=2>Rehab</font></a></li>";
 }else { }
-
+*/
 //echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/patientChargesTitle.php?registrationNo=$registrationNo&title=OTHERS&username=$username&show=&desc=' target='rightFrame'><font size=2>Others</font></a></li>";
 
 if($ro->getRegistrationDetails_room() != "OPD_OPD") { // enable room
@@ -158,7 +158,7 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/Laboratory/resultList/list
 
 echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/patientOR.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."' target='rightFrame'><font size=2>OR#</font></a></li>";
 
-echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/ECART/cartHandler_custom.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."&username=$username&room=".$ro->getRegistrationDetails_room()."&batchNo=$batchNo' target='rightFrame'><font size=2>test</font></a></li>";
+//echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/ECART/cartHandler_custom.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."&username=$username&room=".$ro->getRegistrationDetails_room()."&batchNo=$batchNo' target='rightFrame'><font size=2>test</font></a></li>";
 
 echo "</ul>";
 
