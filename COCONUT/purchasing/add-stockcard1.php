@@ -15,15 +15,18 @@
 	}
 	$inventoryType = $_POST['inventoryType'];
 
-	$data = array(
+	foreach( $inventoryType as $type ) {
 
+	$data = array(
 		"description" => $description,
 		"genericName" => $genericName,
-		"inventoryType" => $inventoryType,
+		"inventoryType" => $type,
 		"encodedDetails" => date("Y-m-d"),
 		"encodedBy" => $ro->selectNow("registeredUser","username","employeeID",$_SESSION['employeeID']),
 
 		);
-	$ro4->insertNow("inventoryStockCard",$data);
+		$ro4->insertNow("inventoryStockCard",$data);
+	}
+
 
 ?>
