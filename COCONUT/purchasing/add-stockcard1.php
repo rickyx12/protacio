@@ -27,6 +27,7 @@
 		);
 		$ro4->insertNow("inventoryStockCard",$data);
 	}
-
+$incrementStockCardNo = ($ro->selectNow("trackingNo","value","name","stockCardNo") + 1);
+$ro->editNow("trackingNo","name","stockCardNo","value",$incrementStockCardNo);
 
 ?>
