@@ -60,25 +60,25 @@ break;
 include("../../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $registrationNo=$_GET['registrationNo'];
 $username=$_GET['username'];
 
-$asql=mysql_query("SELECT patientNo FROM registrationDetails WHERE registrationNo='$registrationNo'");
-while($afetch=mysql_fetch_array($asql)){$patientNo=$afetch['patientNo'];}
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT patientNo FROM registrationDetails WHERE registrationNo='$registrationNo'");
+while($afetch=mysqli_fetch_array($asql)){$patientNo=$afetch['patientNo'];}
 
-$bsql=mysql_query("SELECT lastName, firstName, middleName, Senior FROM patientRecord WHERE patientNo='$patientNo'");
-while($bfetch=mysql_fetch_array($bsql)){$lastName=$bfetch['lastName']; $firstName=$bfetch['firstName']; $middleName=$bfetch['middleName']; $Senior=$afetch['Senior'];}
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT lastName, firstName, middleName, Senior FROM patientRecord WHERE patientNo='$patientNo'");
+while($bfetch=mysqli_fetch_array($bsql)){$lastName=$bfetch['lastName']; $firstName=$bfetch['firstName']; $middleName=$bfetch['middleName']; $Senior=$afetch['Senior'];}
 
 $lastNamefmt=strtoupper($lastName);
 $firstNamefmt=strtoupper($firstName);
 $middleNamefmt=strtoupper($middleName);
 
 if(($Senior=='')||($Senior=='NO')){
-$csql=mysql_query("SELECT seniorID FROM registrationDetails WHERE registrationNo='$registrationNo'");
-while($cfetch=mysql_fetch_array($csql)){$seniorID=$cfetch['seniorID'];}
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT seniorID FROM registrationDetails WHERE registrationNo='$registrationNo'");
+while($cfetch=mysqli_fetch_array($csql)){$seniorID=$cfetch['seniorID'];}
 }
 else{
 $seniorID='';
