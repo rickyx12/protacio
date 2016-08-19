@@ -158,7 +158,7 @@ $("#breadcrumbs a").hover(
        
 <?php }else { } ?>
 
-             <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/editVitalSign.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Vital Sign</a></li>
+            <!-- <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/editVitalSign.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Vital Sign</a></li>-->
                     <li><a class="hide" href="http://<?php echo $ro->getMyUrl() ?>/COCONUT/patientProfile/editInitialDiagnosis.php?registrationNo=<?php echo $registrationNo ?>&username=<?php echo $username; ?>" target="patientX">Diagnosis</a></li>
 
 <?php
@@ -239,7 +239,7 @@ $("#breadcrumbs a").hover(
                      <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/voidPayment/void-opd-new.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment Itemized</a></li>                    
 
 <?php //} else { ?>
-                    <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment</a></li>
+                    <!---<li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/Payments/viewPayment.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Void Payment</a></li>-->
 <?php //} ?>
 
 <?php }else { } ?>
