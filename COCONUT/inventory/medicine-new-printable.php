@@ -17,17 +17,25 @@ $ro4->inventory_list("medicine");
 		<meta charset="UTF-8">
 		<title></title>
 		<script src='../js/jquery-2.1.4.min.js'></script>
+		<script src='../js/table2excel/dist/jquery.table2excel.min.js'></script>
 		<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
 		<script>
 			$(document).ready(function(){
 				$("#export").click(function() {
-					
+					/*
 					var data='<table>'+$("#medicine").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
 					var reportName = '<? echo 'Medicine ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
 
 					$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
 					 $('#ReportTableData').submit().remove();
-					 return false;				
+					 return false;	
+					 */		
+
+					$("#medicine").table2excel({
+					    name: "Medicine",
+					    filename: "Medicine [<? echo $ro4->formatDate(date('Y-m-d')) ?>]" //do not include extension
+					});
+
 				});
 			});
 		</script>
