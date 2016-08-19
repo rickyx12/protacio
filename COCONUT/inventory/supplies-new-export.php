@@ -28,19 +28,21 @@ $ro4->inventory_list("supplies");
 
 				if( isChrome == true ) {
 					$("#export").click(function() {
-						/*
-						var data='<table>'+$("#medicine").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-						var reportName = '<? echo 'Medicine ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
+						
+						var data='<table>'+$("#supplies").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+						var reportName = '<? echo 'Supplies ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
 
 						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
 						 $('#ReportTableData').submit().remove();
 						 return false;	
-						 */		
+						 		
 
+						 /*
 						$("#supplies").table2excel({
 						    name: "Supplies",
 						    filename: "Supplies [<? echo $ro4->formatDate(date('Y-m-d')) ?>]" //do not include extension
 						});
+						*/
 					});
 				}else {
 					$("#export").hide();
