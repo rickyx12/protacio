@@ -50,13 +50,12 @@ echo "</div>";
 
 echo "</form>";
 
-
+/*
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/philhealth/icdCode/addICD1.php'>";
 echo "<input type=hidden name='username' value='$username'>";
 echo "<Br>";
 echo "<br><center><div style='border:1px solid #000000; width:600px; height:auto; border-color:black black black black;'>";
 echo "<br>";
-
 echo "<Table border=0 cellpadding=0 cellspacing=0>";
 echo "<tr>";
 echo "<Td><font class='labelz'>ICD Code&nbsp;&nbsp;	</font></tD>";
@@ -71,6 +70,6 @@ echo "<Br>";
 echo "<input type=submit value='Proceed'>";
 echo "<div>";
 echo "</form>";
-
+*/
 
 ?>
