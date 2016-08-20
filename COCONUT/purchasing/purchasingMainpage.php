@@ -88,6 +88,7 @@
 						<a href="#" id="addStockCard">Add Stockcard</a>
 						<a href="search-invoice.php" target="departmentX">Search Invoice</a>
 						<a href="pay-invoice.php" target="departmentX">Invoice Payment</a>
+						<a href="paid-invoices-date.php" target="departmentX">Paid Invoice</a>
 					</ul>
 				</li>
 
