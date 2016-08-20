@@ -103,7 +103,6 @@ public function accounting_purchaseJournal_itemized($siNo) {
 
 echo "
 <style type='text/css'>
-tr:hover { background-color:yellow; color:black;}
 a {  border_bottom:10px; color:black; }
 </style>";
 
@@ -130,24 +129,31 @@ $this->accounting_purchaseJournal_itemized_inputVAT = $inputVAT;
 $this->accounting_purchaseJournal_itemized_wTax = $wTax;
 
 echo "<Tr>";
+echo "<td><b>".$this->selectNow("supplier","supplierName","supplierCode",$this->selectNow("salesInvoice","supplier","siNo",$siNo))."</b></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
+
+echo "<Tr>";
 echo "<td>INVENTORY</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_purchases,2)."</td>";
-echo "<td>&nbsp;</td>";
+echo "<td></td>";
+echo "<td>".number_format($this->accounting_purchaseJournal_itemized_purchases,2)."</td>";
+echo "<td></td>";
 echo "</tr>";
 
 echo "<Tr>";
 echo "<td>INPUT VAT</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_inputVAT,2)."</td>";
-echo "<td>&nbsp;</td>";
+echo "<td></td>";
+echo "<td>".number_format($this->accounting_purchaseJournal_itemized_inputVAT,2)."</td>";
+echo "<td></td>";
 echo "</tr>";
 
 echo "<Tr>";
 echo "<td>WITHHOLDING TAX - EXPANDED PAYABLE 1%</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_itemized_wTax,2)."</td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td>".number_format($this->accounting_purchaseJournal_itemized_wTax,2)."</td>";
 echo "</tr>";
 
 }
@@ -160,7 +166,7 @@ public function accounting_purchaseJournal($date1,$date2) {
 echo "
 <style type='text/css'>
 a { text-decoration:none; color:black; }
-tr:hover { background-color:yellow;color:black;}
+
 
 tr.border_bottom td {
   border-bottom:1pt solid #CCCCCC;
@@ -178,7 +184,7 @@ $result = mysqli_query($connection, " SELECT invoiceNo,supplier,transactionDate,
 
 
 echo "<br>";
-echo "<table border=0 width='70%'>";
+echo "<table id='purchaseJournal' border=0 width='70%'>";
 echo "<tr class='table_header'>";
 echo "<th>Account</th>";
 echo "<th>Date</th>";
@@ -188,13 +194,27 @@ echo "</tr>";
 while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
-$this->coconutTableData("<font size=3><b><a href='/COCONUT/accounting/voucher/accountsPayableVoucher.php?invoiceNo=$row[invoiceNo]' target='_blank' style='text-decoration:none;'>Invoice#:".$row['invoiceNo']."</font></a></b><br><font size=3>".$this->selectNow("supplier","supplierName","supplierCode",$row['supplier'])."</font>");
-$this->coconutTableData("<font size=3>".$row['transactionDate']."</font>");
-$this->coconutTableData("&nbsp;");
-$this->coconutTableData("&nbsp;");
+//$this->coconutTableData("<font size=3><b><a href='/COCONUT/accounting/voucher/accountsPayableVoucher.php?invoiceNo=$row[invoiceNo]' target='_blank' style='text-decoration:none;'>Invoice#:".$row['invoiceNo']."</font></a></b>");
+echo "<td><font size=3><b><a href='/COCONUT/accounting/voucher/accountsPayableVoucher.php?invoiceNo=$row[invoiceNo]' target='_blank' style='text-decoration:none;'>Invoice#:".$row['invoiceNo']."</font></a></b></td>";
+	//date format
+	$date = $row['transactionDate'];
+	$year = substr($date,0,4);
+	$month = substr($date,4,2);
+	$day = substr($date,6,2);
+	$formatDate = $year."-".$month."-".$day;									
+echo "<td>".$this->formatDate($formatDate)."</td>";
+echo "<td></td>";
+echo "<td></td>";
 $this->accounting_purchaseJournal_itemized($row['siNo']);
 $this->coconutTableRowStop();
-
+/*
+echo "<Tr>";
+echo "<td><font size=3>".$this->selectNow("supplier","supplierName","supplierCode",$row['supplier'])."</font></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
+*/
 
 
 /*
@@ -235,9 +255,9 @@ echo "<td>CASH</td>";
 }else {
 echo "<td>ACCOUNTS PAYABLE</td>";
 }
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;</td>";
-echo "<td>&nbsp;".number_format($this->accounting_purchaseJournal_accountsPayable,2)."</td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td>".number_format($this->accounting_purchaseJournal_accountsPayable,2)."</td>";
 echo "</tr>";
 
 }
@@ -741,7 +761,7 @@ $sql = new mysqli($this->host,$this->username,$this->password,$this->database);
  
 /* we will just create an insert query here, and use it,
 normally this would be done by form submission or other means */
-$query = "insert into vouchers(invoiceNo,checkedNo,bank,orNo,paymentMode,description,amount,vattable,wtax,vat,payee,date,user,voucherNo,time) values('$invoiceNo','$checkNo','$bank','$orNo','$paymentMode','$description','$amount','$vattable','$wtax','$vat','$payee','$date','$username','$voucherNo','".date("H:i:s")."')";
+$query = "insert into vouchers(invoiceNo,checkedNo,bank,orNo,paymentMode,description,amount,vattable,wtax,vat,payee,datePaid,user,voucherNo,timePaid) values('$invoiceNo','$checkNo','$bank','$orNo','$paymentMode','$description','$amount','$vattable','$wtax','$vat','$payee','$date','$username','$voucherNo','".date("H:i:s")."')";
  
 if ( $sql->query($query) ) {
    //echo "A new entry has been added with the `id`";
