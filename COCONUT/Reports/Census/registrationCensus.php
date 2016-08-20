@@ -34,14 +34,24 @@ $toRegistered = $toYear."-".$toMonth."-".$toDay;
 <script src="../../js/jquery-2.1.4.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$("#export").click(function(){
-			var data='<table>'+$("#census").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-			var reportName = '<? echo 'Census '.$type.' ['.$ro4->formatDate($fromRegistered).' to '.$ro4->formatDate($toRegistered).' ]' ?>';
 
-			$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
-			 $('#ReportTableData').submit().remove();
-			 return false;				
-		});	
+
+		var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+		if( isChrome == true ) {
+			$("#export").click(function(){
+				var data='<table>'+$("#census").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+				var reportName = '<? echo 'Census '.$type.' ['.$ro4->formatDate($fromRegistered).' to '.$ro4->formatDate($toRegistered).' ]' ?>';
+
+				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
+				 $('#ReportTableData').submit().remove();
+				 return false;				
+			});	
+		}else {
+			$("#export").hide();
+		}
+
+
 	});
 </script>
 
