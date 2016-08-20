@@ -13,7 +13,7 @@ if( !isset($_POST['reportName']) ) {
 	header("Content-Disposition: attachment;filename='".$_POST['reportName'].".xls'");
 	header("Content-Transfer-Encoding: binary ");
 
-	echo strip_tags($_POST['tableData'],'<table><th><tr><td>');  
+	echo strip_tags($_POST['tableData'],'<table><th><tr><td><style>');  
 }
 
 ?>
