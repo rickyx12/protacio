@@ -1554,6 +1554,35 @@ public function list_inventory_preparation() {
 	}
 }
 
+private $paid_invoices_controlNo;
+
+public function paid_invoices_controlNo() {
+	return $this->paid_invoices_controlNo;
+}
+
+public function paid_invoices($from,$to,$paymentMode) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT controlNo FROM vouchers WHERE (datePaid BETWEEN '$from' and '$to') and invoiceNo != '' and paymentMode = '$paymentMode' order by datePaid asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->paid_invoices_controlNo[] = $row['controlNo'];
+	}
+}
+
+private $charges_list_chargesCode;
+
+public function charges_list_chargesCode() {
+	return $this->charges_list_chargesCode;
+}
+
+public function charges_list($title) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT chargesCode FROM availableCharges WHERE Category = '$title' ORDER BY Description ASC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->charges_list_chargesCode[] = $row['chargesCode'];
+	}
+}
 
 /*temporary function lng e2*/
 
