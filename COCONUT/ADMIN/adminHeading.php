@@ -113,8 +113,9 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
                 <a href="../inventory/stockCardList.php?inventoryType=supplies" target="departmentX">Stock Card Supplies</a>
                 <a href="../purchasing/view-purchases.php" target="departmentX">Purchases List</a>
                 <a href="../philhealth/phicReceivables/new-receivables.php" target="departmentX">Philhealth Receivables</a>
-                <a href="../inventory/medicine-new-export.php" target="departmentX">Medicine</a>
-                <a href="../inventory/supplies-new-export.php" target="departmentX">Supplies</a>
+                <a href="../inventory/medicine-new-export.php" target="departmentX">Medicine Cost</a>
+                <a href="../inventory/supplies-new-export.php" target="departmentX">Supplies Cost</a>
+                <a href="../purchasing/paid-invoices-date.php" target="departmentX">Paid Invoice</a>
             </ul>
         </li>
 
@@ -251,7 +252,26 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
             </li>
 
 
- <li>
+                <li>
+                    <a href="#">Charges List</a>
+                    <ul>
+                        <a href="../Reports/charges-list.php?title=LABORATORY" target="departmentX">Laboratory</a>
+                        <a href="../Reports/charges-list.php?title=XRAY" target="departmentX">X-Ray</a>
+                        <a href="../Reports/charges-list.php?title=CTSCAN" target="departmentX">CT-Scan</a>
+                        <a href="../Reports/charges-list.php?title=ULTRASOUND" target="departmentX">Ultrasound</a>
+                        <a href="../Reports/charges-list.php?title=ECG" target="departmentX">ECG</a>
+                        <a href="../Reports/charges-list.php?title=OT" target="departmentX">Occupational Therapy</a>
+                        <a href="../Reports/charges-list.php?title=PT" target="departmentX">Physical Therapy</a>
+                        <a href="../Reports/charges-list.php?title=ST" target="departmentX">Speech Therapy</a>
+                        <a href="../Reports/charges-list.php?title=OR/DR/ER Fee" target="departmentX">Operating Room</a>
+                        <a href="../Reports/charges-list.php?title=MISCELLANEOUS" target="departmentX">Miscellaneous</a> 
+                        <a href="../Reports/charges-list.php?title=NURSERY" target="departmentX">Nursery</a>
+                        <a href="../Reports/charges-list.php?title=OTHERS" target="departmentX">Others</a>
+                        <a href="../Reports/charges-list.php?title=ER FEE" target="departmentX">ER Fee</a>
+                    </ul>
+                </li>
+
+            <li>
                 <a href="#">Search<span class="arrow"></span></a>
                 <ul>
  <!--               
