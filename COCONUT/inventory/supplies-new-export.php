@@ -30,7 +30,7 @@ $ro4->inventory_list("supplies");
 					$("#export").click(function() {
 						
 						var data='<table>'+$("#supplies").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-						var reportName = '<? echo 'Supplies ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
+						var reportName = '<? echo 'Supplies Cost ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
 
 						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
 						 $('#ReportTableData').submit().remove();
@@ -55,11 +55,9 @@ $ro4->inventory_list("supplies");
 	</head>
 	<body>
 		<div class="container">
-			<h6>&nbsp;</h6>
+			<h3>Supplies Cost</h3>
 			<div class="row">
-				<button id="export" class="btn btn-success col-xs">
-					Export To Excel
-				</button>
+				<a href="#" id="export" ><img src="../../export-to-excel/excel-icon.png"></a>
 				<i id="msg"></i>
 			</div>
 			<div class="row">
