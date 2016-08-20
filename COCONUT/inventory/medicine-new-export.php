@@ -29,7 +29,7 @@ $ro4->inventory_list("medicine");
 					$("#export").click(function() {
 						
 						var data='<table>'+$("#medicine").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-						var reportName = '<? echo 'Medicine ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
+						var reportName = '<? echo 'Medicine Cost ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
 
 						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
 						 $('#ReportTableData').submit().remove();
@@ -52,11 +52,9 @@ $ro4->inventory_list("medicine");
 	</head>
 	<body>
 		<div class="container">
-			<h6>&nbsp;</h6>
 			<div class="row">
-				<button id="export" class="btn btn-success col-xs">
-					Export To Excel
-				</button>
+				<h3>Medicine Cost</h3>
+				<a href="#" id="export" ><img src="../../export-to-excel/excel-icon.png"></a>
 				<i id='msg'></i>
 			</div>
 			<div class="row">
