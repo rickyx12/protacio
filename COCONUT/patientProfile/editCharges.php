@@ -361,16 +361,6 @@ echo "<input type=hidden name='paidBy' value=''>";
 }
 
 
-
-if( $ro->selectNow("patientCharges","title","itemNo",$itemNo) == "XRAY" || $ro->selectNow("patientCharges","title","itemNo",$itemNo) == "ULTRASOUND" ) {
-echo "<tr>";
-echo "<td>&nbsp;</td>";
-echo "<td><a href='http://".$ro->getMyUrl()."/COCONUT/uploader/multiplefileupload.php?username=".$username."-".$ro->selectNow("patientCharges","registrationNo","itemNo",$itemNo)."-".$itemNo."' style='text-decoration:none; color:red;'><font size=2>Upload Result</font></a></td>";
-echo "</tr>";
-}else { }
-
-
-
 echo "</table>
 <Br><Br>
 <input type=submit value='Proceed' style='border:1px solid #ff0000; background-color:transparent;'>
