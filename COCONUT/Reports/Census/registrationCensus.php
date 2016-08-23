@@ -32,6 +32,7 @@ $toRegistered = $toYear."-".$toMonth."-".$toDay;
 ?>
 
 <script src="../../js/jquery-2.1.4.min.js"></script>
+<script src="../../js/open.js"></script>
 <script>
 	$(document).ready(function(){
 
@@ -39,13 +40,17 @@ $toRegistered = $toYear."-".$toMonth."-".$toDay;
 		var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
 		if( isChrome == true ) {
-			$("#export").click(function(){
+			$("#export").click(function(result){
 				var data='<table>'+$("#census").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
 				var reportName = '<? echo 'Census '.$type.' ['.$ro4->formatDate($fromRegistered).' to '.$ro4->formatDate($toRegistered).' ]' ?>';
-
+				/*
 				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
+				*/
+				
+				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+data+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
+				
 				 $('#ReportTableData').submit().remove();
-				 return false;				
+				 return false;	
 			});	
 		}else {
 			$("#export").hide();
@@ -61,6 +66,12 @@ echo "
 #rowz:hover {
 background-color:yellow;
 }
+
+.header {
+	background-color:#3b5998;
+	color:#ffffff;
+}
+
 </style>
 ";
 
@@ -94,16 +105,16 @@ echo "<a href='#' id='export'><img src='../../../export-to-excel/excel-icon.png'
 echo "<br>";
 echo "<Table id='census' border=1 cellpadding=0 rules=all cellspacing=0 >";
 echo "<tr>";
-echo "<th bgcolor='#3b5998'><font color='white'>Name</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Age</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Gender</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Service</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>PHIC</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Insurance</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Attending</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Registered</font></th>";
-echo "<th bgcolor='#3b5998'><font color='white'>Registered By</font></th>";
-echo "<th bgcolor='#3b5998'></th>";
+echo "<th class='header'>Name</th>";
+echo "<th class='header'>Age</th>";
+echo "<th class='header'>Gender</th>";
+echo "<th class='header'>Service</th>";
+echo "<th class='header'>PHIC</th>";
+echo "<th class='header'>Insurance</th>";
+echo "<th class='header'>Attending</th>";
+echo "<th class='header'>Registered</th>";
+echo "<th class='header'>Registered By</th>";
+echo "<th class='header'></th>";
 /*
 $ro->coconutTableHeader("Name");
 $ro->coconutTableHeader("Age");
