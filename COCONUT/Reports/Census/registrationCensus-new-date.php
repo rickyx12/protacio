@@ -15,6 +15,39 @@ echo "<center>";
 //echo "<br><font size=3>".$ro->getReportInformation("hmoSOA_address")."</font>";
 //echo "<Br><font size=3>($branch)</font>";
 
+?>
+
+<script src="../../js/jquery-2.1.4.min.js"></script>
+<script src="../../js/open.js"></script>
+<script>
+	$(document).ready(function(){
+
+
+		var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+		if( isChrome == true ) {
+			$("#export").click(function(result){
+				var data='<table>'+$("#census").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+				var reportName = '<? echo 'Census '.$type.' ['.$ro4->formatDate($fromRegistered).' to '.$ro4->formatDate($toRegistered).' ]' ?>';
+				/*
+				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
+				*/
+				
+				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+data+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
+				
+				 $('#ReportTableData').submit().remove();
+				 return false;	
+			});	
+		}else {
+			$("#export").hide();
+		}
+
+
+	});
+</script>
+
+<?php
+
 echo "<center><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/mendero.png' width='60%' height='20%'></center>";
 
 echo "<font size=5>Registration Census For $type</font>";
@@ -28,6 +61,12 @@ echo "
 #rowz:hover {
 background-color:yellow;
 }
+
+.header {
+	background-color:#3b5998;
+	color:#ffffff;
+}
+
 </style>
 ";
 
@@ -59,58 +98,56 @@ $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT upper(pr.lastName) as
 
 }
 
-
+echo "<a href='#' id='export'><img src='../../../export-to-excel/excel-icon.png'></a>";
 echo "<br>";
-$ro->coconutTableStart();
-$ro->coconutTableRowStart();
-$ro->coconutTableHeader("Name");
-$ro->coconutTableHeader("Age");
-$ro->coconutTableHeader("Gender");
-$ro->coconutTableHeader("Service");
-$ro->coconutTableHeader("PHIC");
-$ro->coconutTableHeader("Insurance");
-$ro->coconutTableHeader("Attending");
-$ro->coconutTableHeader("Registered");
-$ro->coconutTableHeader("Registered By");
-//$ro->coconutTableHeader("");
-$ro->coconutTableRowStop();
+echo "<Table id='census' border=1 cellpadding=0 rules=all cellspacing=0 >";
+echo "<tr>";
+	echo "<th class='header'>Name</th>";
+	echo "<th class='header'>Age</th>";
+	echo "<th class='header'>Gender</th>";
+	echo "<th class='header'>Service</th>";
+	echo "<th class='header'>PHIC</th>";
+	echo "<th class='header'>Insurance</th>";
+	echo "<th class='header'>Attending</th>";
+	echo "<th class='header'>Registered</th>";
+	echo "<th class='header'>Registered By</th>";
+echo "</tr>";
 while($row = mysqli_fetch_array($result))
   {
-if($row['firstName']=="N/A"){
-}
-else{
-echo "<Tr id='rowz'>";
-$ro->censusRegistered_patient += 1;
-$ro->coconutTableData($row['lastName']." ".$row['firstName']." ".$row['middleName']);
-$ro->coconutTableData($row['Age']);
-$ro->coconutTableData($row['Gender']);
-$ro->coconutTableData($ro->selectNow("Doctors","Specialization1","Name",$ro->getAttendingDoc($row['registrationNo'],"ATTENDING")));
+	if($row['firstName']=="N/A"){
+	
+	}
+	else{
+		echo "<Tr id='rowz'>";
+			$ro->censusRegistered_patient += 1;
+			echo "<td>".$row['lastName']." ".$row['firstName']." ".$row['middleName']."</td>";
+			echo "<td>".$row['Age']."</td>";
+			echo "<td>".$row['Gender']."</td>";
+			echo "<td>".$ro->selectNow("Doctors","Specialization1","Name",$ro->getAttendingDoc($row['registrationNo'],"ATTENDING"))."</td>";
+			if( $row['phic'] == "YES" ) {
+				echo "<td>NH</td>";
+			}else {
+				echo "<td>NN</td>";
+			}
+			echo "<td>".$row['Company']."</td>";
+			echo "<td>".$ro->getAttendingDoc($row['registrationNo'],"ATTENDING")."</td>";
+			echo "<td>".$row['timeRegistered']."@".$row['dateRegistered']."</td>";
+			echo "<td>".$row['registeredBy']."</td>";
+		echo "</tr>";
 
-if( $row['phic'] == "YES" ) {
-$ro->coconutTableData("NH");
-}else {
-$ro->coconutTableData("NN");
+	  }
 }
-$ro->coconutTableData($row['Company']);
-$ro->coconutTableData($ro->getAttendingDoc($row['registrationNo'],"ATTENDING"));
-$ro->coconutTableData($row['timeRegistered']."@".$row['dateRegistered']);
-$ro->coconutTableData($row['registeredBy']);
-//$ro->coconutTableData("<a href='http://".$ro->getMyUrl()."/COCONUT/Reports/Census/registrationCensusDelete.php?registrationNo=$row[registrationNo]&fromMonth=$fromMonth&fromDay=$fromDay&fromYear=$fromYear&toMonth=$toMonth&toDay=$toDay&toYear=$toYear&type=$type&dept=$dept'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/delete.jpeg'></a>");
-echo "</tr>";
-
-  }
-}
-$ro->coconutTableData("<b>TOTAL PATIENT</b>");
-$ro->coconutTableData("<b>".$ro->censusRegistered_patient."</b>");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableData("");
-$ro->coconutTableStop();
-
+	echo "<tr>";
+		echo "<td>Total Patient</td>";
+		echo "<td>".$ro->censusRegistered_patient."</td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+	echo "</tr>";
 
 ?>
