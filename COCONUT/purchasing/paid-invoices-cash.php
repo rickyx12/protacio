@@ -34,7 +34,12 @@
 						var data='<table>'+$("#paidInvoice").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
 						var reportName = '<? echo 'Cash Paid Invoice  ['.$ro4->formatDate($date1).' to '.$ro4->formatDate($date2).']' ?>';	
 
+						/*
 						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
+						*/
+
+						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+data+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
+						
 						$('#ReportTableData').submit().remove();
 						return false;	
 					
