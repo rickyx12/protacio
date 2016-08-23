@@ -32,11 +32,15 @@ $ro4->inventory_list("supplies");
 						var data='<table>'+$("#supplies").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
 						var reportName = '<? echo 'Supplies Cost ['.$ro4->formatDate(date('Y-m-d')).']' ?>';
 
+						/*
 						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><input type='text' name='tableData' value='"+data+"' ><input type='text' name='reportName' value='"+reportName+"'></form>");
+						*/
+
+						$('body').prepend("<form method='post' action='../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+data+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");						
 						 $('#ReportTableData').submit().remove();
+
 						 return false;	
 						 		
-
 						 /*
 						$("#supplies").table2excel({
 						    name: "Supplies",
