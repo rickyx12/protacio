@@ -58,6 +58,7 @@
 						content: $('<span>Loading....</span>'),
 						position: 'right',
 						theme: 'tooltipster-noir',
+						interactive:true,
 						contentAsHTML:true,
 						functionBefore:function(origin,continueTooltip) {
 							continueTooltip();
