@@ -97,6 +97,26 @@
 
 				<? } ?>
 
+				var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+				console.log(isChrome);
+
+				if( isChrome == true ) {
+					$("#export").click(function() {
+						
+						var data='<table>'+$("#charges").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+						var reportName = '<? echo $title.' Census ['.$ro4->formatDate($date1).' - '.$ro4->formatDate($date2).']' ?>';
+
+						$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+data+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
+
+						 $('#ReportTableData').submit().remove();
+						 return false;	
+						 
+					});
+				}else {
+					$("#export").hide();
+				}
+
+
 			});
 		</script>
 
@@ -104,10 +124,10 @@
 	<body>
 		<div class="container">
 			<h3>Charges Census</h3>
-			<h5>Per Examination</h5>
+			<h5>Per Examination<a href="#" id="export"><img src="../../../export-to-excel/excel-icon.png"></a></h5>
 			<h5><? echo $ro4->formatDate($date1)." - ".$ro4->formatDate($date2) ?></h5>
 			<div class="col-md-6">
-				<table class="table table-hover">
+				<table id="charges" class="table table-hover">
 					<thead>
 						<tr>
 							<th>Description</th>
