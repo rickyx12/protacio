@@ -26,6 +26,7 @@
 				<thead>
 					<tr>
 						<th>Patient</th>
+						<th>Total</th>
 						<th>Time</th>
 						<th>Date</th>
 					</tr>
@@ -40,6 +41,13 @@
 									$lastName = $ro->selectNow("patientRecord","lastName","patientNo",$patientNo);
 									$firstName = $ro->selectNow("patientRecord","firstName","patientNo",$patientNo);
 									echo $registrationNo." - ".strtoupper($lastName).", ".strtoupper($firstName);
+								?>
+							</td>
+							<td>
+								<?
+									$total = $ro->selectNow("patientCharges","total","itemNo",$itemNo);
+									($total > 0) ? $x = number_format($total,2) : $x = "";
+									echo $x;
 								?>
 							</td>
 							<td>
