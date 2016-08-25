@@ -1,14 +1,20 @@
 <?
-	
+	include "../../../myDatabase.php";
 	include "../../../myDatabase4.php";
 
 	$chargesCode = $_POST['chargesCode'];
 	$date1 = $_POST['date1'];
 	$date2 = $_POST['date2'];
 
+	$ro = new database();
 	$ro4 = new database4();
 
-	echo $ro4->count_charges($chargesCode,$date1,$date2,"OPD");
-	
+	$price = $ro->selectNow("availableCharges","OPD","chargesCode",$chargesCode);
+	$census = $ro4->count_charges($chargesCode,$date1,$date2,"OPD");
+	if( $census > 0 ) {
+		echo "(".$census.") ".number_format(($census * $price),2);
+	}else {
+
+	}
 
 ?>
