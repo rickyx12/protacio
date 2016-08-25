@@ -38,64 +38,169 @@
 						};
 
 						$("#opd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
-						$("#ipd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+						$("#hmo<? echo $chargesCode ?>").html("<p>Waiting OPD</p>");
+						$("#specialRates_opd<? echo $chargesCode ?>").html("<p>Waiting HMO</p>");
+						$("#ipd<? echo $chargesCode ?>").html("<p>Waiting Spec.Rates</p>");
+						$("#specialRates_ipd<? echo $chargesCode ?>").html("<p>Waiting IPD</p>");
+						$("#total<? echo $chargesCode ?>").html("<p>Waiting All</p>");
 
 						$.post("charges-census-count-opd.php",data,function(result){
 							$("#opd<? echo $chargesCode ?>").html(result);
-							$("#opd<? echo $chargesCode ?>").removeAttr("id");
+							$("#opd<? echo $chargesCode ?>").attr("id","opd1<? echo $chargesCode ?>");
+							$("#hmo<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+
+									$.post("charges-census-count-hmo.php",data,function(result){
+										$("#hmo<? echo $chargesCode ?>").html(result);
+										$("#hmo<? echo $chargesCode ?>").attr("id","hmo1<? echo $chargesCode ?>");
+										$("#specialRates_opd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+								
+										$.post("charges-census-count-specialRates-opd.php",data,function(result){
+											$("#specialRates_opd<? echo $chargesCode ?>").html(result);
+											$("#specialRates_opd<? echo $chargesCode ?>").attr("id","specialRates_opd1<? echo $chargesCode ?>");
+											$("#ipd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+										
+											$.post("charges-census-count-ipd.php",data,function(result){
+												$("#ipd<? echo $chargesCode ?>").html(result);
+												$("#ipd<? echo $chargesCode ?>").attr("id","ipd1<? echo $chargesCode ?>");
+												$("#specialRates_ipd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+
+												$.post("charges-census-count-specialRates-ipd.php",data,function(result){
+													$("#specialRates_ipd<? echo $chargesCode ?>").html(result);
+													$("#specialRates_ipd<? echo $chargesCode ?>").attr("id","specialRates_ipd1<? echo $chargesCode ?>");
+													$("#total<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+									
+													$.post("charges-census-count-total.php",data,function(result){
+														$("#total<? echo $chargesCode ?>").html(result);
+
+														//$("#opd<? echo $chargesCode ?>").attr("id","opd1<? echo $chargesCode ?>");
+														//$("#hmo<? echo $chargesCode ?>").attr("id","hmo1<? echo $chargesCode ?>");
+														//$("#specialRates_opd<? echo $chargesCode ?>").attr("id","specialRates_opd1<? echo $chargesCode ?>");
+														//$("#ipd<? echo $chargesCode ?>").attr("id","ipd1<? echo $chargesCode ?>");
+														//$("#specialRates_ipd<? echo $chargesCode ?>").attr("id","specialRates_ipd1<? echo $chargesCode ?>");
+													
+														$("#total<? echo $chargesCode ?>").removeAttr("id");
+
+														$("#opd1<? echo $chargesCode ?>").tooltipster({
+															content: $('<span>Loading....</span>'),
+															position: 'right',
+															theme: 'tooltipster-noir',
+															interactive:true,
+															repositionOnScroll:true,
+															contentAsHTML:true,
+															functionBefore:function(origin,continueTooltip) {
+																continueTooltip();
+																if( origin.data('ajax') !== 'cached' ){ 
+																	$.ajax({
+																		type:'POST',
+																		url:'charges-census-details-opd.php',
+																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		success:function(data) {
+																			origin.tooltipster('content',data).data('ajax','cached');
+																		}
+																	});
+																}
+															}									
+														});
+
+										
+														$("#hmo1<? echo $chargesCode ?>").tooltipster({
+															content: $('<span>Loading....</span>'),
+															position: 'right',
+															theme: 'tooltipster-noir',
+															interactive:true,
+															contentAsHTML:true,
+															functionBefore:function(origin,continueTooltip) {
+																continueTooltip();
+																if( origin.data('ajax') !== 'cached' ){ 
+																	$.ajax({
+																		type:'POST',
+																		url:'charges-census-details-hmo.php',
+																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		success:function(data) {
+																			origin.tooltipster('content',data).data('ajax','cached');
+																		}
+																	});
+																}
+															}									
+														});
+
+
+														$("#specialRates_opd1<? echo $chargesCode ?>").tooltipster({
+															content: $('<span>Loading....</span>'),
+															position: 'right',
+															theme: 'tooltipster-noir',
+															interactive:true,
+															contentAsHTML:true,
+															functionBefore:function(origin,continueTooltip) {
+																continueTooltip();
+																if( origin.data('ajax') !== 'cached' ){ 
+																	$.ajax({
+																		type:'POST',
+																		url:'charges-census-details-specialRates-opd.php',
+																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		success:function(data) {
+																			origin.tooltipster('content',data).data('ajax','cached');
+																		}
+																	});
+																}
+															}									
+														});
+
+
+														$("#ipd1<? echo $chargesCode ?>").tooltipster({
+															content: $('<span>Loading....</span>'),
+															position: 'right',
+															theme: 'tooltipster-noir',
+															interactive:true,
+															contentAsHTML:true,
+															functionBefore:function(origin,continueTooltip) {
+																continueTooltip();
+																if( origin.data('ajax') !== 'cached' ){ 
+																	$.ajax({
+																		type:'POST',
+																		url:'charges-census-details-ipd.php',
+																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		success:function(data) {
+																			origin.tooltipster('content',data).data('ajax','cached');
+																		}
+																	});
+																}
+															}									
+														});
+
+														$("#specialRates_ipd1<? echo $chargesCode ?>").tooltipster({
+															content: $('<span>Loading....</span>'),
+															position: 'right',
+															theme: 'tooltipster-noir',
+															interactive:true,
+															contentAsHTML:true,
+															functionBefore:function(origin,continueTooltip) {
+																continueTooltip();
+																if( origin.data('ajax') !== 'cached' ){ 
+																	$.ajax({
+																		type:'POST',
+																		url:'charges-census-details-specialRates-ipd.php',
+																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		success:function(data) {
+																			origin.tooltipster('content',data).data('ajax','cached');
+																		}
+																	});
+																}
+															}									
+														});
+
+													});												
+
+												});												
+
+											});											
+
+										});		
+													
+								});								
 						});
 
-						$.post("charges-census-count-ipd.php",data,function(result){
-							$("#ipd<? echo $chargesCode ?>").html(result);
-							$("#ipd<? echo $chargesCode ?>").removeAttr("id");
-						});
-
-
 					});
-
-
-					$("#opd<? echo $chargesCode ?>").tooltipster({
-						content: $('<span>Loading....</span>'),
-						position: 'right',
-						theme: 'tooltipster-noir',
-						interactive:true,
-						contentAsHTML:true,
-						functionBefore:function(origin,continueTooltip) {
-							continueTooltip();
-							if( origin.data('ajax') !== 'cached' ){ 
-								$.ajax({
-									type:'POST',
-									url:'charges-census-details-opd.php',
-									data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
-									success:function(data) {
-										origin.tooltipster('content',data).data('ajax','cached');
-									}
-								});
-							}
-						}									
-					});
-
-					$("#ipd<? echo $chargesCode ?>").tooltipster({
-						content: $('<span>Loading....</span>'),
-						position: 'right',
-						theme: 'tooltipster-noir',
-						contentAsHTML:true,
-						functionBefore:function(origin,continueTooltip) {
-							continueTooltip();
-							if( origin.data('ajax') !== 'cached' ){ 
-								$.ajax({
-									type:'POST',
-									url:'charges-census-details-ipd.php',
-									data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
-									success:function(data) {
-										origin.tooltipster('content',data).data('ajax','cached');
-									}
-								});
-							}
-						}									
-					});
-
-
 				<? } ?>
 
 				var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
@@ -127,13 +232,17 @@
 			<h3>Charges Census</h3>
 			<h5>Per Examination<a href="#" id="export"><img src="../../../export-to-excel/excel-icon.png"></a></h5>
 			<h5><? echo $ro4->formatDate($date1)." - ".$ro4->formatDate($date2) ?></h5>
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<table id="charges" class="table table-hover">
 					<thead>
 						<tr>
 							<th>Description</th>
-							<th>Outpatient</th>
-							<th>Inpatient</th>
+							<th>OPD (Cash)</th>
+							<th>OPD (HMO)</th>
+							<th>OPD (Spec.Rates)</th>
+							<th>IPD</th>
+							<th>IPD (Spec.Rates)</th>
+							<th>Total</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -153,7 +262,27 @@
 										</span>
 									</td>
 									<td>
+										<span id="hmo<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span id="specialRates_opd<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
 										<span id="ipd<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span id="specialRates_ipd<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span id="total<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
