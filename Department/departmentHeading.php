@@ -125,16 +125,22 @@ echo  ' <li>
 
 //echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/currentPatient/patientInterface_walkIn.php?username='.$username.'&completeName=" target="_blank">Search Walk In</a></li>';
 
-echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/systemBiller/generatorCharge/generatorShift.php?username='.$username.'" target="departmentX">Generator</a></li>';
+//echo '<li><a href="http://'.$ro->getMyUrl().'/COCONUT/systemBiller/generatorCharge/generatorShift.php?username='.$username.'" target="departmentX">Generator</a></li>';
 
-if( $module == "RADIOLOGY" ) {
+if( $module == "XRAY" ) {
 
+                /*
                  echo  ' <li><a href="http://'.$ro->getMyUrl().'/Maintenance/addCharges.php?module=RADIOLOGY&username='.$username.'" target="departmentX">Add Radiology Charges</a></li>';
 
                  echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/charges.php?username='.$username.'&title=RADIOLOGY&show=All" target="departmentX">View Radiology Charges</a></li>';
+                */
 
-                 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Results/Radiology/addHospital.php?username='.$username.'" target="departmentX">Add Hospital Heading</a></li>';
+echo  ' <li><a href="../COCONUT/radiology/result-list-all.php" target="departmentX">View Result</a></li>'; 
+echo  ' <li><a href="../COCONUT/radiology/result-list.php" target="departmentX">Search Result</a></li>';                
 
+                 //echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Results/Radiology/addHospital.php?username='.$username.'" target="departmentX">Add Hospital Heading</a></li>';
+
+/*
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Results/Radiology/addRadioTemplate.php?username='.$username.'" target="departmentX">Add Report Template</a></li>';
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Results/Radiology/radioHeadingMasterfile.php?username='.$username.'" target="departmentX">View Hospital Heading</a></li>';
@@ -142,16 +148,17 @@ echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Results/Radiology/radioH
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Results/Radiology/radioReportTemplateMasterfile.php?username='.$username.'" target="departmentX">View Report Template</a></li>';
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?module=REGISTRATION&from='.$from.'" target="_blank">Registration</a></li>';
-
+*/
 
 }else { }
 
 //echo  ' <li><a href="http://'.$ro->getMyUrl().'/Registration/specialRegistration/unknownPatient.php?username='.$username.'&from='.$module.'" target="_blank">Walk-in</a></li>';
 
+/*
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/accounting/voucher/addVoucher.php?username='.$username.'" target="departmentX">Expenses</a></li>';
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.php?username='.$username.'" target="departmentX">OPD</a></li>';
-
+*/
 }else if( $module == "PHARMACY" ) {
 
 echo ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/Department/selectShift.php?module='.$module.'&username='.$username.'&branch='.$branch.'>" target="departmentX" >Diagnostics</a></li>';
@@ -216,19 +223,14 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/masterfile/charges.php?us
 
 echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/maintenance/searchCharges.php?username='.$username.'&title=LABORATORY&show=search" target="departmentX" >Search Examination</a></li>';
 
-echo ' <li><a href="http://'.$ro->getMyUrl().'/Maintenance/addCharges.php?username='.$username.'&module=LABORATORY" target="departmentX" >Add Examination</a></li>';
+echo ' <li><a href="../COCONUT/Laboratory/add-charges-laboratory.php" target="departmentX" >Add Examination</a></li>';
 
 echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Laboratory/resultList/addResultForm.php" target="departmentX" >Add Laboratory Template</a></li>';
 
 echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Laboratory/resultList/resultFormMasterfile.php" target="departmentX" >Edit Laboratory Template</a></li>';
 
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?module=REGISTRATION&from='.$module.'" target="_blank">Registration</a></li>';
-
-echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Reports/Census/selectShift_registered.php?username='.$username.'&switch=2" target="_blank">Registration Census</a></li>';
-
-echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Laboratory/addReagents.php?username='.$username.'" target="departmentX" >Add Reagents</a></li>';
-
-echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Laboratory/viewReagents.php?username='.$username.'" target="departmentX" >View Reagents</a></li>';
+echo ' <li><a href="../COCONUT/Laboratory/lab-result-list.php" target="departmentX" >View Results</a></li>';
+echo ' <li><a href="../COCONUT/Laboratory/lab-result-list-search.php" target="departmentX" >Search Results</a></li>';
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.php?username='.$username.'" target="departmentX">OPD</a></li>';
 
