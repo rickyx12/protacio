@@ -42,9 +42,15 @@ FUNCTION ENCRYPT_DECRYPT($Str_Message) {
         //$str_encrypted_message .= chr((ord(substr($str_message, $position, 1))) ^ ((255+(($len_str_message+$position)+1)) % 255));
     }
     RETURN $Str_Encrypted_Message;
-} 
+}
+
+$patientNo = $ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo);
+$lastName = $ro->selectNow("patientRecord","lastName","patientNo",$patientNo);
+$firstName = $ro->selectNow("patientRecord","firstName","patientNo",$patientNo);
+$patientName = $lastName.", ".$firstName;
+
 $ro->addLaboratoryResultChecker($registrationNo,$itemNo);
-$ro->addLaboratoryResultInPatient($registrationNo,$itemNo,$chargesCode,$username,$date,ENCRYPT_DECRYPT($result),$ro->getSynapseTime(),$remarks,$morphology);
+$ro->addLaboratoryResultInPatient($registrationNo,$itemNo,$chargesCode,$username,$date,ENCRYPT_DECRYPT($result),$ro->getSynapseTime(),$remarks,$morphology,$patientName);
 //$ro->useReagents($itemNo,$registrationNo,$reagents1,date("Y-m-d"));
 //$ro->useReagents($itemNo,$registrationNo,$reagents2,date("Y-m-d"));
 //$ro->useReagents($itemNo,$registrationNo,$reagents3,date("Y-m-d"));
@@ -52,6 +58,6 @@ $ro->addLaboratoryResultInPatient($registrationNo,$itemNo,$chargesCode,$username
 //$ro->useReagents($itemNo,$registrationNo,$reagents5,date("Y-m-d"));
 
 
-//$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/Laboratory/resultList/resultForm_output.php?registrationNo=$registrationNo&itemNo=$itemNo");
+$ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/Laboratory/resultList/resultForm_output.php?registrationNo=$registrationNo&itemNo=$itemNo");
 
 ?>
