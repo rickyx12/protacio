@@ -2293,7 +2293,7 @@ echo "</script>";
 }
 
 
-public function addLaboratoryResultInPatient($registrationNo,$itemNo,$chargesCode,$medtech,$date,$result,$time,$remarks,$morphology) {
+public function addLaboratoryResultInPatient($registrationNo,$itemNo,$chargesCode,$medtech,$date,$result,$time,$remarks,$morphology,$patientName) {
 
 $con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
 if (!$con)
@@ -2303,9 +2303,9 @@ if (!$con)
 
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
-$sql="INSERT INTO labSavedResult (registrationNo,itemNo,chargesCode,medtech,date,result,time,remarks,morphology)
+$sql="INSERT INTO labSavedResult (registrationNo,itemNo,chargesCode,medtech,date,result,time,remarks,morphology,patientName)
 VALUES
-('$registrationNo','$itemNo','$chargesCode','$medtech','$date','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $result) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$time','$remarks','$morphology')";
+('$registrationNo','$itemNo','$chargesCode','$medtech','$date','".((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $result) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."','$time','$remarks','$morphology','$patientName')";
 
 if (!mysqli_query($con, $sql))
   {
