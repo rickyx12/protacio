@@ -1510,10 +1510,26 @@ public function list_charges($title,$date1,$date2) {
 //bilangin kung ilan procedure/examination ung ngwa
 public function count_charges($chargesCode,$date1,$date2,$type) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = '$type' and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+
+	if( $type == "IPD" ) {	
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if($type == "OPD") {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company < 1 and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if($type == "HMO") {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if($type == "specialRates_opd") {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if($type == "specialRates_ipd") {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}
+	else {
+
+	}
+
 
 	return mysqli_num_rows($result);
 }
+
 
 private $count_charges_details_itemNo;
 
@@ -1522,8 +1538,22 @@ public function count_charges_details_itemNo() {
 }
 
 public function count_charges_details($chargesCode,$date1,$date2,$type) {
-	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = '$type' and pc.chargesCode = '$chargesCode' and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);
+
+	if( $type == "IPD" ) {      
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if( $type == "OPD" ) {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company < 1 and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if( $type == "HMO" ) {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if( $type == "specialRates_opd" ) {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+	}else if( $type == "specialRates_ipd" ) {
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error());
+	}
+	else {
+
+	}
 
 	while( $row = mysqli_fetch_array($result) ) {
 		$this->count_charges_details_itemNo[] = $row['itemNo'];
@@ -1581,6 +1611,88 @@ public function charges_list($title) {
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->charges_list_chargesCode[] = $row['chargesCode'];
+	}
+}
+
+public function uploadedFilesInformation($fileName,$fileUrl,$fileOwner,$itemNo,$registrationNo,$patientName) {
+
+/* make your connection */
+$sql = new mysqli($this->host,$this->username,$this->password,$this->database);
+ 
+/* we will just create an insert query here, and use it,
+normally this would be done by form submission or other means */
+$query = "insert into uploadedFiles(fileName,fileUrl,fileOwner,dateUploaded,timeUploaded,itemNo,registrationNo,patientName) values('$fileName','$fileUrl','$fileOwner','".date("Y-m-d")."','".date("H:i:s")."','$itemNo','$registrationNo','$patientName')";
+ 
+if ( $sql->query($query) ) {
+   echo "A new entry has been added with the `id`";
+} else {
+    echo "There was a problem:<br />$query<br />{$sql->error}";
+}
+ 
+
+/* close our connection */
+$sql->close();
+}
+
+
+private $search_uploaded_files_fileNo;
+
+public function search_uploaded_files_fileNo() {
+	return $this->search_uploaded_files_fileNo;
+}
+
+public function search_uploaded_files($patientName) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT fileNo FROM uploadedFiles WHERE patientName like '$patientName%' order by patientName,fileName ASC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->search_uploaded_files_fileNo[] = $row['fileNo'];
+	}
+}
+
+private $list_uploaded_files_fileNo;
+
+public function list_uploaded_files_fileNo() {
+	return $this->list_uploaded_files_fileNo;
+}
+
+public function list_uploaded_files($date1,$date2) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT fileNo FROM uploadedFiles WHERE (dateUploaded BETWEEN '$date1' and '$date2') order by dateUploaded,patientName,fileName ASC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_uploaded_files_fileNo[] = $row['fileNo'];
+	}
+}
+
+
+private $list_laboratory_result_savedNo;
+
+public function list_laboratory_result_savedNo() {
+	return $this->list_laboratory_result_savedNo;
+}
+
+public function list_laboratory_result($date1,$date2) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT savedNo FROM labSavedResult WHERE (date BETWEEN '$date1' and '$date2') and status = '' order by date ASC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->list_laboratory_result_savedNo[] = $row['savedNo'];
+	}
+}
+
+private $search_laboratory_result_savedNo;
+
+public function search_laboratory_result_savedNo() {
+	return $this->search_laboratory_result_savedNo;
+}
+
+public function search_laboratory_result($pxName) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT savedNo FROM labSavedResult WHERE patientName like '$pxName%' and patientName != '' and status = '' order by date ASC ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->search_laboratory_result_savedNo[] = $row['savedNo'];
 	}
 }
 
