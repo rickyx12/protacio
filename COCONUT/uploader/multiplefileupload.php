@@ -2,14 +2,17 @@
 include("../../myDatabase.php");
 $ro = new database();
 $username = $_GET['username'];
+$registrationNo = $_GET['registrationNo'];
+$itemNo = $_GET['itemNo'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<link href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/uploader/accesories/uploadfile.css" rel="stylesheet">
-<script src="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/uploader/accesories/jquery.min.js"></script>
-<script src="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/uploader/accesories/jquery.uploadfile.min.js"></script>
+<script src="../js/jquery-2.1.4.min.js"></script>
+<script src="accesories/jquery.uploadfile.min.js"></script>
+<link href="accesories/uploadfile.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,16 +24,25 @@ $username = $_GET['username'];
 $(document).ready(function()
 {
 
+var data = {
+	username:"<? echo $username ?>",
+	registrationNo: "<? echo $registrationNo ?>",
+	itemNo: "<? echo $itemNo ?>"
+};
+
 var settings = {
 	url: "upload.php",
 	method: "POST",
-	formData: {"username":"<?php echo $username; ?>"},
+	multiple:false,
+	dragDrop:false,
+	formData:data,
 	allowedTypes:"docx",
+	maxFileCount:1,
 	fileName: "myfile",
-	multiple: true,
 	onSuccess:function(files,data,xhr)
 	{
 		$("#status").html("<font color='green'>Upload is success</font>");
+		$(".ajax-file-upload").hide();
 		
 	},
 	onError: function(files,status,errMsg)
