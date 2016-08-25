@@ -24,7 +24,8 @@ $ro->coconutFormStop();
 			CKEDITOR.replace( 'formTemplate',
 	{
 		enterMode : CKEDITOR.ENTER_BR,
-		skin : 'office2003'
+		skin : 'office2003',
+		extraPlugins:'autogrow'
 	});
 		
 

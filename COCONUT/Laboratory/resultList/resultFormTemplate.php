@@ -77,7 +77,8 @@ echo "<textarea id='result' name='result'>".$ro->selectNow("labResultList","temp
 			CKEDITOR.replace( 'result',
 	{
 		enterMode : CKEDITOR.ENTER_BR,
-		skin : 'office2003'
+		skin : 'office2003',
+		extraPlugins:'autogrow'
 	});
 		
 
