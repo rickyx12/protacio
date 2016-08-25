@@ -2395,17 +2395,18 @@ echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT
 
 
 if( $this->checkIfRadResultExist($row['itemNo']) > 0 ) {
-echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReport_output.php?itemNo=$row[itemNo]&registrationNo=$registrationNo&description=$row[description]' target='_blank'><font size=1 color=red>&nbsp;Result Available</font></a>&nbsp;";
+echo "<br><a href='../../".$this->selectNow("uploadedFiles","fileUrl","itemNo",$row['itemNo'])."' download='".$this->selectNow("uploadedFiles","fileName","itemNo",$row['itemNo'])."'><font size=1 color=red>&nbsp;Download Result</font></a>&nbsp;";
 }else { 
 echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReportSettings.php?description=$row[description]&registrationNo=$registrationNo&itemNo=$row[itemNo]&branch=Paranaque' target='_self'><font size=1 color=blue>&nbsp;[Add Result]</font></a>&nbsp;";
 }
 
+/*
 if( $this->checkDicom($row['itemNo']) > 0 ) {
 echo "<br><a href='http://".$this->getMyUrl()."".$this->selectNow("uploadedFiles","fileUrl","itemNo",$row['itemNo'])."' target='_blank'><font size=1 color=red>&nbsp;Image Available</font></a>&nbsp;";
 }else {
 echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/uploader/multiplefileupload.php?username=".$username."-".$this->selectNow("patientCharges","registrationNo","itemNo",$row['itemNo'])."-".$row['itemNo']."' target='_self'><font size=1 color=blue>&nbsp;[Upload Image]</font></a>&nbsp;";
 }
-
+*/
 echo "</td>";
 }else if($this->checkIfSoapExist($row['itemNo']) > 0 && $row['title'] == "PROFESSIONAL FEE" ) {
 echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT/patientProfile/editCharges.php?itemNo=$row[itemNo]&username=$username&show=$show&desc=$desc'>".$row['description']."</a><br>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Doctor/doctorModule/soapView.php?itemNo=$row[itemNo]&registrationNo=$row[registrationNo]&username=$username'>(<font color=red size=1>S.O.A.P</font>)</font></a>&nbsp;</td>";
@@ -2573,10 +2574,9 @@ $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.type,rd.dateU
 
 }else if( $module =="LABORATORY" || $module == "BLOODBANK" ) {
 $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (pc.title='LABORATORY' or pc.title = 'BLOODBANK') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
-}else if($module =="RADIOLOGY") {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and (pc.title='ULTRASOUND' or pc.title = 'XRAY') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
+}else if($module =="XRAY") {
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.title IN ('XRAY','ULTRASOUND') and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and pc.status not like 'DELETED_%%%%%' group by pc.itemNo order by pc.description asc ");
 }
-
 else {
 $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.*,rd.* FROM patientCharges pc,registrationDetails rd where rd.registrationNo = '$registrationNo' and rd.registrationNo = pc.registrationNo and pc.title='$title' and pc.dateCharge='$selectedDate' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.departmentStatus not like 'remittedBy%%%%%' and status not like 'DELETED_%%%%%%%' group by pc.itemNo order by pc.description asc ");
 }
@@ -2713,15 +2713,19 @@ echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT
 echo "<td>&nbsp;<font class='data'><a href='#'>".$row['description']."</a>";
 
 if( $this->checkIfRadResultExist($row['itemNo']) > 0 ) {
-echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReport_output.php?itemNo=$row[itemNo]&registrationNo=$registrationNo&description=$row[description]' target='_blank'><font size=1 color=red>&nbsp;Result Available</font></a>&nbsp;";
+echo "<br><a href='../".$this->selectNow("uploadedFiles","fileUrl","itemNo",$row['itemNo'])."' download='".$this->selectNow("uploadedFiles","fileName","itemNo",$row['itemNo'])."'><font size=1 color=red>&nbsp;Download Result</font></a>&nbsp;";
 }else { 
-echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReportSettings.php?description=$row[description]&registrationNo=$registrationNo&itemNo=$row[itemNo]&branch=Paranaque' target='_self'><font size=1 color=blue>&nbsp;[Add Result]</font></a>&nbsp;";
+echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/uploader/multiplefileupload.php?username=$username&registrationNo=$registrationNo&itemNo=$row[itemNo]' target='_self'><font size=1 color=blue>&nbsp;[Add Result]</font></a>&nbsp;";
 }
+
+/*
 if( $this->checkDicom($row['itemNo']) > 0 ) {
 echo "<br><a href='http://".$this->getMyUrl()."".$this->selectNow("uploadedFiles","fileUrl","itemNo",$row['itemNo'])."' target='_blank'><font size=1 color=red>&nbsp;Image Available</font></a>&nbsp;";
 }else {
 echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/uploader/multiplefileupload.php?username=".$username."-".$this->selectNow("patientCharges","registrationNo","itemNo",$row['itemNo'])."-".$row['itemNo']."' target='_self'><font size=1 color=blue>&nbsp;[Upload Image]</font></a>&nbsp;";
 }
+*/
+
 echo "</td>";
 
 
@@ -5553,15 +5557,16 @@ if (!$con)
 
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
-if($module=="PHARMACY" || $module =="CSR") {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.pxCount,rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.cashUnpaid) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.inventoryFrom='$module' and (pc.title='MEDICINE' or pc.title='SUPPLIES') and pc.departmentStatus not like 'dispensedBy%%%%' and (pc.status not like 'DELETED_%%%%%%') group by rd.registrationNo order by pr.lastName asc ");
 
-}else if( $module == "LABORATORY" ) {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.pxCount,rd.room,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.total) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and (pc.title='$module' or pc.title='BLOODBANK') and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%') group by rd.registrationNo order by pc.itemNo desc ");
+if( $module == "XRAY" ) {
+
+  $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.cashPaid,rd.pxCount,rd.room,pc.description,pc.itemNo,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.title IN ('XRAY','ULTRASOUND') and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%' and pc.status = 'UNPAID') group by rd.registrationNo order by pr.lastName asc ");
+
 }else {
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT rd.pxCount,rd.room,pc.description,pc.itemNo,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,sum(pc.total) as grandTotal,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.title='$module' and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%' and pc.status = 'UNPAID') group by rd.registrationNo order by pr.lastName asc ");
-}
 
+  $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pc.cashPaid,rd.pxCount,rd.room,pc.description,pc.itemNo,rd.type,rd.registrationNo,upper(pr.lastName) as lastName,upper(pr.firstName) as firstName,pc.chargeBy FROM patientRecord pr,registrationDetails rd,patientCharges pc WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and pc.dateCharge = '$dateSelected' and (pc.timeCharge between '$fromTimez' and '$toTimez') and pc.title='$module' and pc.departmentStatus not like 'remittedBy%%%%' and (pc.status not like 'DELETED_%%%%%%' and pc.status = 'UNPAID') group by rd.registrationNo order by pr.lastName asc ");
+
+  }
 
 while($row = mysqli_fetch_array($result))
   {
@@ -5570,21 +5575,19 @@ echo "<tr>";
 echo "<td>&nbsp;".$row['pxCount']."</td>";
 if($row['type'] == "IPD") {
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/Department/patientDepartmentProfile.php?registrationNo=$row[registrationNo]&module=$module&month=$m&day=$d&year=$y&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&module=$module&nod=' target='patientCharges'><font size='2' color=red>".$row['lastName']." ".$row['firstName']."</font><br><font size=1 color=blue>(".$row['room'].")</font></a>&nbsp;</td>";
+  
+  echo "<td></td>";
+
 }else {
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/Department/patientDepartmentProfile.php?registrationNo=$row[registrationNo]&module=$module&month=$m&day=$d&year=$y&fromTime_hour=$fromTime_hour&fromTime_minutes=$fromTime_minutes&fromTime_seconds=$fromTime_seconds&toTime_hour=$toTime_hour&toTime_minutes=$toTime_minutes&toTime_seconds=$toTime_seconds&username=$username&module=$module&nod=' target='patientCharges'><font size='2' color='blue'>".$row['lastName']." ".$row['firstName']."</font></a>&nbsp;</td>";
+
+  if( $row['cashPaid'] > 0 ) {
+  echo "<td>Paid</td>";
+  }else {
+    echo "<td></td>";
+  }
 }
 
-
-if($row['grandTotal'] > 0) {
-
-if( $module == "RADIOLOGY" ) {
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReportSettings.php?description=$row[description]&itemNo=$row[itemNo]&registrationNo=$row[registrationNo]&branch=Consolacion' target='patientCharges'>".number_format($row['grandTotal'],2)."</a>&nbsp;</td>";
-}else {
-echo "<td>&nbsp;".number_format($row['grandTotal'],2)."&nbsp;</td>";
-}
-}else {
-echo "<td>&nbsp;</td>";
-}
 echo "</tr>";
 
 }
@@ -17859,13 +17862,15 @@ $to = $year1."-".$month1."-".$day1;
 
 echo "
 <script src='../../js/jquery-2.1.4.min.js'></script>
-<script src='../../js/table2excel/dist/jquery.table2excel.min.js'></script>
+<script src='../../js/tableExport/tableExport.js'></script>
+<script src='../../js/tableExport/jquery.base64.js'></script>
 <link rel='stylesheet' href='../../../bootstrap-3.3.6/css/bootstrap.css'></link>
 <script>
   $(document).ready(function() {
     $('#exportBtn').click(function(){
-      $('#admissionTbl').table2excel({
-          filename: '".$name."_PF_IPD_(".$this->formatDate($from)." to ".$this->formatDate($to).")'
+      $('#admissionTbl').tableExport({
+          type:'excel',
+          escape:'false'
       });
     });
   });
@@ -18652,16 +18657,15 @@ function calculate_age($bday)
 
 public function getPxCount($date) {
 
-$count="";
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " SELECT count(registrationNo) as pxCount from registrationDetails where dateRegistered = '$date' and pxCount > 0 ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " SELECT pxCount FROM pxCount WHERE currentDate = '$date' and id = 1  ") or die("Query fail: " . mysqli_error()); 
 
 while($row = mysqli_fetch_array($result))
   {
-return $row['pxCount']+1;
-}
+    return $row['pxCount'];
+  }
 
 }
 
