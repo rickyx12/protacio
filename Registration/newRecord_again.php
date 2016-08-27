@@ -159,6 +159,12 @@ $registrationNo = fread($fh, 100);
 fclose($fh);
 */
 $registrationNo = $ro->selectNow("trackingNo","value","name","registrationNo");
+
+if( $ro->getPxCount(date("Y-m-d")) != "" ) {
+	$pxCount = $ro->getPxCount(date("Y-m-d"));
+}else {
+	$pxCount = 1;
+}
 /*
 $ro->getPatientID();
 $myFile = "/opt/lampp/htdocs/COCONUT/trackingNo/patientID.dat";
@@ -185,7 +191,7 @@ else{
 echo "<span class='style3'>Previous Balance of </span><span class='style4'>".number_format($ro->getPxBalance_balance(),2)."</span><span class='style3'> from </span><span class='style4>'".$ro->getPxBalance_dateRegistered()."</span><span class='style3'> with a Reg#:</span><span class='style1'>".$ro->getPxBalance_registrationNo()."</span>";
 }
 echo "<br>";
-echo "<span class='style4'><input type='text' name='pxCount' style='border:1px solid #000; width:5%; text-align:center;' value='".$ro->getPxCount(date("Y-m-d"))."'></span>";
+echo "<span class='style4'><input type='text' name='pxCount' style='border:1px solid #000; width:5%; text-align:center;' value='".$pxCount."'></span>";
 echo "<Br>";
 echo "<div style='border:1px solid #000000; width:500px; height:480px; border-color:black black black black;'>";
 

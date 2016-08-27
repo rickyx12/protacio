@@ -99,6 +99,14 @@ $incrementPatNo = ($ro->selectNow("trackingNo","value","name","patientNo") + 1);
 $ro->editNow("trackingNo","name","registrationNo","value",$incrementRegNo);
 $ro->editNow("trackingNo","name","patientNo","value",$incrementPatNo);
 
+if( $pxCount > 0 ) {
+	$newPxCount = ($pxCount + 1);
+	$ro->editNow("pxCount","id","1","pxCount",$newPxCount);
+	$ro->editNow("pxCount","id","1","currentDate",date("Y-m-d"));
+}else {
+
+}
+
 if($registrationStatus == "new") { // Registration Status [new]
 
 $ro->addNewPatientRecord($patientNo,$manual_patientID,$lastname,$firstname,$middlename,$completeName,$ro->calculate_age($birthDate),$patientContact,$birthDate,$gender,$seniorCitizen,$address,$philHealth,$civilStatus,$religion,$email);

@@ -136,13 +136,18 @@ $registrationNo = $ro->selectNow("trackingNo","value","name","registrationNo");
 //get current patientNo
 $patientNo = $ro->selectNow("trackingNo","value","name","patientNo");
 
+if( $ro->getPxCount(date("Y-m-d")) != "" ) {
+	$pxCount = $ro->getPxCount(date("Y-m-d"));
+}else {
+	$pxCount = 1;
+}
 
 //newRecord_insert.php
 echo "<form method='get' action='verifyRegistration.php'>";
 echo "<br>";
 echo "<body onload='DisplayTime();'>";
 echo "<center>";
-echo "<input type='text' name='pxCount' style='border:1px solid #000; width:5%; text-align:center;' value='".$ro->getPxCount(date("Y-m-d"))."'>";
+echo "<input type='text' name='pxCount' style='border:1px solid #000; width:5%; text-align:center;' value='".$pxCount."'>";
 echo "<br>";
 echo "<div style='border:1px solid #000000; width:500px; heigh:480px; border-color:black black black black;'>";
 echo "<br>";
