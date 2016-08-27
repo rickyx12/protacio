@@ -33,9 +33,8 @@
 	$totalAmount = ( $opdTotal + $hmoTotal + $ipdTotal + $specialRatesTotal_opd + $specialRatesTotal_ipd );
 
 	if( $totalCensus > 0 ) {
-		echo "(".$totalCensus.") ".number_format($totalAmount,2);
+		echo $totalCensus."-".number_format($totalAmount,2);
 	}else {
-
+		echo " - ";
 	}
-
 ?>

@@ -11,10 +11,11 @@
 
 	$price = $ro->selectNow("availableCharges","OPD","chargesCode",$chargesCode);
 	$census = $ro4->count_charges($chargesCode,$date1,$date2,"OPD");
+	
 	if( $census > 0 ) {
-		echo "(".$census.") ".number_format(($census * $price),2);
+		echo $census."-".number_format(($census * $price),2);
 	}else {
-
+		echo " - ";
 	}
 
 ?>

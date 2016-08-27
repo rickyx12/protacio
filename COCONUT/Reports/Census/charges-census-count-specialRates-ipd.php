@@ -13,9 +13,8 @@
 	$census = $ro4->count_charges($chargesCode,$date1,$date2,"specialRates_ipd");
 
 	if( $census > 0 ) {
-		echo "(".$census.") ".number_format(($price * $census),2);
+		echo $census."-".number_format(($price * $census),2);
 	}else {
-
+		echo " - ";
 	}
-
 ?>
