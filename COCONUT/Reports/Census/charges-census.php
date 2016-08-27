@@ -37,50 +37,106 @@
 							date2:'<? echo $date2 ?>'
 						};
 
-						$("#opd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
-						$("#hmo<? echo $chargesCode ?>").html("<p>Waiting OPD</p>");
-						$("#specialRates_opd<? echo $chargesCode ?>").html("<p>Waiting HMO</p>");
-						$("#ipd<? echo $chargesCode ?>").html("<p>Waiting Spec.Rates</p>");
-						$("#specialRates_ipd<? echo $chargesCode ?>").html("<p>Waiting IPD</p>");
-						$("#total<? echo $chargesCode ?>").html("<p>Waiting All</p>");
+						$("#opdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+						$("#opdAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+
+
+						$("#hmoCensus<? echo $chargesCode ?>").html("<p>Waiting OPD</p>");
+						$("#hmoAmount<? echo $chargesCode ?>").html("<p>Waiting OPD</p>");
+
+						$("#specialRates_opdCensus<? echo $chargesCode ?>").html("<p>Waiting HMO</p>");
+						$("#specialRates_opdAmount<? echo $chargesCode ?>").html("<p>Waiting HMO</p>");
+
+
+						$("#ipdCensus<? echo $chargesCode ?>").html("<p>Waiting Spec.Rates</p>");
+						$("#ipdAmount<? echo $chargesCode ?>").html("<p>Waiting Spec.Rates</p>");
+
+
+						$("#specialRates_ipdCensus<? echo $chargesCode ?>").html("<p>Waiting IPD</p>");
+						$("#specialRates_ipdAmount<? echo $chargesCode ?>").html("<p>Waiting IPD</p>");
+
+
+						$("#totalCensus<? echo $chargesCode ?>").html("<p>Waiting All</p>");
+						$("#totalAmount<? echo $chargesCode ?>").html("<p>Waiting All</p>");
 
 						$.post("charges-census-count-opd.php",data,function(result){
-							$("#opd<? echo $chargesCode ?>").html(result);
-							$("#opd<? echo $chargesCode ?>").attr("id","opd1<? echo $chargesCode ?>");
-							$("#hmo<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+							var opdResult = result;
+							var opdData = opdResult.split("-");
+
+							
+							$("#opdCensus<? echo $chargesCode ?>").html(opdData[0]);
+							$("#opdAmount<? echo $chargesCode ?>").html(opdData[1]);
+
+							$("#opdCensus<? echo $chargesCode ?>").attr("id","opdCensus1<? echo $chargesCode ?>");
+							$("#opdAmount<? echo $chargesCode ?>").attr("id","opdAmount1<? echo $chargesCode ?>");
+							
+							$("#hmoCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+							$("#hmoAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 
 									$.post("charges-census-count-hmo.php",data,function(result){
-										$("#hmo<? echo $chargesCode ?>").html(result);
-										$("#hmo<? echo $chargesCode ?>").attr("id","hmo1<? echo $chargesCode ?>");
-										$("#specialRates_opd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+										var hmoResult = result;
+										var hmoData = hmoResult.split("-");
+
+										$("#hmoCensus<? echo $chargesCode ?>").html(hmoData[0]);
+										$("#hmoAmount<? echo $chargesCode ?>").html(hmoData[1]);
+
+										$("#hmoCensus<? echo $chargesCode ?>").attr("id","hmoCensus1<? echo $chargesCode ?>");
+										$("#hmoAmount<? echo $chargesCode ?>").attr("id","hmoAmount1<? echo $chargesCode ?>");
+
+										$("#specialRates_opdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+										$("#specialRates_opdAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 								
 										$.post("charges-census-count-specialRates-opd.php",data,function(result){
-											$("#specialRates_opd<? echo $chargesCode ?>").html(result);
-											$("#specialRates_opd<? echo $chargesCode ?>").attr("id","specialRates_opd1<? echo $chargesCode ?>");
-											$("#ipd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+											var specialRates_opdResult = result;
+											var specialRates_opdData = specialRates_opdResult.split("-");
+
+											$("#specialRates_opdCensus<? echo $chargesCode ?>").html(specialRates_opdData[0]);
+											$("#specialRates_opdAmount<? echo $chargesCode ?>").html(specialRates_opdData[1]);
+
+											$("#specialRates_opdCensus<? echo $chargesCode ?>").attr("id","specialRates_opdCensus1<? echo $chargesCode ?>");
+											$("#specialRates_opdAmount<? echo $chargesCode ?>").attr("id","specialRates_opdAmount1<? echo $chargesCode ?>");
+											
+											$("#ipdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+											$("#ipdAmount<? echo $chargesCode ?>").html("<p>Calculating</p>");
 										
 											$.post("charges-census-count-ipd.php",data,function(result){
-												$("#ipd<? echo $chargesCode ?>").html(result);
-												$("#ipd<? echo $chargesCode ?>").attr("id","ipd1<? echo $chargesCode ?>");
-												$("#specialRates_ipd<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+												var ipdResult = result;
+												var ipdData = ipdResult.split("-");
+
+												$("#ipdCensus<? echo $chargesCode ?>").html(ipdData[0]);
+												$("#ipdAmount<? echo $chargesCode ?>").html(ipdData[1]);
+
+												$("#ipdCensus<? echo $chargesCode ?>").attr("id","ipdCensus1<? echo $chargesCode ?>");
+												$("#ipdAmount<? echo $chargesCode ?>").attr("id","ipdAmount1<? echo $chargesCode ?>");
+
+												$("#specialRates_ipdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+												$("#specialRates_ipdAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 
 												$.post("charges-census-count-specialRates-ipd.php",data,function(result){
-													$("#specialRates_ipd<? echo $chargesCode ?>").html(result);
-													$("#specialRates_ipd<? echo $chargesCode ?>").attr("id","specialRates_ipd1<? echo $chargesCode ?>");
+													var specialRates_ipdResult = result;
+													var specialRates_ipdData = specialRates_ipdResult.split("-");
+
+													$("#specialRates_ipdCensus<? echo $chargesCode ?>").html(specialRates_ipdData[0]);
+													$("#specialRates_ipdAmount<? echo $chargesCode ?>").html(specialRates_ipdData[1]);
+
+													$("#specialRates_ipdCensus<? echo $chargesCode ?>").attr("id","specialRates_ipdCensus1<? echo $chargesCode ?>");
+													$("#specialRates_ipdAmount<? echo $chargesCode ?>").attr("id","specialRates_ipdAmount1<? echo $chargesCode ?>");													
+
+
 													$("#total<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 									
 													$.post("charges-census-count-total.php",data,function(result){
-														$("#total<? echo $chargesCode ?>").html(result);
+														var totalResult = result;
+														var totalData = totalResult.split("-");
 
-														//$("#opd<? echo $chargesCode ?>").attr("id","opd1<? echo $chargesCode ?>");
-														//$("#hmo<? echo $chargesCode ?>").attr("id","hmo1<? echo $chargesCode ?>");
-														//$("#specialRates_opd<? echo $chargesCode ?>").attr("id","specialRates_opd1<? echo $chargesCode ?>");
-														//$("#ipd<? echo $chargesCode ?>").attr("id","ipd1<? echo $chargesCode ?>");
-														//$("#specialRates_ipd<? echo $chargesCode ?>").attr("id","specialRates_ipd1<? echo $chargesCode ?>");
+														$("#totalCensus<? echo $chargesCode ?>").html(totalData[0]);
+														$("#totalAmount<? echo $chargesCode ?>").html(totalData[1]);
+
 													
-														$("#total<? echo $chargesCode ?>").removeAttr("id");
+														$("#totalCensus<? echo $chargesCode ?>").removeAttr("id");
+														$("#totalAmount<? echo $chargesCode ?>").removeAttr("id");
 
-														$("#opd1<? echo $chargesCode ?>").tooltipster({
+														$(".opdCash<? echo $chargesCode ?>").tooltipster({
 															content: $('<span>Loading....</span>'),
 															position: 'right',
 															theme: 'tooltipster-noir',
@@ -103,7 +159,7 @@
 														});
 
 										
-														$("#hmo1<? echo $chargesCode ?>").tooltipster({
+														$(".opdHMO<? echo $chargesCode ?>").tooltipster({
 															content: $('<span>Loading....</span>'),
 															position: 'right',
 															theme: 'tooltipster-noir',
@@ -125,7 +181,7 @@
 														});
 
 
-														$("#specialRates_opd1<? echo $chargesCode ?>").tooltipster({
+														$(".opdSpecialRates<? echo $chargesCode ?>").tooltipster({
 															content: $('<span>Loading....</span>'),
 															position: 'right',
 															theme: 'tooltipster-noir',
@@ -147,7 +203,7 @@
 														});
 
 
-														$("#ipd1<? echo $chargesCode ?>").tooltipster({
+														$(".ipd<? echo $chargesCode ?>").tooltipster({
 															content: $('<span>Loading....</span>'),
 															position: 'right',
 															theme: 'tooltipster-noir',
@@ -168,7 +224,7 @@
 															}									
 														});
 
-														$("#specialRates_ipd1<? echo $chargesCode ?>").tooltipster({
+														$(".ipdSpecialRates<? echo $chargesCode ?>").tooltipster({
 															content: $('<span>Loading....</span>'),
 															position: 'right',
 															theme: 'tooltipster-noir',
@@ -237,12 +293,18 @@
 					<thead>
 						<tr>
 							<th>Description</th>
-							<th>OPD (Cash)</th>
-							<th>OPD (HMO)</th>
-							<th>OPD (Spec.Rates)</th>
-							<th>IPD</th>
-							<th>IPD (Spec.Rates)</th>
-							<th>Total</th>
+							<th>OPD Count (Cash)</th>
+							<th>OPD Amount (Cash)</th>
+							<th>OPD Count (HMO)</th>
+							<th>OPD Amount (HMO)</th>
+							<th>OPD Count (Spec.Rates)</th>
+							<th>OPD Amount (Spec.Rates)</th>
+							<th>IPD Count</th>
+							<th>IPD Amount</th>
+							<th>IPD Count (Spec.Rates)</th>
+							<th>IPD Amount (Spec.Rates)</th>
+							<th>Total Count</th>
+							<th>Total Amount</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -257,32 +319,62 @@
 										</span>
 									</td>
 									<td>
-										<span id="opd<? echo $chargesCode ?>">
+										<span class="opdCash<? echo $chargesCode ?>" id="opdCensus<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
 									<td>
-										<span id="hmo<? echo $chargesCode ?>">
+										<span class="opdCash<? echo $chargesCode ?>" id="opdAmount<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
 									<td>
-										<span id="specialRates_opd<? echo $chargesCode ?>">
+										<span class="opdHMO<? echo $chargesCode ?>" id="hmoCensus<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
 									<td>
-										<span id="ipd<? echo $chargesCode ?>">
+										<span class="opdHMO<? echo $chargesCode ?>" id="hmoAmount<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
 									<td>
-										<span id="specialRates_ipd<? echo $chargesCode ?>">
+										<span class="opdSpecialRates<? echo $chargesCode ?>" id="specialRates_opdCensus<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
 									<td>
-										<span id="total<? echo $chargesCode ?>">
+										<span class="opdSpecialRates<? echo $chargesCode ?>" id="specialRates_opdAmount<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span class="ipd<? echo $chargesCode ?>" id="ipdCensus<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span class="ipd<? echo $chargesCode ?>" id="ipdAmount<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span class="ipdSpecialRates<? echo $chargesCode ?>" id="specialRates_ipdCensus<? echo $chargesCode ?>">
+										
+										</span>
+									</td>
+									<td>
+										<span class="ipdSpecialRates<? echo $chargesCode ?>" id="specialRates_ipdAmount<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span id="totalCensus<? echo $chargesCode ?>">
+											
+										</span>
+									</td>
+									<td>
+										<span id="totalAmount<? echo $chargesCode ?>">
 											
 										</span>
 									</td>
