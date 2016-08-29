@@ -113,6 +113,7 @@ echo "</table>";
 
 
 else {
+$ro->coconutHidden("otShare","");
 echo "<Table border=0>";
 echo "<tr>";
 echo "<td>Description</td>";
