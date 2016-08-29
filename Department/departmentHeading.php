@@ -2,11 +2,11 @@
 require_once('../COCONUT/authentication.php');
 include("../myDatabase.php");
 include "../myDatabase4.php";
-$username = $_SESSION['username'];
-$module = $_SESSION['module'];
-$from = $_SESSION['from'];
+$module = $_POST['module'];
+$from = $_POST['from'];
 $ro = new database();
 $ro4 = new database4();
+$username = $ro->selectNow("registeredUser","username","employeeID",$_SESSION['employeeID']);
 $branch = "Paranaque";
 
 
@@ -31,6 +31,16 @@ echo "
         $('document').ready(function(){
             $('.menu').fixedMenu();
 
+            $('#signout').click(function(){
+
+                var data = {
+                    module:'".$module."',
+                    from:'".$from."'
+                };
+
+                open('POST','initializeDepartment.php',data,'_self');
+                
+            });
 
             $('#requesition').click(function(){
                 open('POST','../COCONUT/requestition/generateRequesitionNo.php',{},'departmentX');
@@ -83,8 +93,8 @@ echo "
 </head>
 <body>
 <ol id="breadcrumbs">
-        <li><a href="http://<?php echo $ro->getMyUrl(); ?>/Department/initializeDepartment.php?module=<?php echo $_SESSION['module']; ?>"><font color=white>Home</font><span class="arrow"></span></a></li>
-        <li><a href="#" class='odd'><font color=yellow><?php echo $_SESSION['module']." (".$branch.")"; ?></font><span class="arrow"></span></a></li>
+        <li><a id="signout" href="#"><font color=white>Home</font><span class="arrow"></span></a></li>
+        <li><a href="#" class='odd'><font color=yellow><?php echo $module." (".$branch.")"; ?></font><span class="arrow"></span></a></li>
 
     <li>&nbsp;&nbsp;</li>
 </ol>
