@@ -1,26 +1,28 @@
 <?php
+require_once "../authentication.php";
 include("../../myDatabase.php");
-session_start();
-$username = $_SESSION['username'];
-$module = $_SESSION['module'];
-
-
+$module = $_POST['module'];
 
 $ro = new database();
-
-if ( (!isset($username) && !isset($module)) ) {
-header("Location:http://".$ro->getMyUrl()."/LOGINPAGE/module.php ");
-}
 
 ?>
 
 <html>
 <head>
-
-<link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/rickyCSS1.css" />
+        <script src="../js/jquery-2.1.4.min.js"></script>
+        <script src="../js/open.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/rickyCSS1.css" />
         <script type="text/javascript" src="http://<?php echo $ro->getMyUrl() ?>/Registration/menu/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="http://<?php echo $ro->getMyUrl() ?>/Registration/menu/jquery.fixedMenu.js"></script>
         <link rel="stylesheet" type="text/css" href="http://<?php echo $ro->getMyUrl();?>/Registration/menu/fixedMenu_style1.css" />
+
+        <script>
+            $(document).ready(function(){
+                $("#out").click(function(){
+                    open("POST","initializeMaintenance.php",{module:'<? echo $module ?>'},"_self");
+                });
+            });
+        </script>
 
 <?php
 
@@ -64,7 +66,7 @@ body.onload=function() { history.go();  }
 </head>
 <body>
 <ol id="breadcrumbs">
-        <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/maintenance/initializeMaintenance.php"><font color=white>Home</font><span class="arrow"></span></a></li>
+        <li><a id="out" href="#"><font color=white>Home</font><span class="arrow"></span></a></li>
         <li><a href="#" class='odd'><font color=yellow><?php echo $module; ?></font><span class="arrow"></span></a></li>
 
     <li>&nbsp;&nbsp;</li>
