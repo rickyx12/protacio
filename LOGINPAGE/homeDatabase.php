@@ -26,6 +26,7 @@ public function getMyUrl() {
 
 public function getSynapseModule() {
 
+
 $con = @($GLOBALS["___mysqli_ston"] = mysqli_connect($this->myHost, $this->username, $this->password));
 if (!$con)
   {
@@ -43,10 +44,21 @@ if($row['name'] == "REGISTRATION") {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/opdRegistration.php?module=$row[name]&from=main'>".$x++.". ".$row['name']."</a></li>";
 }else if($row['name'] == "OR/DR") {
 echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/specialRoom/specialRoom.php?module=$row[name]' target='welcome'>".$x++.". ".$row['name']."</a></li>";
-}else if($row['name'] == "REQUISTITION" ) {
-echo "<li><a href='http://".$this->getMyUrl()."/COCONUT/requestition/batchRequest/requestLogin.php?module=$row[name]' target='welcome'>".$x++.". ".$row['name']."</a></li>";
+}else if( $row['name'] == "PHARMACY" ) {
+  echo "<li><a id='pharmacy' href='#'>".$x++." ".$row['name']."</a></li>";
 }
-
+//ung control s mga link n e2 ay nsa coconutUpperMenuStart() function.
+else if( $row['name'] == "E.R" ) {
+  echo "<li><a id='er' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "NURSING" ) {
+  echo "<li><a id='nursing' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "PURCHASING" ) {
+  echo "<li><a id='purchasing' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "MAINTENANCE" ) {
+  echo "<li><a id='maintenance' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "ADMIN" ) {
+  echo "<li><a id='admin' href='#'>".$x++." ".$row['name']."</a></li>";
+}
 else {
 echo "<li><a href='http://".$this->getMyUrl()."/LOGINPAGE/loginpage.php?module=$row[name]&from=$row[name]'>".$x++.". ".$row['name']."</a></li>";
 }
@@ -103,22 +115,61 @@ $this->UserEmployeeID = $row['employeeID'];
 
 }
 
+private $check_user_employeeID;
+
+public function check_user_employeeID() {
+  return $this->check_user_employeeID;
+}
+
+public function check_user($username,$password,$module) {
+  $connection = mysqli_connect($this->myHost,$this->username,$this->password,$this->database);      
+  $result = mysqli_query($connection,"SELECT employeeID FROM registeredUser WHERE username = '$username' and password = '$password' and module = '$module' ") or die("Query fail: " . mysqli_error()); 
+
+  while($row = mysqli_fetch_array($result)) {
+    $this->check_user_employeeID[] = $row['employeeID'];
+  }
+}
 
 
 /*******************start ng upper menu****************************************/
 public function coconutUpperMenuStart() {
 
-echo '<script type="text/javascript" src="http://'.$this->getMyUrl().'/Registration/menu/jquery-1.4.2.min.js"></script>';
-echo '<script type="text/javascript" src="http://'.$this->getMyUrl().'/Registration/menu/jquery.fixedMenu.js"></script>';
-echo '<link rel="stylesheet" type="text/css" href="http://'.$this->getMyUrl().'/Registration/menu/fixedMenu_style1.css" />';
+echo '<script type="text/javascript" src="../COCONUT/js/jquery-2.1.4.min.js"></script>';
+echo '<script type="text/javascript" src="../Registration/menu/jquery.fixedMenu.js"></script>';
+echo "<script src='../COCONUT/js/open.js'></script>";
+echo '<link rel="stylesheet" type="text/css" href="../Registration/menu/fixedMenu_style1.css" />';
 
-echo '<script type="text/javascript">
+echo "<script>
 
-        $("document").ready(function(){
-            $(".menu").fixedMenu();
+        $('document').ready(function(){
+            $('.menu').fixedMenu();
+
+        $('#nursing').click(function(){
+          open('POST','login-ui.php',{module:'NURSING'},'_self');
+        });
+
+        $('#er').click(function(){
+          open('POST','login-ui.php',{module:'E.R'},'_self');
+        });
+
+        $('#pharmacy').click(function(){
+          open('POST','login-ui.php',{module:'PHARMACY'},'_self');
+        });   
+
+        $('#purchasing').click(function(){
+          open('POST','login-ui.php',{module:'PURCHASING'},'_self');
+        });
+
+        $('#maintenance').click(function(){
+          open('POST','login-ui.php',{module:'MAINTENANCE'},'_self');
+        });
+
+        $('#admin').click(function(){
+          open('POST','login-ui.php',{module:'ADMIN'},'_self');
+        });
 
         });
-</script>';
+</script>";
 echo '<div class="menu"><ul>';
 }
 
