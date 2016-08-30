@@ -104,7 +104,7 @@ $(document).ready(function (){
                 };
                 
                 if( module == "PHARMACY" ) {
-                  open("POST","../../Department/initializeDepartment.php",auth,"_top");
+                  open("POST","../../Department/initializeDepartment.php",auth,"_self");
                 }else if( module == "E.R" ) {
                   open("POST","../COCONUT/ER/erMainpage.php",{},"_self");
                 }else if( module == "NURSING" ) {
@@ -115,6 +115,8 @@ $(document).ready(function (){
                   open("POST","../COCONUT/maintenance/initializeMaintenance.php",{module:'MAINTENANCE'},"_self");
                 }else if( module == "ADMIN" ) {
                   open("POST","../COCONUT/ADMIN/initializeAdmin.php",{module:'ADMIN'},"_self");
+                }else if( module == "BILLING" ) {
+                  open("POST","../../Department/initializeDepartment.php",auth,"_self")
                 }
                 else {
 
