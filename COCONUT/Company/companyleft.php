@@ -43,8 +43,8 @@ function MM_goToURL() { //v3.0
 include("../../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $syear=$_GET['syear'];
 $smonth=$_GET['smonth'];
@@ -63,8 +63,8 @@ echo "
 ";
 
 $num=0;
-$asql=mysql_query("SELECT registrationDetails.registrationNo, registrationDetails.patientNo, registrationDetails.Company, registrationDetails.dateUnregistered, registrationDetails.pxCount, registrationDetails.type, patientRecord.lastName, patientRecord.firstName FROM  registrationDetails, patientRecord WHERE patientRecord.patientNo=registrationDetails.patientNo AND registrationDetails.dateRegistered='$sdate' AND registrationDetails.Company NOT LIKE '' AND registrationDetails.dateUnregistered='' AND registrationDetails.type='OPD' ORDER BY patientRecord.lastName");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT registrationDetails.registrationNo, registrationDetails.patientNo, registrationDetails.Company, registrationDetails.dateUnregistered, registrationDetails.pxCount, registrationDetails.type, patientRecord.lastName, patientRecord.firstName FROM  registrationDetails, patientRecord WHERE patientRecord.patientNo=registrationDetails.patientNo AND registrationDetails.dateRegistered='$sdate' AND registrationDetails.Company NOT LIKE '' AND registrationDetails.dateUnregistered='' AND registrationDetails.type='OPD' ORDER BY patientRecord.lastName");
+while($afetch=mysqli_fetch_array($asql)){
 $registrationNo=$afetch['registrationNo'];
 $patientNo=$afetch['patientNo'];
 $Company=$afetch['Company'];
@@ -74,8 +74,8 @@ $pxCount=$afetch['pxCount'];
 $lastName=$afetch['lastName'];
 $firstName=$afetch['firstName'];
 
-$csql=mysql_query("SELECT SUM(total) AS totalcharges FROM patientCharges WHERE registrationNo='$registrationNo' AND status='UNPAID'");
-while($cfetch=mysql_fetch_array($csql)){
+$csql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT SUM(total) AS totalcharges FROM patientCharges WHERE registrationNo='$registrationNo' AND status='UNPAID'");
+while($cfetch=mysqli_fetch_array($csql)){
 $totalcharges=$cfetch['totalcharges'];
 }
 

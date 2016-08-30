@@ -41,8 +41,8 @@ function MM_goToURL() { //v3.0
 include("../../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $patientNo=$_GET['patientNo'];
 $registrationNo=$_GET['registrationNo'];
@@ -53,14 +53,14 @@ echo "
 ";
 
 if($patientNo!=""){
-$bsql=mysql_query("SELECT lastName, firstName FROM patientRecord WHERE patientNo='$patientNo'");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT lastName, firstName FROM patientRecord WHERE patientNo='$patientNo'");
+while($bfetch=mysqli_fetch_array($bsql)){
 $lastName=$bfetch['lastName'];
 $firstName=$bfetch['firstName'];
 }
 
-$asql=mysql_query("SELECT Company FROM registrationDetails WHERE patientNo='$patientNo' AND registrationNo='$registrationNo'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT Company FROM registrationDetails WHERE patientNo='$patientNo' AND registrationNo='$registrationNo'");
+while($afetch=mysqli_fetch_array($asql)){
 $Company=$afetch['Company'];
 }
 
@@ -100,8 +100,8 @@ echo "
 
 if($registrationNo!=''){
 $num=0;
-$asql=mysql_query("SELECT itemNo, status, description, quantity, total, cashUnpaid, company FROM patientCharges WHERE status='UNPAID' AND registrationNo='$registrationNo'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT itemNo, status, description, quantity, total, cashUnpaid, company FROM patientCharges WHERE status='UNPAID' AND registrationNo='$registrationNo'");
+while($afetch=mysqli_fetch_array($asql)){
 $itemNo=$afetch['itemNo'];
 $status=$afetch['status'];
 $description=$afetch['description'];
