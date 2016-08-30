@@ -60,6 +60,8 @@ else if( $row['name'] == "E.R" ) {
   echo "<li><a id='admin' href='#'>".$x++." ".$row['name']."</a></li>";
 }else if( $row['name'] == "BILLING" ) {
   echo "<li><a id='billing' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "XRAY" ) {
+  echo "<li><a id='xray' href='#'>".$x++." ".$row['name']."</a></li>";
 }
 else {
 echo "<li><a href='http://".$this->getMyUrl()."/LOGINPAGE/loginpage.php?module=$row[name]&from=$row[name]'>".$x++.". ".$row['name']."</a></li>";
@@ -173,6 +175,11 @@ echo "<script>
         $('#billing').click(function(){
           open('POST','login-ui.php',{module:'BILLING'},'_self');
         });
+
+        $('#xray').click(function(){
+          open('POST','login-ui.php',{module:'XRAY'},'_self');
+        });
+
 
         });
 </script>";

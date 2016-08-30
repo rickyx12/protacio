@@ -116,7 +116,9 @@ $(document).ready(function (){
                 }else if( module == "ADMIN" ) {
                   open("POST","../COCONUT/ADMIN/initializeAdmin.php",{module:'ADMIN'},"_self");
                 }else if( module == "BILLING" ) {
-                  open("POST","../../Department/initializeDepartment.php",auth,"_self")
+                  open("POST","../../Department/initializeDepartment.php",auth,"_self");
+                }else if( module == "XRAY" ) {
+                  open("POST","../../Department/initializeDepartment.php",auth,"_self");
                 }
                 else {
 
