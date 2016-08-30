@@ -295,7 +295,7 @@ echo  ' <li><a href="http://'.$ro->getMyUrl().'/Department/depthandler.php?usern
 
 echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Company/companyselectdate.php?username='.$username.'" target="departmentX" >OPD w/ Company</a></li>';
 
-$ro->showFloorAsUpperMenu_billing($ro->getUserBranch_username($username,$module),$username);
+//$ro->showFloorAsUpperMenu_billing($ro->getUserBranch_username($username,$module),$username);
 
 echo  ' <li>
 <form method="post" action="/COCONUT/currentPatient/patientInterface.php" target="_blank">
@@ -306,9 +306,9 @@ echo  ' <li>
 </form>
 </li>';
 
-echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/addInventory.php?username='.$username.'" target="departmentX" >Add Medicine</a></li>';
+//echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/addInventory.php?username='.$username.'" target="departmentX" >Add Medicine</a></li>';
 
-echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/addInventory_supplies.php?username='.$username.'" target="departmentX" >Add Supplies</a></li>';
+//echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/inventory/addInventory_supplies.php?username='.$username.'" target="departmentX" >Add Supplies</a></li>';
 
 echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Reports/Census/selectShift_pxList.php?username='.$username.'" target="departmentX" >Patient List</a></li>';
 
