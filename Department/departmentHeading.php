@@ -166,9 +166,10 @@ echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/opdRegistration.php?modu
 
 /*
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/accounting/voucher/addVoucher.php?username='.$username.'" target="departmentX">Expenses</a></li>';
+*/
 
 echo  ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Pharmacy/viewPx_handler.php?username='.$username.'" target="departmentX">OPD</a></li>';
-*/
+
 }else if( $module == "PHARMACY" ) {
 
 echo ' <li><a class="hide" href="http://'.$ro->getMyUrl().'/Department/selectShift.php?module='.$module.'&username='.$username.'&branch='.$branch.'>" target="departmentX" >Diagnostics</a></li>';
