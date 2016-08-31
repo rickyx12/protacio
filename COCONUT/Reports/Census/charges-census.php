@@ -29,10 +29,11 @@
 			$(document).ready(function(){
 
 				<? foreach( $ro4->list_charges_chargesCode() as $chargesCode ) { ?>
+
 					$("#charges<? echo $chargesCode ?>").mouseover(function(){
 
 						var data = {
-							chargesCode:'<? echo $chargesCode ?>',
+							chargesCode:<? echo $chargesCode ?>,
 							date1:'<? echo $date1 ?>',
 							date2:'<? echo $date2 ?>'
 						};
@@ -67,8 +68,6 @@
 							$("#opdCensus<? echo $chargesCode ?>").html(opdData[0]);
 							$("#opdAmount<? echo $chargesCode ?>").html(opdData[1]);
 
-							$("#opdCensus<? echo $chargesCode ?>").attr("id","opdCensus1<? echo $chargesCode ?>");
-							$("#opdAmount<? echo $chargesCode ?>").attr("id","opdAmount1<? echo $chargesCode ?>");
 							
 							$("#hmoCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 							$("#hmoAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
@@ -80,9 +79,6 @@
 										$("#hmoCensus<? echo $chargesCode ?>").html(hmoData[0]);
 										$("#hmoAmount<? echo $chargesCode ?>").html(hmoData[1]);
 
-										$("#hmoCensus<? echo $chargesCode ?>").attr("id","hmoCensus1<? echo $chargesCode ?>");
-										$("#hmoAmount<? echo $chargesCode ?>").attr("id","hmoAmount1<? echo $chargesCode ?>");
-
 										$("#specialRates_opdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 										$("#specialRates_opdAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 								
@@ -92,9 +88,6 @@
 
 											$("#specialRates_opdCensus<? echo $chargesCode ?>").html(specialRates_opdData[0]);
 											$("#specialRates_opdAmount<? echo $chargesCode ?>").html(specialRates_opdData[1]);
-
-											$("#specialRates_opdCensus<? echo $chargesCode ?>").attr("id","specialRates_opdCensus1<? echo $chargesCode ?>");
-											$("#specialRates_opdAmount<? echo $chargesCode ?>").attr("id","specialRates_opdAmount1<? echo $chargesCode ?>");
 											
 											$("#ipdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 											$("#ipdAmount<? echo $chargesCode ?>").html("<p>Calculating</p>");
@@ -106,9 +99,6 @@
 												$("#ipdCensus<? echo $chargesCode ?>").html(ipdData[0]);
 												$("#ipdAmount<? echo $chargesCode ?>").html(ipdData[1]);
 
-												$("#ipdCensus<? echo $chargesCode ?>").attr("id","ipdCensus1<? echo $chargesCode ?>");
-												$("#ipdAmount<? echo $chargesCode ?>").attr("id","ipdAmount1<? echo $chargesCode ?>");
-
 												$("#specialRates_ipdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 												$("#specialRates_ipdAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 
@@ -119,10 +109,7 @@
 													$("#specialRates_ipdCensus<? echo $chargesCode ?>").html(specialRates_ipdData[0]);
 													$("#specialRates_ipdAmount<? echo $chargesCode ?>").html(specialRates_ipdData[1]);
 
-													$("#specialRates_ipdCensus<? echo $chargesCode ?>").attr("id","specialRates_ipdCensus1<? echo $chargesCode ?>");
-													$("#specialRates_ipdAmount<? echo $chargesCode ?>").attr("id","specialRates_ipdAmount1<? echo $chargesCode ?>");													
-
-
+																										
 													$("#total<? echo $chargesCode ?>").html("<p>Calculating..</p>");
 									
 													$.post("charges-census-count-total.php",data,function(result){
@@ -132,9 +119,31 @@
 														$("#totalCensus<? echo $chargesCode ?>").html(totalData[0]);
 														$("#totalAmount<? echo $chargesCode ?>").html(totalData[1]);
 
-													
-														$("#totalCensus<? echo $chargesCode ?>").removeAttr("id");
-														$("#totalAmount<? echo $chargesCode ?>").removeAttr("id");
+														
+														$("#opdCensus<? echo $chargesCode ?>").attr("id","opdCensusResult<? echo $chargesCode ?>");
+
+														$("#opdAmount<? echo $chargesCode ?>").attr("id","opdAmountResult<? echo $chargesCode ?>");
+
+														$("#hmoCensus<? echo $chargesCode ?>").attr("id","hmoCensusResult<? echo $chargesCode ?>");
+
+														$("#hmoAmount<? echo $chargesCode ?>").attr("id","hmoAmountResult<? echo $chargesCode ?>");
+
+														$("#specialRates_opdCensus<? echo $chargesCode ?>").attr("id","specialRates_opdCensusResult<? echo $chargesCode ?>");
+
+														$("#specialRates_opdAmount<? echo $chargesCode ?>").attr("id","specialRates_opdAmountResult<? echo $chargesCode ?>");
+
+														$("#ipdCensus<? echo $chargesCode ?>").attr("id","ipdCensusResult<? echo $chargesCode ?>");
+
+														$("#ipdAmount<? echo $chargesCode ?>").attr("id","ipdAmountResult<? echo $chargesCode ?>");
+
+														$("#specialRates_ipdCensus<? echo $chargesCode ?>").attr("id","specialRates_ipdCensusResult<? echo $chargesCode ?>");
+
+														$("#specialRates_ipdAmount<? echo $chargesCode ?>").attr("id","specialRates_ipdAmountResult<? echo $chargesCode ?>");
+														
+														$("#totalCensus<? echo $chargesCode ?>").attr("id","totalCensusResult<? echo $chargesCode ?>");
+
+														$("#totalAmount<? echo $chargesCode ?>").attr("id","totalAmountResult<? echo $chargesCode ?>");
+
 
 														$(".opdCash<? echo $chargesCode ?>").tooltipster({
 															content: $('<span>Loading....</span>'),
@@ -256,7 +265,109 @@
 								});								
 						});
 
+					}).click(function(){
+
+						var data = {
+							chargesCode:<? echo $chargesCode ?>,
+							date1:'<? echo $date1 ?>',
+							date2:'<? echo $date2 ?>'
+						};
+
+						$("#opdCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+						$("#opdAmountResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+
+
+						$("#hmoCensusResult<? echo $chargesCode ?>").html("<p>Waiting OPD</p>");
+						$("#hmoAmountResult<? echo $chargesCode ?>").html("<p>Waiting OPD</p>");
+
+						$("#specialRates_opdCensusResult<? echo $chargesCode ?>").html("<p>Waiting HMO</p>");
+						$("#specialRates_opdAmountResult<? echo $chargesCode ?>").html("<p>Waiting HMO</p>");
+
+
+						$("#ipdCensusResult<? echo $chargesCode ?>").html("<p>Waiting Spec.Rates</p>");
+						$("#ipdAmountResult<? echo $chargesCode ?>").html("<p>Waiting Spec.Rates</p>");
+
+
+						$("#specialRates_ipdCensusResult<? echo $chargesCode ?>").html("<p>Waiting IPD</p>");
+						$("#specialRates_ipdAmountResult<? echo $chargesCode ?>").html("<p>Waiting IPD</p>");
+
+
+						$("#totalCensusResult<? echo $chargesCode ?>").html("<p>Waiting All</p>");
+						$("#totalAmountResult<? echo $chargesCode ?>").html("<p>Waiting All</p>");
+
+						$.post("charges-census-count-opd.php",data,function(result){
+							var opdResult = result;
+							var opdData = opdResult.split("-");
+
+							
+							$("#opdCensusResult<? echo $chargesCode ?>").html(opdData[0]);
+							$("#opdAmountResult<? echo $chargesCode ?>").html(opdData[1]);
+
+							
+							$("#hmoCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+							$("#hmoAmountResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+
+									$.post("charges-census-count-hmo.php",data,function(result){
+										var hmoResult = result;
+										var hmoData = hmoResult.split("-");
+
+										$("#hmoCensusResult<? echo $chargesCode ?>").html(hmoData[0]);
+										$("#hmoAmountResult<? echo $chargesCode ?>").html(hmoData[1]);
+
+										$("#specialRates_opdCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+										$("#specialRates_opdAmountResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+								
+										$.post("charges-census-count-specialRates-opd.php",data,function(result){
+											var specialRates_opdResult = result;
+											var specialRates_opdData = specialRates_opdResult.split("-");
+
+											$("#specialRates_opdCensusResult<? echo $chargesCode ?>").html(specialRates_opdData[0]);
+											$("#specialRates_opdAmountResult<? echo $chargesCode ?>").html(specialRates_opdData[1]);
+											
+											$("#ipdCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+											$("#ipdAmountResult<? echo $chargesCode ?>").html("<p>Re Calculating</p>");
+										
+											$.post("charges-census-count-ipd.php",data,function(result){
+												var ipdResult = result;
+												var ipdData = ipdResult.split("-");
+
+												$("#ipdCensusResult<? echo $chargesCode ?>").html(ipdData[0]);
+												$("#ipdAmountResult<? echo $chargesCode ?>").html(ipdData[1]);
+
+												$("#specialRates_ipdCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+												$("#specialRates_ipdAmountResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+
+												$.post("charges-census-count-specialRates-ipd.php",data,function(result){
+													var specialRates_ipdResult = result;
+													var specialRates_ipdData = specialRates_ipdResult.split("-");
+
+													$("#specialRates_ipdCensusResult<? echo $chargesCode ?>").html(specialRates_ipdData[0]);
+													$("#specialRates_ipdAmountResult<? echo $chargesCode ?>").html(specialRates_ipdData[1]);
+
+																										
+													$("#totalCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+													$("#totalAmountResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
+													$.post("charges-census-count-total.php",data,function(result){
+														var totalResult = result;
+														var totalData = totalResult.split("-");
+
+														$("#totalCensusResult<? echo $chargesCode ?>").html(totalData[0]);
+														$("#totalAmountResult<? echo $chargesCode ?>").html(totalData[1]);
+
+														
+													});												
+
+												});												
+
+											});											
+
+										});		
+													
+								});								
+						});
+
 					});
+
 				<? } ?>
 
 				var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
@@ -312,11 +423,11 @@
 							<? foreach( $ro4->list_charges_chargesCode() as $chargesCode ) { ?>
 								<tr>
 									<td>
-										<span id="charges<? echo $chargesCode ?>">
+										<a style="color:black; text-decoration:none;" href="#" id="charges<? echo $chargesCode ?>">
 											<?
 												echo strtoupper($ro->selectNow("availableCharges","Description","chargesCode",$chargesCode))
 											?>
-										</span>
+										</a>
 									</td>
 									<td>
 										<span class="opdCash<? echo $chargesCode ?>" id="opdCensus<? echo $chargesCode ?>">
