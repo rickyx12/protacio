@@ -5,11 +5,12 @@ $count = count($registrationNo);
 
 $ro = new database3();
 
-$ro->dermaCharges("101980");
+//$ro->dermaCharges("101980");
 
 
 for($x=0;$x<$count;$x++) {
 echo "Reg#:&nbsp;".$registrationNo[$x]."<Br>";
+$ro->dermaCharges($registrationNo[$x]);
 //$ro->updateDermaPx($registrationNo[$x]);
 }
 
