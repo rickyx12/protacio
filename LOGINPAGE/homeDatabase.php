@@ -62,6 +62,8 @@ else if( $row['name'] == "E.R" ) {
   echo "<li><a id='billing' href='#'>".$x++." ".$row['name']."</a></li>";
 }else if( $row['name'] == "XRAY" ) {
   echo "<li><a id='xray' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "LABORATORY" ) {
+  echo "<li><a id='laboratory' href='#'>".$x++." ".$row['name']."</a></li>";
 }
 else {
 echo "<li><a href='http://".$this->getMyUrl()."/LOGINPAGE/loginpage.php?module=$row[name]&from=$row[name]'>".$x++.". ".$row['name']."</a></li>";
@@ -180,6 +182,9 @@ echo "<script>
           open('POST','login-ui.php',{module:'XRAY'},'_self');
         });
 
+        $('#laboratory').click(function(){
+          open('POST','login-ui.php',{module:'LABORATORY'},'_self');
+        });
 
         });
 </script>";
