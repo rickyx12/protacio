@@ -127,6 +127,7 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th>Reg#</th>
 							<th>Patient</th>
 							<th>Procedure</th>
 							<th>Date</th>
@@ -138,6 +139,12 @@
 						<? if( $ro4->list_uploaded_files_fileNo() != "" ) { ?>
 							<? foreach( $ro4->list_uploaded_files_fileNo() as $fileNo ) { ?>
 								<tr>
+									<td>
+										<?
+											echo $ro->selectNow("uploadedFiles","registrationNo","fileNo",$fileNo)
+										?>
+									</td>
+
 									<td>
 										<?
 											echo strtoupper($ro->selectNow("uploadedFiles","patientName","fileNo",$fileNo));
