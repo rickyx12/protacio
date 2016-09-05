@@ -110,8 +110,9 @@
 													$("#specialRates_ipdAmount<? echo $chargesCode ?>").html(specialRates_ipdData[1]);
 
 																										
-													$("#total<? echo $chargesCode ?>").html("<p>Calculating..</p>");
-									
+													$("#totalCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+													$("#totalAmount<? echo $chargesCode ?>").html("<p>Calculating..</p>");
+
 													$.post("charges-census-count-total.php",data,function(result){
 														var totalResult = result;
 														var totalData = totalResult.split("-");
