@@ -89,18 +89,18 @@ echo "<br>";
 if( $ro->selectNow("registrationDetails","mgh","registrationNo",$registrationNo) == "" ) {
 
 if($ro->getRegistrationDetails_dateUnregistered() == "" ) {
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharge_new.php?registrationNo=$registrationNo&protoType=Discharged&room=".$ro->getRegistrationDetails_room()."&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
+echo "&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharge_new.php?registrationNo=$registrationNo&protoType=Discharged&room=".$ro->getRegistrationDetails_room()."&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
 }else {
-echo "<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharged.php?registrationNo=$registrationNo&protoType=Undischarged&room=&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
+echo "&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/discharged.php?registrationNo=$registrationNo&protoType=Undischarged&room=&username=$username'><img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'></a>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
 }
 
 }else {
 
 
 if($ro->getRegistrationDetails_dateUnregistered() == "" ) {
-echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
+echo "&nbsp;&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/unlock.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue'>View Discharged History</font></a><br>";
 }else {
-echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue' >View Discharged History</font></a><br>";
+echo "&nbsp;&nbsp;<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'>&nbsp;&nbsp;<font size=2 color=red><b>".$ro->getRegistrationDetails_type()."</b></font>&nbsp;&nbsp;<a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/discharged/dischargedHistory.php?registrationNo=$registrationNo' style='text-decoration:none;'><font size=1 color='blue' >View Discharged History</font></a><br>";
 }
 
 
@@ -111,11 +111,11 @@ echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/locked1.jpeg'>&nbsp;
 
 
 //echo "<img src='http://".$ro->getMyUrl()."/COCONUT/myImages/verified.jpeg'>";
-echo "<br><font class='informationLabel'>Px Count:</font>&nbsp;<font color=red>".$ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo)."</font><br />";
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Px Count:</font>&nbsp;<font color=red>".$ro->selectNow("registrationDetails","pxCount","registrationNo",$registrationNo)."</font><br />";
 
-echo "<font class='informationLabel'>PIN#:</font>&nbsp;<font color=red>".$ro->selectNow("patientRecord","manual_patientNo","patientNo",$ro->getRegistrationDetails_patientNo())."</font><br>";
+echo "&nbsp;&nbsp;<font class='informationLabel'>PIN#:</font>&nbsp;<font color=red>".$ro->selectNow("patientRecord","manual_patientNo","patientNo",$ro->getRegistrationDetails_patientNo())."</font><br>";
 
-echo "<font class='informationLabel'>Registration#:</font>&nbsp;<font color=red>".$registrationNo."</font>";
+echo "&nbsp;&nbsp;<font class='informationLabel'>Registration#:</font>&nbsp;<font color=red>".$registrationNo."</font>";
 
 
 if( $ro->getRegistrationDetails_type() == "OPD" ) {
@@ -125,32 +125,32 @@ echo "<br><font class='informationLabel'>Admission#:</font>&nbsp;<font color='bl
 }
 //echo "<br><font class='informationLabel'>System#:</font>&nbsp;".$ro->getRegistrationDetails_patientNo();
 //echo "<br><font class='informationLabel'>Registration#:</font>&nbsp;".$ro->getRegistrationDetails_registrationNo();
-echo "<br><font class='informationLabel'>Age:</font>&nbsp;".$ro->getPatientRecord_age();
-echo "<br><font class='informationLabel'>Gender:</font>&nbsp;".$ro->getPatientRecord_gender();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Age:</font>&nbsp;".$ro->getPatientRecord_age();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Gender:</font>&nbsp;".$ro->getPatientRecord_gender();
 //echo "<br><font class='informationLabel'>Civil Status:</font>&nbsp;".$ro->getPatientRecord_civilStatus();
-echo "<br><font class='informationLabel'>Birth Date:</font>&nbsp;".$ro4->formatDate($ro->getPatientRecord_Birthdate());
-echo "<br><font class='informationLabel'>Contact No#:</font>&nbsp;".$ro->getPatientRecord_contactNo();
-echo "<br><font class='informationLabel'>Senior:</font>&nbsp;".$ro->getPatientRecord_senior();
-echo "<br><font class='informationLabel'>Senior ID#:</font>&nbsp;".$ro->selectNow("registrationDetails","seniorID","registrationNo",$registrationNo);
-echo "<br><font class='informationLabel'>PhilHealth:</font>&nbsp;".$ro->getPatientRecord_phic()." <a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/Payments/phicPayment_selection.php?registrationNo=$registrationNo&username=$username' style='text-decoration:none;'><font color='red' size=2>[Payment]</font></a>";
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Birth Date:</font>&nbsp;".$ro4->formatDate($ro->getPatientRecord_Birthdate());
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Contact No#:</font>&nbsp;".$ro->getPatientRecord_contactNo();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Senior:</font>&nbsp;".$ro->getPatientRecord_senior();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Senior ID#:</font>&nbsp;".$ro->selectNow("registrationDetails","seniorID","registrationNo",$registrationNo);
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>PhilHealth:</font>&nbsp;".$ro->getPatientRecord_phic()." <a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/Payments/phicPayment_selection.php?registrationNo=$registrationNo&username=$username' style='text-decoration:none;'><font color='red' size=2>[Payment]</font></a>";
 //echo "<br><font class='informationLabel'>Religion:</font>&nbsp;".$ro->getPHICtype_patientRecord();
 
 
-echo "<br><font class='informationLabel'>Company:</font>&nbsp;".$ro->getRegistrationDetails_company()." <a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/Payments/companyPayment_selection.php?registrationNo=$registrationNo&username=$username' style='text-decoration:none;'><font color='red' size=2>[Payment]</font></a>";
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Company:</font>&nbsp;".$ro->getRegistrationDetails_company()." <a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/Payments/companyPayment_selection.php?registrationNo=$registrationNo&username=$username' style='text-decoration:none;'><font color='red' size=2>[Payment]</font></a>";
 
 if( $ro->selectNow("registrationDetails","company1","registrationNo",$registrationNo) != "" ) {
-echo "<br><font class='informationLabel'>Company1:</font>&nbsp;".$ro->selectNow("registrationDetails","company1","registrationNo",$registrationNo);
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Company1:</font>&nbsp;".$ro->selectNow("registrationDetails","company1","registrationNo",$registrationNo);
 }else { }
 if( $ro->selectNow("registrationDetails","company2","registrationNo",$registrationNo) != "" ) {
-echo "<br><font class='informationLabel'>Company2:</font>&nbsp;".$ro->selectNow("registrationDetails","company2","registrationNo",$registrationNo);
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Company2:</font>&nbsp;".$ro->selectNow("registrationDetails","company2","registrationNo",$registrationNo);
 }else { }
 
 //echo "<br><font class='informationLabel'>Mother's Name:</font>&nbsp;".$ro->selectNow("patientRecord","mothersName","patientNo",$ro->getRegistrationDetails_patientNo());
 //echo "<br><font class='informationLabel'>Father's Name:</font>&nbsp;".$ro->selectNow("patientRecord","fathersName","patientNo",$ro->getRegistrationDetails_patientNo());
 
 if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo) == "OPD" ) {
-	echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro4->formatTime($ro->getRegistrationDetails_timeRegistered());
-	echo "<br><font class='informationLabel'>Date Registered:</font>&nbsp;".$ro4->formatDate($ro->getRegistrationDetails_dateRegistered());
+	echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Time Registered:</font>&nbsp;".$ro4->formatTime($ro->getRegistrationDetails_timeRegistered());
+	echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Date Registered:</font>&nbsp;".$ro4->formatDate($ro->getRegistrationDetails_dateRegistered());
 }else{
 	echo "<br><font class='informationLabel'>Time Registered:</font>&nbsp;".$ro4->formatTime($ro->getRegistrationDetails_timeRegistered());
 	echo "<br><div class='col-xs-3 input-group'>
@@ -167,12 +167,12 @@ if( $ro->selectNow("registrationDetails","type","registrationNo",$registrationNo
 
 
 //echo "<br><font class='informationLabel'>Branch Registered:</font>&nbsp;".$ro->getRegistrationDetails_branch();
-echo "<br><font class='informationLabel'>Case Type:</font>&nbsp;<a href='#' style='text-decoration:none; color:black;'>".$ro->selectNow("registrationDetails","privateORhouse_case","registrationNo",$registrationNo)."</a>";
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Case Type:</font>&nbsp;<a href='#' style='text-decoration:none; color:black;'>".$ro->selectNow("registrationDetails","privateORhouse_case","registrationNo",$registrationNo)."</a>";
 //selectNow($table,$cols,$identifier,$identifierData)
-echo "<br><font class='informationLabel'>Room:</font>&nbsp;".$room[0];
-echo "<br><font class='informationLabel'>Address:</font>&nbsp;".$ro->getPatientRecord_address();
-echo "<br><font class='informationLabel'>Email:</font>&nbsp;".$ro->selectNow("patientRecord","email","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo));
-echo "<br><font class='informationLabel'>Registered By:</font>&nbsp;".$ro->getRegistrationDetails_registeredBy();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Room:</font>&nbsp;".$room[0];
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Address:</font>&nbsp;".$ro->getPatientRecord_address();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Email:</font>&nbsp;".$ro->selectNow("patientRecord","email","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo));
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Registered By:</font>&nbsp;".$ro->getRegistrationDetails_registeredBy();
 
 
 
@@ -201,8 +201,8 @@ echo "<br><font class='informationLabel' color=red>Current Balance:</font>&nbsp;
 */
 
 if($ro->getRegistrationDetails_dateUnregistered() != "") {
-echo "<br><font class='informationLabel'>Time Discharged:</font>&nbsp;".$ro4->formatTime($ro->getRegistrationDetails_timeUnregistered());
-echo "<br><font class='informationLabel'>Discharged:</font>&nbsp;".$ro4->formatDate($ro->getRegistrationDetails_dateUnregistered());
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Time Discharged:</font>&nbsp;".$ro4->formatTime($ro->getRegistrationDetails_timeUnregistered());
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Discharged:</font>&nbsp;".$ro4->formatDate($ro->getRegistrationDetails_dateUnregistered());
 }else {
 echo "";
 }
@@ -269,17 +269,17 @@ $ro->coconutButton("REMOVE PENDING MEDICINE/SUPPLIES");
 $ro->coconutFormStop();
 */
 
-echo "<br><bR><font size=2 color=red><b>VITAL SIGN</b></font>";
-echo "<br><font class='informationLabel'>Height:</font>&nbsp;".$ro->getRegistrationDetails_height();
-echo "<br><font class='informationLabel'>Weight:</font>&nbsp;".$ro->getRegistrationDetails_weight();
-echo "<br><font class='informationLabel'>Blood Pressure:</font>&nbsp;".$ro->getRegistrationDetails_bloodPressure();
-echo "<br><font class='informationLabel'>Temperature:</font>&nbsp;".$ro->getRegistrationDetails_temperature();
-echo "<br><font class='informationLabel'>Pulse Rate:</font>&nbsp;".$ro->getRegistrationDetails_pulse();
+echo "<br><bR>&nbsp;&nbsp;<font size=2 color=red><b>VITAL SIGN</b></font>";
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Height:</font>&nbsp;".$ro->getRegistrationDetails_height();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Weight:</font>&nbsp;".$ro->getRegistrationDetails_weight();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Blood Pressure:</font>&nbsp;".$ro->getRegistrationDetails_bloodPressure();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Temperature:</font>&nbsp;".$ro->getRegistrationDetails_temperature();
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Pulse Rate:</font>&nbsp;".$ro->getRegistrationDetails_pulse();
 //echo "<br><font class='informationLabel'>Respiratory Rate:</font>&nbsp;".$ro->getRegistrationDetails_respiratory();
 
-echo "<br><br><font class='informationLabel'>Chief Complaint:</font><br><textarea class='initialDiagnosis' readonly>".$ro->getRegistrationDetails_initialDiagnosis()."</textarea>";
+echo "<br><br>&nbsp;&nbsp;<font class='informationLabel'>Chief Complaint:</font><br><textarea class='initialDiagnosis' readonly>".$ro->getRegistrationDetails_initialDiagnosis()."</textarea>";
 
-echo "<br><br><font class='informationLabel'>Initial Diagnosis:</font><br><textarea class='initialDiagnosis' readonly>".$ro->getRegistrationDetails_IxDx()."</textarea>";
+echo "<br><br>&nbsp;&nbsp;<font class='informationLabel'>Initial Diagnosis:</font><br><textarea class='initialDiagnosis' readonly>".$ro->getRegistrationDetails_IxDx()."</textarea>";
 
 
 ?>
