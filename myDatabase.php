@@ -2397,7 +2397,7 @@ echo "<td>&nbsp;<font class='data'><a href='http://".$this->getMyUrl()."/COCONUT
 if( $this->checkIfRadResultExist($row['itemNo']) > 0 ) {
 echo "<br><a href='../../".$this->selectNow("uploadedFiles","fileUrl","itemNo",$row['itemNo'])."' download='".$this->selectNow("uploadedFiles","fileName","itemNo",$row['itemNo'])."'><font size=1 color=red>&nbsp;Download Result</font></a>&nbsp;";
 }else { 
-echo "<br><a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReportSettings.php?description=$row[description]&registrationNo=$registrationNo&itemNo=$row[itemNo]&branch=Paranaque' target='_self'><font size=1 color=blue>&nbsp;[Add Result]</font></a>&nbsp;";
+echo "<br><a href='../uploader/multiplefileupload.php?username=$username&registrationNo=$registrationNo&itemNo=$row[itemNo]' target='_self'><font size=1 color=blue>&nbsp;[Add Result]</font></a>&nbsp;";
 }
 
 /*
@@ -2450,7 +2450,7 @@ echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Laboratory/resultL
 
 
 }else if($row['title'] == "RADIOLOGY") {
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Reports/radiologyReport/radioReportSettings.php?description=$row[description]&registrationNo=$registrationNo&itemNo=$row[itemNo]&branch=$row[branch]'><font class='data'>".$row['service']."</font></a>&nbsp;</td>";
+echo "<td>&nbsp;<a href='#'><font class='data'>".$row['service']."</font></a>&nbsp;</td>";
 }else if($row['title'] == "PROFESSIONAL FEE") {
 echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Doctor/doctorModule/soap.php?registrationNo=$registrationNo&itemNo=$row[itemNo]&username=$username'><font class='data'>".$row['service']."</font></a><br><font size=2 color=red>".$this->selectNow("Doctors","contact","doctorCode",$row['chargesCode'])."</font>&nbsp;</td>";
 }else {
@@ -2777,7 +2777,7 @@ echo "<font size=2 color=red>You can only Dispense a medicine/supplies when it i
 
 }else {
 //if($this->chargesStatus == "PAID" || $this->patientType == "IPD" || $this->patientType == "ER" || $this->patientType == "OR/DR") {
-echo "<input type=submit value='Remit' style='border:1px solid #000; background-color:#3b5998; color:white'>";
+echo "<input type=submit value='Completed' style='border:1px solid #000; background-color:#3b5998; color:white'>";
 //}else {
 //echo "<font size=2 color=red>You can only Remit a charges when it is PAID</font>";
 //}
