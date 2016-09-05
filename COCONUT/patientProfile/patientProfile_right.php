@@ -121,7 +121,7 @@ echo "&nbsp;&nbsp;<font class='informationLabel'>Registration#:</font>&nbsp;<fon
 if( $ro->getRegistrationDetails_type() == "OPD" ) {
 echo "";
 }else {
-echo "<br><font class='informationLabel'>Admission#:</font>&nbsp;<font color='blue'>".$ro->selectNow("registrationDetails","manual_registrationNo","registrationNo",$ro->getRegistrationDetails_registrationNo())."</font>";
+echo "<br>&nbsp;&nbsp;<font class='informationLabel'>Admission#:</font>&nbsp;<font color='blue'>".$ro->selectNow("registrationDetails","manual_registrationNo","registrationNo",$ro->getRegistrationDetails_registrationNo())."</font>";
 }
 //echo "<br><font class='informationLabel'>System#:</font>&nbsp;".$ro->getRegistrationDetails_patientNo();
 //echo "<br><font class='informationLabel'>Registration#:</font>&nbsp;".$ro->getRegistrationDetails_registrationNo();
