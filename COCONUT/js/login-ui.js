@@ -119,6 +119,8 @@ $(document).ready(function (){
                   open("POST","../../Department/initializeDepartment.php",auth,"_self");
                 }else if( module == "XRAY" ) {
                   open("POST","../../Department/initializeDepartment.php",auth,"_self");
+                }else if( module == "LABORATORY" ) {
+                  open("POST","../../Department/initializeDepartment.php",auth,"_self");
                 }
                 else {
 
