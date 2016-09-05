@@ -362,13 +362,20 @@ echo ' <li><a href="http://'.$ro->getMyUrl().'/COCONUT/Cashier/cashierReport/dai
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Cashier/cashierReport/dailyCashiersReport_date.php?username=<?php echo $username; ?>.php?username=<?php echo $username; ?>" target="departmentX">Daily Cashiers Report</a></li>
 -->
 <?php }else if( $module == "LABORATORY" ) { ?>
+
+    <li><a href="../COCONUT/Reports/Census/charges-census-date.php" target="departmentX">Laboratory Census</a></li>
+
+<!--
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Summary Laboratory Census</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/labCensus/selectDoctor.php?title=LABORATORY" target="departmentX">Laboratory Census w/ Doctor</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/labCensus/dateLab.php" target="departmentX">Lab Charges</a></li>
+-->
 
-<?php }else if( $module == "RADIOLOGY" ) { ?>
+<? }else if( $module == "XRAY" ) { ?>
+    <li><a href="../COCONUT/Reports/Census/charges-census-date.php" target="departmentX">XRAY Census</a></li>
+<? }else if( $module == "RADIOLOGY" ) { ?>
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/labCensus/selectDoctor.php?title=RADIOLOGY" target="departmentX">Radiology Census w/ Doctor</a></li>
 <? } else { } ?>
 
