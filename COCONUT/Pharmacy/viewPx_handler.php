@@ -16,7 +16,7 @@ echo "
 
 <frameset cols='45%,210%' framespacing='0' border='1'>
    <frame src='http://".$ro->getMyUrl()."/COCONUT/Pharmacy/viewPx.php?username=$username'  scrolling=no frameborder=1 framespacing=1 name='selection' />
-   <frame src='#'  scrolling=yes frameborder=1 framespacing=1 name='rightFrame' />
+   <frame src=''  scrolling=yes frameborder=1 framespacing=1 name='rightFrame' />
 
 </frameset>
 
