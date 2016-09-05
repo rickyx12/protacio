@@ -138,7 +138,13 @@ echo "<td><font class='labelz'><b>Senior:</b></font></td>";
 echo "<td><font size=2>".$ro->getPatientRecord_senior()."</font></td>";
 echo "</tr>";
 echo "<tr>";
-echo "<td><font class='labelz'><b>Date of Addmission:</b></font></td><td><font size=2>".$admdatefmt." - ".$ro4->formatTime($admtime)."&nbsp;&nbsp;&nbsp;</font></td>";
+
+	if( $admtime != "" ) {	
+		echo "<td><font class='labelz'><b>Date of Addmission:</b></font></td><td><font size=2>".$admdatefmt." - ".$ro4->formatTime($admtime)."&nbsp;&nbsp;&nbsp;</font></td>";
+	}else {
+		echo "<td><font class='labelz'><b>Date of Addmission:</b></font></td><td><font size=2>".$admdatefmt."&nbsp;&nbsp;&nbsp;</font></td>";		
+	}
+
 echo "<Td>&nbsp;</td>";
 $disdate=$ro->selectNow("registrationDetails","dateUnregistered","registrationNo",$registrationNo);
 $disdatestr=strtotime($disdate);
