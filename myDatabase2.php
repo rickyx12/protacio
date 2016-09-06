@@ -1437,7 +1437,7 @@ if (!$con)
 $date = $year."-".$month."-".$day;
 $date1 = $year1."-".$month1."-".$day1;
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,pc.quantity,pc.dateCharge,pc.departmentStatus_time,rd.registrationNo,pc.dispensedNo FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date' and '$date1')  and pc.chargesCode = '$chargesCode' and pc.departmentStatus like 'dispensedBy_%%%%%%' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,pc.quantity,pc.dateCharge,pc.departmentStatus_time,rd.registrationNo,pc.dispensedNo FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date' and '$date1')  and pc.chargesCode = '$chargesCode' and pc.dispenseFlag = 'dispense' ");
 
 echo "<Br><center>";
 $this->coconutTableStart();
@@ -1464,6 +1464,7 @@ $this->coconutTableRowStop();
 $this->coconutTableRowStart();
 $this->coconutTableData("&nbsp;<b>TOTAL</b>");
 $this->coconutTableData("&nbsp;".$this->dispensedMonitor_qty);
+$this->coconutTableData("&nbsp;");
 $this->coconutTableData("&nbsp;");
 $this->coconutTableData("&nbsp;");
 $this->coconutTableData("&nbsp;");
@@ -9502,7 +9503,6 @@ $this->coconutTableRowStart();
 $this->coconutTableHeader("Date Added");
 $this->coconutTableHeader("Inv Code");
 $this->coconutTableHeader("UnitCost");
-$this->coconutTableHeader("Price");
 $this->coconutTableHeader("QTY In");
 $this->coconutTableHeader("QTY Out");
 $this->coconutTableHeader("Remaining");
@@ -9512,12 +9512,10 @@ $this->coconutTableHeader("Status");
 $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
-$price = preg_split ("/\_/", $row['Added']); 
 $this->coconutTableRowStart();
-$this->coconutTableData("&nbsp;<a href='/COCONUT/Pharmacy/monitoring/monitoringHead.php?inventoryCode=$row[inventoryCode]' style='text-decoration:none; color:red;' target='_blank' >".$row['dateAdded']."</a>");
+$this->coconutTableData("&nbsp;<a href='/COCONUT/Pharmacy/monitoring/monitoringHead.php?inventoryCode=$row[inventoryCode]' style='text-decoration:none; color:red;' target='_blank' >".$this->formatDate($row['dateAdded'])."</a>");
 $this->coconutTableData("&nbsp;".$row['inventoryCode']);
 $this->coconutTableData("&nbsp;".$row['unitcost']);
-$this->coconutTableData("&nbsp;".$price[1]);
 $this->coconutTableData("&nbsp;".$row['beginningQTY']);
 $this->coconutTableData("&nbsp;". ($this->stockCard_quantityOut($stockCardNo,$row['inventoryCode']) + $this->stockCard_quantityRequesition($row['inventoryCode'])) );
 $this->coconutTableData("&nbsp;".$row['quantity']);
