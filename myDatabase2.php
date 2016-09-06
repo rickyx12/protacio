@@ -1417,7 +1417,7 @@ public function dispensedMonitor_qty() {
 return $this->dispensedMonitor_qty;
 }
 
-public function dispensedMonitor($chargesCode,$month,$day,$year,$month1,$day1,$year1) {
+public function dispensedMonitor($chargesCode,$date1,$date2) {
 
 echo "<style type='text/css'>
 tr:hover { background-color:yellow; color:black; }
@@ -1434,10 +1434,7 @@ if (!$con)
 
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
-$date = $year."-".$month."-".$day;
-$date1 = $year1."-".$month1."-".$day1;
-
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,pc.quantity,pc.dateCharge,pc.departmentStatus_time,rd.registrationNo,pc.dispensedNo FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date' and '$date1')  and pc.chargesCode = '$chargesCode' and pc.dispenseFlag = 'dispense' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,pc.quantity,pc.dateCharge,pc.departmentStatus_time,rd.registrationNo,pc.dispensedNo FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date1' and '$date2')  and pc.chargesCode = '$chargesCode' and pc.dispenseFlag = 'dispense' ");
 
 echo "<Br><center>";
 $this->coconutTableStart();
@@ -9513,7 +9510,7 @@ $this->coconutTableRowStop();
 while($row = mysqli_fetch_array($result))
   {
 $this->coconutTableRowStart();
-$this->coconutTableData("&nbsp;<a href='/COCONUT/Pharmacy/monitoring/monitoringHead.php?inventoryCode=$row[inventoryCode]' style='text-decoration:none; color:red;' target='_blank' >".$this->formatDate($row['dateAdded'])."</a>");
+$this->coconutTableData("&nbsp;<a href='/COCONUT/Pharmacy/monitoring/monitoring.php?inventoryCode=$row[inventoryCode]' style='text-decoration:none; color:red;' target='_blank' >".$this->formatDate($row['dateAdded'])."</a>");
 $this->coconutTableData("&nbsp;".$row['inventoryCode']);
 $this->coconutTableData("&nbsp;".$row['unitcost']);
 $this->coconutTableData("&nbsp;".$row['beginningQTY']);
