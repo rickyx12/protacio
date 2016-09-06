@@ -8159,7 +8159,7 @@ echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/masterfile/EDIT/ed
 //echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/inventory/annualChart_front.php?description=$row[description]&inventoryCode=$row[inventoryCode]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/line.png'></a>&nbsp;</td>";
 
 
-echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Pharmacy/monitoring/monitoringHead.php?inventoryCode=$row[inventoryCode]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/eye.jpeg'></a>&nbsp;</td>";
+echo "<td>&nbsp;<a href='http://".$this->getMyUrl()."/COCONUT/Pharmacy/monitoring/monitoring.php?inventoryCode=$row[inventoryCode]'><img src='http://".$this->getMyUrl()."/COCONUT/myImages/eye.jpeg'></a>&nbsp;</td>";
 
 if( $row['stockCardNo'] != "" ) {
 echo "<td><a href='http://".$this->getMyUrl()."/COCONUT/inventory/stockCard.php?stockCardNo=$row[stockCardNo]&inventoryType=$row[inventoryType]&show=all' style='font-size:13px; text-decoration:none; color:red;'>Stock Card</a></td>";
