@@ -6946,6 +6946,25 @@ return $row['cols'];
 }
 
 
+public function tripleSelectNow($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1,$identifier2,$identifierData2) {
+
+$con = ($GLOBALS["___mysqli_ston"] = mysqli_connect($this->host, $this->username, $this->password));
+if (!$con)
+  {
+  die('Could not connect: ' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
+  }
+
+((bool)mysqli_query( $con, "USE " . $this->database));
+
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ($cols) as cols from $table  where $identifier = '$identifierData' and $identifier1 = '$identifierData1' and $identifier2 = '$identifierData2' ");
+
+while($row = mysqli_fetch_array($result))
+  {
+return $row['cols'];
+  }
+
+}
+
 
 public function doubleSelectNow_notDeleted($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1) {
 
