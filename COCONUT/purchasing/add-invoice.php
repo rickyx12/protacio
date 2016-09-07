@@ -57,7 +57,7 @@
 							"date":date
 						}
 
-						$.post("add-invoice-check-exist.php",{invoiceNo:invoiceNo},function(result){
+						$.post("add-invoice-check-exist.php",{invoiceNo:invoiceNo,supplier:supplier},function(result){
 
 							if( result == 1 ) {
 								$("#invoiceNoExist").show();
@@ -84,7 +84,7 @@
 				<br><br>
 
 				<div id="invoiceNoExist" class="alert alert-danger text-center">
-					Invoice No# already exist
+					Invoice No# already exist in the selected supplier
 				</div>
 
 				<div id="invoiceNoAlert" class="alert alert-danger text-center">
