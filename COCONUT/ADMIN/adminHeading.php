@@ -101,6 +101,7 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
                 <a href="date/pending-opd-transaction-date.php" target="departmentX">Pending OPD Transaction</a>
                 <a href="../Cashier/cashierReport/CollectionReportSD.php?username=x" target="departmentX">Collection Report</a>
                 <a href="date/admission-date.php" target="departmentX">Admission</a>
+                <a href="../Reports/billing/selectShift.php" target="departmentX">Discharged</a>
                 <a href="date/discharged-with-pf.php" target="departmentX">Discharge w/ PF</a>
                 <a href="date/petty-cash-expenses-date.php" target="departmentX">Petty Cash Expenses</a>
                 <a href="../Cashier/cashierReport/dailyCashiersReport_date.php" target="departmentX">Daily Cashier</a>
