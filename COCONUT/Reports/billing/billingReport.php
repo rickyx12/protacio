@@ -1,7 +1,5 @@
 <?php
 include("../../../myDatabase.php");
-$username = $_GET['username'];
-$branch = $_GET['branch'];
 $month = $_GET['month'];
 $day = $_GET['day'];
 $year = $_GET['year'];
@@ -14,10 +12,9 @@ $ro = new database();
 
 
 echo "<br><center>";
-echo "<font size=5>Discharged Report</font><br>";
-echo "<font size=3>($branch)</font><br>";
+echo "<font size=5>Discharged</font><br>";
 
-$ro->getDischargedPatient($month,$day,$year,$month1,$day1,$year1,$branch);
+$ro->getDischargedPatient($month,$day,$year,$month1,$day1,$year1,"");
 
 
 ?>
