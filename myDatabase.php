@@ -17410,7 +17410,7 @@ $this->getPaymentHistory_showUp_returnPaid+=$row['total'];
 
 
 
-public $getDischargedPatient_amountPaid;
+public $getDischargedPatient_no;
 
 public function getDischargedPatient($month,$day,$year,$month1,$day1,$year1,$branch) {
 
@@ -17426,28 +17426,27 @@ if (!$con)
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT rd.registrationNo,pr.lastName,pr.firstName,rd.room FROM registrationDetails rd,patientRecord pr WHERE rd.patientNo = pr.patientNo and (rd.dateUnregistered between '$fromDate' and '$toDate') ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], " SELECT rd.registrationNo,pr.lastName,pr.firstName,rd.room FROM registrationDetails rd,patientRecord pr WHERE rd.patientNo = pr.patientNo and (rd.dateUnregistered between '$fromDate' and '$toDate') and rd.type = 'IPD' ");
 
 echo "<Table border=1 cellpadding=1 cellspacing=0>";
 echo "<tr>";
 echo "<th>Patient</th>";
 echo "<th>Room</th>";
-echo "<th>&nbsp;Amount Paid&nbsp;</th>";
 echo "</tr>";
 while($row = mysqli_fetch_array($result))
   {
+
+    $this->getDischargedPatient_no += 1;
+
 echo "<tr>";
 $this->getPaymentHistory_showUp_returnPaid_setter($row['registrationNo']);
-echo "<td>&nbsp;".$row['lastName'].", ".$row['firstName']."&nbsp;</td>";
+echo "<td>&nbsp;".strtoupper($row['lastName']).", ".strtoupper($row['firstName'])."&nbsp;</td>";
 echo "<td>&nbsp;".$row['room']."&nbsp;</td>";
-echo "<tD>&nbsp;".$this->getPaymentHistory_showUp_returnPaid()."&nbsp;</tD>";
-$this->getDischargedPatient_amountPaid+=$this->getPaymentHistory_showUp_returnPaid();
 echo "</tr>";
   }
 echo "<Tr>";
-echo "<Td>&nbsp;<b>Total</b></tD>";
+echo "<Td><center><b>".$this->getDischargedPatient_no." Patients</b></center></tD>";
 echo "<Td>&nbsp;</tD>";
-echo "<Td>&nbsp;<b>".$this->getDischargedPatient_amountPaid."</b></tD>";
 echo "</tr>";
 echo "</table>";
 
