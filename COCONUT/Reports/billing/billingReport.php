@@ -1,6 +1,5 @@
 <?php
 include("../../../myDatabase.php");
-session_start();
 $username = $_GET['username'];
 $branch = $_GET['branch'];
 $month = $_GET['month'];
@@ -13,9 +12,6 @@ $year1 = $_GET['year1'];
 
 $ro = new database();
 
-if(!isset($_SESSION['username'])) {
-header("Location:/LOGINPAGE/module.php");
-}
 
 echo "<br><center>";
 echo "<font size=5>Discharged Report</font><br>";
