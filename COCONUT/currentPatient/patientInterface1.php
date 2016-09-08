@@ -268,10 +268,14 @@ $("#breadcrumbs a").hover(
 <? }else { /**/ } ?>
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/patientProfile/addDiscount.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">Discount Type</a></li>
-    
+ 
+<? if( $ro->selectNow("patientRecord","PHIC","patientNo",$ro->selectNow("registrationDetails","patientNo","registrationNo",$registrationNo)) == "YES" ) { ?>
+
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/approximate.php?registrationNo=<?php echo $registrationNo; ?>&caserate=" target="patientX">R-Banny</a></li>
 
 <li><a class="hide" href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/rBanny/itemException.php?registrationNo=<?php echo $registrationNo; ?>&username=<?php echo $username; ?>" target="patientX">R-Banny Exclude</a></li> 
+
+<? }else { } ?>
 
 <?php 
 
