@@ -1,7 +1,5 @@
 <?php
 include("../../../myDatabase.php");
-$username = $_GET['username'];
-$branch = $_GET['branch'];
 $ro = new database();
 
 ?>
@@ -11,8 +9,6 @@ $ro = new database();
 <?php
  
 echo "<form method='get' action='billingReport.php'>";
-echo "<input type=hidden name='username' value='$username'>";
-$ro->coconutHidden("branch",$branch);
 echo "<br><br><Br><br><center><div style='border:1px solid #000000; width:500px; height:180px; border-color:black black black black;'>";
 
 echo "<br><table border=0 cellpadding=0 cellspacing=0>";
