@@ -158,6 +158,8 @@ echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/Laboratory/resultList/list
 
 echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/patientOR.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."' target='rightFrame'><font size=2>OR#</font></a></li>";
 
+echo "<li><a href='chargeSlip.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."' target='rightFrame'><font size=2>Charge Slip</font></a></li>";
+
 //echo "<li><a href='http://".$ro->getMyUrl()."/COCONUT/patientProfile/ECART/cartHandler_custom.php?registrationNo=".$ro->getRegistrationDetails_registrationNo()."&username=$username&room=".$ro->getRegistrationDetails_room()."&batchNo=$batchNo' target='rightFrame'><font size=2>test</font></a></li>";
 
 echo "</ul>";
