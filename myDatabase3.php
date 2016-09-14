@@ -1568,32 +1568,16 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-if($shift == "all") {
-$result = mysqli_query($connection, " select shift,registrationNo,orNo,amountPaid,paidVia,paymentFor from patientPayment where datePaid = '$date' and shift in ('1','2','3') group by paidVia,registrationNo order by shift,orNo asc ") or die("Query fail: " . mysqli_error()); 
-}else {
-$result = mysqli_query($connection, " select registrationNo,orNo,amountPaid,paidVia,paymentFor from patientPayment where datePaid = '$date' and shift = '$shift' group by paidVia,registrationNo order by orNo asc ") or die("Query fail: " . mysqli_error()); 
-}
+$result = mysqli_query($connection, " select registrationNo,orNo,amountPaid,paidVia,paymentFor from patientPayment where datePaid = '$date' and shift = '$shift' and paidBy = '$username' group by paidVia,registrationNo order by orNo asc ") or die("Query fail: " . mysqli_error()); 
+
 
 while($row = mysqli_fetch_array($result))
 {
 $this->getPatientProfile($row['registrationNo']);
 
-if($shift == "all") {
-$this->dailyCashierReport_ipd_shift1_cash += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,"1",$username,"Cash");
-$this->dailyCashierReport_ipd_shift2_cash += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,"2",$username,"Cash");
-$this->dailyCashierReport_ipd_shift3_cash += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,"3",$username,"Cash");
-$this->dailyCashierReport_ipd_shift1_creditCard += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,"1",$username,"Credit Card");
-$this->dailyCashierReport_ipd_shift2_creditCard += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,"2",$username,"Credit Card");
-$this->dailyCashierReport_ipd_shift3_creditCard += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,"3",$username,"Credit Card");
-
-}else { }
-
 $this->dailyCashiersReport_ipd_total += $this->dailyCashiersReport_pd_ipd($row['registrationNo'],$date,$shift,$username,$row['paidVia']);
 
 echo "<tr>";
-if($shift == "all") {
-echo "<td>&nbsp;<font size=2>".$row['shift']."</font></td>";
-}
 echo "<td>&nbsp;<font size=2>".$date."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['paidVia']."</font></td>";
 echo "<td>&nbsp;<font size=2>".$row['orNo']."</font></td>";
@@ -1671,62 +1655,29 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift = '$shift' and status IN ('PAID','UNPAID') and orNO != '' group by registrationNo,paidVia order by orNO asc") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select registrationNo,paidVia,orNO from patientCharges where datePaid = '$date' and reportShift = '$shift' and status IN ('PAID','UNPAID') and orNO != '' and paidBy = '$username' group by registrationNo,paidVia order by orNO asc") or die("Query fail: " . mysqli_error()); 
 
 
 while($row = mysqli_fetch_array($result))
 {
-$this->getPatientProfile($row['registrationNo']);
-if( $row['paidVia'] == "Cash" ) { //CASH
-
-if( $shift == "all" ) {
-if($row['reportShift'] == "1") {
-$this->dailyCashiersReport_opd_shift1_cash += $this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,"1",$username);
-}else if($row['reportShift'] == "2") {
-$this->dailyCashiersReport_opd_shift2_cash += $this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,"2",$username);
-}else if($row['reportShift'] == "3") {
-$this->dailyCashiersReport_opd_shift3_cash += $this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,"3",$username);
-}else { }
-}else{ }
-
-$this->dailyCashiersReport_opd_total += $this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,$shift,$username);
-
-}else { //CREDIT CARD
-
-if( $shift == "all" ) {
-if($row['reportShift'] == "1") {
-$this->dailyCashiersReport_opd_shift1_creditCard += $this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,"1",$username);
-}else if($row['reportShift'] == "2") {
-$this->dailyCashiersReport_opd_shift2_creditCard += $this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,"2",$username);
-}else if($row['reportShift'] == "3") {
-$this->dailyCashiersReport_opd_shift3_creditCard += $this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,"3",$username);
-}else { }
-}else { }
-
-$this->dailyCashiersReport_opd_total += $this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,$shift,$username);
-
-}
-echo "<tr>";
-
-if($shift == "all") {
-if($this->selectNow("registrationDetails","dateUnregistered","registrationNo",$row['registrationNo']) == "") {
-echo "<td>&nbsp;<font size=2>".$row['reportShift']." - Not Discharged</font></td>";
-}else {
-echo "<td>&nbsp;<font size=2>".$row['reportShift']."</font></td>";
-}
-
-}else { }
-echo "<td>&nbsp;<font size=2>".$date."</font></td>";
-echo "<td>&nbsp;<font size=2>".$row['paidVia']."</font></td>";
-echo "<td>&nbsp;<font size=2>".$row['orNO']."</font></td>";
-echo "<td>&nbsp;<font size=2>".$this->getPatientRecord_lastName().", ".$this->getPatientRecord_firstName()."</font></td>";
-if( $row['paidVia'] == "Cash" ) {
-echo "<td>&nbsp;<font size=2>".number_format($this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,$shift,$username),2)."</font></td>";
-}else {
-echo "<td>&nbsp;<font size=2>".number_format($this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,$shift,$username),2)."</font></td>";
-}
-echo "<td>&nbsp;<font size=2>".$this->getRegistrationDetails_type()."</font></td>";
-echo "</tr>";
+	$this->getPatientProfile($row['registrationNo']);
+	if( $row['paidVia'] == "Cash" ) { //CASH
+		$this->dailyCashiersReport_opd_total += $this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,$shift,$username);
+	}else { //CREDIT CARD
+		$this->dailyCashiersReport_opd_total += $this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,$shift,$username);
+	}
+	echo "<tr>";
+		echo "<td>&nbsp;<font size=2>".$this->formatDate($date)."</font></td>";
+		echo "<td>&nbsp;<font size=2>".$row['paidVia']."</font></td>";
+		echo "<td>&nbsp;<font size=2>".$row['orNO']."</font></td>";
+		echo "<td>&nbsp;<font size=2>".$this->getPatientRecord_lastName().", ".$this->getPatientRecord_firstName()."</font></td>";
+		if( $row['paidVia'] == "Cash" ) {
+		echo "<td>&nbsp;<font size=2>".number_format($this->dailyCashiersReport_pd_opd($row['registrationNo'],$date,$shift,$username),2)."</font></td>";
+		}else {
+		echo "<td>&nbsp;<font size=2>".number_format($this->dailyCashiersReport_pd_opd_creditCard($row['registrationNo'],$date,$shift,$username),2)."</font></td>";
+		}
+		echo "<td>&nbsp;<font size=2>".$this->getRegistrationDetails_type()."</font></td>";
+	echo "</tr>";
 }
 
 }
