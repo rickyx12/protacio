@@ -1,14 +1,16 @@
 <?php
+require_once "../../authentication.php";
 include("../../../myDatabase3.php");
 $month = $_GET['month'];
 $day = $_GET['day'];
 $year = $_GET['year'];
 $shift = $_GET['shift'];
-$username = "sion";
 
 $ro = new database3();
 
 $date = $year."-".$month."-".$day;
+$username = $ro->selectNow('registeredUser','username','employeeID',$_SESSION['employeeID']);
+
 ?>
 
 <script type="text/javascript">
