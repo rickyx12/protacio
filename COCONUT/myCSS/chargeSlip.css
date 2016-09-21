@@ -1,0 +1,46 @@
+	#printData {
+		
+		width:50%;
+		height: auto;
+	}
+
+	#charges {
+		width:80%;
+		margin-top:5%;
+	}
+
+	.description {
+		width:15%;
+	}
+	.qty {
+		width: 3%;
+	}
+	.delimiter {
+		width:3%;
+	}
+
+	.prices {
+		width:5%;
+	}
+
+	.data {
+		font-size:13px;
+	}
+
+	#header {
+		height: 10%;
+		width:100%;
+	}
+
+	.headerContainer {	
+		width: 45%;
+		padding-left:1%;
+		float:left;
+	}
+
+	.headerContainerFullWidth {
+		width: 98%;
+		padding-left:1%;
+		float:left;
+	}
+
