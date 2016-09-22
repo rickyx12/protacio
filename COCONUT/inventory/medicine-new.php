@@ -118,7 +118,11 @@
 					<td>&nbsp;<?php echo $inventoryCode ?></td>
 					<td>&nbsp;<?php echo $ro1->selectNow("inventory","stockCardNo","inventoryCode",$inventoryCode) ?></td>
 					<td>&nbsp;<span class="details<? echo $inventoryCode ?>"><?php echo $ro1->selectNow("inventory","description","inventoryCode",$inventoryCode) ?></span></td>
-					<td>&nbsp;<span class="details<? echo $inventoryCode ?>"><?php echo $ro1->selectNow("inventory","genericName","inventoryCode",$inventoryCode) ?></span></td>
+					<? if( $ro1->selectNow('inventory','classification','inventoryCode',$inventoryCode) == 'noInventory' ) { ?>
+					<td>&nbsp;<span class="details<? echo $inventoryCode ?>"><?php echo $ro1->selectNow("inventory","genericName","inventoryCode",$inventoryCode) ?></span><h6>Non-Stock</h6></td>
+					<?}else {?>
+						<td>&nbsp;<span class="details<? echo $inventoryCode ?>"><?php echo $ro1->selectNow("inventory","genericName","inventoryCode",$inventoryCode) ?></span></td>
+					<? } ?>
 					<td>&nbsp;<?php echo $ro1->selectNow("inventory","quantity","inventoryCode",$inventoryCode) ?></td>
 					<td>&nbsp;<?php echo $ro->number_format($ro1->selectNow("inventory","unitcost","inventoryCode",$inventoryCode)) ?></td>
 					<td>&nbsp;<?php echo $ro->number_format($ro1->selectNow("inventory","ipdPrice","inventoryCode",$inventoryCode)) ?></td>
