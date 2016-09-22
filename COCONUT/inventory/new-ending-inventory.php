@@ -44,10 +44,7 @@
 									url:'ending-inventory-details.php',
 									data:{stockCardNo:'<? echo $stockCardNo ?>',quarter:'<? echo $quarter ?>'},
 									success:function(data) {
-										origin.tooltipster('content',data).data('ajax','cached');
-									},
-									 headers: {
-								     	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+										origin.tooltipster('content',data).data('ajax','');
 									}
 								});
 							}
@@ -61,13 +58,17 @@
 	<body>
 		<div class="container">
 			<h3>Ending Inventory Consolidation</h3>
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>Stock#</th>
 							<th>Particulars</th>
 							<th>End QTY</th>
+							<th>Pharmacy</th>
+							<th>N.Station</th>
+							<th>E.R</th>
+							<th>O.R</th>
 							<th>Cost</th>
 						</tr>
 					</thead>
@@ -101,9 +102,29 @@
 									</td>
 									<td>
 										<?
-											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter)
+											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"")
 										?>
 									</td>
+									<td>
+										<?
+											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"PHARMACY")
+										?>
+									</td>
+									<td>
+										<?
+											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"NURSING")
+										?>
+									</td>
+									<td>
+										<?
+											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"E.R")
+										?>
+									</td>
+									<td>
+										<?
+											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"OR")
+										?>
+									</td>									
 									<td>
 										<?
 											( $ro4->ending_inventory_list_totalCost()[$b] > 0 ) ? $x = number_format($ro4->ending_inventory_list_totalCost()[$b],2) : $x = "";
@@ -118,6 +139,10 @@
 						<tr>
 							<td></td>
 							<td><? echo $totalItems ?></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td></td>
 							<td><? echo number_format($grandTotalCost,2) ?></td>
 						</tr>
