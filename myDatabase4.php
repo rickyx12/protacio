@@ -84,6 +84,15 @@ public function doubleSelectCondition($table,$cols,$identifier,$identifierData,$
 	}
 }
 
+public function tripleSelectCondition($table,$cols,$identifier,$identifierData,$condition,$identifier1,$identifierData1,$condition1,$identifier2,$identifierData2,$condition2) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection,"SELECT (".$cols.") as cols FROM ".$table." WHERE ".$identifier." ".$condition." '".$identifierData."' and ".$identifier1." ".$condition1." '".$identifierData1."' and ".$identifier2." ".$condition2." '".$identifierData2."' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['cols'];
+	}
+}
+
 private $aging_of_accounts_details_firstName;
 private $aging_of_accounts_details_lastName;
 private $aging_of_accounts_details_registrationNo;
@@ -765,9 +774,14 @@ public function ending_inventory_list($quarter,$inventoryType) {
 }
 
 
-public function ending_inventory_sumQTY($stockCardNo,$quarter) {
-	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT SUM(endingQTY) as endTotal FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ") or die("Query fail: " . mysqli_error()); 
+public function ending_inventory_sumQTY($stockCardNo,$quarter,$inventoryLocation) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);   
+
+	if( $inventoryLocation != "" ) {
+		$result = mysqli_query($connection, "SELECT SUM(endingQTY) as endTotal FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' and inventoryLocation = '$inventoryLocation' ") or die("Query fail: " . mysqli_error()); 
+	}else {
+		$result = mysqli_query($connection, "SELECT SUM(endingQTY) as endTotal FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ") or die("Query fail: " . mysqli_error()); 
+	}
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['endTotal'];
