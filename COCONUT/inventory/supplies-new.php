@@ -106,11 +106,22 @@
 					<tr>
 						<td>&nbsp;<? echo $inventoryCode ?></td>
 						<td>&nbsp;<? echo $ro->selectNow("inventory","stockCardNo","inventoryCode",$inventoryCode) ?></td>
-						<td>&nbsp;
-							<span class="details<? echo $inventoryCode ?>">
-								<? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?>
-							</span>
-						</td>
+						<? if( $ro->selectNow('inventory','classification','inventoryCode',$inventoryCode) == 'noInventory' ) { ?>
+							<td>&nbsp;
+								<span class="details<? echo $inventoryCode ?>">
+									<? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?>
+									<h6>
+										Non-Stock
+									</h6>
+								</span>
+							</td>
+						<? }else { ?>
+							<td>&nbsp;
+								<span class="details<? echo $inventoryCode ?>">
+									<? echo $ro->selectNow("inventory","description","inventoryCode",$inventoryCode) ?>
+								</span>
+							</td>
+						<? } ?>
 						<td>&nbsp;<? echo $ro->selectNow("inventory","quantity","inventoryCode",$inventoryCode) ?></td>
 						<td>&nbsp;<? echo $ro4->number_format($ro->selectNow("inventory","suppliesUNITCOST","inventoryCode",$inventoryCode)) ?></td>
 						<td>&nbsp;<? echo $ro4->number_format($ro->selectNow("inventory","unitcost","inventoryCode",$inventoryCode)) ?></td>
