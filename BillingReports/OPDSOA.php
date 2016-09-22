@@ -79,8 +79,8 @@ function printF(printData)
 include("../myDatabase.php");
 $cuz = new database();
 
-mysql_connect($cuz->myHost(),$cuz->getUser(),$cuz->getPass());
-mysql_select_db($cuz->getDB());
+($GLOBALS["___mysqli_ston"] = mysqli_connect($cuz->myHost(), $cuz->getUser(), $cuz->getPass()));
+((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $cuz->getDB()));
 
 $username=$_GET['username'];
 $registrationNo=$_GET['registrationNo'];
@@ -90,8 +90,8 @@ echo "
 <table width='100%' border='0' cellspaicng='0' cellpadding='0'>
 ";
 
-$asql=mysql_query("SELECT pr.lastName, pr.firstName, pr.middleName, rd.Company FROM patientRecord pr, registrationDetails rd WHERE pr.patientNo=rd.patientNo AND rd.registrationNo='$registrationNo'");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName, pr.firstName, pr.middleName, rd.Company FROM patientRecord pr, registrationDetails rd WHERE pr.patientNo=rd.patientNo AND rd.registrationNo='$registrationNo'");
+while($afetch=mysqli_fetch_array($asql)){
 $lastName=$afetch['lastName'];
 $firstName=$afetch['firstName'];
 $middleName=$afetch['middleName'];
@@ -145,8 +145,8 @@ echo "
 
 $gross=0;
 $grossdisc=0;
-$asql=mysql_query("SELECT title FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' GROUP BY title ORDER BY title ");
-while($afetch=mysql_fetch_array($asql)){
+$asql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT title FROM patientCharges WHERE registrationNo='$registrationNo' AND status NOT LIKE 'DELETED_%%%%' GROUP BY title ORDER BY title ");
+while($afetch=mysqli_fetch_array($asql)){
 echo "
           <tr>
             <td colspan='8' height='15' class='tableTopBottom' valign='bottom'><div align='left' class='style3'>".$afetch['title']."</div></td>
@@ -161,8 +161,8 @@ $totcompany=0;
 $finaltotal=0;
 
 if(($afetch['title']=="MEDICINE")||($afetch['title']=="SUPPLIES")){
-$bsql=mysql_query("SELECT description, sellingPrice, SUM(quantity) AS quantity, SUM(discount) AS discount, SUM(cashUnpaid) AS cashUnpaid, SUM(phic) AS phic, SUM(company) AS company, departmentStatus FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND status NOT LIKE 'DELETED_%%%%' GROUP BY description, sellingPrice ORDER BY description");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description, sellingPrice, SUM(quantity) AS quantity, SUM(discount) AS discount, SUM(cashUnpaid) AS cashUnpaid, SUM(phic) AS phic, SUM(company) AS company, departmentStatus FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND status NOT LIKE 'DELETED_%%%%' GROUP BY description, sellingPrice ORDER BY description");
+while($bfetch=mysqli_fetch_array($bsql)){
 $departmentStatus=$bfetch['departmentStatus'];
 $splitdpeartmentStatus=preg_split('[_]',$departmentStatus);
 
@@ -206,8 +206,8 @@ $finaltotal+=0;
 
 }
 else{
-$bsql=mysql_query("SELECT description, sellingPrice, SUM(quantity) AS quantity, SUM(discount) AS discount, SUM(cashUnpaid) AS cashUnpaid, SUM(phic) AS phic, SUM(company) AS company, departmentStatus, SUM(doctorsPF) as doctorsPF FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND status NOT LIKE 'DELETED_%%%%' GROUP BY description, sellingPrice ORDER BY description");
-while($bfetch=mysql_fetch_array($bsql)){
+$bsql=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT description, sellingPrice, SUM(quantity) AS quantity, SUM(discount) AS discount, SUM(cashUnpaid) AS cashUnpaid, SUM(phic) AS phic, SUM(company) AS company, departmentStatus, SUM(doctorsPF) as doctorsPF FROM patientCharges WHERE registrationNo='$registrationNo' AND title='".$afetch['title']."' AND status NOT LIKE 'DELETED_%%%%' GROUP BY description, sellingPrice ORDER BY description");
+while($bfetch=mysqli_fetch_array($bsql)){
 $sellingPriceNotReal=$bfetch['sellingPrice'];
 if($afetch['title']=='PROFESSIONAL FEE'){$splitprice=preg_split('[/]',$sellingPriceNotReal); $sellingPrice=$splitprice[0];}else{$sellingPrice=$sellingPriceNotReal;}
 
