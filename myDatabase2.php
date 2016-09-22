@@ -1434,7 +1434,7 @@ if (!$con)
 
 ((bool)mysqli_query( $con, "USE " . $this->database));
 
-$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,pc.quantity,pc.dateCharge,pc.departmentStatus_time,rd.registrationNo,pc.dispensedNo FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date1' and '$date2')  and pc.chargesCode = '$chargesCode' and pc.dispenseFlag = 'dispense' ");
+$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT pr.lastName,pr.firstName,pc.quantity,pc.dateCharge,pc.departmentStatus_time,rd.registrationNo,pc.dispensedNo FROM patientCharges pc,registrationDetails rd,patientRecord pr WHERE pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and (pc.dateCharge between '$date1' and '$date2')  and pc.chargesCode = '$chargesCode' and pc.dispenseFlag = 'dispense' and pc.returnFlag = '' ");
 
 echo "<Br><center>";
 $this->coconutTableStart();
