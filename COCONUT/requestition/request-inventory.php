@@ -4,6 +4,7 @@
 	include "../../myDatabase4.php";
 
 	$requesitionNo = $_GET['requesitionNo'];
+	$module = $_GET['module'];
 
 	$ro = new database();
 	$ro4 = new database4();
@@ -29,10 +30,12 @@
 					
 					var searchBox = $("#searchBox").val();
 					var requesitionNo = '<? echo $requesitionNo ?>';
+					var module = '<? echo $module ?>';
 
 					var data = {
 						searchValue:searchBox,
-						requesitionNo:requesitionNo
+						requesitionNo:requesitionNo,
+						module:module
 					};
 					$.post("search-inventory.php",data,function(result){
 						$("#content").html(result);
@@ -44,10 +47,12 @@
 					if(event.which == 13) {
 						var searchBox = $("#searchBox").val();
 						var requesitionNo = <? echo $requesitionNo ?>;
+						var module = '<? echo $module ?>';
 
 						var data = {
 							searchValue:searchBox,
-							requesitionNo:requesitionNo
+							requesitionNo:requesitionNo,
+							module:module
 						};
 						$.post("search-inventory.php",data,function(result){
 							$("#content").html(result);

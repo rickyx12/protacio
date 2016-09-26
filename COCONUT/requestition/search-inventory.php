@@ -4,6 +4,7 @@
 	include "../../myDatabase4.php";
 	$searchValue = $_POST['searchValue'];
 	$requesitionNo = $_POST['requesitionNo'];
+	$module = $_POST['module'];
 
 	$ro = new database();
 	$ro4 = new database4();
@@ -25,12 +26,14 @@
 						$("#requestBtn<? echo $inventoryCode ?>").click(function(){
 
 							var requestQTY<? echo $inventoryCode ?> = $("#requestQTY<? echo $inventoryCode ?>").val();
+							var module = '<? echo $module ?>';
 
 							var data = {
 								inventoryCode:<? echo $inventoryCode ?>,
 								requesitionNo:<? echo $requesitionNo ?>,
-								requestQTY:requestQTY<? echo $inventoryCode ?>
-							}
+								requestQTY:requestQTY<? echo $inventoryCode ?>,
+								module:module
+							};
 
 							$.post("add-request.php",data,function(result){
 								location.reload();

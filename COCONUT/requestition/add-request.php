@@ -6,6 +6,7 @@
 	$inventoryCode = $_POST['inventoryCode'];
 	$requesitionNo = $_POST['requesitionNo'];
 	$requestQTY = $_POST['requestQTY'];
+	$module = $_POST['module'];
 
 	$ro = new database();
 	$ro4 = new database4();
@@ -16,7 +17,7 @@
 	$qty = $requestQTY;
 	$inventoryType = $ro->selectNow("inventory","inventoryType","inventoryCode",$inventoryCode);
 	$requestToDept = "Stockroom";
-	$requestingDept = $ro->selectNow("registeredUser","module","employeeID",$_SESSION['employeeID']);
+	$requestingDept = $module;
 	$requestingUser = $ro->selectNow("registeredUser","username","employeeID",$_SESSION['employeeID']);
 	$dateRequested = date("Y-m-d");
 	$timeRequested = date("H:i:s");
