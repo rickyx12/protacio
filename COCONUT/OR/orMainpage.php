@@ -31,6 +31,14 @@
 					open("POST","../currentPatient/patientInterface.php",data,'_blank')
 				});
 
+				$("#requestInventory").click(function(){
+					var data = {
+						module:'OR'
+					};
+
+					open("POST","../requestition/generateRequesitionNo.php",data,"departmentX");	
+				});
+
 				$("#pendingRequest").click(function(){
 					open("POST","../requestition/pending-request.php",{module:'OR'},"departmentX");
 				});
@@ -85,7 +93,7 @@
 					<a href="#">Inventory</a>
 					<ul>
 						<a href="../inventory/ekit.php" target="departmentX">E-KIT Inventory</a>
-						<a href="../requestition/generateRequesitionNo.php" target="departmentX">Request Inventory</a>
+						<a id="requestInventory" target="departmentX">Request Inventory</a>
 						<? if( $ro4->count_pending_request("OR") > 0 ) { ?>
 							<a href="#" id="pendingRequest" >
 								Pending Inventory Request 

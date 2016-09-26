@@ -43,7 +43,12 @@ echo "
             });
 
             $('#requesition').click(function(){
-                open('POST','../COCONUT/requestition/generateRequesitionNo.php',{},'departmentX');
+
+                var data = {
+                    module:'PHARMACY'
+                };
+
+                open('POST','../COCONUT/requestition/generateRequesitionNo.php',data,'departmentX');
             });
 
             $('#pendingRequest').click(function(){

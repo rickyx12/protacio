@@ -35,6 +35,13 @@
 					open("POST","../Doctor/showDocName.php",{},'departmentX');	
 				});
 
+				$("#requestInventory").click(function(){
+					data = {
+						module:'E.R'
+					};
+					open("POST","../requestition/generateRequesitionNo.php",data,'departmentX');
+				});
+
 				$("#pendingRequest").click(function(){
 					open("POST","../requestition/pending-request.php",{module:'E.R'},"departmentX");
 				});
@@ -98,7 +105,7 @@
 					<a href="#">Inventory</a>
 					<ul>
 						<a href="../inventory/ekit.php" target="departmentX">E-KIT Inventory</a>
-						<a href="../requestition/generateRequesitionNo.php" target="departmentX">Request Inventory</a>
+						<a id="requestInventory" target="departmentX">Request Inventory</a>
 
 						<? if( $ro4->count_pending_request("E.R") > 0 ) { ?>
 							<a href="#" id="pendingRequest" >
