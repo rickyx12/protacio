@@ -797,7 +797,7 @@ public function ending_inventory_list_details_endingNo() {
 
 public function ending_inventory_list_details($stockCardNo,$quarter) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter'") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, "SELECT endingNo FROM endingInventory WHERE stockCardNo = '$stockCardNo' and quarter = '$quarter' ORDER BY inventoryLocation,endingNo ASC ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->ending_inventory_list_details_endingNo[] = $row['endingNo'];
