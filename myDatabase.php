@@ -4594,6 +4594,10 @@ WHERE $identifier = '$identifierData' and $identifier1 = '$identifierData1' ");
 
 }
 
+public function tripleEditNow($table,$identifier1,$identifierData1,$identifier2,$identifierData2,$identifier3,$identifierData3,$columns,$data) {
+  $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+  $result = mysqli_query($connection, "UPDATE ".$table." SET ".$columns." = '".$data."' WHERE ".$identifier1." = '".$identifierData1."' and ".$identifier2." = '".$identifierData2."' and ".$identifier3." = '".$identifierData3."' ") or die("Query fail: " . mysqli_error()); 
+}
 
 
 public function phicFuller($table,$identifier,$identifierData,$identifier1,$identifierData1,$columns,$newData) {
