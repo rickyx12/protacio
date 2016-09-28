@@ -5,6 +5,8 @@
 
 	$endingNo = $_POST['endingNo'];
 	$endingQTY = $_POST['endingQTY'];
+	$inventoryLoc = $_POST['inventoryLoc'];
+	$quarter = $_POST['quarter'];
 
 	$ro = new database();
 	$ro4 = new database4();
@@ -55,6 +57,8 @@
 		);
 
 		$ro4->insertNow("inventory",$medicine);
+		$ro->tripleEditNow("endingInventory","stockCardNo",$stockCardNo,"inventoryLocation",$inventoryLoc,"quarter",$quarter,"encoded","encoded ".$addedBy."-".$dateAdded."-".$timeAdded);
+
 	}else {
 
 		$stockCardNo = $ro->selectNow("endingInventory","stockCardNo","endingNo",$endingNo);
@@ -98,7 +102,9 @@
 		);
 
 		$ro4->insertNow("inventory",$supplies);
-
+		$ro->tripleEditNow("endingInventory","stockCardNo",$stockCardNo,"inventoryLocation",$inventoryLoc,"quarter",$quarter,"encoded","encoded ".$addedBy."-".$dateAdded."-".$timeAdded);
 	}
+
+
 
 ?>
