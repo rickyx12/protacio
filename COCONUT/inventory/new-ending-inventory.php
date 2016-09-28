@@ -49,7 +49,101 @@
 								});
 							}
 						}															
-					});				
+					});
+
+
+					//pharmacy
+					$("#reLabel_pharmacy<? echo $stockCardNo ?>").hide();
+
+					$("#pharmacy<? echo $stockCardNo ?>").click(function(){
+						var total = $("#pharmacyTotal<? echo $stockCardNo ?>").val();
+						var endingNo = '<? echo $ro->tripleSelectNow('endingInventory','endingNo','stockCardNo',$stockCardNo,'quarter',$quarter,'inventoryLocation','PHARMACY') ?>';
+						var inventoryLoc = 'PHARMACY';
+						var quarter = '<? echo $quarter ?>';
+
+						var data = {
+							endingQTY:total,
+							endingNo:endingNo,
+							inventoryLoc:inventoryLoc,
+							quarter:quarter
+						};
+
+						$.post("ending-inventory-add.php",data,function(result){
+							$("#pharmacy<? echo $stockCardNo ?>").remove();
+							$("#reLabel_pharmacy<? echo $stockCardNo ?>").show();
+						});
+
+					});
+
+					//NURSING
+					$("#reLabel_ns<? echo $stockCardNo ?>").hide();
+
+					$("#ns<? echo $stockCardNo ?>").click(function(){
+						var total = $("#nsTotal<? echo $stockCardNo ?>").val();
+						var endingNo = '<? echo $ro->tripleSelectNow('endingInventory','endingNo','stockCardNo',$stockCardNo,'quarter',$quarter,'inventoryLocation','NURSING') ?>';
+						var inventoryLoc = 'NURSING';
+						var quarter = '<? echo $quarter ?>';
+						
+						var data = {
+							endingQTY:total,
+							endingNo:endingNo,
+							inventoryLoc:inventoryLoc,
+							quarter:quarter
+						};
+
+						$.post("ending-inventory-add.php",data,function(result){
+							$("#ns<? echo $stockCardNo ?>").remove();
+							$("#reLabel_ns<? echo $stockCardNo ?>").show();
+						});
+
+					});
+
+					//ER
+					$("#reLabel_er<? echo $stockCardNo ?>").hide();
+
+					$("#er<? echo $stockCardNo ?>").click(function(){
+						var total = $("#erTotal<? echo $stockCardNo ?>").val();
+						var endingNo = '<? echo $ro->tripleSelectNow('endingInventory','endingNo','stockCardNo',$stockCardNo,'quarter',$quarter,'inventoryLocation','E.R') ?>';
+						var inventoryLoc = 'E.R';
+						var quarter = '<? echo $quarter ?>';		
+						
+						var data = {
+							endingQTY:total,
+							endingNo:endingNo,
+							inventoryLoc:inventoryLoc,
+							quarter:quarter
+						};
+
+						$.post("ending-inventory-add.php",data,function(result){
+							$("#er<? echo $stockCardNo ?>").remove();
+							$("#reLabel_er<? echo $stockCardNo ?>").show();
+						});										
+
+					});
+
+					//OR
+					$("#reLabel_or<? echo $stockCardNo ?>").hide();
+
+					$("#or<? echo $stockCardNo ?>").click(function(){
+						var total = $("#orTotal<? echo $stockCardNo ?>").val();
+						var endingNo = '<? echo $ro->tripleSelectNow('endingInventory','endingNo','stockCardNo',$stockCardNo,'quarter',$quarter,'inventoryLocation','OR') ?>';
+						var inventoryLoc = 'OR';
+						var quarter = '<? echo $quarter ?>';	
+
+						var data = {
+							endingQTY:total,
+							endingNo:endingNo,
+							inventoryLoc:inventoryLoc,
+							quarter:quarter
+						};
+
+						$.post("ending-inventory-add.php",data,function(result){
+							$("#or<? echo $stockCardNo ?>").remove();
+							$("#reLabel_or<? echo $stockCardNo ?>").show();
+						});														
+
+					});
+
 				<? } ?>
 			});
 		</script>
@@ -106,24 +200,68 @@
 										?>
 									</td>
 									<td>
-										<?
-											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"PHARMACY")
-										?>
+										<? $pharmacy = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"PHARMACY") ?>
+										<? $isEncoded =$ro->tripleSelectNow("endingInventory","encoded","stockCardNo",$stockCardNo,"inventoryLocation","PHARMACY","quarter",$quarter)  ?>
+
+										<? if( $isEncoded == "" ) { ?>
+											<a href="#" id="pharmacy<? echo $stockCardNo ?>">
+												<input type="hidden" id="pharmacyTotal<? echo $stockCardNo ?>" value="<? echo $pharmacy ?>">
+												<? echo $pharmacy ?>
+											</a>
+											<span id="reLabel_pharmacy<? echo $stockCardNo ?>">
+												<? echo $pharmacy ?>
+											</span>
+										<? }else { ?>
+											<? echo $pharmacy ?>
+										<? } ?>
 									</td>
 									<td>
-										<?
-											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"NURSING")
-										?>
+										<? $ns = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"NURSING") ?>
+										<? $isEncoded = $ro->tripleSelectNow("endingInventory","encoded","stockCardNo",$stockCardNo,"inventoryLocation","NURSING","quarter",$quarter) ?>
+
+										<? if( $isEncoded == "" ) { ?>
+											<a href="#" id="ns<? echo $stockCardNo ?>">
+												<input type="hidden" id="nsTotal<? echo $stockCardNo ?>" value="<? echo $ns ?>">
+												<? echo $ns ?>
+											</a>
+											<span id="reLabel_ns<? echo $stockCardNo ?>">
+												<? echo $ns ?>
+											</span>
+										<? }else { ?>
+											<? echo $ns ?>
+										<? } ?>
 									</td>
 									<td>
-										<?
-											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"E.R")
-										?>
+										<? $er = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"E.R") ?>
+										<? $isEncoded = $ro->tripleSelectNow("endingInventory","encoded","stockCardNo",$stockCardNo,"inventoryLocation","E.R","quarter",$quarter) ?>
+
+										<? if( $isEncoded == "" ) { ?>
+											<a href="#" id="er<? echo $stockCardNo ?>">
+												<input type="hidden" id="erTotal<? echo $stockCardNo ?>" value="<? echo $er ?>">
+												<? echo $er ?>
+											</a>
+											<span id="reLabel_er<? echo $stockCardNo ?>">
+												<? echo $er ?>
+											</span>
+										<? }else { ?>
+											<? echo $er ?>
+										<? } ?>
 									</td>
 									<td>
-										<?
-											echo $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"OR")
-										?>
+										<? $or = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,"OR") ?>
+										<? $isEncoded = $ro->tripleSelectNow("endingInventory","encoded","stockCardNo",$stockCardNo,"inventoryLocation","OR","quarter",$quarter) ?>
+
+										<? if( $isEncoded == "" ) { ?>
+											<a href="#" id="or<? echo $stockCardNo ?>">
+												<input type="hidden" id="orTotal<? echo $stockCardNo ?>" value="<? echo $or ?>">
+												<? echo $or ?>
+											</a>
+											<span id="reLabel_or<? echo $stockCardNo ?>">
+												<? echo $or ?>											
+											</span>
+										<? }else { ?>
+											<? echo $or ?>
+										<? } ?>
 									</td>									
 									<td>
 										<?
