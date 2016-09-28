@@ -19,47 +19,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<script src="../js/jquery-2.1.4.min.js"></script>
 		<link rel="stylesheet" href="../../bootstrap-3.3.6/css/bootstrap.css"></link>
-		<script>
-			$(document).ready(function(){
-
-				<? foreach( $ro4->ending_inventory_list_details_endingNo() as $endingNo ) { ?>
-					$("#add<? echo $endingNo ?>").click(function(){
-						//console.log(this.id);
-						var data = {
-							"endingNo":'<? echo $endingNo ?>',
-							"endingQTY":'<? echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo)  ?>'
-						};
-						$.post("ending-inventory-add.php",data,function(result){
-							//console.log(result);
-							$("#add<? echo $endingNo ?>").hide();
-						});
-					});
-				<? } ?>
-
-				$("#add<? echo $stockCardNo ?>").click(function(){
-
-					var selectedItem = $('input[class=endingNo]:checked').map(function(){
-									return this.value;
-								}).get();
-					var stockCardNo = '<? echo $stockCardNo ?>';
-
-					$.post("ending-inventory-details-add.php",{endingNo:selectedItem,stockCardNo:stockCardNo},function(result){
-						$('input[class=endingNo]:checked').hide();
-						console.log(result);
-					});				
-
-				});
-
-			});
-		</script>
 	</head>
 	<body>
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th></th>
 					<th>QTY</th>
 					<th>Unitcost</th>
 					<th>Total</th>
@@ -71,13 +36,6 @@
 			<tbody>
 				<? foreach( $ro4->ending_inventory_list_details_endingNo() as $endingNo ) { ?>
 					<tr>
-						<td>
-							<? if( $ro->selectNow('endingInventory','status','endingNo',$endingNo) == "" ) { ?>
-								<input type="checkbox" class="endingNo" value="<? echo $endingNo ?>">
-							<? }else { ?>
-								&nbsp;
-							<? } ?>
-						</td>
 						<td>
 							<?
 								echo $ro->selectNow("endingInventory","endingQTY","endingNo",$endingNo)
@@ -128,11 +86,7 @@
 					<td><? echo number_format($totalCost,2) ?></td>
 					<td></td>
 					<td></td>
-					<td>
-						<button type="button" id="add<? echo $stockCardNo ?>" class="btn btn-success col-sm">
-							Add
-						</button>								
-					</td>
+					<td></td>
 				</tr>
 			</tfoot>
 		</table>
