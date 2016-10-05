@@ -12,10 +12,10 @@
 	$price = $ro->selectNow("availableCharges","HMO","chargesCode",$chargesCode);
 	$census = $ro4->count_charges($chargesCode,$date1,$date2,"HMO");
 
-	if( $census > 0 ) {
+	//if( $census > 0 ) {
 		echo $census."-".number_format(($price * $census),2);
-	}else {
-		echo " - ";
-	}
+	//}else {
+		//echo " - ";
+	//}
 
 ?>
