@@ -1514,7 +1514,7 @@ public function list_charges_chargesCode() {
 
 public function list_charges($title,$date1,$date2) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, " SELECT ac.chargesCode FROM availableCharges ac,patientCharges pc where pc.title = '$title' and ac.chargesCode = pc.chargesCode and (pc.dateCharge BETWEEN '$date1' and '$date2') and pc.status not like 'DELETED%' group by ac.chargesCode order by ac.Description asc ") or die("Query fail: " . mysqli_error()); 
+	$result = mysqli_query($connection, " SELECT chargesCode FROM availableCharges WHERE Category ='$title' order by Description ASC") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 	 	$this->list_charges_chargesCode[] = $row['chargesCode'];
@@ -1709,6 +1709,80 @@ public function search_laboratory_result($pxName) {
 	 	$this->search_laboratory_result_savedNo[] = $row['savedNo'];
 	}
 }
+
+private $get_doctor_outpatient_registrationNo;
+
+public function get_doctor_outpatient_registrationNo() {
+	return $this->get_doctor_outpatient_registrationNo;
+}
+
+public function get_doctor_outpatient($doctorCode,$date) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.dateRegistered = '$date' and rd.type = 'OPD' and pc.title = 'PROFESSIONAL FEE' and pc.chargesCode = '$doctorCode' and pc.departmentStatus NOT IN ('Completed') and pc.status not like 'DELETED%' group by rd.registrationNo order by rd.pxCount asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_doctor_outpatient_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+private $get_doctor_outpatient_completed_registrationNo;
+
+public function get_doctor_outpatient_completed_registrationNo() {
+	return $this->get_doctor_outpatient_completed_registrationNo;
+}
+
+public function get_doctor_outpatient_completed($doctorCode,$date) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT rd.registrationNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.dateRegistered = '$date' and rd.type = 'OPD' and pc.title = 'PROFESSIONAL FEE' and pc.chargesCode = '$doctorCode' and pc.departmentStatus IN ('Completed') and pc.status not like 'DELETED%' group by rd.registrationNo order by rd.pxCount asc ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_doctor_outpatient_completed_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+private $get_previous_visit_registrationNo;
+
+public function get_previous_visit_registrationNo() {
+	return $this->get_previous_visit_registrationNo;
+}
+
+public function get_previous_visit($patientNo,$date) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT registrationNo FROM registrationDetails WHERE patientNo = '$patientNo' and dateRegistered not LIKE 'DELETED%' and dateRegistered NOT IN ('$date') ORDER BY dateRegistered DESC LIMIT 5  ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->get_previous_visit_registrationNo[] = $row['registrationNo'];
+	}
+}
+
+
+public function get_previous_visit_doctor($registrationNo,$service) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT itemNo FROM patientCharges WHERE registrationNo = '$registrationNo' and status not like 'DELETED%' and title = 'PROFESSIONAL FEE' and service = '$service' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['itemNo'];
+	}
+}
+
+public function get_current_doctor_not_completed($registrationNo,$doctorCode) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT itemNo FROM patientCharges WHERE registrationNo = '$registrationNo' and status not like 'DELETED%' and title = 'PROFESSIONAL FEE' and chargesCode = '$doctorCode' and departmentStatus NOT IN ('Completed') ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['itemNo'];
+	}
+}
+
+public function get_current_doctor($registrationNo,$doctorCode) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT itemNo FROM patientCharges WHERE registrationNo = '$registrationNo' and status not like 'DELETED%' and title = 'PROFESSIONAL FEE' and chargesCode = '$doctorCode' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['itemNo'];
+	}
+}
+
 
 /*temporary function lng e2*/
 
