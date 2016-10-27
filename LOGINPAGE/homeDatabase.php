@@ -64,6 +64,8 @@ else if( $row['name'] == "E.R" ) {
   echo "<li><a id='xray' href='#'>".$x++." ".$row['name']."</a></li>";
 }else if( $row['name'] == "LABORATORY" ) {
   echo "<li><a id='laboratory' href='#'>".$x++." ".$row['name']."</a></li>";
+}else if( $row['name'] == "DOCTOR" ) {
+  echo "<li><a id='doctor' href='#'>".$x++." ".$row['name']."</a></li>";
 }
 else {
 echo "<li><a href='http://".$this->getMyUrl()."/LOGINPAGE/loginpage.php?module=$row[name]&from=$row[name]'>".$x++.". ".$row['name']."</a></li>";
@@ -129,8 +131,12 @@ public function check_user_employeeID() {
 
 public function check_user($username,$password,$module) {
   $connection = mysqli_connect($this->myHost,$this->username,$this->password,$this->database);      
-  $result = mysqli_query($connection,"SELECT employeeID FROM registeredUser WHERE username = '$username' and password = '$password' and module = '$module' ") or die("Query fail: " . mysqli_error()); 
-
+  
+  if( $module != 'DOCTOR' ) {
+    $result = mysqli_query($connection,"SELECT employeeID FROM registeredUser WHERE username = '$username' and password = '$password' and module = '$module' ") or die("Query fail: " . mysqli_error()); 
+  }else {
+    $result = mysqli_query($connection,"SELECT doctorCode as employeeID FROM Doctors WHERE username = '$username' and password = '$password' ") or die("Query fail: " . mysqli_error()); 
+  }
   while($row = mysqli_fetch_array($result)) {
     $this->check_user_employeeID[] = $row['employeeID'];
   }
@@ -184,6 +190,10 @@ echo "<script>
 
         $('#laboratory').click(function(){
           open('POST','login-ui.php',{module:'LABORATORY'},'_self');
+        });
+
+        $('#doctor').click(function(){
+          open('POST','login-ui.php',{module:'DOCTOR'},'_self');
         });
 
         });
