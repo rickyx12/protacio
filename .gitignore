@@ -10,3 +10,4 @@
 *.dat
 *.db
 *.htaccess
+bower_components/
