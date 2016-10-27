@@ -248,7 +248,7 @@ window.onload=function() { SetMsg(document.getElementById('searchPatient', false
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/selectShift.php?username=<?php echo $username; ?>&switch=2" target="departmentX">Summary Charges Census</a></li>
 
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Reports/Census/charges-census-date.php" target="departmentX">Charges Census</a></li>
-
+<li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/Laboratory/reports/senior/report-date.php" target="departmentX">Senior Per Dept</a></li>
 <!--
 <li><a href="http://<?php echo $ro->getMyUrl(); ?>/COCONUT/flow/dischargedDate.php?username=<?php echo $username; ?>&module=<?php echo $module; ?>" target="departmentX">Discharged Patient</a></li>  
 -->
