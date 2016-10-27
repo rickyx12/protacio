@@ -121,6 +121,8 @@ $(document).ready(function (){
                   open("POST","../../Department/initializeDepartment.php",auth,"_self");
                 }else if( module == "LABORATORY" ) {
                   open("POST","../../Department/initializeDepartment.php",auth,"_self");
+                }else if( module == "DOCTOR" )  {
+                  open("POST","../COCONUT/Doctor/doctorMainpage.php",{},"_self");
                 }
                 else {
 
