@@ -1,0 +1,29 @@
+{
+  "name": "synapse.his",
+  "homepage": "https://github.com/rickyx12/protacio",
+  "authors": [
+    "rickyx12 <aizekrysler@gmail.com>"
+  ],
+  "description": "front-end dependencies",
+  "main": "bower.json",
+  "keywords": [
+    "protacio"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "jquery-ui": "^1.12.1",
+    "jquery": "^3.1.1",
+    "semantic": "^2.2.4",
+    "sweetalert": "^1.1.3"
+  }
+}
