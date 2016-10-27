@@ -57,6 +57,10 @@ public function calculateDays($date,$date1) {
 	return $days;
 }
 
+public function formatLetter($str) {
+	return ucfirst(strtolower($str));
+}
+
 public function select($table,$cols) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, "SELECT ".$cols." as cols FROM ".$table) or die("Query fail: " . mysqli_error()); 
@@ -1783,6 +1787,30 @@ public function get_current_doctor($registrationNo,$doctorCode) {
 	}
 }
 
+
+private $laboratory_senior_patient_itemNo;
+
+public function laboratory_senior_patient_itemNo() {
+	return $this->laboratory_senior_patient_itemNo;
+}
+
+public function laboratory_senior_patient($date1,$date2,$type,$title) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo AND (rd.dateRegistered BETWEEN '$date1' and '$date2') AND rd.type = '$type' and pc.title = '$title' GROUP BY pc.registrationNo  ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	$this->laboratory_senior_patient_itemNo[] = $row['itemNo'];
+	}
+}
+
+public function laboratory_senior_patient_discount($registrationNo) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, " SELECT SUM(discount) as disc FROM patientCharges WHERE registrationNo = '$registrationNo' AND status NOT LIKE 'DELETED%' ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+	 	return $row['disc'];
+	}
+}
 
 /*temporary function lng e2*/
 
