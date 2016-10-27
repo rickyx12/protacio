@@ -48,7 +48,7 @@ document.getElementById('tablediv').innerHTML=xmlhttp.responseText;
 xmlhttp.open('GET','viewPatient.php?doctorCode=$docCode&username=$username',true);
 xmlhttp.send();
 
-window.setTimeout(function(){ RefreshTable()},7000);
+window.setTimeout(function(){ RefreshTable()},6000);
 }
 
 </script>

@@ -113,7 +113,7 @@ $ro->coconutFormStop();
 */
 
 
-echo "<br><br>";
+echo "<br><br><br>";
 echo "<div style='float:left; width:100%;  '>";
 $ro->coconutFormStart("get","http://".$ro->getMyUrl()."/COCONUT/android/doctor/mobileSOAP.php");
 $ro->coconutHidden("registrationNo",$registrationNo);

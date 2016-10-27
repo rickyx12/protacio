@@ -13,7 +13,7 @@ $ro = new database();
 
 echo "
 
-<frameset cols='45%,210%' framespacing='0' border='1'>
+<frameset cols='65%,210%' framespacing='0' border='1'>
    <frame src='http://".$ro->getMyUrl()."/COCONUT/android/doctor/viewPatient_update.php?doctorCode=$docCode&username=$username'  scrolling=yes frameborder=1 framespacing=1 name='selection' />
    <frame src='http://".$ro->getMyUrl()."/COCONUT/android/doctor/viewPatient_information.php' frameborder=1 framespacing=1 name='rightFrame' />
 
