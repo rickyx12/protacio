@@ -11,3 +11,4 @@
 *.db
 *.htaccess
 bower_components/
+COCONUT/DB_Backup/
