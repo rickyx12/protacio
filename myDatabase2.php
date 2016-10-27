@@ -3437,7 +3437,7 @@ public function androidViewPatient($doctorCode) {
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, "select pr.lastName,pr.firstName,rd.registrationNo,pc.itemNo,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc,Doctors doc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and doc.doctorCode = '$doctorCode' and pc.chargesCode = doc.doctorCode and pc.dateCharge = '".date("Y-m-d")."' and rd.type='OPD' order by rd.pxCount ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, "select pr.lastName,pr.firstName,rd.registrationNo,pc.itemNo,rd.pxCount from patientRecord pr,registrationDetails rd,patientCharges pc,Doctors doc where pr.patientNo = rd.patientNo and rd.registrationNo = pc.registrationNo and doc.doctorCode = '$doctorCode' and pc.chargesCode = doc.doctorCode and pc.dateCharge = '".date("Y-m-d")."' and rd.type='OPD' order by rd.pxCount desc ") or die("Query fail: " . mysqli_error()); 
 
 $docName = $this->selectNow("Doctors","Name","doctorCode",$doctorCode);
 
