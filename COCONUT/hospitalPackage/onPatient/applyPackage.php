@@ -19,7 +19,7 @@ $itemQTY =  $ro->selectNow("hospitalPackage","packageIncluded_qty","packageNo",$
 
 //addCharges_cash($status,$registrationNo,$chargesCode,$description,$sellingPrice,$discount,$total,$cashUnpaid,$phic,$company,$timeCharge,$dateCharge,$chargeBy,$service,$title,$paidVia,$cashPaid,$batchNo,$quantity,$inventoryFrom,$branch,$room)
 $sellingPrice;
-if($packageIncluded[2] == "OR/DR/ER Fee" || $packageIncluded[2] == "OR/DR/ER FEE" || $packageIncluded[2]  == "LABORATORY" || $packageIncluded[2] == "RADIOLOGY" || $packageIncluded[2] == "ECG" || $packageIncluded[2] == "REHAB" ) {
+if($packageIncluded[2] == "OR/DR/ER Fee" || $packageIncluded[2] == "OR/DR/ER FEE" || $packageIncluded[2]  == "LABORATORY" || $packageIncluded[2] == "RADIOLOGY" || $packageIncluded[2] == "ECG" || $packageIncluded[2] == "REHAB" || $packageIncluded[2] == "ER FEE" ) {
 $services = "Examination";
 $chargesPrice = $ro->selectNow("hospitalPackage","Added","packageNo",$packageNo[$x]);
 
