@@ -35,7 +35,8 @@
 						var data = {
 							chargesCode:<? echo $chargesCode ?>,
 							date1:'<? echo $date1 ?>',
-							date2:'<? echo $date2 ?>'
+							date2:'<? echo $date2 ?>',
+							title:'<? echo $title ?>'
 						};
 
 						$("#opdCensus<? echo $chargesCode ?>").html("<p>Calculating..</p>");
@@ -159,7 +160,12 @@
 																	$.ajax({
 																		type:'POST',
 																		url:'charges-census-details-opd.php',
-																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		data:{
+																				chargesCode:'<? echo $chargesCode ?>',
+																				date1:'<? echo $date1 ?>',
+																				date2:'<? echo $date2 ?>',
+																				title:'<? echo $title ?>'
+																			},
 																		success:function(data) {
 																			origin.tooltipster('content',data).data('ajax','cached');
 																		}
@@ -181,7 +187,12 @@
 																	$.ajax({
 																		type:'POST',
 																		url:'charges-census-details-hmo.php',
-																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		data:{
+																				chargesCode:'<? echo $chargesCode ?>',
+																				date1:'<? echo $date1 ?>',
+																				date2:'<? echo $date2 ?>',
+																				title:'<? echo $title ?>'
+																			},
 																		success:function(data) {
 																			origin.tooltipster('content',data).data('ajax','cached');
 																		}
@@ -203,7 +214,12 @@
 																	$.ajax({
 																		type:'POST',
 																		url:'charges-census-details-specialRates-opd.php',
-																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		data:{
+																				chargesCode:'<? echo $chargesCode ?>',
+																				date1:'<? echo $date1 ?>',
+																				date2:'<? echo $date2 ?>',
+																				title:'<? echo $title ?>'
+																			},
 																		success:function(data) {
 																			origin.tooltipster('content',data).data('ajax','cached');
 																		}
@@ -225,7 +241,12 @@
 																	$.ajax({
 																		type:'POST',
 																		url:'charges-census-details-ipd.php',
-																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		data:{
+																			chargesCode:'<? echo $chargesCode ?>',
+																			date1:'<? echo $date1 ?>',
+																			date2:'<? echo $date2 ?>',
+																			title:'<? echo $title ?>'
+																		},
 																		success:function(data) {
 																			origin.tooltipster('content',data).data('ajax','cached');
 																		}
@@ -246,7 +267,12 @@
 																	$.ajax({
 																		type:'POST',
 																		url:'charges-census-details-specialRates-ipd.php',
-																		data:{chargesCode:'<? echo $chargesCode ?>',date1:'<? echo $date1 ?>',date2:'<? echo $date2 ?>'},
+																		data:{
+																				chargesCode:'<? echo $chargesCode ?>',
+																				date1:'<? echo $date1 ?>',
+																				date2:'<? echo $date2 ?>',
+																				title:'<? echo $title ?>'
+																			},
 																		success:function(data) {
 																			origin.tooltipster('content',data).data('ajax','cached');
 																		}
@@ -271,7 +297,8 @@
 						var data = {
 							chargesCode:<? echo $chargesCode ?>,
 							date1:'<? echo $date1 ?>',
-							date2:'<? echo $date2 ?>'
+							date2:'<? echo $date2 ?>',
+							title:'<? echo $title ?>'
 						};
 
 						$("#opdCensusResult<? echo $chargesCode ?>").html("<p>Re Calculating..</p>");
