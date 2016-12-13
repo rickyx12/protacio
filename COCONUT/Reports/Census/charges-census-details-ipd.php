@@ -6,11 +6,12 @@
 	$chargesCode = $_POST['chargesCode'];
 	$date1 = $_POST['date1'];
 	$date2 = $_POST['date2'];
+	$title = $_POST['title'];
 
 	$ro = new database();
 	$ro4 = new database4();
 
-	$ro4->count_charges_details($chargesCode,$date1,$date2,"IPD");
+	$ro4->count_charges_details($chargesCode,$date1,$date2,"IPD",$title);
 
 ?>
 <!DOCTYPE html>
