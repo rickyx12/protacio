@@ -1526,19 +1526,19 @@ public function list_charges($title,$date1,$date2) {
 }
 
 //bilangin kung ilan procedure/examination ung ngwa
-public function count_charges($chargesCode,$date1,$date2,$type) {
+public function count_charges($chargesCode,$date1,$date2,$type,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
 	if( $type == "IPD" ) {	
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if($type == "OPD") {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company < 1 and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company < 1 and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if($type == "HMO") {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company > 0 and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if($type == "specialRates_opd") {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if($type == "specialRates_ipd") {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}
 	else {
 
@@ -1555,19 +1555,19 @@ public function count_charges_details_itemNo() {
 	return $this->count_charges_details_itemNo;
 }
 
-public function count_charges_details($chargesCode,$date1,$date2,$type) {
+public function count_charges_details($chargesCode,$date1,$date2,$type,$title) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);
 
 	if( $type == "IPD" ) {      
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if( $type == "OPD" ) {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company < 1 and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company < 1 and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if( $type == "HMO" ) {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company > 0 and rd.Company NOT IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if( $type == "specialRates_opd" ) {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'OPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and pc.company > 0 and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error()); 
 	}else if( $type == "specialRates_ipd" ) {
-		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error());
+		$result = mysqli_query($connection, " SELECT pc.itemNo FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = pc.registrationNo and rd.type = 'IPD' and pc.chargesCode = '$chargesCode' and pc.title = '$title' and rd.Company IN ('INTELLICARE','AVEGA Managed Care, Inc.') and pc.status not like 'DELETED%' and (dateCharge BETWEEN '$date1' and '$date2') ") or die("Query fail: " . mysqli_error());
 	}
 	else {
 
