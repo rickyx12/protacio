@@ -499,6 +499,12 @@ public function dispensed_quantity($inventoryCode) {
 }
 
 
+private $insertNow_lastID;
+
+public function insertNow_lastID() {
+	return $this->insertNow_lastID;
+}
+
 private $insertNow_cols;
 private $insertNow_data;
 private $insertNow_totalArray;
@@ -526,9 +532,9 @@ public function insertNow($table,$data) {
 	} 
 	$query = $table."(".$this->insertNow_cols.") values(".$this->insertNow_data.")";
 	if ( $sql->query($query) ) {
-   	//echo "new entry has been added with the `id`";
+  		$this->insertNow_lastID = mysqli_insert_id($sql);
 	} else {
-    echo "There was a problem:<br />$query<br />{$sql->error}";
+    	echo "There was a problem:<br />$query<br />{$sql->error}";
 	}	
 	/* close our connection */
 	$sql->close();
