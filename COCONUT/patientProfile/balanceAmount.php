@@ -55,7 +55,7 @@ echo "<br>";
 $ro->coconutButton("Proceed");
 $ro->coconutBoxStop();
 $ro->coconutFormStop();
-}else if($title == "OT" || $title == "ST") {
+}else if($title == "OT" || $title == "ST" || $title == "SPED") {
 $ro->gotoPage("http://".$ro->getMyUrl()."/COCONUT/patientProfile/therapyCharges.php?status=UNPAID&registrationNo=$registrationNo&chargesCode=$chargesCode&description=$description&sellingPrice=$sellingPrice&discount=$discount&timeCharge=$timeCharge&chargeBy=$chargeBy&service=$service&title=$title&paidVia=$paidVia&cashPaid=$cashPaid&batchNo=$batchNo&username=$username&quantity=$quantity&inventoryFrom=$inventoryFrom&paycash=$paycash&remarks=$remarks");
 }
 else {

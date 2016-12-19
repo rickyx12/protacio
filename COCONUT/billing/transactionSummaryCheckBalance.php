@@ -94,7 +94,7 @@ Balance Paid
 <br><hr><br>
 
 <?
-
+//for therapy variables
 $otTotal;
 $otCreditCard;
 $otCash;
@@ -112,6 +112,16 @@ $stPHIC;
 $stUnpaid;
 $stShare;
 $stDiscount;
+
+$spedTotal;
+$spedCreditCard;
+$spedCash;
+$spedHMO;
+$spedPHIC;
+$spedUnpaid;
+$spedShare;
+$spedDiscount;
+
 
 $ro3->showAllAccountTitle_opd($date,$date1);
 
@@ -158,6 +168,19 @@ $st_Payables = $ro3->showTherapyAccounts_payable();
 $st_hmo_Payables = $ro3->showTherapyAccounts_hmo_payable();
 $stDiscount = $ro3->showTherapyAccounts_discount();
 
+
+$ro3->showTherapyAccounts($date,$date1,"SPED");
+$spedTotal = $ro3->showTherapyAccounts_total();
+$spedCreditCard = $ro3->showTherapyAccounts_creditCard();
+$spedCash = $ro3->showTherapyAccounts_cash();
+$spedHMO = $ro3->showTherapyAccounts_hmo();
+$spedPHIC = $ro3->showTherapyAccounts_phic();
+$spedUnpaid = $ro3->showTherapyAccounts_unpaid();
+$spedShare = $ro3->showTherapyAccounts_pf();
+$sped_Payables = $ro3->showTherapyAccounts_payable();
+$sped_hmo_Payables = $ro3->showTherapyAccounts_hmo_payable();
+$spedDiscount = $ro3->showTherapyAccounts_discount();
+
 echo "</table>";
 
 ?>
@@ -185,16 +208,16 @@ echo "<a href='#' id='totalLink' style='text-decoration:none; color:black'>Total
 
 
 //for original transaction summary format
-$opd_creditCard = ( $ro3->showAllAccountTitle_opd_creditCard() + $ro3->showPFAccounts_creditCard_totalCard() + $otCreditCard + $stCreditCard );
-$opd_cash = ( $ro3->showAllAccountTitle_opd_cash() + $ro3->showPFaccounts_cash() + $otCash + $stCash );
-$opd_hmo = ( $ro3->showAllAccountTitle_opd_hmo() + $ro3->showPFaccounts_hmo() + $otHMO + $stHMO);
-$opd_phic = ( $ro3->showAllAccountTitle_opd_phic() + $ro3->showPFaccounts_phic() + $otPHIC + $stPHIC );
-$opd_unpaid = ( $ro3->showAllAccountTitle_opd_unpaid() + $ro3->showPFaccounts_unpaid() + $otUnpaid + $stUnpaid );
-$opd_discount = ( $ro3->showAllAccountTitle_opd_discount() + $ro3->showPFaccounts_discount() + $otDiscount + $stDiscount );
+$opd_creditCard = ( $ro3->showAllAccountTitle_opd_creditCard() + $ro3->showPFAccounts_creditCard_totalCard() + $otCreditCard + $stCreditCard + $spedCreditCard );
+$opd_cash = ( $ro3->showAllAccountTitle_opd_cash() + $ro3->showPFaccounts_cash() + $otCash + $stCash + $spedCash );
+$opd_hmo = ( $ro3->showAllAccountTitle_opd_hmo() + $ro3->showPFaccounts_hmo() + $otHMO + $stHMO + $spedHMO);
+$opd_phic = ( $ro3->showAllAccountTitle_opd_phic() + $ro3->showPFaccounts_phic() + $otPHIC + $stPHIC + $spedPHIC );
+$opd_unpaid = ( $ro3->showAllAccountTitle_opd_unpaid() + $ro3->showPFaccounts_unpaid() + $otUnpaid + $stUnpaid + $spedUnpaid );
+$opd_discount = ( $ro3->showAllAccountTitle_opd_discount() + $ro3->showPFaccounts_discount() + $otDiscount + $stDiscount + $spedDiscount );
 
 $opd_paidBalance = $ro3->showAllAccountTitle_opd_balancePaid();
 $opd_PF_total = $ro3->showPFaccounts_total();
-$opd_PF_hospitalShare = ( $ro3->showPFaccounts_unpaid() + $ro3->showPFaccounts_cash() + $ro3->showPFaccounts_creditCards() + $ro3->showPFaccounts_phic() + $ro3->showPFaccounts_hmo() + $ro3->showPFaccounts_discount() );
+$opd_PF_hospitalShare = (( $ro3->showPFaccounts_unpaid() + $ro3->showPFaccounts_cash() + $ro3->showPFaccounts_creditCards() + $ro3->showPFaccounts_phic() + $ro3->showPFaccounts_hmo() + $ro3->showPFaccounts_discount() ) - $ro3->showPFaccounts_payable() );
 $opd_PF_creditCard = $ro3->showPFaccounts_creditCards();
 $opd_PF_payable = $ro3->showPFaccounts_payable();
 $opd_ecg = $ro3->showAllAccountTitle_opd_ecg();
@@ -214,6 +237,7 @@ $opd_OR = $ro3->showAllAccountTitle_opd_OR();
 $opd_PT = ($ro3->showAllAccountTitle_opd_PT());
 $opd_OT = ( $otCreditCard + $otCash + $otHMO + $otPHIC + $otUnpaid + $otDiscount );
 $opd_ST = ( $stCreditCard + $stCash + $stHMO + $stPHIC + $stUnpaid + $stDiscount );
+$opd_SPED = ( $spedCreditCard + $spedCash + $spedHMO + $spedPHIC + $spedUnpaid + $spedDiscount );
 $opd_cardiacMonitor = $ro3->showAllAccountTitle_opd_cardiacMonitor();
 $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 
@@ -244,8 +268,10 @@ $opd_misc = $ro3->showAllAccountTitle_opd_misc();
 	<input type="hidden" name="opd_PT" value="<? echo $opd_PT ?>">
 	<input type="hidden" name="opd_OT" value="<? echo $opd_OT ?>">
 	<input type="hidden" name="opd_ST" value="<? echo $opd_ST ?>">
+	<input type="hidden" name="opd_SPED" value="<? echo $opd_SPED ?>">
 	<input type="hidden" name="opd_OT_payables" value="<? echo ($ot_hmo_Payables + $ot_Payables) ?>">
 	<input type="hidden" name="opd_ST_payables" value="<? echo ($st_hmo_Payables + $st_Payables) ?>">
+	<input type="hidden" name="opd_SPED_payables" value="<? echo ($sped_hmo_Payables + $sped_Payables) ?>">
 	<input type="hidden" name="opd_PF_payable" value="<? echo $opd_PF_payable ?>">
 	<input type="hidden" name="opd_cardiacMonitor" value="<? echo $opd_cardiacMonitor ?>">
 	<input type="hidden" name="opd_misc" value="<? echo $opd_misc ?>">

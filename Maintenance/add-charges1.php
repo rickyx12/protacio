@@ -7,6 +7,8 @@ $ipdPrice = $_POST['ipdPrice'];
 $hmoPrice = $_POST['hmoPrice'];
 $specialRates = $_POST['specialRates'];
 $discountable = $_POST['discountable'];
+$hospitalShare = $_POST['hospitalShare'];
+$pfShare = $_POST['pfShare'];
 
 $ro4 = new database4();
 
@@ -42,4 +44,22 @@ $data = array(
 
 $ro4->insertNow("availableCharges",$data);
 
+if( $category == "OT" || $category == "ST" || $category == "SPED" ) {
+
+	$lastID = $ro4->insertNow_lastID();
+
+	$therapy = array(
+
+			"chargesCode" => $lastID,
+			"pf" => $pfShare,
+			"hospital" => $hospitalShare,
+			"fee" => ($pfShare + $hospitalShare)
+
+		);
+
+	$ro4->insertNow("therapyCharges",$therapy);
+
+}else {
+
+}
 ?>

@@ -12,6 +12,20 @@
 	  	$(document).ready(function(){
 
 	  		$("#alert").hide();
+	  		$("#hospitalShareRow").hide();
+	  		$("#PFShareRow").hide();
+
+	  		$(document).on("change","#category",function(){
+
+	  			if( $("#category").val() == "OT" || $("#category").val() == "ST" || $("#category").val() == "SPED" ) {
+	  				$("#hospitalShareRow").show();
+	  				$("#PFShareRow").show();
+	  			}else {
+	  				$("#hospitalShareRow").hide();
+	  				$("#PFShareRow").hide();
+	  			}
+
+	  		});
 
 	  		$("#addChargesBtn").click(function(){
 
@@ -22,6 +36,8 @@
 	  			var hmoPrice = $("#hmoPrice").val();
 	  			var specialRates = $("#specialRates").val();
 	  			var discountable = $('input[name=discount]:checked').val();
+	  			var hospitalShare = $("#hospitalShare").val();
+	  			var pfShare = $("#pfShare").val();
 
 	  			var data = {
 	  				"description":description,
@@ -30,7 +46,9 @@
 	  				"ipdPrice":ipdPrice,
 	  				"hmoPrice":hmoPrice,
 	  				"specialRates":specialRates,
-	  				"discountable":discountable
+	  				"discountable":discountable,
+	  				"hospitalShare":hospitalShare,
+	  				"pfShare":pfShare
 	  			};
 
 	  			$.post("add-charges1.php",data,function(result){
@@ -41,6 +59,8 @@
 	  				$("#ipdPrice").val("");
 	  				$("#hmoPrice").val("");
 	  				$("#specialRates").val("");
+	  				$("#hospitalShareRow").hide();
+	  				$("#PFShareRow").hide();	  				
 	  			});
 
 	  		});
@@ -136,6 +156,24 @@
 	      								&nbsp;&nbsp;&nbsp;&nbsp;
 	      								<input type="radio" id="discountable" name="discount" value="no">&nbsp;No
 	   								 </div>
+								</div>
+							</div>
+
+							<div id="hospitalShareRow" class="row">
+								<div class="form-group">
+									<label class="control-label col-sm-3">Hospital</label>
+									<div class="col-sm-5">
+										<input type="text" class="form-control" id="hospitalShare" placeholder="Hospital Share">
+									</div>
+								</div>
+							</div>
+
+							<div id="PFShareRow" class="row">
+								<div class="form-group">
+									<label class="control-label col-sm-3">PF</label>
+									<div class="col-sm-5">
+										<input type="text" class="form-control" id="pfShare" placeholder="PF Share">
+									</div>
 								</div>
 							</div>
 

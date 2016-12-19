@@ -2406,7 +2406,7 @@ a {  border_bottom:10px; color:black; }
 
 $connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 
-$result = mysqli_query($connection, " select registrationNo,title from patientCharges where title not in ('PROFESSIONAL FEE','OT','ST') group by title order by title asc ") or die("Query fail: " . mysqli_error()); 
+$result = mysqli_query($connection, " select registrationNo,title from patientCharges where title not in ('PROFESSIONAL FEE','OT','ST','SPED') group by title order by title asc ") or die("Query fail: " . mysqli_error()); 
 
 echo "<table border=0 width='90%'>";
 echo "<Tr>";

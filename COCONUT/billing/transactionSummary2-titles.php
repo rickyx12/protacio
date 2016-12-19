@@ -28,8 +28,10 @@ $opd_OR = $_GET['opd_OR'];
 $opd_PT = $_GET['opd_PT'];
 $opd_OT = $_GET['opd_OT'];
 $opd_ST = $_GET['opd_ST'];
+$opd_SPED = $_GET['opd_SPED'];
 $opd_OT_payables = $_GET['opd_OT_payables'];
 $opd_ST_payables = $_GET['opd_ST_payables'];
+$opd_SPED_payables = $_GET['opd_SPED_payables'];
 $opd_cardiacMonitor = $_GET['opd_cardiacMonitor'];
 $opd_PF_payable = $_GET['opd_PF_payable'];
 $opd_misc = $_GET['opd_misc'];
@@ -352,6 +354,19 @@ $ipd_balance1 = 0;
 							</tr>
 						<? }else { $stTotal = 0; } ?>
 
+						<? if( ( $opd_SPED - $opd_SPED_payables ) > 0 ) { ?>
+							<tr>
+								<td>SPED</td>
+								<td></td>
+								<td>
+									<? 
+										$spedTotal = ( $opd_SPED - $opd_SPED_payables );
+										( $spedTotal > 0 ) ? $x = number_format(($spedTotal),2) : $x = ""; echo $x 
+									?>
+								</td>
+							</tr>
+						<? }else { $spedTotal = 0; } ?>
+
 
 						<? if( $opd_cardiacMonitor > 0 ) { ?>
 							<tr>
@@ -362,13 +377,13 @@ $ipd_balance1 = 0;
 						<? } ?>
 
 
-						<? if( ( $opd_PF_payable + $opd_OT_payables + $opd_ST_payables ) > 0 ) { ?>
+						<? if( ( $opd_PF_payable + $opd_OT_payables + $opd_ST_payables + $opd_SPED_payables ) > 0 ) { ?>
 							<tr>
 								<td>Payable-MD</td>
 								<td></td>
 								<td>
 									<? 
-										$payableTotal = ( $opd_PF_payable + $opd_OT_payables + $opd_ST_payables );
+										$payableTotal = ( $opd_PF_payable + $opd_OT_payables + $opd_ST_payables + $opd_SPED_payables );
 										($payableTotal > 0) ? $x = number_format($payableTotal,2) : $x = ""; echo $x 
 									?>
 								</td>
@@ -379,14 +394,14 @@ $ipd_balance1 = 0;
 							<td></td>
 							<td>
 								<? 
-									$opdDebit = ( $opdCreditCard + $opdCash + $opdHMO + $opdPHIC + $opdUnpaid + $opdDiscount + $opd_PF_payable);
+									$opdDebit = ( $opdCreditCard + $opdCash + $opdHMO + $opdPHIC + $opdUnpaid + $opdDiscount );
 									echo number_format($opdDebit,2); 
 								?>
 							</td>
 							<td>
 								<? 
 
-									$opdCredit = ( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_nursery + $opd_rehab + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal  + $payableTotal );
+									$opdCredit = ( $opdBalancePaid + $opd_pf_total + $opd_OR + $opd_erFee + $opd_nursery + $opd_rehab + $opd_ecg + $opd_spyrometry + $opd_xray + $opd_ultrasound + $opd_ctscan + $opd_laboratory + $opd_medicine + $opd_supplies + $opd_misc + $opd_derma + $opd_cardiacMonitor + $opd_others + $opd_PT + $otTotal + $stTotal + $spedTotal  + $payableTotal );
 									echo number_format($opdCredit,2); 
 								?>
 							</td>
