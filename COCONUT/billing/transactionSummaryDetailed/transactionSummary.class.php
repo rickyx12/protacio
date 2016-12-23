@@ -54,10 +54,20 @@ class transactionSummary {
 		}
 	}
 
-	//get only the PF share in OT/ST and reflect as payables because it paid as credit card
+	//get only the PF share in OT/ST/SPED and reflect as payables because it is paid as credit card
 	public function get_outpatients_therapy_payables_total($registrationNo,$shift) {
 		$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 		$result = mysqli_query($connection, "SELECT SUM(otShare) as otShare FROM patientCharges WHERE registrationNo = '$registrationNo' AND title IN ('OT','ST','SPED') AND status NOT LIKE 'DELETED%' AND paidVia = 'Credit Card' AND reportShift = '$shift' ") or die("Query fail: " . mysqli_error()); 
+		while($row = mysqli_fetch_array($result)) {
+			return $row['otShare'];
+		}
+	}
+
+
+	//get only the PF share in OT/ST/SPED and reflect as payables because it is covered by HMO
+	public function get_outpatients_therapy_payables_company_total($registrationNo,$shift) {
+		$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+		$result = mysqli_query($connection, "SELECT SUM(otShare) as otShare FROM patientCharges WHERE registrationNo = '$registrationNo' AND title IN ('OT','ST','SPED') AND status NOT LIKE 'DELETED%' AND company > 0 AND reportShift = '$shift' ") or die("Query fail: " . mysqli_error()); 
 		while($row = mysqli_fetch_array($result)) {
 			return $row['otShare'];
 		}
@@ -83,7 +93,7 @@ class transactionSummary {
 
 
 	//get patient's shift
-	public function get_outpatients_shift($registrationNo,$month,$day,$year) {
+	public function get_outpatients_shift($registrationNo,$month,$day,$year,$shift) {
 
 		if( $day < 10 ) {
 			$day_format = "0".$day;
@@ -94,9 +104,13 @@ class transactionSummary {
 		$format = $year."-".$month."-".$day_format;
 
 		$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-		$result = mysqli_query($connection, "SELECT pc.reportShift FROM registrationDetails rd,patientCharges pc WHERE pc.registrationNo = '$registrationNo' AND rd.registrationNo = '$registrationNo' AND rd.dateUnregistered = '$format' AND pc.status NOT LIKE 'DELETED%' and pc.reportShift != '' ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, "SELECT pc.reportShift FROM registrationDetails rd,patientCharges pc WHERE pc.registrationNo = '$registrationNo' AND rd.registrationNo = '$registrationNo' AND rd.dateUnregistered = '$format' AND pc.status NOT LIKE 'DELETED%' and pc.reportShift = '$shift' ") or die("Query fail: " . mysqli_error()); 
 		while($row = mysqli_fetch_array($result)) {
-			return $row['reportShift'];
+			if( $row['reportShift'] != "" ) {
+				return $row['reportShift'];
+			}else {
+				return "noShift";
+			}
 		}
 	}
 
@@ -153,6 +167,15 @@ class transactionSummary {
 		}
 	}
 
+	//get the total amount covered in philhealth
+	public function get_outpatients_philhealth_covered($registrationNo,$shift) {
+		$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+		$result = mysqli_query($connection, "SELECT SUM(pc.phic) as covered FROM registrationDetails rd,patientCharges pc WHERE rd.registrationNo = '$registrationNo' AND pc.registrationNo = rd.registrationNo AND pc.status NOT LIKE 'DELETED%' AND pc.reportShift = '$shift' ") or die("Query fail: " . mysqli_error()); 
+		while($row = mysqli_fetch_array($result)) {
+			return $row['covered'];
+		}
+	}
+
 	//sum the total unpaid amount of patient.
 	public function get_outpatients_unpaid_total($registrationNo,$shift) {
 		$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
@@ -170,7 +193,15 @@ class transactionSummary {
 		}
 	}
 
-	public function get_OR_number($registrationNo,$shift,$month,$day,$year) {
+	private $get_or_number;
+
+	public function get_or_number() {
+		return $this->get_or_number;
+	}
+
+	public function or_number($registrationNo,$shift,$month,$day,$year) {
+
+		$this->get_or_number = [];
 
 		if( $day < 10 ) {
 			$day_format = "0".$day;
@@ -181,9 +212,9 @@ class transactionSummary {
 		$format = $year."-".$month."-".$day_format;		
 
 		$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-		$result = mysqli_query($connection, "SELECT orNO FROM patientCharges WHERE registrationNo = '$registrationNo' AND status NOT LIKE 'DELETED%' AND reportShift = '$shift' AND datePaid = '$format' ") or die("Query fail: " . mysqli_error()); 
+		$result = mysqli_query($connection, "SELECT orNO FROM patientCharges WHERE registrationNo = '$registrationNo' AND status NOT LIKE 'DELETED%' AND reportShift = '$shift' AND datePaid = '$format' GROUP BY orNO ") or die("Query fail: " . mysqli_error()); 
 		while($row = mysqli_fetch_array($result)) {
-			return $row['orNO'];
+			$this->get_or_number[] = $row['orNO'];
 		}
 	}
 
