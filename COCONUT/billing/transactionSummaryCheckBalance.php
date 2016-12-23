@@ -215,6 +215,7 @@ $opd_phic = ( $ro3->showAllAccountTitle_opd_phic() + $ro3->showPFaccounts_phic()
 $opd_unpaid = ( $ro3->showAllAccountTitle_opd_unpaid() + $ro3->showPFaccounts_unpaid() + $otUnpaid + $stUnpaid + $spedUnpaid );
 $opd_discount = ( $ro3->showAllAccountTitle_opd_discount() + $ro3->showPFaccounts_discount() + $otDiscount + $stDiscount + $spedDiscount );
 
+
 $opd_paidBalance = $ro3->showAllAccountTitle_opd_balancePaid();
 $opd_PF_total = $ro3->showPFaccounts_total();
 $opd_PF_hospitalShare = (( $ro3->showPFaccounts_unpaid() + $ro3->showPFaccounts_cash() + $ro3->showPFaccounts_creditCards() + $ro3->showPFaccounts_phic() + $ro3->showPFaccounts_hmo() + $ro3->showPFaccounts_discount() ) - $ro3->showPFaccounts_payable() );
