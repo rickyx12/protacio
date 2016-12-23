@@ -68,6 +68,9 @@
 	$company_per_day = 0;
 	$companyTotal = 0;
 
+	$philhealth_per_day = 0;
+	$philhealthTotal = 0;
+
 	$unpaid_per_day = 0;
 	$unpaidTotal = 0;
 
@@ -98,6 +101,9 @@
 	$spirometry_per_day = 0;
 	$spirometryTotal = 0;
 
+	$cardiac_per_day = 0;
+	$cardiacTotal = 0;
+
 	$medicine_per_day = 0;
 	$medicineTotal = 0;
 
@@ -113,11 +119,14 @@
 	$ot_per_day = 0;
 	$otTotal = 0;
 
-	$pt_per_day = 0;
-	$ptTotal = 0;
-
 	$st_per_day = 0;
 	$stTotal = 0;
+
+	$sped_per_day = 0;
+	$spedTotal = 0;
+
+	$pt_per_day = 0;
+	$ptTotal = 0;
 
 	$derma_per_day = 0;
 	$dermaTotal = 0;
@@ -139,7 +148,29 @@
 	<head>
 	  <meta charset="UTF-8">
 	  <title>Transaction Summary</title>
+	  <script src='../../../../bower_components/jquery/dist/jquery.min.js'></script>
 	  <link rel='stylesheet' href='../../../../bower_components/bootstrap/dist/css/bootstrap.min.css'>
+
+	  <script>
+	  	
+	  	$(document).ready(function() {
+
+			$("#export").click(function() {
+				
+				var patients = '<table>'+$("#patients").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+				var summary = '<table>'+$("#summary").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
+				var reportName = 'Transaction_Summary_[<? echo $monthWord[$month]."-".$year ?>]';
+
+				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+patients+summary+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
+
+				 $('#ReportTableData').submit().remove();
+				 return false;	
+				 
+			});
+ 		
+	  	});
+
+	  </script>
 
 	  <style>
 
@@ -155,7 +186,7 @@
 	  	}
 
 	  	.box {
-	  		width: 200%;
+	  		width: 230%;
 	  		margin:2%;
 	  	}
 
@@ -175,7 +206,11 @@
 
 	  	.lightBlue {
 	  		background-color: lightblue;
-	  		padding:0.3%;
+	  		padding:0.2%;
+	  	}
+
+	  	.sped {
+	  		background-color:white;
 	  	}
 
 	  </style>
@@ -183,8 +218,8 @@
 	<body>
 		<div class='box'>
 			<div class=''>
-				<h2></h2>
-				<table rules=all>
+				<h5><a href="#" id="export"><img src="../../../export-to-excel/excel-icon.png"></a></h5>
+				<table rules=all id='patients'>
 					<thead>
 						<tr>
 							<th>&nbsp;</th>
@@ -193,26 +228,29 @@
 							<th class='white'>First Name</th>
 							<th class='yellow'>Cash & Card</th>
 							<th>HMO</th>
-							<th class='lightBlue'>Cash</th>
-							<th class='lightBlue'>Credit Card</th>
-							<th class='lightBlue'>A/R HMO</th>
-							<th class='lightBlue'>A/R Company</th>
-							<th class='lightBlue'>A/R PERSONAL</th>
-							<th class='yellow'>Discount</th>
+							<th style="background-color: lightblue; padding:0.2%; ">Cash</th>
+							<th style="background-color: lightblue; padding:0.2%; ">Credit Card</th>
+							<th style="background-color: lightblue; padding:0.2%; ">A/R HMO</th>
+							<th style="background-color: lightblue; padding:0.2%; ">A/R Company</th>
+							<th style="background-color: lightblue; padding:0.2%; ">PHILHEALTH</th>
+							<th style="background-color: lightblue; padding:0.2%; ">A/R PERSONAL</th>
+							<th style="background-color: yellow; padding:0.2%; ">Discount</th>
 							<th>Laboratory</th>
 							<th>&nbsp;XRAY</th>
 							<th>&nbsp;ULTRASOUND</th>
 							<th>&nbsp;ECG</th>
 							<th>&nbsp;CTSCAN</th>
 							<th>&nbsp;SPIRO</th>
+							<th>&nbsp;CARDIAC</th>
 							<th>&nbsp;Medicine</th>
 							<th>&nbsp;Supplies</th>
 							<th>&nbsp;ER FEE</th>
 							<th>&nbsp;MISC</th>
 							<th>&nbsp;OT</th>
-							<th class='orange'>&nbsp;PT</th>
 							<th>&nbsp;ST</th>
-							<th class='lightBlue'>&nbsp;DERMA</th>
+							<th>&nbsp;SPED</th>
+							<th style="background-color:orange; padding:0.2%; ">&nbsp;PT</th>
+							<th style="background-color: lightblue; padding:0.2%; ">&nbsp;DERMA</th>
 							<th>&nbsp;OTHERS</th>
 							<th>&nbsp;O.R</th>
 							<th>A/R OPD PAID</th>
@@ -225,37 +263,40 @@
 								
 							<? $ts->get_outpatients($year,$month,$day,$year1,$month1,$day1); ?>
 							<tr>
-								<td class='date'><h4><? echo $monthWord[$month] ?> <? echo $dayLoop ?>, <? echo $year ?></h4></td>
-								<td class='date'><!--OR#--></td>
-								<td class='date'><!--LASTNAME--></td>
-								<td class='date'><!--FIRSTNAME--></td>
-								<td class='date'><!--CASH & CARD--></td>
-								<td class='date'><!--HMO--></td>
-								<td class='date'><!--CASH--></td>
-								<td class='date'><!--CREDIT CARD--></td>
-								<td class='date'><!--HMO--></td>
-								<td class='date'><!--Company--></td>
-								<td class='date'><!--PERSNAL A/R--></td>
-								<td class='date'><!--DISCOUNT--></td>
-								<td class='date'><!--LABORATORY--></td>
-								<td class='date'><!--XRAY--></td>	
-								<td class='date'><!--UTZ--></td>
-								<td class='date'><!--ECG--></td>
-								<td class='date'><!--CTSCAN--></td>
-								<td class='date'><!--SPIRO--></td>
-								<td class='date'><!--MEDICINE--></td>
-								<td class='date'><!--SUPPLIES--></td>
-								<td class='date'><!--ER FEE--></td>
-								<td class='date'><!--MISC--></td>
-								<td class='date'><!--OT--></td>
-								<td class='date'><!--PT--></td>
-								<td class='date'><!--ST--></td>
-								<td class='date'><!--DERMA--></td>
-								<td class='date'><!--OTHERS--></td>
-								<td class='date'><!--O.R--></td>	
-								<td class='date'><!--A/R OPD PAID--></td>
-								<td class='date'><!--CLINIC REVENUE--></td>
-								<td class='date'><!--PF A/P (MD SHARE)--></td>					
+								<td style='background-color: yellow; padding: 0.3%'><h4><? echo $monthWord[$month] ?> <? echo $dayLoop ?>, <? echo $year ?></h4></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--OR#--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--LASTNAME--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--FIRSTNAME--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--HMO--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--CASH--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--CREDIT CARD--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--HMO--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--Company--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--PHILHEALTH--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--PERSNAL A/R--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--DISCOUNT--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--LABORATORY--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--XRAY--></td>	
+								<td style='background-color: yellow; padding: 0.3%'><!--UTZ--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--ECG--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--CTSCAN--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--SPIRO--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--CARDIAC--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--MEDICINE--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--SUPPLIES--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--ER FEE--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--MISC--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--OT--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--ST--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--PT--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--SPED--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--DERMA--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--OTHERS--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--O.R--></td>	
+								<td style='background-color: yellow; padding: 0.3%'><!--A/R OPD PAID--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--CLINIC REVENUE--></td>
+								<td style='background-color: yellow; padding: 0.3%'><!--PF A/P (MD SHARE)--></td>					
 							</tr>
 
 							<!--MORNNING-->
@@ -264,28 +305,31 @@
 								<th><!--OR#--></th>
 								<th><!--LASTNAME--></th>
 								<th><!--FIRSTNAME--></th>
-								<th class='yellow'><!--CASH & CARD--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></th>
 								<th><!--HMO--></th>
-								<th class='lightBlue'><!--CASH--></th>
-								<th class='lightBlue'><!--CREDIT CARD--></th>
-								<th class='lightBlue'><!--HMO--></th>
-								<th class='lightBlue'><!--Company--></th>
-								<th class='lightBlue'><!--PERSONAL A/R--></th>
-								<th class='yellow'><!--DISCOUNT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CASH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CREDIT CARD--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--HMO--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--Company--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PHILHEALTH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PERSONAL A/R--></th>
+								<th style="background-color: yellow; padding:0.2%; "><!--DISCOUNT--></th>
 								<th><!--LABORATORY--></th>
 								<th><!--XRAY--></th>
 								<th><!--UTZ--></th>
 								<th><!--ECG--></th>
 								<th><!--CTSCAN--></th>
 								<th><!--SPIRO--></th>
+								<th><!--CARDIAC--></th>
 								<th><!--MEDICINE--></th>
 								<th><!--SUPPLIES--></th>
 								<th><!--ER FEE--></th>
 								<th><!--MISC--></th>
 								<th><!--OT--></th>
-								<th class='orange'><!--PT--></th>
 								<th><!--ST--></th>
-								<th class='lightBlue'><!--DERMA--></th>
+								<th><!--SPED--></th>
+								<th style="background-color:orange; padding:0.2%; "><!--PT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--DERMA--></th>
 								<th><!--OTHERS--></th>
 								<th><!--O.R--></th>
 								<th><!--A/R OPD PAID--></th>
@@ -295,19 +339,82 @@
 
 							<? foreach( $ts->get_outpatients_registrationNo() as $registrationNo ) { ?>
 
-								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year) == "Morning" ) { ?>
+								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year,$morning) == "Morning" ) { ?>
 								<tr>
+
+									<?
+
+										//DEBIT
+										$cashPaidMorning = $ts->get_outpatients_cash_payment($registrationNo,$morning);
+										$creditCardMorning = $ts->get_outpatients_creditCard_payment($registrationNo,$morning);
+										$hmoMorning = $ts->get_outpatients_hmo_covered($registrationNo,$morning);
+										$companyMorning = $ts->get_outpatients_company_covered($registrationNo,$morning);
+										$philhealthMorning = $ts->get_outpatients_philhealth_covered($registrationNo,$morning);
+										$unpaidMorning = $ts->get_outpatients_unpaid_total($registrationNo,$morning);
+										$discountMorning = $ts->get_outpatients_discount_total($registrationNo,$morning);
+
+										//CREDIT
+										$laboratoryMorning = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$morning);
+										$xrayMorning = $ts->get_outpatients_title_total($registrationNo,"XRAY",$morning);
+										$utzMorning = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$morning);
+										$ecgMorning = $ts->get_outpatients_title_total($registrationNo,"ECG",$morning);
+										$ctscanMorning = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$morning);
+										$spirometryMorning = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$morning);
+										$cardiacMorning = $ts->get_outpatients_title_total($registrationNo,"CARDIAC MONITOR",$morning);
+										$medicineMorning = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$morning);
+										$suppliesMorning = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$morning);
+										$erfeeMorning = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$morning);
+										$miscMorning = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$morning);
+										$otMorning = $ts->get_outpatients_therapy_total($registrationNo,"OT",$morning);
+										$stMorning = $ts->get_outpatients_therapy_total($registrationNo,"ST",$morning);
+										$spedMorning = $ts->get_outpatients_therapy_total($registrationNo,"SPED",$morning);
+										$ptMorning = $ts->get_outpatients_title_total($registrationNo,"PT",$morning);
+										$dermaMorning = $ts->get_outpatients_title_total($registrationNo,"DERMA",$morning);
+										$othersMorning = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$morning);
+										$orMorning = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$morning);
+										$balanceMorning = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$morning);
+										$pfMorning = ( 
+												$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$morning) -
+												$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$morning)
+
+											);		
+										$payableMorning = (
+												$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$morning) +
+												$ts->get_outpatients_therapy_payables_total($registrationNo,$morning) +
+												$ts->get_outpatients_therapy_payables_company_total($registrationNo,$morning)
+											);																			
+
+
+									?>
 
 									<td><!----></td>
 
 									<td class='white'>
 										<?
-											echo $ts->get_OR_number($registrationNo,$morning,$month,$dayLoop,$year);
+											// OR#
+											$ts->or_number($registrationNo,$morning,$month,$dayLoop,$year);
+
+											//this is to avoid showing an error when there is no OR# like in HMO/Company
+											if( $ts->get_or_number() > 0 ) {
+
+												//for delimiters of OR# just in case there are more than one OR# existing
+												$orCount = count($ts->get_or_number());	
+
+												foreach( $ts->get_or_number() as $or ) {
+													if( $orCount > 1 ) {
+														echo $or.'/ ';
+													}else {
+														echo $or;
+													}
+												}
+
+											}
 										?>
 									</td>
 
 									<td class='white'>
 										<?
+											//LAST NAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$lastName = $ro->selectNow('patientRecord','lastName','patientNo',$patientNo);
 											echo $lastName;
@@ -316,29 +423,30 @@
 
 									<td class='white'>
 										<?
+											//FIRST NAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$firstName = $ro->selectNow('patientRecord','firstName','patientNo',$patientNo);
 											echo $firstName;
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$cashPaidMorning = $ts->get_outpatients_cash_payment($registrationNo,$morning);
-											$creditCardMorning = $ts->get_outpatients_creditCard_payment($registrationNo,$morning);
+											//CASH & CARD
 											echo $ro4->number_format($cashPaidMorning + $creditCardMorning);
 										?>
 									</td>
 
 									<td>
 										<?
+											//HMO/COMPANY
 											echo $ro->selectNow('registrationDetails','Company','registrationNo',$registrationNo)
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$cashPaidMorning = $ts->get_outpatients_cash_payment($registrationNo,$morning);
+											//CASH 
 											echo $ro4->number_format($cashPaidMorning);
 											$cashPaid_per_day += $cashPaidMorning;
 											$cashPaidTotal += $cashPaidMorning;
@@ -346,9 +454,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$creditCardMorning = $ts->get_outpatients_creditCard_payment($registrationNo,$morning);
+											//CREDIT CARD 
 											echo $ro4->number_format($creditCardMorning);
 											$creditCard_per_day += $creditCardMorning;
 											$creditCardTotal += $creditCardMorning;
@@ -356,9 +464,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$hmoMorning = $ts->get_outpatients_hmo_covered($registrationNo,$morning);
+											// A/R HMO
 											echo $ro4->number_format($hmoMorning);
 											$hmo_per_day += $hmoMorning;
 											$hmoTotal += $hmoMorning;
@@ -366,9 +474,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$companyMorning = $ts->get_outpatients_company_covered($registrationNo,$morning);
+											// A/R COMPANY
 											echo $ro4->number_format($companyMorning);
 											$company_per_day += $companyMorning;
 											$companyTotal += $companyMorning;
@@ -376,9 +484,19 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$unpaidMorning = $ts->get_outpatients_unpaid_total($registrationNo,$morning);
+											//PHILHEALTH
+											echo $ro4->number_format($philhealthMorning);
+											$philhealth_per_day += $philhealthMorning;
+											$philhealthTotal += $philhealthMorning;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											// A/R PERSONAL
 											echo $ro4->number_format($unpaidMorning);
 											$unpaid_per_day += $unpaidMorning;
 											$unpaidTotal += $unpaidMorning;
@@ -386,9 +504,9 @@
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$discountMorning = $ts->get_outpatients_discount_total($registrationNo,$morning);
+											//DISCOUNT
 											echo $ro4->number_format($discountMorning);
 											$discount_per_day += $discountMorning;
 											$discountTotal += $discountMorning;
@@ -398,7 +516,7 @@
 
 									<td>
 										<?
-											$laboratoryMorning = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$morning);
+											//LABORATORY
 											echo $ro4->number_format($laboratoryMorning);
 											$laboratory_per_day += $laboratoryMorning;
 											$laboratoryTotal += $laboratoryMorning;
@@ -408,7 +526,7 @@
 								
 									<td>
 										<?
-											$xrayMorning = $ts->get_outpatients_title_total($registrationNo,"XRAY",$morning);
+											//XRAY
 											echo $ro4->number_format($xrayMorning);
 											$xray_per_day += $xrayMorning;
 											$xrayTotal += $xrayMorning;
@@ -418,7 +536,7 @@
 
 									<td>
 										<?
-											$utzMorning = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$morning);
+											//ULTRASOUND
 											echo $ro4->number_format($utzMorning);
 											$utz_per_day += $utzMorning;
 											$utzTotal += $utzMorning;
@@ -428,7 +546,7 @@
 
 									<td>
 										<?
-											$ecgMorning = $ts->get_outpatients_title_total($registrationNo,"ECG",$morning);
+											//ECG
 											echo $ro4->number_format($ecgMorning);
 											$ecg_per_day += $ecgMorning;
 											$ecgTotal += $ecgMorning;
@@ -438,7 +556,7 @@
 
 									<td>
 										<?
-											$ctscanMorning = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$morning);
+											//CTSCAN
 											echo $ro4->number_format($ctscanMorning);
 											$ctscan_per_day += $ctscanMorning;
 											$ctscanTotal += $ctscanMorning;
@@ -448,7 +566,7 @@
 
 									<td>
 										<?
-											$spirometryMorning = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$morning);
+											//SPIROMETRY
 											echo $ro4->number_format($spirometryMorning);
 											$spirometry_per_day += $spirometryMorning;
 											$spirometryTotal += $spirometryMorning;
@@ -458,7 +576,17 @@
 
 									<td>
 										<?
-											$medicineMorning = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$morning);
+											//CARDIAC
+											echo $ro4->number_format($cardiacMorning);
+											$cardiac_per_day += $cardiacMorning;
+											$cardiacTotal += $cardiacMorning;
+
+										?>
+									</td>									
+
+									<td>
+										<?
+											//MEDICINE
 											echo $ro4->number_format($medicineMorning);
 											$medicine_per_day += $medicineMorning;
 											$medicineTotal += $medicineMorning;
@@ -468,7 +596,7 @@
 
 									<td>
 										<?
-											$suppliesMorning = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$morning);
+											//SUPPLIES
 											echo $ro4->number_format($suppliesMorning);
 											$supplies_per_day += $suppliesMorning;
 											$suppliesTotal += $suppliesMorning;
@@ -478,7 +606,7 @@
 
 									<td>
 										<?
-											$erfeeMorning = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$morning);
+											//ERFEE
 											echo $ro4->number_format($erfeeMorning);
 											$erfee_per_day += $erfeeMorning;
 											$erfeeTotal += $erfeeMorning;
@@ -488,7 +616,7 @@
 
 									<td>
 										<?
-											$miscMorning = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$morning);
+											//MISCELLANEOUS
 											echo $ro4->number_format($miscMorning);
 											$misc_per_day += $miscMorning;
 											$miscTotal += $miscMorning;
@@ -498,7 +626,7 @@
 
 									<td>
 										<?
-											$otMorning = $ts->get_outpatients_therapy_total($registrationNo,"OT",$morning);
+											//OT
 											echo $ro4->number_format($otMorning);
 											$ot_per_day += $otMorning;
 											$otTotal += $otMorning;
@@ -506,19 +634,9 @@
 										?>
 									</td>
 
-									<td class='orange'>
-										<?
-											$ptMorning = $ts->get_outpatients_title_total($registrationNo,"PT",$morning);
-											echo $ro4->number_format($ptMorning);
-											$pt_per_day += $ptMorning;
-											$ptTotal += $ptMorning;
-
-										?>
-									</td>
-
 									<td>
 										<?
-											$stMorning = $ts->get_outpatients_therapy_total($registrationNo,"ST",$morning);
+											//ST
 											echo $ro4->number_format($stMorning);
 											$st_per_day += $stMorning;
 											$stTotal += $stMorning;
@@ -526,9 +644,29 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td class='sped'>
 										<?
-											$dermaMorning = $ts->get_outpatients_title_total($registrationNo,"DERMA",$morning);
+											//SPED
+											echo $ro4->number_format($spedMorning);
+											$sped_per_day += $spedMorning;
+											$spedTotal += $spedMorning;
+
+										?>
+									</td>
+
+									<td style="background-color:orange; padding:0.2%; ">
+										<?
+											//PT
+											echo $ro4->number_format($ptMorning);
+											$pt_per_day += $ptMorning;
+											$ptTotal += $ptMorning;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											//DERMA
 											echo $ro4->number_format($dermaMorning);
 											$derma_per_day += $dermaMorning;
 											$dermaTotal += $dermaMorning;
@@ -538,7 +676,7 @@
 
 									<td>
 										<?
-											$othersMorning = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$morning);
+											//OTHERS
 											echo $ro4->number_format($othersMorning);
 											$others_per_day += $othersMorning;
 											$othersTotal += $othersMorning;
@@ -548,7 +686,7 @@
 
 									<td>
 										<?
-											$orMorning = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$morning);
+											//O.R
 											echo $ro4->number_format($orMorning);
 											$or_per_day += $orMorning;
 											$orTotal += $orMorning;
@@ -558,7 +696,7 @@
 
 									<td>
 										<?
-											$balanceMorning = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$morning);
+											// A/R OPD PAID
 											echo $ro4->number_format($balanceMorning);
 											$balance_per_day += $balanceMorning;
 											$balanceTotal += $balanceMorning;
@@ -568,11 +706,7 @@
 
 									<td>
 										<?
-											$pfMorning = ( 
-													$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$morning) -
-													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$morning)
-
-												);
+											//CLINIC REVENUE
 											echo $ro4->number_format($pfMorning);
 											$pf_per_day += $pfMorning;
 											$pfTotal += $pfMorning;
@@ -582,10 +716,7 @@
 
 									<td>
 										<?
-											$payableMorning = (
-													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$morning) +
-													$ts->get_outpatients_therapy_payables_total($registrationNo,$morning) 
-												);
+											//PF A/P(MD SHARE)
 											echo $ro4->number_format($payableMorning);
 											$payable_per_day += $payableMorning;
 											$payableTotal += $payableMorning;
@@ -604,28 +735,31 @@
 								<th><!--OR#--></th>
 								<th><!--LASTNAME--></th>
 								<th><!--FIRSTNAME--></th>
-								<th class='yellow'><!--CASH & CARD--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></th>
 								<th><!--HMO--></th>
-								<th class='lightBlue'><!--CASH--></th>
-								<th class='lightBlue'><!--CREDIT CARD--></th>
-								<th class='lightBlue'><!--HMO--></th>
-								<th class='lightBlue'><!--Company--></th>
-								<th class='lightBlue'><!--PERSONAL A/R--></th>
-								<th class='yellow'><!--DISCOUNT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CASH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CREDIT CARD--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--HMO--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--Company--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PHILHEALTH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PERSONAL A/R--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--DISCOUNT--></th>
 								<th><!--LABORATORY--></th>
 								<th><!--XRAY--></th>
 								<th><!--UTZ--></th>
 								<th><!--ECG--></th>
 								<th><!--CTSCAN--></th>
 								<th><!--SPIRO--></th>
+								<th><!--CARDIAC--></th>
 								<th><!--MEDICINE--></th>
 								<th><!--SUPPLIES--></th>
 								<th><!--ER FEE--></th>
 								<th><!--MISC--></th>
 								<th><!--OT--></th>
-								<th class='orange'><!--PT--></th>
 								<th><!--ST--></th>
-								<th class='lightBlue'><!--DERMA--></th>
+								<th class='sped'><!--SPED--></th>
+								<th style="background-color:orange; padding:0.2%; "><!--PT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--DERMA--></th>
 								<th><!--OTHERS--></th>
 								<th><!--O.R--></th>
 								<th><!--A/R OPD PAID--></th>
@@ -633,19 +767,81 @@
 							</tr>						
 							<? foreach( $ts->get_outpatients_registrationNo() as $registrationNo ) { ?>
 
-								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year) == "Noon" ) { ?>
+								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year,$noon) == "Noon" ) { ?>
 								<tr>
 									
+									<?
+										//DEBIT
+										$cashPaidNoon = $ts->get_outpatients_cash_payment($registrationNo,$noon);
+										$creditCardNoon = $ts->get_outpatients_creditCard_payment($registrationNo,$noon);
+										$hmoNoon = $ts->get_outpatients_hmo_covered($registrationNo,$noon);
+										$companyNoon = $ts->get_outpatients_company_covered($registrationNo,$noon);
+										$philhealthNoon = $ts->get_outpatients_philhealth_covered($registrationNo,$noon);
+										$unpaidNoon = $ts->get_outpatients_unpaid_total($registrationNo,$noon);
+										$discountNoon = $ts->get_outpatients_discount_total($registrationNo,$noon);
+
+
+										//CREDIT
+										$laboratoryNoon = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$noon);
+										$xrayNoon = $ts->get_outpatients_title_total($registrationNo,"XRAY",$noon);
+										$utzNoon = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$noon);
+										$ecgNoon = $ts->get_outpatients_title_total($registrationNo,"ECG",$noon);
+										$ctscanNoon = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$noon);
+										$spirometryNoon = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$noon);
+										$cardiacNoon = $ts->get_outpatients_title_total($registrationNo,"CARDIAC MONITOR",$noon);
+										$medicineNoon = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$noon);
+										$suppliesNoon = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$noon);
+										$erfeeNoon = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$noon);
+										$miscNoon = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$noon);
+										$otNoon = $ts->get_outpatients_therapy_total($registrationNo,"OT",$noon);
+										$stNoon = $ts->get_outpatients_therapy_total($registrationNo,"ST",$noon);
+										$spedNoon = $ts->get_outpatients_therapy_total($registrationNo,"SPED",$noon);
+										$ptNoon = $ts->get_outpatients_title_total($registrationNo,"PT",$noon);
+										$dermaNoon = $ts->get_outpatients_title_total($registrationNo,"DERMA",$noon);
+										$othersNoon = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$noon);
+										$orNoon = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$noon);
+										$balanceNoon = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$noon);
+										$pfNoon = ( 
+													$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$noon) -
+													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$noon)
+												);	
+										$payableNoon = (
+												$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$noon) +
+												$ts->get_outpatients_therapy_payables_total($registrationNo,$noon) +
+												$ts->get_outpatients_therapy_payables_company_total($registrationNo,$noon)
+											);																					
+
+									?>
+
 									<td><!----></td>
 
-									<td class='white'>
-										<?
-											echo $ts->get_OR_number($registrationNo,$noon,$month,$dayLoop,$year);
-										?>
-									</td>									
 
 									<td class='white'>
 										<?
+											// OR#
+											$ts->or_number($registrationNo,$noon,$month,$dayLoop,$year);
+
+											//this is to avoid showing an error when there is no OR# like in HMO/Company
+											if( $ts->get_or_number() > 0 ) {
+
+												//for delimiters of OR# just in case there are more than one OR# existing
+												$orCount = count($ts->get_or_number());	
+
+												foreach( $ts->get_or_number() as $or ) {
+													if( $orCount > 1 ) {
+														echo $or.'/ ';
+													}else {
+														echo $or;
+													}
+												}
+
+											}
+										?>
+									</td>								
+
+									<td class='white'>
+										<?
+											//LAST NAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$lastName = $ro->selectNow('patientRecord','lastName','patientNo',$patientNo);
 											echo $lastName;
@@ -654,29 +850,30 @@
 
 									<td class='white'>
 										<?
+											//FIRST NAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$firstName = $ro->selectNow('patientRecord','firstName','patientNo',$patientNo);
 											echo $firstName;
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$cashPaidNoon = $ts->get_outpatients_cash_payment($registrationNo,$noon);
-											$creditCardNoon = $ts->get_outpatients_creditCard_payment($registrationNo,$noon);
+											//CASH & CARD
 											echo $ro4->number_format($cashPaidNoon + $creditCardNoon);
 										?>
 									</td>
 
 									<td>
 										<?
+											// HMO/COMPANY
 											echo $ro->selectNow('registrationDetails','Company','registrationNo',$registrationNo)
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$cashPaidNoon = $ts->get_outpatients_cash_payment($registrationNo,$noon);
+											//CASH
 											echo $ro4->number_format($cashPaidNoon);
 											$cashPaid_per_day += $cashPaidNoon;
 											$cashPaidTotal += $cashPaidNoon;
@@ -684,9 +881,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$creditCardNoon = $ts->get_outpatients_creditCard_payment($registrationNo,$noon);
+											//CREDIT CARD
 											echo $ro4->number_format($creditCardNoon);
 											$creditCard_per_day += $creditCardNoon;
 											$creditCardTotal += $creditCardNoon;
@@ -694,9 +891,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$hmoNoon = $ts->get_outpatients_hmo_covered($registrationNo,$noon);
+											//HMO
 											echo $ro4->number_format($hmoNoon);
 											$hmo_per_day += $hmoNoon;
 											$hmoTotal += $hmoNoon;
@@ -704,9 +901,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$companyNoon = $ts->get_outpatients_company_covered($registrationNo,$noon);
+											//COMPANY
 											echo $ro4->number_format($companyNoon);
 											$company_per_day += $companyNoon;
 											$companyTotal += $companyNoon;
@@ -714,9 +911,19 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$unpaidNoon = $ts->get_outpatients_unpaid_total($registrationNo,$noon);
+											//PHILHEALTH
+											echo $ro4->number_format($philhealthNoon);
+											$philhealth_per_day += $philhealthNoon;
+											$philhealthTotal += $philhealthNoon;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											// A/R PERSONAL
 											echo $ro4->number_format($unpaidNoon);
 											$unpaid_per_day += $unpaidNoon;
 											$unpaidTotal += $unpaidNoon;
@@ -724,9 +931,9 @@
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$discountNoon = $ts->get_outpatients_discount_total($registrationNo,$noon);
+											//DISCOUNT
 											echo $ro4->number_format($discountNoon);
 											$discount_per_day += $discountNoon;
 											$discountTotal += $discountNoon;
@@ -736,7 +943,7 @@
 
 									<td>
 										<?
-											$laboratoryNoon = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$noon);
+											//LABORATORY
 											echo $ro4->number_format($laboratoryNoon);
 											$laboratory_per_day += $laboratoryNoon;
 											$laboratoryTotal += $laboratoryNoon;
@@ -745,7 +952,7 @@
 
 									<td>
 										<?
-											$xrayNoon = $ts->get_outpatients_title_total($registrationNo,"XRAY",$noon);
+											//XRAY
 											echo $ro4->number_format($xrayNoon);
 											$xray_per_day += $xrayNoon;
 											$xrayTotal += $xrayNoon;
@@ -755,7 +962,7 @@
 
 									<td>
 										<?
-											$utzNoon = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$noon);
+											//ULTRASOUND
 											echo $ro4->number_format($utzNoon);
 											$utz_per_day += $utzNoon;
 											$utzTotal += $utzNoon;
@@ -765,7 +972,7 @@
 
 									<td>
 										<?
-											$ecgNoon = $ts->get_outpatients_title_total($registrationNo,"ECG",$noon);
+											//ECG
 											echo $ro4->number_format($ecgNoon);
 											$ecg_per_day += $ecgNoon;
 											$ecgTotal += $ecgNoon;
@@ -775,7 +982,7 @@
 
 									<td>
 										<?
-											$ctscanNoon = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$noon);
+											//CTSCAN
 											echo $ro4->number_format($ctscanNoon);
 											$ctscan_per_day += $ctscanNoon;
 											$ctscanTotal += $ctscanNoon;
@@ -785,7 +992,7 @@
 
 									<td>
 										<?
-											$spirometryNoon = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$noon);
+											//SPIROMETRY
 											echo $ro4->number_format($spirometryNoon);
 											$spirometry_per_day += $spirometryNoon;
 											$spirometryTotal += $spirometryNoon;
@@ -795,7 +1002,17 @@
 
 									<td>
 										<?
-											$medicineNoon = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$noon);
+											//CARDIAC
+											echo $ro4->number_format($cardiacNoon);
+											$cardiac_per_day += $cardiacNoon;
+											$cardiacTotal += $cardiacNoon;
+
+										?>
+									</td>
+
+									<td>
+										<?
+											//MEDICINE
 											echo $ro4->number_format($medicineNoon);
 											$medicine_per_day += $medicineNoon;
 											$medicineTotal += $medicineNoon;
@@ -805,7 +1022,7 @@
 
 									<td>
 										<?
-											$suppliesNoon = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$noon);
+											//SUPPLIES
 											echo $ro4->number_format($suppliesNoon);
 											$supplies_per_day += $suppliesNoon;
 											$suppliesTotal += $suppliesNoon;
@@ -815,7 +1032,7 @@
 
 									<td>
 										<?
-											$erfeeNoon = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$noon);
+											//ERFEE
 											echo $ro4->number_format($erfeeNoon);
 											$erfee_per_day += $erfeeNoon;
 											$erfeeTotal += $erfeeNoon;
@@ -825,7 +1042,7 @@
 
 									<td>
 										<?
-											$miscNoon = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$noon);
+											//MISCELLANEOUS
 											echo $ro4->number_format($miscNoon);
 											$misc_per_day += $miscNoon;
 											$miscTotal += $miscNoon;
@@ -835,7 +1052,7 @@
 
 									<td>
 										<?
-											$otNoon = $ts->get_outpatients_therapy_total($registrationNo,"OT",$noon);
+											//OT
 											echo $ro4->number_format($otNoon);
 											$ot_per_day += $otNoon;
 											$otTotal += $otNoon;
@@ -843,19 +1060,9 @@
 										?>
 									</td>
 
-									<td class='orange'>
-										<?
-											$ptNoon = $ts->get_outpatients_title_total($registrationNo,"PT",$noon);
-											echo $ro4->number_format($ptNoon);
-											$pt_per_day += $ptNoon;
-											$ptTotal += $ptNoon;
-
-										?>
-									</td>
-
 									<td>
 										<?
-											$stNoon = $ts->get_outpatients_therapy_total($registrationNo,"ST",$noon);
+											//ST
 											echo $ro4->number_format($stNoon);
 											$st_per_day += $stNoon;
 											$stTotal += $stNoon;
@@ -863,9 +1070,29 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td class='sped'>
 										<?
-											$dermaNoon = $ts->get_outpatients_title_total($registrationNo,"DERMA",$noon);
+											//SPED
+											echo $ro4->number_format($spedNoon);
+											$sped_per_day += $spedNoon;
+											$spedTotal += $spedNoon;
+
+										?>
+									</td>
+
+									<td style="background-color:orange; padding:0.2%; ">
+										<?
+											//PT
+											echo $ro4->number_format($ptNoon);
+											$pt_per_day += $ptNoon;
+											$ptTotal += $ptNoon;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											//DERMA
 											echo $ro4->number_format($dermaNoon);
 											$derma_per_day += $dermaNoon;
 											$dermaTotal += $dermaNoon;
@@ -875,7 +1102,7 @@
 
 									<td>
 										<?
-											$othersNoon = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$noon);
+											//OTHERS
 											echo $ro4->number_format($othersNoon);
 											$others_per_day += $othersNoon;
 											$othersTotal += $othersNoon;
@@ -885,7 +1112,7 @@
 
 									<td>
 										<?
-											$orNoon = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$noon);
+											//O.R
 											echo $ro4->number_format($orNoon);
 											$or_per_day += $orNoon;
 											$orTotal += $orNoon;
@@ -895,7 +1122,7 @@
 
 									<td>
 										<?
-											$balanceNoon = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$noon);
+											// A/R OPD PAID
 											echo $ro4->number_format($balanceNoon);
 											$balance_per_day += $balanceNoon;
 											$balanceTotal += $balanceNoon;
@@ -905,10 +1132,7 @@
 
 									<td>
 										<?
-											$pfNoon = ( 
-														$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$noon) -
-														$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$noon)
-													);
+											//CLINIC REVENUE
 											echo $ro4->number_format($pfNoon);
 											$pf_per_day += $pfNoon;
 											$pfTotal += $pfNoon;
@@ -918,42 +1142,13 @@
 
 									<td>
 										<?
-											$payableNoon = (
-													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$noon) +
-													$ts->get_outpatients_therapy_payables_total($registrationNo,$noon)
-												);
+											//PF A/P(MD SHARE)
 											echo $ro4->number_format($payableNoon);
 											$payable_per_day += $payableNoon;
 											$payableTotal += $payableNoon;
 
 										?>
 									</td>
-
-									<td>
-										<?
-											$credit = (
-													$laboratoryTotal +
-													$xrayTotal +
-													$utzTotal +
-													$ecgTotal +
-													$ctscanTotal +
-													$spirometryTotal +
-													$medicineTotal +
-													$suppliesTotal +
-													$erfeeTotal +
-													$miscTotal +
-													$otTotal +
-													$ptTotal +
-													$stTotal +
-													$dermaTotal +
-													$othersTotal +
-													$orTotal +
-													$balanceTotal +
-													$pfTotal
-												);
-										?>
-									</td>
-
 
 								</tr>
 								<? } ?>
@@ -966,28 +1161,31 @@
 								<th><!--OR#--></th>
 								<th><!--LASTNAME--></th>
 								<th><!--FIRSTNAME--></th>
-								<th class='yellow'><!--CASH & CARD--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></th>
 								<th><!--HMO--></th>
-								<th class='lightBlue'><!--CASH--></th>
-								<th class='lightBlue'><!--CREDIT CARD--></th>
-								<th class='lightBlue'><!--HMO--></th>
-								<th class='lightBlue'><!--Company--></th>
-								<th class='lightBlue'><!--PERSONAL A/R--></th>
-								<th class='yellow'><!--DISCOUNT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CASH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CREDIT CARD--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--HMO--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--Company--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PHILHEALTH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PERSONAL A/R--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--DISCOUNT--></th>
 								<th><!--LABORATORY--></th>
 								<th><!--XRAY--></th>
 								<th><!--UTZ--></th>
 								<th><!--ECG--></th>
 								<th><!--CTSCAN--></th>
 								<th><!--SPIRO--></th>
+								<th><!--CARDIAC--></th>
 								<th><!--MEDICINE--></th>
 								<th><!--SUPPLIES--></th>
 								<th><!--ER FEE--></th>
 								<th><!--MISC--></th>
 								<th><!--OT--></th>
-								<th class='orange'><!--PT--></th>
 								<th><!--ST--></th>
-								<th class='lightBlue'><!--DERMA--></th>
+								<th class='sped'><!--SPED--></th>
+								<th style="background-color:orange; padding:0.2%; "><!--PT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--DERMA--></th>
 								<th><!--OTHERS--></th>
 								<th><!--O.R--></th>
 								<th><!--A/R OPD PAID--></th>
@@ -995,19 +1193,81 @@
 							</tr>						
 							<? foreach( $ts->get_outpatients_registrationNo() as $registrationNo ) { ?>
 
-								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year) == "Afternoon" ) { ?>
+								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year,$afternoon) == "Afternoon" ) { ?>
 								<tr>
+
+									<?
+										//DEBIT
+										$cashPaidAfternoon = $ts->get_outpatients_cash_payment($registrationNo,$afternoon);
+										$creditCardAfternoon = $ts->get_outpatients_creditCard_payment($registrationNo,$afternoon);
+										$hmoAfternoon = $ts->get_outpatients_hmo_covered($registrationNo,$afternoon);
+										$companyAfternoon = $ts->get_outpatients_company_covered($registrationNo,$afternoon);
+										$philhealthAfternoon = $ts->get_outpatients_philhealth_covered($registrationNo,$afternoon);
+										$unpaidAfternoon = $ts->get_outpatients_unpaid_total($registrationNo,$afternoon);
+										$discountAfternoon = $ts->get_outpatients_discount_total($registrationNo,$afternoon);
+
+										//CREDIT
+										$laboratoryAfternoon = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$afternoon);
+										$xrayAfternoon = $ts->get_outpatients_title_total($registrationNo,"XRAY",$afternoon);
+										$utzAfternoon = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$afternoon);
+										$ecgAfternoon = $ts->get_outpatients_title_total($registrationNo,"ECG",$afternoon);
+										$ctscanAfternoon = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$afternoon);
+										$spirometryAfternoon = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$afternoon);
+										$cardiacAfternoon = $ts->get_outpatients_title_total($registrationNo,"CARDIAC MONITOR",$afternoon);
+										$medicineAfternoon = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$afternoon);
+										$suppliesAfternoon = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$afternoon);
+										$erfeeAfternoon = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$afternoon);
+										$miscAfternoon = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$afternoon);
+										$otAfternoon = $ts->get_outpatients_therapy_total($registrationNo,"OT",$afternoon);
+										$stAfternoon = $ts->get_outpatients_therapy_total($registrationNo,"ST",$afternoon);
+										$spedAfternoon = $ts->get_outpatients_therapy_total($registrationNo,"SPED",$afternoon);
+										$ptAfternoon = $ts->get_outpatients_title_total($registrationNo,"PT",$afternoon);
+										$dermaAfternoon = $ts->get_outpatients_title_total($registrationNo,"DERMA",$afternoon);
+										$othersAfternoon = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$afternoon);
+										$orAfternoon = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$afternoon);
+										$balanceAfternoon = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$afternoon);
+										$pfAfternoon = (
+													$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$afternoon) - 
+													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$afternoon)
+												);										
+										$payableAfternoon = (
+												$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$afternoon) +
+												$ts->get_outpatients_therapy_payables_total($registrationNo,$afternoon) +
+												$ts->get_outpatients_therapy_payables_company_total($registrationNo,$afternoon)
+											);										
+
+
+									?>
 
 									<td><!----></td>
 
+
 									<td class='white'>
 										<?
-											echo $ts->get_OR_number($registrationNo,$afternoon,$month,$dayLoop,$year);
+											// OR#
+											$ts->or_number($registrationNo,$afternoon,$month,$dayLoop,$year);
+
+											//this is to avoid showing an error when there is no OR# like in HMO/Company
+											if( $ts->get_or_number() > 0 ) {
+
+												//for delimiters of OR# just in case there are more than one OR# existing
+												$orCount = count($ts->get_or_number());	
+
+												foreach( $ts->get_or_number() as $or ) {
+													if( $orCount > 1 ) {
+														echo $or.'/ ';
+													}else {
+														echo $or;
+													}
+												}
+
+											}
 										?>
 									</td>
 
 									<td class='white'>
 										<?
+											//LASTNAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$lastName = $ro->selectNow('patientRecord','lastName','patientNo',$patientNo);
 											echo $lastName;
@@ -1016,29 +1276,30 @@
 
 									<td class='white'>
 										<?
+											//FIRSTNAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$firstName = $ro->selectNow('patientRecord','firstName','patientNo',$patientNo);
 											echo $firstName;
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$cashPaidAfternoon = $ts->get_outpatients_cash_payment($registrationNo,$afternoon);
-											$creditCardAfternoon = $ts->get_outpatients_creditCard_payment($registrationNo,$afternoon);
+											// CASH & CARD
 											echo $ro4->number_format($cashPaidAfternoon + $creditCardAfternoon);
 										?>
 									</td>
 
 									<td>
 										<?
+											// HMO/COMPANY
 											echo $ro->selectNow('registrationDetails','Company','registrationNo',$registrationNo)
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$cashPaidAfternoon = $ts->get_outpatients_cash_payment($registrationNo,$afternoon);
+											//CASH
 											echo $ro4->number_format($cashPaidAfternoon);
 											$cashPaid_per_day += $cashPaidAfternoon;
 											$cashPaidTotal += $cashPaidAfternoon;
@@ -1046,9 +1307,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$creditCardAfternoon = $ts->get_outpatients_creditCard_payment($registrationNo,$afternoon);
+											//CREDIT CARD
 											echo $ro4->number_format($creditCardAfternoon);
 											$creditCard_per_day += $creditCardAfternoon;
 											$creditCardTotal += $creditCardAfternoon;
@@ -1056,9 +1317,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$hmoAfternoon = $ts->get_outpatients_hmo_covered($registrationNo,$afternoon);
+											//HMO
 											echo $ro4->number_format($hmoAfternoon);
 											$hmo_per_day += $hmoAfternoon;
 											$hmoTotal += $hmoAfternoon;
@@ -1066,9 +1327,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$companyAfternoon = $ts->get_outpatients_company_covered($registrationNo,$afternoon);
+											//COMPANY
 											echo $ro4->number_format($companyAfternoon);
 											$company_per_day += $companyAfternoon;
 											$companyTotal += $companyAfternoon;
@@ -1076,9 +1337,19 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$unpaidAfternoon = $ts->get_outpatients_unpaid_total($registrationNo,$afternoon);
+											//PHILHEALTH
+											echo $ro4->number_format($philhealthAfternoon);
+											$philhealth_per_day += $philhealthAfternoon;
+											$philhealthTotal += $philhealthAfternoon;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											// A/R PERSONAL
 											echo $ro4->number_format($unpaidAfternoon);
 											$unpaid_per_day += $unpaidAfternoon;
 											$unpaidTotal += $unpaidAfternoon;
@@ -1086,9 +1357,9 @@
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$discountAfternoon = $ts->get_outpatients_discount_total($registrationNo,$afternoon);
+											//DISCOUNT
 											echo $ro4->number_format($discountAfternoon);
 											$discount_per_day += $discountAfternoon;
 											$discountTotal += $discountAfternoon;
@@ -1098,7 +1369,7 @@
 
 									<td>
 										<?
-											$laboratoryAfternoon = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$afternoon);
+											//LABORATORY
 											echo $ro4->number_format($laboratoryAfternoon);
 											$laboratory_per_day += $laboratoryAfternoon;
 											$laboratoryTotal += $laboratoryAfternoon;
@@ -1107,7 +1378,7 @@
 
 									<td>
 										<?
-											$xrayAfternoon = $ts->get_outpatients_title_total($registrationNo,"XRAY",$afternoon);
+											//XRAY
 											echo $ro4->number_format($xrayAfternoon);
 											$xray_per_day += $xrayAfternoon;
 											$xrayTotal += $xrayAfternoon;
@@ -1117,7 +1388,7 @@
 
 									<td>
 										<?
-											$utzAfternoon = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$afternoon);
+											//ULTRASOUND
 											echo $ro4->number_format($utzAfternoon);
 											$utz_per_day += $utzAfternoon;
 											$utzTotal += $utzAfternoon;
@@ -1127,7 +1398,7 @@
 
 									<td>
 										<?
-											$ecgAfternoon = $ts->get_outpatients_title_total($registrationNo,"ECG",$afternoon);
+											//ECG
 											echo $ro4->number_format($ecgAfternoon);
 											$ecg_per_day += $ecgAfternoon;
 											$ecgTotal += $ecgAfternoon;
@@ -1137,7 +1408,7 @@
 
 									<td>
 										<?
-											$ctscanAfternoon = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$afternoon);
+											//CTSCAN
 											echo $ro4->number_format($ctscanAfternoon);
 											$ctscan_per_day += $ctscanAfternoon;
 											$ctscanTotal += $ctscanAfternoon;
@@ -1147,7 +1418,7 @@
 
 									<td>
 										<?
-											$spirometryAfternoon = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$afternoon);
+											//SPIROMETRY
 											echo $ro4->number_format($spirometryAfternoon);
 											$spirometry_per_day += $spirometryAfternoon;
 											$spirometryTotal += $spirometryAfternoon;
@@ -1157,7 +1428,17 @@
 
 									<td>
 										<?
-											$medicineAfternoon = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$afternoon);
+											//CARDIAC
+											echo $ro4->number_format($cardiacAfternoon);
+											$cardiac_per_day += $cardiacAfternoon;
+											$cardiacTotal += $cardiacAfternoon;
+
+										?>
+									</td>
+
+									<td>
+										<?
+											//MEDICINE
 											echo $ro4->number_format($medicineAfternoon);
 											$medicine_per_day += $medicineAfternoon;
 											$medicineTotal += $medicineAfternoon;
@@ -1167,7 +1448,7 @@
 
 									<td>
 										<?
-											$suppliesAfternoon = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$afternoon);
+											//SUPPLIES
 											echo $ro4->number_format($suppliesAfternoon);
 											$supplies_per_day += $suppliesAfternoon;
 											$suppliesTotal += $suppliesAfternoon;
@@ -1177,7 +1458,7 @@
 
 									<td>
 										<?
-											$erfeeAfternoon = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$afternoon);
+											//ERFEE
 											echo $ro4->number_format($erfeeAfternoon);
 											$erfee_per_day += $erfeeAfternoon;
 											$erfeeTotal += $erfeeAfternoon;
@@ -1187,7 +1468,7 @@
 
 									<td>
 										<?
-											$miscAfternoon = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$afternoon);
+											//MISCELLANEOUS
 											echo $ro4->number_format($miscAfternoon);
 											$misc_per_day += $miscAfternoon;
 											$miscTotal += $miscAfternoon;
@@ -1197,7 +1478,7 @@
 
 									<td>
 										<?
-											$otAfternoon = $ts->get_outpatients_therapy_total($registrationNo,"OT",$afternoon);
+											//OT
 											echo $ro4->number_format($otAfternoon);
 											$ot_per_day += $otAfternoon;
 											$otTotal += $otAfternoon;
@@ -1205,19 +1486,9 @@
 										?>
 									</td>
 
-									<td class='orange'>
-										<?
-											$ptAfternoon = $ts->get_outpatients_title_total($registrationNo,"PT",$afternoon);
-											echo $ro4->number_format($ptAfternoon);
-											$pt_per_day += $ptAfternoon;
-											$ptTotal += $ptAfternoon;
-
-										?>
-									</td>
-
 									<td>
 										<?
-											$stAfternoon = $ts->get_outpatients_therapy_total($registrationNo,"ST",$afternoon);
+											//ST
 											echo $ro4->number_format($stAfternoon);
 											$st_per_day += $stAfternoon;
 											$stTotal += $stAfternoon;
@@ -1225,9 +1496,29 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td class='sped'>
 										<?
-											$dermaAfternoon = $ts->get_outpatients_title_total($registrationNo,"DERMA",$afternoon);
+											//SPED
+											echo $ro4->number_format($spedAfternoon);
+											$sped_per_day += $spedAfternoon;
+											$spedTotal += $spedAfternoon;
+
+										?>
+									</td>
+
+									<td style="background-color:orange; padding:0.2%; ">
+										<?
+											//PT
+											echo $ro4->number_format($ptAfternoon);
+											$pt_per_day += $ptAfternoon;
+											$ptTotal += $ptAfternoon;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											//DERMA
 											echo $ro4->number_format($dermaAfternoon);
 											$derma_per_day += $dermaAfternoon;
 											$dermaTotal += $dermaAfternoon;
@@ -1237,7 +1528,7 @@
 
 									<td>
 										<?
-											$othersAfternoon = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$afternoon);
+											//OTHERS
 											echo $ro4->number_format($othersAfternoon);
 											$others_per_day += $othersAfternoon;
 											$othersTotal += $othersAfternoon;
@@ -1247,7 +1538,7 @@
 
 									<td>
 										<?
-											$orAfternoon = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$afternoon);
+											//O.R
 											echo $ro4->number_format($orAfternoon);
 											$or_per_day += $orAfternoon;
 											$orTotal += $orAfternoon;
@@ -1257,7 +1548,7 @@
 
 									<td>
 										<?
-											$balanceAfternoon = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$afternoon);
+											// A/R OPD PAID
 											echo $ro4->number_format($balanceAfternoon);
 											$balance_per_day += $balanceAfternoon;
 											$balanceTotal += $balanceAfternoon;
@@ -1267,10 +1558,7 @@
 
 									<td>
 										<?
-											$pfAfternoon = (
-														$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$afternoon) - 
-														$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$afternoon)
-													);
+											//CLINIC REVENUE
 											echo $ro4->number_format($pfAfternoon);
 											$pf_per_day += $pfAfternoon;
 											$pfTotal += $pfAfternoon;
@@ -1280,10 +1568,7 @@
 
 									<td>
 										<?
-											$payableAfternoon = (
-													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$afternoon) +
-													$ts->get_outpatients_therapy_payables_total($registrationNo,$afternoon)
-												);
+											// PF A/P(MD SHARE)
 											echo $ro4->number_format($payableAfternoon);
 											$payable_per_day += $payableAfternoon;
 											$payableTotal += $payableAfternoon;
@@ -1302,28 +1587,31 @@
 								<th><!--OR#--></th>
 								<th><!--LASTNAME--></th>
 								<th><!--FIRSTNAME--></th>
-								<th class='yellow'><!--CASH & CARD--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></th>
 								<th><!--HMO--></th>
-								<th class='lightBlue'><!--CASH--></th>
-								<th class='lightBlue'><!--CREDIT CARD--></th>
-								<th class='lightBlue'><!--HMO--></th>
-								<th class='lightBlue'><!--Company--></th>
-								<th class='lightBlue'><!--PERSONAL A/R--></th>
-								<th class='yellow'><!--DISCOUNT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CASH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CREDIT CARD--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--HMO--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--Company--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PHILHEALTH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PERSONAL A/R--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--DISCOUNT--></th>
 								<th><!--LABORATORY--></th>
 								<th><!--XRAY--></th>
 								<th><!--UTZ--></th>
 								<th><!--ECG--></th>
 								<th><!--CTSCAN--></th>
 								<th><!--SPIRO--></th>
+								<th><!--CARDIAC--></th>
 								<th><!--MEDICINE--></th>
 								<th><!--SUPPLIES--></th>
 								<th><!--ER FEE--></th>
 								<th><!--MISC--></th>
 								<th><!--OT--></th>
-								<th class='orange'><!--PT--></th>
 								<th><!--ST--></th>
-								<th class='lightBlue'><!--DERMA--></th>
+								<th><!--SPED--></th>
+								<th style="background-color:orange; padding:0.2%; "><!--PT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--DERMA--></th>
 								<th><!--OTHERS--></th>
 								<th><!--O.R--></th>
 								<th><!--A/R OPD PAID--></th>
@@ -1331,19 +1619,82 @@
 							</tr>						
 							<? foreach( $ts->get_outpatients_registrationNo() as $registrationNo ) { ?>
 
-								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year) == "Night" ) { ?>
+								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year,$night) == "Night" ) { ?>
 								<tr>
+
+									<?
+										//DEBIT
+										$cashPaidNight = $ts->get_outpatients_cash_payment($registrationNo,$night);
+										$creditCardNight = $ts->get_outpatients_creditCard_payment($registrationNo,$night);
+										$hmoNight = $ts->get_outpatients_hmo_covered($registrationNo,$night);
+										$companyNight = $ts->get_outpatients_company_covered($registrationNo,$night);
+										$philhealthNight = $ts->get_outpatients_philhealth_covered($registrationNo,$night);
+										$unpaidNight = $ts->get_outpatients_unpaid_total($registrationNo,$night);
+										$discountNight = $ts->get_outpatients_discount_total($registrationNo,$night);
+
+
+										//CREDIT
+										$laboratoryNight = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$night);
+										$xrayNight = $ts->get_outpatients_title_total($registrationNo,"XRAY",$night);
+										$utzNight = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$night);
+										$ecgNight = $ts->get_outpatients_title_total($registrationNo,"ECG",$night);
+										$ctscanNight = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$night);
+										$spirometryNight = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$night);
+										$cardiacNight = $ts->get_outpatients_title_total($registrationNo,"CARDIAC MONITOR",$night);
+										$medicineNight = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$night);
+										$suppliesNight = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$night);
+										$erfeeNight = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$night);
+										$miscNight = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$night);
+										$otNight = $ts->get_outpatients_therapy_total($registrationNo,"OT",$night);
+										$stNight = $ts->get_outpatients_therapy_total($registrationNo,"ST",$night);
+										$spedNight = $ts->get_outpatients_therapy_total($registrationNo,"SPED",$night);
+										$ptNight = $ts->get_outpatients_title_total($registrationNo,"PT",$night);
+										$dermaNight = $ts->get_outpatients_title_total($registrationNo,"DERMA",$night);
+										$othersNight = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$night);
+										$orNight = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$night);
+										$balanceNight = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$night);
+										$pfNight = (
+													$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$night) -
+													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$night)
+												);				
+										$payableNight = (
+													$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$night) +
+													$ts->get_outpatients_therapy_payables_total($registrationNo,$night) + 
+													$ts->get_outpatients_therapy_payables_company_total($registrationNo,$night)
+												);																		
+
+
+									?>
 
 									<td><!----></td>
 
+
 									<td class='white'>
 										<?
-											echo $ts->get_OR_number($registrationNo,$night,$month,$dayLoop,$year);
+											// OR#
+											$ts->or_number($registrationNo,$night,$month,$dayLoop,$year);
+
+											//this is to avoid showing an error when there is no OR# like in HMO/Company
+											if( $ts->get_or_number() > 0 ) {
+
+												//for delimiters of OR# just in case there are more than one OR# existing
+												$orCount = count($ts->get_or_number());	
+
+												foreach( $ts->get_or_number() as $or ) {
+													if( $orCount > 1 ) {
+														echo $or.'/ ';
+													}else {
+														echo $or;
+													}
+												}
+
+											}
 										?>
 									</td>
 
 									<td class='white'>
 										<?
+											//LAST NAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$lastName = $ro->selectNow('patientRecord','lastName','patientNo',$patientNo);
 											echo $lastName;
@@ -1352,29 +1703,30 @@
 
 									<td class='white'>
 										<?
+											//FIRST NAME
 											$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 											$firstName = $ro->selectNow('patientRecord','firstName','patientNo',$patientNo);
 											echo $firstName;
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$cashPaidNight = $ts->get_outpatients_cash_payment($registrationNo,$night);
-											$creditCardNight = $ts->get_outpatients_creditCard_payment($registrationNo,$night);
+											//CASH & CARD
 											echo $ro4->number_format($cashPaidNight + $creditCardNight);
 										?>
 									</td>
 
 									<td>
 										<?
+											// HMO/COMPANY
 											echo $ro->selectNow('registrationDetails','Company','registrationNo',$registrationNo)
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$cashPaidNight = $ts->get_outpatients_cash_payment($registrationNo,$night);
+											//CASH
 											echo $ro4->number_format($cashPaidNight);
 											$cashPaid_per_day += $cashPaidNight;
 											$cashPaidTotal += $cashPaidNight;
@@ -1382,9 +1734,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$creditCardNight = $ts->get_outpatients_creditCard_payment($registrationNo,$night);
+											//CREDIT CARD
 											echo $ro4->number_format($creditCardNight);
 											$creditCard_per_day += $creditCardNight;
 											$creditCardTotal += $creditCardNight;
@@ -1392,9 +1744,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$hmoNight = $ts->get_outpatients_hmo_covered($registrationNo,$night);
+											//HMO
 											echo $ro4->number_format($hmoNight);
 											$hmo_per_day += $hmoNight;
 											$hmoTotal += $hmoNight;
@@ -1402,9 +1754,9 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$companyNight = $ts->get_outpatients_company_covered($registrationNo,$night);
+											//COMPANY
 											echo $ro4->number_format($companyNight);
 											$company_per_day += $companyNight;
 											$companyTotal += $companyNight;
@@ -1412,9 +1764,19 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td style="background-color: lightblue; padding:0.2%; ">
 										<?
-											$unpaidNight = $ts->get_outpatients_unpaid_total($registrationNo,$night);
+											//PHILHEALTH
+											echo $ro4->number_format($philhealthNight);
+											$philhealth_per_day += $philhealthNight;
+											$philhealthTotal += $philhealthNight;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											// A/R PERSONAL
 											echo $ro4->number_format($unpaidNight);
 											$unpaid_per_day += $unpaidNight;
 											$unpaidTotal += $unpaidNight;
@@ -1422,9 +1784,9 @@
 										?>
 									</td>
 
-									<td class='yellow'>
+									<td style='background-color: yellow; padding: 0.3%'>
 										<?
-											$discountNight = $ts->get_outpatients_discount_total($registrationNo,$night);
+											//DISCOUNT
 											echo $ro4->number_format($discountNight);
 											$discount_per_day += $discountNight;
 											$discountTotal += $discountNight;
@@ -1434,7 +1796,7 @@
 
 									<td>
 										<?
-											$laboratoryNight = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$night);
+											//LABORATORY
 											echo $ro4->number_format($laboratoryNight);
 											$laboratory_per_day += $laboratoryNight;
 											$laboratoryTotal += $laboratoryNight;
@@ -1443,7 +1805,7 @@
 
 									<td>
 										<?
-											$xrayNight = $ts->get_outpatients_title_total($registrationNo,"XRAY",$night);
+											//XRAY
 											echo $ro4->number_format($xrayNight);
 											$xray_per_day += $xrayNight;
 											$xrayTotal += $xrayNight;
@@ -1453,7 +1815,7 @@
 
 									<td>
 										<?
-											$utzNight = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$night);
+											//ULTRASOUND
 											echo $ro4->number_format($utzNight);
 											$utz_per_day += $utzNight;
 											$utzTotal += $utzNight;
@@ -1463,7 +1825,7 @@
 
 									<td>
 										<?
-											$ecgNight = $ts->get_outpatients_title_total($registrationNo,"ECG",$night);
+											//ECG
 											echo $ro4->number_format($ecgNight);
 											$ecg_per_day += $ecgNight;
 											$ecgTotal += $ecgNight;
@@ -1473,7 +1835,7 @@
 
 									<td>
 										<?
-											$ctscanNight = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$night);
+											//CTSCAN
 											echo $ro4->number_format($ctscanNight);
 											$ctscan_per_day += $ctscanNight;
 											$ctscanTotal += $ctscanNight;
@@ -1483,7 +1845,7 @@
 
 									<td>
 										<?
-											$spirometryNight = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$night);
+											//SPIROMETRY
 											echo $ro4->number_format($spirometryNight);
 											$spirometry_per_day += $spirometryNight;
 											$spirometryTotal += $spirometryNight;
@@ -1493,7 +1855,17 @@
 
 									<td>
 										<?
-											$medicineNight = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$night);
+											//CARDIAC
+											echo $ro4->number_format($cardiacNight);
+											$cardiac_per_day += $cardiacNight;
+											$cardiacTotal += $cardiacNight;
+
+										?>
+									</td>
+
+									<td>
+										<?
+											//MEDICINE
 											echo $ro4->number_format($medicineNight);
 											$medicine_per_day += $medicineNight;
 											$medicineTotal += $medicineNight;
@@ -1503,7 +1875,7 @@
 
 									<td>
 										<?
-											$suppliesNight = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$night);
+											//SUPPLIES
 											echo $ro4->number_format($suppliesNight);
 											$supplies_per_day += $suppliesNight;
 											$suppliesTotal += $suppliesNight;
@@ -1513,7 +1885,7 @@
 
 									<td>
 										<?
-											$erfeeNight = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$night);
+											//ERFEE
 											echo $ro4->number_format($erfeeNight);
 											$erfee_per_day += $erfeeNight;
 											$erfeeTotal += $erfeeNight;
@@ -1523,7 +1895,7 @@
 
 									<td>
 										<?
-											$miscNight = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$night);
+											//MISCELLANEOUS
 											echo $ro4->number_format($miscNight);
 											$misc_per_day += $miscNight;
 											$miscTotal += $miscNight;
@@ -1533,7 +1905,7 @@
 
 									<td>
 										<?
-											$otNight = $ts->get_outpatients_therapy_total($registrationNo,"OT",$night);
+											//OT
 											echo $ro4->number_format($otNight);
 											$ot_per_day += $otNight;
 											$otTotal += $otNight;
@@ -1541,19 +1913,9 @@
 										?>
 									</td>
 
-									<td class='orange'>
-										<?
-											$ptNight = $ts->get_outpatients_title_total($registrationNo,"PT",$night);
-											echo $ro4->number_format($ptNight);
-											$pt_per_day += $ptNight;
-											$ptTotal += $ptNight;
-
-										?>
-									</td>
-
 									<td>
 										<?
-											$stNight = $ts->get_outpatients_therapy_total($registrationNo,"ST",$night);
+											//ST
 											echo $ro4->number_format($stNight);
 											$st_per_day += $stNight;
 											$stTotal += $stNight;
@@ -1561,9 +1923,29 @@
 										?>
 									</td>
 
-									<td class='lightBlue'>
+									<td class='sped'>
 										<?
-											$dermaNight = $ts->get_outpatients_title_total($registrationNo,"DERMA",$night);
+											//SPED
+											echo $ro4->number_format($spedNight);
+											$sped_per_day += $spedNight;
+											$spedTotal += $spedNight;
+
+										?>
+									</td>
+
+									<td style="background-color:orange; padding:0.2%; ">
+										<?
+											//PT
+											echo $ro4->number_format($ptNight);
+											$pt_per_day += $ptNight;
+											$ptTotal += $ptNight;
+
+										?>
+									</td>
+
+									<td style="background-color: lightblue; padding:0.2%; ">
+										<?
+											//DERMA
 											echo $ro4->number_format($dermaNight);
 											$derma_per_day += $dermaNight;
 											$dermaTotal += $dermaNight;
@@ -1573,7 +1955,7 @@
 
 									<td>
 										<?
-											$othersNight = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$night);
+											//OTHERS
 											echo $ro4->number_format($othersNight);
 											$others_per_day += $othersNight;
 											$othersTotal += $othersNight;
@@ -1583,7 +1965,7 @@
 
 									<td>
 										<?
-											$orNight = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$night);
+											//O.R
 											echo $ro4->number_format($orNight);
 											$or_per_day += $orNight;
 											$orTotal += $orNight;
@@ -1593,7 +1975,7 @@
 
 									<td>
 										<?
-											$balanceNight = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$night);
+											// A/R OPD PAID
 											echo $ro4->number_format($balanceNight);
 											$balance_per_day += $balanceNight;
 											$balanceTotal += $balanceNight;
@@ -1604,10 +1986,7 @@
 
 									<td>
 										<?
-											$pfNight = (
-														$ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$night) -
-														$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$night)
-													);
+											//CLINIC REVENUE
 											echo $ro4->number_format($pfNight);
 											$pf_per_day += $pfNight;
 											$pfTotal += $pfNight;
@@ -1617,10 +1996,7 @@
 
 									<td>
 										<?
-											$payableNight = (
-														$ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$night) +
-														$ts->get_outpatients_therapy_payables_total($registrationNo,$night)
-													);
+											// PF A/P(MD SHARE)
 											echo $ro4->number_format($payableNight);
 											$payable_per_day += $payableNight;
 											$payableTotal += $payableNight;
@@ -1639,48 +2015,109 @@
 								<th><!--OR#--></th>
 								<th><!--LASTNAME--></th>
 								<th><!--FIRSTNAME--></th>
-								<th class='yellow'><!--CASH & CARD--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></th>
 								<th><!--HMO--></th>
-								<th class='lightBlue'><!--CASH PAID--></th>
-								<th class='lightBlue'><!--CREDIT CARD--></th>
-								<th class='lightBlue'><!--HMO--></th>
-								<th class='lightBlue'><!--Company--></th>
-								<th class='lightBlue'><!--PERSONAL A/R--></th>
-								<th class='yellow'><!--DISCOUNT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CASH PAID--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--CREDIT CARD--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--HMO--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--Company--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PHILHEALTH--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--PERSONAL A/R--></th>
+								<th style='background-color: yellow; padding: 0.3%'><!--DISCOUNT--></th>
 								<th><!--LABORATORY--></th>
 								<th><!--XRAY--></th>
 								<th><!--UTZ--></th>
 								<th><!--ECG--></th>
 								<th><!--CTSCAN--></th>
 								<th><!--SPIRO--></th>
+								<th><!--CARDIAC--></th>
 								<th><!--MEDICINE--></th>
 								<th><!--SUPPLIES--></th>
 								<th><!--ER FEE--></th>
 								<th><!--MISC--></th>
 								<th><!--OT--></th>
-								<th class='orange'><!--PT--></th>
 								<th><!--ST--></th>
-								<th class='lightBlue'><!--DERMA--></th>
+								<th><!--SPED--></th>
+								<th style="background-color:orange; padding:0.2%; "><!--PT--></th>
+								<th style="background-color: lightblue; padding:0.2%; "><!--DERMA--></th>
 								<th><!--OTHERS--></th>
 								<th><!--O.R--></th>
 								<th><!--A/R OPD PAID--></th>
 								<th><!--CLINIC REVENUE--></th>								
 							</tr>						
 							<? foreach( $ts->get_outpatients_registrationNo() as $registrationNo ) { ?>
-							
-								<? if( $ts->check_total($registrationNo) > 0 ) { ?>
+								
+								<? if( $ts->get_outpatients_shift($registrationNo,$month,$dayLoop,$year,$noShift) == "noShift" ) { ?>
+									<? if( $ts->check_total($registrationNo) > 0 ) { ?>
 									<tr>
+										<?
+
+											//DEBIT
+											$hmo_no_shift = $ts->get_outpatients_hmo_covered($registrationNo,$noShift);
+											$company_no_shift = $ts->get_outpatients_company_covered($registrationNo,$noShift);
+											$philhealth_no_shift = $ts->get_outpatients_philhealth_covered($registrationNo,$noShift);
+											$unpaid_no_shift = $ts->get_outpatients_unpaid_total($registrationNo,$noShift);
+											$discount_no_shift = $ts->get_outpatients_discount_total($registrationNo,$noShift);
+
+											//CREDIT
+											$laboratory_no_shift = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$noShift);
+											$xray_no_shift = $ts->get_outpatients_title_total($registrationNo,"XRAY",$noShift);
+											$utz_no_shift = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$noShift);
+											$ecg_no_shift = $ts->get_outpatients_title_total($registrationNo,"ECG",$noShift);
+											$ctscan_no_shift = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$noShift);
+											$spirometry_no_shift = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$noShift);
+											$cardiac_no_shift = $ts->get_outpatients_title_total($registrationNo,"CARDIAC MONITOR",$noShift);
+											$medicine_no_shift = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$noShift);
+											$supplies_no_shift = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$noShift);
+											$erfee_no_shift = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$noShift);
+											$misc_no_shift = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$noShift);
+											$ot_no_shift = $ts->get_outpatients_therapy_total($registrationNo,"OT",$noShift);
+											$st_no_shift = $ts->get_outpatients_therapy_total($registrationNo,"ST",$noShift);
+											$sped_no_shift = $ts->get_outpatients_therapy_total($registrationNo,"SPED",$noShift);
+											$pt_no_shift = $ts->get_outpatients_title_total($registrationNo,"PT",$noShift);
+											$derma_no_shift = $ts->get_outpatients_title_total($registrationNo,"DERMA",$noShift);
+											$others_no_shift = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$noShift);
+											$or_no_shift = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$noShift);
+											$balance_no_shift = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$noShift);
+											$pf_no_shift = $ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$noShift);
+											$payable_no_shift = ($ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$noShift) + $ts->get_outpatients_therapy_payables_total($registrationNo,$noShift));											
+
+
+
+
+										?>
 
 										<td><!----></td>
 										
+
 										<td class='white'>
 											<?
-												echo $ts->get_OR_number($registrationNo,$noShift,$month,$dayLoop,$year);
+												// OR#
+
+												$ts->or_number($registrationNo,$noShift,$month,$dayLoop,$year);
+
+												//this is to avoid showing an error when there is no OR# like in HMO/Company
+												if( $ts->get_or_number() > 0 ) {
+
+													//for delimiters of OR# just in case there are more than one OR# existing
+													$orCount = count($ts->get_or_number());	
+
+													foreach( $ts->get_or_number() as $or ) {
+														if( $orCount > 1 ) {
+															echo $or.'/ ';
+														}else {
+															echo $or;
+														}
+													}
+
+												}
 											?>
 										</td>
 
 										<td class='white'>
 											<?
+
+												//LAST NAME
 												$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 												$lastName = $ro->selectNow('patientRecord','lastName','patientNo',$patientNo);
 												echo $lastName;
@@ -1689,27 +2126,29 @@
 
 										<td class='white'>
 											<?
+												//FIRST NAME
 												$patientNo = $ro->selectNow('registrationDetails','patientNo','registrationNo',$registrationNo);
 												$firstName = $ro->selectNow('patientRecord','firstName','patientNo',$patientNo);
 												echo $firstName;
 											?>
 										</td>
 
-										<td class='yellow'><!--CASH & CARD--></td>
+										<td style='background-color: yellow; padding: 0.3%'><!--CASH & CARD--></td>
 
 										<td>
 											<?
+												// HMO/COMPANY
 												echo $ro->selectNow('registrationDetails','Company','registrationNo',$registrationNo)
 											?>
 										</td>
 
-										<td class='lightBlue'><!--CASH PAID--></td>
+										<td style="background-color: lightblue; padding:0.2%; "><!--CASH PAID--></td>
 
-										<td class='lightBlue'><!--CREDIT CARD--></td>
+										<td style="background-color: lightblue; padding:0.2%; "><!--CREDIT CARD--></td>
 
-										<td class='lightBlue'>
+										<td style="background-color: lightblue; padding:0.2%; ">
 											<?
-												$hmo_no_shift = $ts->get_outpatients_hmo_covered($registrationNo,$noShift);
+												//HMO
 												echo $ro4->number_format($hmo_no_shift);
 												$hmo_per_day += $hmo_no_shift;
 												$hmoTotal += $hmo_no_shift;
@@ -1717,9 +2156,9 @@
 											?>
 										</td>
 
-										<td class='lightBlue'>
+										<td style="background-color: lightblue; padding:0.2%; ">
 											<?
-												$company_no_shift = $ts->get_outpatients_company_covered($registrationNo,$noShift);
+												//COMPANY
 												echo $ro4->number_format($company_no_shift);
 												$company_per_day += $company_no_shift;
 												$companyTotal += $company_no_shift;
@@ -1727,9 +2166,19 @@
 											?>
 										</td>
 
-										<td class='lightBlue'>
+										<td style="background-color: lightblue; padding:0.2%; ">
 											<?
-												$unpaid_no_shift = $ts->get_outpatients_unpaid_total($registrationNo,$noShift);
+												//PHILHEALTH
+												echo $ro4->number_format($philhealth_no_shift);
+												$philhealth_per_day += $philhealth_no_shift;
+												$philhealthTotal += $philhealth_no_shift;
+
+											?>
+										</td>
+
+										<td style="background-color: lightblue; padding:0.2%; ">
+											<?
+												// A/R PERSONAL
 												echo $ro4->number_format($unpaid_no_shift);
 												$unpaid_per_day += $unpaid_no_shift;
 												$unpaidTotal += $unpaid_no_shift;
@@ -1737,9 +2186,9 @@
 											?>
 										</td>
 
-										<td class='yellow'>
+										<td style='background-color: yellow; padding: 0.3%'>
 											<?
-												$discount_no_shift = $ts->get_outpatients_discount_total($registrationNo,$noShift);
+												//DISCOUNT
 												echo $ro4->number_format($discount_no_shift);
 												$discount_per_day += $discount_no_shift;
 												$discountTotal += $discount_no_shift;
@@ -1749,7 +2198,7 @@
 
 										<td>
 											<?
-												$laboratory_no_shift = $ts->get_outpatients_title_total($registrationNo,"LABORATORY",$noShift);
+												//LABORATORY
 												echo $ro4->number_format($laboratory_no_shift);
 												$laboratory_per_day += $laboratory_no_shift;
 												$laboratoryTotal += $laboratory_no_shift;
@@ -1758,7 +2207,7 @@
 
 										<td>
 											<?
-												$xray_no_shift = $ts->get_outpatients_title_total($registrationNo,"XRAY",$noShift);
+												//XRAY
 												echo $ro4->number_format($xray_no_shift);
 												$xray_per_day += $xray_no_shift;
 												$xrayTotal += $xray_no_shift;
@@ -1768,7 +2217,7 @@
 
 										<td>
 											<?
-												$utz_no_shift = $ts->get_outpatients_title_total($registrationNo,"ULTRASOUND",$noShift);
+												//ULTRASOUND
 												echo $ro4->number_format($utz_no_shift);
 												$utz_per_day += $utz_no_shift;
 												$utzTotal += $utz_no_shift;
@@ -1778,7 +2227,7 @@
 
 										<td>
 											<?
-												$ecg_no_shift = $ts->get_outpatients_title_total($registrationNo,"ECG",$noShift);
+												//ECG
 												echo $ro4->number_format($ecg_no_shift);
 												$ecg_per_day += $ecg_no_shift;
 												$ecgTotal += $ecg_no_shift;
@@ -1788,7 +2237,7 @@
 
 										<td>
 											<?
-												$ctscan_no_shift = $ts->get_outpatients_title_total($registrationNo,"CTSCAN",$noShift);
+												//CTSCAN
 												echo $ro4->number_format($ctscan_no_shift);
 												$ctscan_per_day += $ctscan_no_shift;
 												$ctscanTotal += $ctscan_no_shift;
@@ -1798,7 +2247,7 @@
 
 										<td>
 											<?
-												$spirometry_no_shift = $ts->get_outpatients_title_total($registrationNo,"SPIROMETRY",$noShift);
+												//SPIROMETRY
 												echo $ro4->number_format($spirometry_no_shift);
 												$spirometry_per_day += $spirometry_no_shift;
 												$spirometryTotal += $spirometry_no_shift;
@@ -1808,7 +2257,17 @@
 
 										<td>
 											<?
-												$medicine_no_shift = $ts->get_outpatients_title_total($registrationNo,"MEDICINE",$noShift);
+												//CARDIAC
+												echo $ro4->number_format($cardiac_no_shift);
+												$cardiac_per_day += $cardiac_no_shift;
+												$cardiacTotal += $cardiac_no_shift;
+
+											?>
+										</td>
+
+										<td>
+											<?
+												//MEDICINE
 												echo $ro4->number_format($medicine_no_shift);
 												$medicine_per_day += $medicine_no_shift;
 												$medicineTotal += $medicine_no_shift;
@@ -1818,7 +2277,7 @@
 
 										<td>
 											<?
-												$supplies_no_shift = $ts->get_outpatients_title_total($registrationNo,"SUPPLIES",$noShift);
+												//SUPPLIES
 												echo $ro4->number_format($supplies_no_shift);
 												$supplies_per_day += $supplies_no_shift;
 												$suppliesTotal += $supplies_no_shift;
@@ -1828,7 +2287,7 @@
 
 										<td>
 											<?
-												$erfee_no_shift = $ts->get_outpatients_title_total($registrationNo,"ER FEE",$noShift);
+												//ERFEE
 												echo $ro4->number_format($erfee_no_shift);
 												$erfee_per_day += $erfee_no_shift;
 												$erfeeTotal += $erfee_no_shift;
@@ -1838,7 +2297,7 @@
 
 										<td>
 											<?
-												$misc_no_shift = $ts->get_outpatients_title_total($registrationNo,"MISCELLANEOUS",$noShift);
+												//MISCELLANEOUS
 												echo $ro4->number_format($misc_no_shift);
 												$misc_per_day += $misc_no_shift;
 												$miscTotal += $misc_no_shift;
@@ -1848,7 +2307,7 @@
 
 										<td>
 											<?
-												$ot_no_shift = $ts->get_outpatients_therapy_total($registrationNo,"OT",$noShift);
+												//OT
 												echo $ro4->number_format($ot_no_shift);
 												$ot_per_day += $ot_no_shift;
 												$otTotal += $ot_no_shift;
@@ -1856,19 +2315,9 @@
 											?>
 										</td>
 
-										<td class='orange'>
-											<?
-												$pt_no_shift = $ts->get_outpatients_title_total($registrationNo,"PT",$noShift);
-												echo $ro4->number_format($pt_no_shift);
-												$pt_per_day += $pt_no_shift;
-												$ptTotal += $pt_no_shift;
-
-											?>
-										</td>
-
 										<td>
 											<?
-												$st_no_shift = $ts->get_outpatients_therapy_total($registrationNo,"ST",$noShift);
+												//ST
 												echo $ro4->number_format($st_no_shift);
 												$st_per_day += $st_no_shift;
 												$stTotal += $st_no_shift;
@@ -1876,9 +2325,29 @@
 											?>
 										</td>
 
-										<td class='lightBlue'>
+										<td class='sped'>
+											<?	
+												//SPED
+												echo $ro4->number_format($sped_no_shift);
+												$sped_per_day += $sped_no_shift;
+												$spedTotal += $sped_no_shift;
+
+											?>
+										</td>
+
+										<td style="background-color:orange; padding:0.2%; ">
 											<?
-												$derma_no_shift = $ts->get_outpatients_title_total($registrationNo,"DERMA",$noShift);
+												//PT
+												echo $ro4->number_format($pt_no_shift);
+												$pt_per_day += $pt_no_shift;
+												$ptTotal += $pt_no_shift;
+
+											?>
+										</td>
+
+										<td style="background-color: lightblue; padding:0.2%; ">
+											<?
+												//DERMA
 												echo $ro4->number_format($derma_no_shift);
 												$derma_per_day += $derma_no_shift;
 												$dermaTotal += $derma_no_shift;
@@ -1888,7 +2357,7 @@
 
 										<td>
 											<?
-												$others_no_shift = $ts->get_outpatients_title_total($registrationNo,"OTHERS",$noShift);
+												//OTHERS
 												echo $ro4->number_format($others_no_shift);
 												$others_per_day += $others_no_shift;
 												$othersTotal += $others_no_shift;
@@ -1898,7 +2367,7 @@
 
 										<td>
 											<?
-												$or_no_shift = $ts->get_outpatients_title_total($registrationNo,"OR/DR/ER Fee",$noShift);
+												// O.R
 												echo $ro4->number_format($or_no_shift);
 												$or_per_day += $or_no_shift;
 												$orTotal += $or_no_shift;
@@ -1908,7 +2377,7 @@
 
 										<td>
 											<?
-												$balance_no_shift = $ts->get_outpatients_title_total($registrationNo,"BALANCE",$noShift);
+												// A/R OPD PAID
 												echo $ro4->number_format($balance_no_shift);
 												$balance_per_day += $balance_no_shift;
 												$balanceTotal += $balance_no_shift;
@@ -1918,7 +2387,6 @@
 
 										<td>
 											<?
-												$pf_no_shift = $ts->get_outpatients_PF_total($registrationNo,"PROFESSIONAL FEE",$noShift);
 												echo $ro4->number_format($pf_no_shift);
 												$pf_per_day += $pf_no_shift;
 												$pfTotal += $pf_no_shift;
@@ -1928,7 +2396,7 @@
 
 										<td>
 											<?
-												$payable_no_shift = $ts->get_outpatients_PF_payables_total($registrationNo,"PROFESSIONAL FEE",$noShift);
+												// PF A/P(MD SHARE)
 												echo $ro4->number_format($payable_no_shift);
 												$payable_per_day += $payable_no_shift;
 												$payableTotal += $payable_no_shift;
@@ -1937,8 +2405,9 @@
 										</td>
 
 									</tr>
+									<? } ?>
 								<? } ?>
-								
+
 							<? } ?>
 
 
@@ -1947,27 +2416,38 @@
 								<th><!--OR#--></th>
 								<th><!--LASTNAME--></th>
 								<th><!--FIRSTNAME--></th>
-								<th class="grandTotal yellow"><? echo $ro4->number_format($cashPaid_per_day + $creditCard_per_day) ?></th>
+								
+								<th class="grandTotal" style='background-color: yellow; padding: 0.3%'>
+									<? echo $ro4->number_format($cashPaid_per_day + $creditCard_per_day) ?>
+								</th>
+
 								<th><!--HMO--></th>
 								<th class="grandTotal lightBlue"><? echo $ro4->number_format($cashPaid_per_day) ?></th>
 								<th class="grandTotal lightBlue"><? echo $ro4->number_format($creditCard_per_day) ?></th>
 								<th class="grandTotal lightBlue"><? echo $ro4->number_format($hmo_per_day) ?></th>
 								<th class="grandTotal lightBlue"><? echo $ro4->number_format($company_per_day) ?></th>
+								<th class="grandTotal lightBlue"><? echo $ro4->number_format($philhealth_per_day) ?></th>
 								<th class="grandTotal lightBlue"><? echo $ro4->number_format($unpaid_per_day) ?></th>
-								<th class="grandTotal yellow"><? echo $ro4->number_format($discount_per_day) ?></th>
+								
+								<th class="grandTotal" style='background-color: yellow; padding: 0.3%'>
+									<? echo $ro4->number_format($discount_per_day) ?>
+								</th>
+								
 								<th class="grandTotal"><? echo $ro4->number_format($laboratory_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($xray_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($utz_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($ecg_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($ctscan_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($spirometry_per_day) ?></th>
+								<th class="grandTotal"><? echo $ro4->number_format($cardiac_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($medicine_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($supplies_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($erfee_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($misc_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($ot_per_day) ?></th>
-								<th class="grandTotal orange"><? echo $ro4->number_format($pt_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($st_per_day) ?></th>
+								<th class="grandTotal"><? echo $ro4->number_format($sped_per_day) ?></th>
+								<th class="grandTotal orange"><? echo $ro4->number_format($pt_per_day) ?></th>
 								<th class="grandTotal lightBlue"><? echo $ro4->number_format($derma_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($others_per_day) ?></th>
 								<th class="grandTotal"><? echo $ro4->number_format($or_per_day) ?></th>
@@ -1983,6 +2463,7 @@
 								$creditCard_per_day = 0;
 								$hmo_per_day = 0;
 								$company_per_day = 0;
+								$philhealth_per_day = 0;
 								$unpaid_per_day = 0;
 								$discount_per_day = 0;
 								$laboratory_per_day = 0; 
@@ -1991,19 +2472,22 @@
 								$ecg_per_day = 0;
 								$ctscan_per_day = 0;
 								$spirometry_per_day = 0;
+								$cardiac_per_day = 0;
 								$medicine_per_day = 0;
 								$supplies_per_day = 0;
 								$erfee_per_day = 0;
 								$misc_per_day = 0;
 								$ot_per_day = 0;
-								$pt_per_day = 0;
 								$st_per_day = 0;
+								$sped_per_day = 0;
+								$pt_per_day = 0;
 								$derma_per_day = 0;
 								$others_per_day = 0;
 								$or_per_day = 0;
 								$balance_per_day = 0;
 								$pf_per_day = 0;
 								$payable_per_day = 0;
+
 							?>																
 						<? } ?>
 					</tbody>
@@ -2013,40 +2497,49 @@
 							<td><!--OR#--></td>
 							<td><!--LASTNAME--></td>
 							<td><!--FIRSTNAME--></td>
-							<td class='yellow'><? echo $ro4->number_format($cashPaidTotal + $creditCardTotal) ?></td>
+
+							<td style='background-color: yellow; padding: 0.3%'>
+								<? echo $ro4->number_format($cashPaidTotal + $creditCardTotal) ?>
+							</td>
+
 							<td><!--HMO--></td>
-							<td class='lightBlue'><? echo $ro4->number_format($cashPaidTotal) ?></td>
-							<td class='lightBlue'><? echo $ro4->number_format($creditCardTotal) ?></td>
-							<td class='lightBlue'><? echo $ro4->number_format($hmoTotal) ?></td>
-							<td class='lightBlue'><? echo $ro4->number_format($companyTotal) ?></td>
-							<td class='lightBlue'><? echo $ro4->number_format($unpaidTotal) ?></td>
-							<td class='yellow'><? echo $ro4->number_format($discountTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; "><? echo $ro4->number_format($cashPaidTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; "><? echo $ro4->number_format($creditCardTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; "><? echo $ro4->number_format($hmoTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; "><? echo $ro4->number_format($companyTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; "><? echo $ro4->number_format($philhealthTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; "><? echo $ro4->number_format($unpaidTotal) ?></td>
+							<td style='background-color: yellow; padding: 0.3%'>
+								<? echo $ro4->number_format($discountTotal) ?>
+							</td>
 							<td><? echo $ro4->number_format($laboratoryTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($xrayTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($utzTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($ecgTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($ctscanTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($spirometryTotal) ?></td>
+							<td>&nbsp;<? echo $ro4->number_format($cardiacTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($medicineTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($suppliesTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($erfeeTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($miscTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($otTotal) ?></td>
-							<td class='orange'>&nbsp;<? echo $ro4->number_format($ptTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($stTotal) ?></td>
-							<td class='lightBlue'>&nbsp;<? echo $ro4->number_format($dermaTotal) ?></td>
+							<td class='sped'>&nbsp;<? echo $ro4->number_format($spedTotal) ?></td>
+							<td style="background-color:orange; padding:0.2%; ">&nbsp;<? echo $ro4->number_format($ptTotal) ?></td>
+							<td style="background-color: lightblue; padding:0.2%; ">&nbsp;<? echo $ro4->number_format($dermaTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($othersTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($orTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($balanceTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($pfTotal) ?></td>
 							<td>&nbsp;<? echo $ro4->number_format($payableTotal) ?></td>
-						</tr>
+						</tr>						
 					</tfoot>
 				</table>
 					
 				<!--table for transaction summary-->
 				<br><br><br>	
-				<table style="width:20%;">
+				<table id='summary' style="width:20%;">
 
 					<tr>
 						<td>CREDIT CARD</td>
@@ -2069,6 +2562,12 @@
 					<tr>
 						<td>Company</td>
 						<td><? echo $ro4->number_format($companyTotal) ?></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>Philhealth</td>
+						<td><? echo $ro4->number_format($philhealthTotal) ?></td>
 						<td></td>
 					</tr>
 
@@ -2133,6 +2632,12 @@
 					</tr>
 
 					<tr>
+						<td>CARDIAC</td>
+						<td></td>
+						<td><? echo $ro4->number_format($cardiacTotal) ?></td>
+					</tr>
+
+					<tr>
 						<td>MEDICINE</td>
 						<td></td>
 						<td><? echo $ro4->number_format($medicineTotal) ?></td>
@@ -2175,6 +2680,12 @@
 					</tr>
 
 					<tr>
+						<td>SPED</td>
+						<td></td>
+						<td><? echo $ro4->number_format($spedTotal) ?></td>
+					</tr>
+
+					<tr>
 						<td>DERMA</td>
 						<td></td>
 						<td><? echo $ro4->number_format($dermaTotal) ?></td>
@@ -2207,6 +2718,7 @@
 										$cashPaidTotal +
 										$hmoTotal +
 										$companyTotal +
+										$philhealthTotal +
 										$unpaidTotal +
 										$discountTotal
 									);
@@ -2224,6 +2736,7 @@
 										$ecgTotal +
 										$ctscanTotal +
 										$spirometryTotal +
+										$cardiacTotal +
 										$medicineTotal +
 										$suppliesTotal +
 										$erfeeTotal +
@@ -2231,6 +2744,7 @@
 										$otTotal +
 										$ptTotal +
 										$stTotal +
+										$spedTotal +
 										$dermaTotal +
 										$othersTotal +
 										$orTotal +
