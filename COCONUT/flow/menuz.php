@@ -86,8 +86,17 @@ echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/sele
 echo "<input type='submit' value='Transaction Summary2' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/selectShift_transactionSummary-new.php' target='rightFrame'>";
+echo "<input type='submit' value='Transaction Summary2 (new)' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
+
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/transactionSummaryDetailed/date.php' target='_blank'>";
 echo "<input type='submit' value='Transaction Summary3' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
+echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/billing/transactionSummaryDetailed/ipd_date.php' target='_blank'>";
+echo "<input type='submit' value='Transaction Summary4' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
 echo "<form method='get' action='http://".$ro->getMyUrl()."/COCONUT/Doctor/doctorModule/doctorPF_shift.php' target='rightFrame'>";
