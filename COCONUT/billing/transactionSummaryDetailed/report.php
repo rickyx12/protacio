@@ -159,7 +159,7 @@
 				
 				var patients = '<table>'+$("#patients").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
 				var summary = '<table>'+$("#summary").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-				var reportName = 'Transaction_Summary_[<? echo $monthWord[$month]."-".$year ?>]';
+				var reportName = 'OPD_Transaction_Summary_[<? echo $monthWord[$month]."-".$year ?>]';
 
 				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+patients+summary+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
 
