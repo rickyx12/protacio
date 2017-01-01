@@ -19,8 +19,8 @@ echo "<form method='post' action='inpatient-total.php' target='_blank'>";
 $ro3->transactionSummaryDischarge($date,$date1);
 echo "<Br><br>";
 
-$ro4->inpatient_deposit($date,$date1,"Cash");
-$ro4->inpatient_deposit($date,$date1,"Credit Card");
+$ro4->inpatient_deposit($date,$date1,"Cash",'no');
+$ro4->inpatient_deposit($date,$date1,"Credit Card",'no');
 $deposit_cash = 0;
 $deposit_creditCard = 0;
 ?>
