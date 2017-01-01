@@ -333,7 +333,7 @@
 											$ro4->inpatient_title_total_inventory($registrationNo,'total','MEDICINE') +
 											$ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"total")
 										);
-										$supplies = $ro4->inpatient_title_total($registrationNo,'total','SUPPLIES');
+										$supplies = $ro4->inpatient_title_total_inventory($registrationNo,'total','SUPPLIES');
 										$or = $ro4->inpatient_title_total($registrationNo,'total','OR/DR/ER Fee');
 										$room = $ro4->inpatient_title_total($registrationNo,'total','Room and Board');
 										$pt = $ro4->inpatient_title_total($registrationNo,'total','PT');
@@ -1066,7 +1066,7 @@
 											$ro4->inpatient_title_total_inventory($registrationNo,'total','MEDICINE') +
 											$ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"total")
 										);
-										$supplies = $ro4->inpatient_title_total($registrationNo,'total','SUPPLIES');
+										$supplies = $ro4->inpatient_title_total_inventory($registrationNo,'total','SUPPLIES');
 										$or = $ro4->inpatient_title_total($registrationNo,'total','OR/DR/ER Fee');
 										$room = $ro4->inpatient_title_total($registrationNo,'total','Room and Board');
 										$pt = $ro4->inpatient_title_total($registrationNo,'total','PT');
@@ -1800,7 +1800,7 @@
 											$ro4->inpatient_title_total_inventory($registrationNo,'total','MEDICINE') +
 											$ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"total")
 										);
-										$supplies = $ro4->inpatient_title_total($registrationNo,'total','SUPPLIES');
+										$supplies = $ro4->inpatient_title_total_inventory($registrationNo,'total','SUPPLIES');
 										$or = $ro4->inpatient_title_total($registrationNo,'total','OR/DR/ER Fee');
 										$room = $ro4->inpatient_title_total($registrationNo,'total','Room and Board');
 										$pt = $ro4->inpatient_title_total($registrationNo,'total','PT');
@@ -2532,7 +2532,7 @@
 											$ro4->inpatient_title_total_inventory($registrationNo,'total','MEDICINE') +
 											$ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"total")
 										);
-										$supplies = $ro4->inpatient_title_total($registrationNo,'total','SUPPLIES');
+										$supplies = $ro4->inpatient_title_total_inventory($registrationNo,'total','SUPPLIES');
 										$or = $ro4->inpatient_title_total($registrationNo,'total','OR/DR/ER Fee');
 										$room = $ro4->inpatient_title_total($registrationNo,'total','Room and Board');
 										$pt = $ro4->inpatient_title_total($registrationNo,'total','PT');
@@ -3290,7 +3290,7 @@
 											$ro4->inpatient_title_total_inventory($registrationNo,'total','MEDICINE') +
 											$ro4->inpatient_paymentMode_total_inventory_takeHomeMeds($registrationNo,"total")
 										);
-										$supplies = $ro4->inpatient_title_total($registrationNo,'total','SUPPLIES');
+										$supplies = $ro4->inpatient_title_total_inventory($registrationNo,'total','SUPPLIES');
 										$or = $ro4->inpatient_title_total($registrationNo,'total','OR/DR/ER Fee');
 										$room = $ro4->inpatient_title_total($registrationNo,'total','Room and Board');
 										$pt = $ro4->inpatient_title_total($registrationNo,'total','PT');
