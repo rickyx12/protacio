@@ -70,9 +70,29 @@ public function select($table,$cols) {
 	}
 }
 
+/**
+ *get the last row of the query.
+ *
+ *@param String table = table to select.
+ *@param String cols = column of the table to select.
+ *@param String identifier = column in where clause.
+ *@param String/Integer identifierData = the value of column in where clause.
+ *@param String ordering = order the coloumn.
+ *
+ *@return String/Integer query result.
+ */	
 public function selectLast($table,$cols,$identifier,$identifierData,$ordering) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, "select ".$cols." as cols FROM ".$table." WHERE ".$identifier." = '".$identifierData."' and ".$cols." != '' ORDER BY ".$ordering." desc limit 1 ") or die("Query fail: " . mysqli_error()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['cols'];
+	}
+}
+
+public function doubleSelectLast($table,$cols,$identifier,$identifierData,$identifier1,$identifierData1,$ordering) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "select ".$cols." as cols FROM ".$table." WHERE ".$identifier." = '".$identifierData."' and ".$identifier1." = '".$identifierData1."' and ".$cols." != '' ORDER BY ".$ordering." desc limit 1 ") or die("Query fail: " . mysqli_error()); 
 
 	while($row = mysqli_fetch_array($result)) {
 		return $row['cols'];
@@ -939,6 +959,15 @@ public function inpatient_payment_total($registrationNo,$paidVia) {
 	}
 }
 
+public function inpatient_payment_hospitalBill_total($registrationNo,$paidVia) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
+	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' and paymentFor = 'HOSPITAL BILL' ") or die("Query fail: " . mysqli_alerror()); 
+
+	while($row = mysqli_fetch_array($result)) {
+		return $row['total'];
+	}
+}
+
 public function inpatient_balancePayment_total($registrationNo,$paidVia) {
 	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
 	$result = mysqli_query($connection, "SELECT sum(amountPaid) as total from patientPayment where registrationNo = '$registrationNo' and paidVia = '$paidVia' and paymentFor in ('BALANCE PAID') ") or die("Query fail: " . mysqli_alerror()); 
@@ -998,9 +1027,18 @@ public function inpatient_deposit_paidVia() {
 	return $this->inpatient_deposit_paidVia;
 }
 
-public function inpatient_deposit($date1,$date2,$paidVia) {
-	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);      
-	$result = mysqli_query($connection, "SELECT rd.registrationNo,rd.dateUnregistered,pp.amountPaid,pp.paidVia,pp.paymentNo FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.dateUnregistered = '' and (pp.datePaid between '$date1' and '$date2') and pp.paidVia = '$paidVia' and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
+public function inpatient_deposit($date1,$date2,$paidVia,$discharged) {
+	$connection = mysqli_connect($this->host,$this->username,$this->password,$this->database);   
+
+	if( $discharged == 'no' ) {
+
+		$result = mysqli_query($connection, "SELECT rd.registrationNo,rd.dateUnregistered,pp.amountPaid,pp.paidVia,pp.paymentNo FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and rd.dateUnregistered = '' and (pp.datePaid between '$date1' and '$date2') and pp.paidVia = '$paidVia' and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
+	
+	}else {
+	
+		$result = mysqli_query($connection, "SELECT rd.registrationNo,rd.dateUnregistered,pp.amountPaid,pp.paidVia,pp.paymentNo FROM registrationDetails rd,patientPayment pp WHERE rd.registrationNo = pp.registrationNo and (pp.datePaid between '$date1' and '$date2') and pp.paidVia = '$paidVia' and pp.paymentFor = 'DEPOSIT' ") or die("Query fail: " . mysqli_error()); 
+	}
+
 
 	while($row = mysqli_fetch_array($result)) {
 		$this->inpatient_deposit_paymentNo[] = $row['paymentNo'];
