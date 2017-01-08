@@ -192,4 +192,8 @@ echo "<input type='hidden' name='toDate' value='".date("Ymd")."'>";
 echo "<input type='submit' value='Purchases List' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
 echo "</form>";
 
+echo "<form method='get' action='../inventory/rmc_quarter.php' target='rightFrame'>";
+echo "<input type='submit' value='RMC Ending Inventory' style='border:1px solid #ff0000; width:100%; height:10%; color:blue; '>";
+echo "</form>";
+
 ?>
