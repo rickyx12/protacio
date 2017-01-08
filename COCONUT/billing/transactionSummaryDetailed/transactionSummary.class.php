@@ -460,12 +460,22 @@ class transactionSummary {
 
 
 
+
 	private $list_inpatient_balance_paid_paymentNo;
 
 	public function list_inpatient_balance_paid_paymentNo() {
 		return $this->list_inpatient_balance_paid_paymentNo;
 	}
 
+	/**
+	*show the paid balance of inpatient.
+	*
+	*@param String month
+	*@param String day
+	*@param String year
+	*
+	*@return void
+	*/
 	public function list_inpatient_balance_paid($month,$day,$year) {
 
 		$this->list_inpatient_balance_paid_paymentNo = [];
