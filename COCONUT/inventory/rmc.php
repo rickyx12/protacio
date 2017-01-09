@@ -7,12 +7,13 @@ $ro = new database();
 $ro4 = new database4();
 $ending = new ending_inventory();
 
+$year = $_POST['year'];
 $quarter = $_POST['quarter'];
 
 $medicine = 'medicine';
 $supplies = 'supplies';
 
-$ending->ending_inventory($quarter);
+$ending->ending_inventory($quarter,$year);
 
 ?>
 <!DOCTYPE html>
@@ -47,7 +48,7 @@ $ending->ending_inventory($quarter);
 	<body>
 		<div class='container'>
 			<h3>
-				<? echo $quarter ?> Quarter
+				<? echo $quarter ?> Quarter of <? echo $year ?>
 			</h3>
 			<h1><a href="#" id="export"><img src="../../../export-to-excel/excel-icon.png"></a></h1>
 			

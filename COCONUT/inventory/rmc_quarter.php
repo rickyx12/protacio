@@ -25,7 +25,18 @@
 						<form method="post" action="rmc.php">
 							<div class="row">
 								<div class="form-group">
-									
+									<div class='col-md-2'>
+										<label class="control-label col-md-2">Year</label>
+									</div>
+									<div class='col-md-10'>
+									<select class='form-control' name='year'>
+										<? for( $x=date('Y');$x>2014;$x-- ) { ?>
+											<option>
+												<? echo $x ?>
+											</option>
+										<? } ?>
+									</select>
+									</div>
 								</div>
 							</div>
 
