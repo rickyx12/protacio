@@ -7,13 +7,14 @@ $ro = new database();
 $ro4 = new database4();
 $ending = new ending_inventory();
 
+$type = $_POST['type'];
 $year = $_POST['year'];
 $quarter = $_POST['quarter'];
 
 $medicine = 'medicine';
 $supplies = 'supplies';
 
-$ending->ending_inventory($quarter,$year);
+$ending->ending_inventory($quarter,$year,$type);
 
 ?>
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ $ending->ending_inventory($quarter,$year);
 			$("#export").click(function() {
 				
 				var inventory = '<table>'+$("#inventory").html().replace(/<a\/?[^>]+>/gi, '')+'</table>';
-				var reportName = 'Ending Inventory';
+				var reportName = 'Ending Inventory_<? echo $quarter ?> Qtr_<? echo $year ?>_<? echo $type ?>';
 
 				$('body').prepend("<form method='post' action='../../../export-to-excel/exporttoexcel.php' style='display:none' id='ReportTableData'><textarea name='tableData'>"+inventory+"</textarea><input type='text' name='reportName' value='"+reportName+"'></form>");
 
@@ -48,7 +49,7 @@ $ending->ending_inventory($quarter,$year);
 	<body>
 		<div class='container'>
 			<h3>
-				<? echo $quarter ?> Quarter of <? echo $year ?>
+				<? echo $quarter ?> Quarter of <? echo $year ?> in <? echo $type ?>
 			</h3>
 			<h1><a href="#" id="export"><img src="../../../export-to-excel/excel-icon.png"></a></h1>
 			
@@ -72,155 +73,78 @@ $ending->ending_inventory($quarter,$year);
 					<? foreach( $ending->ending_inventory_endingNo() as $endingNo ) { ?>
 
 						<?
-
 							$stockCardNo = $ro->selectNow('endingInventory','stockCardNo','endingNo',$endingNo);
-							$inventoryType = $ro->selectNow('inventoryStockCard','inventoryType','stockCardNo',$stockCardNo);
-
 						?>
 
-						<!--MEDICINE-->
-						<? if( $inventoryType == $medicine ) { ?>
-							<tr>
-								<!--PRODUCT/INVENTORY CODE-->
-								<td style="border:1px solid black">
-									<?
-										echo $stockCardNo
-									?>
-								</td>
+				
+						<tr>
+							<!--PRODUCT/INVENTORY CODE-->
+							<td style="border:1px solid black">
+								<?
+									echo $stockCardNo
+								?>
+							</td>
 
-								<!--ITEM DESCRIPTION-->
-								<td style="border:1px solid black">
-									<?
-										echo $ro->selectNow('inventoryStockCard','description','stockCardNo',$stockCardNo)
-									?>
-								</td>
+							<!--ITEM DESCRIPTION-->
+							<td style="border:1px solid black">
+								<?
+									echo $ro->selectNow('inventoryStockCard','description','stockCardNo',$stockCardNo)
+								?>
+							</td>
 
-								<!--ADDRESS-->
-								<td style="border:1px solid black">
-									<?
-										$inventoryLocation = $ro->selectNow('endingInventory','inventoryLocation','endingNo',$endingNo);
-										echo $inventoryLocation;
-									?>
-								</td>
+							<!--ADDRESS-->
+							<td style="border:1px solid black">
+								<?
+									$inventoryLocation = $ro->selectNow('endingInventory','inventoryLocation','endingNo',$endingNo);
+									echo $inventoryLocation;
+								?>
+							</td>
 
-								<!--CODE-->
-								<td style="border:1px solid black"> </td>
+							<!--CODE-->
+							<td style="border:1px solid black"> </td>
 
-								<!--REMARKS-->
-								<td style="border:1px solid black"> </td>
+							<!--REMARKS-->
+							<td style="border:1px solid black"> </td>
 
-								<!--INVENTORY VALUATION METHOD (Note 2)-->
-								<td style="border:1px solid black"> </td>
+							<!--INVENTORY VALUATION METHOD (Note 2)-->
+							<td style="border:1px solid black"> </td>
 
-								<!--UNIT PRICE-->
-								<td style="border:1px solid black"> 
-									<?
-										$unitcost = $ro->selectNow('endingInventory','unitcost','endingNo',$endingNo); 
-										echo $ro4->number_format($unitcost);
-									?>
-								</td>
+							<!--UNIT PRICE-->
+							<td style="border:1px solid black"> 
+								<?
+									$unitcost = $ro->selectNow('endingInventory','unitcost','endingNo',$endingNo); 
+									echo $ro4->number_format($unitcost);
+								?>
+							</td>
 
-								<!--QTY IN STOCKS-->
-								<td style="border:1px solid black">
-									<?
-										$qty = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,$inventoryLocation);
-										echo $qty;
-									?>
-								</td>
+							<!--QTY IN STOCKS-->
+							<td style="border:1px solid black">
+								<?
+									$qty = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,$inventoryLocation);
+									echo $qty;
+								?>
+							</td>
 
-								<!--UNIT IN MEASUREMENT-->
-								<td style="border:1px solid black">
-									<?
-										echo $ro->selectNow('inventory','preparation','stockCardNo',$stockCardNo);
-									?>
-								</td>
+							<!--UNIT IN MEASUREMENT-->
+							<td style="border:1px solid black">
+								<?
+									echo $ro->selectNow('inventory','preparation','stockCardNo',$stockCardNo);
+								?>
+							</td>
 
-								<!--TOTAL WEIGHT/VOLUME-->
-								<td style="border:1px solid black"> </td>
+							<!--TOTAL WEIGHT/VOLUME-->
+							<td style="border:1px solid black"> </td>
 
-								<!--TOTAL COST-->
-								<td style="border:1px solid black">
-									<?
-										$totalCost = ( $unitcost * $qty );
-										echo $ro4->number_format($totalCost)
-									?>
-								</td>
+							<!--TOTAL COST-->
+							<td style="border:1px solid black">
+								<?
+									$totalCost = ( $unitcost * $qty );
+									echo $ro4->number_format($totalCost)
+								?>
+							</td>
 
-							</tr>
-						<? }else {  } ?>
-
-
-						<!--SUPPLIES-->
-						<? if( $inventoryType == $supplies ) { ?>
-							<tr>
-								<!--PRODUCT/INVENTORY CODE-->
-								<td style="border:1px solid black">
-									<?
-										echo $stockCardNo
-									?>
-								</td>
-
-								<!--ITEM DESCRIPTION-->
-								<td style="border:1px solid black">
-									<?
-										echo $ro->selectNow('inventoryStockCard','description','stockCardNo',$stockCardNo)
-									?>
-								</td>
-
-								<!--ADDRESS-->
-								<td style="border:1px solid black">
-									<?
-										$inventoryLocation = $ro->selectNow('endingInventory','inventoryLocation','endingNo',$endingNo);
-										echo $inventoryLocation;
-									?>
-								</td>
-
-								<!--CODE-->
-								<td style="border:1px solid black"> </td>
-
-								<!--REMARKS-->
-								<td style="border:1px solid black"> </td>
-
-								<!--INVENTORY VALUATION METHOD (Note 2)-->
-								<td style="border:1px solid black"> </td>
-
-								<!--UNIT PRICE-->
-								<td style="border:1px solid black"> 
-									<?
-										$unitcost = $ro->selectNow('endingInventory','unitcost','endingNo',$endingNo); 
-										echo $ro4->number_format($unitcost);
-									?>
-								</td>
-
-								<!--QTY IN STOCKS-->
-								<td style="border:1px solid black">
-									<?
-										$qty = $ro4->ending_inventory_sumQTY($stockCardNo,$quarter,$inventoryLocation);
-										echo $qty;
-									?>
-								</td>
-
-								<!--UNIT IN MEASUREMENT-->
-								<td style="border:1px solid black">
-									<?
-										echo $ro->selectNow('inventory','preparation','stockCardNo',$stockCardNo);
-									?>
-								</td>
-
-								<!--TOTAL WEIGHT/VOLUME-->
-								<td style="border:1px solid black"> </td>
-
-								<!--TOTAL COST-->
-								<td style="border:1px solid black">
-									<?
-										$totalCost = ( $unitcost * $qty );
-										echo $ro4->number_format($totalCost)
-									?>
-								</td>
-
-							</tr>
-						<? }else {  } ?>
-
+						</tr>
+					
 					<? } ?>
 				</tbody>
 			</table>

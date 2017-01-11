@@ -40,6 +40,21 @@
 								</div>
 							</div>
 
+							<div class='row'>
+								<div class='form-group'>
+									<label class='control-label col-sm-2'>Type</label>
+
+									<div class='col-md-3'>
+										<input type="radio" name="type" value="medicine" checked>&nbsp;Medicine
+									</div>
+
+									<div class='col-md-5'>
+										<input type="radio" name="type" value="supplies">&nbsp;Supplies
+									</div>
+
+								</div>
+							</div>
+
 							<div class="row">
 								<div class="form-group">
 									<label class="control-label col-sm-2">Quarter</label>
